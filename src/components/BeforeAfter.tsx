@@ -13,9 +13,9 @@ const BeforeAfter = () => {
             <div className="bg-code-bg rounded-lg p-6 border border-border">
               <div className="text-sm text-code-comment mb-2">// AI Agent</div>
               <div className="space-y-2 text-sm">
-                <div className="text-code-string">"I don't understand your architecture"</div>
-                <div className="text-code-string">"What's your coding style?"</div>
-                <div className="text-code-string">"Can you explain this pattern?"</div>
+                <div className="text-destructive">"I don't understand your architecture"</div>
+                <div className="text-destructive">"What's your coding style?"</div>
+                <div className="text-destructive">"Can you explain this pattern?"</div>
               </div>
             </div>
             
