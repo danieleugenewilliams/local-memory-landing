@@ -15,7 +15,7 @@ const CodeExample = () => {
           {/* MCP Setup */}
           <div className="bg-code-bg rounded-2xl p-4 sm:p-6 lg:p-8 border border-primary/20 shadow-glow overflow-x-auto">
             <div className="text-sm font-mono">
-              <div className="text-code-comment mb-4">// MCP Setup (Claude Desktop, OpenCode)</div>
+              <div className="text-code-comment mb-4">// MCP Setup (Claude Code, Claude Desktop, OpenCode)</div>
               
               <div className="mb-6">
                 <span className="text-foreground">{"{"}</span>

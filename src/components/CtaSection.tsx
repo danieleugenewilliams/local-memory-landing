@@ -8,8 +8,8 @@ const CtaSection = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
             Ready to Give Your AI Persistent Memory?
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground mb-8">
-            Transform any AI from generic to personalized intelligence. Works with Claude Desktop, OpenCode, ChatGPT, Cursor, and more.
+          <p className="text-lg sm:text-xl text-foreground mb-8">
+            Transform any AI from generic to personalized intelligence. Works with Claude Code, Claude Desktop, OpenCode, Cursor, and more.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -25,17 +25,17 @@ const CtaSection = () => {
             <div>
               <div className="text-memory-green text-xl sm:text-2xl mb-2">⚡</div>
               <div className="font-bold text-foreground text-sm sm:text-base">5 Minute Setup</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">npm install and you're running</div>
+              <div className="text-xs sm:text-sm text-foreground">npm install and you're running</div>
             </div>
             <div>
               <div className="text-memory-blue text-xl sm:text-2xl mb-2">🔒</div>
               <div className="font-bold text-foreground text-sm sm:text-base">100% Private</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Your data never leaves your machine</div>
+              <div className="text-xs sm:text-sm text-foreground">Your data never leaves your machine</div>
             </div>
             <div>
               <div className="text-memory-purple text-xl sm:text-2xl mb-2">🌐</div>
               <div className="font-bold text-foreground text-sm sm:text-base">Universal Support</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Works with all AI platforms</div>
+              <div className="text-xs sm:text-sm text-foreground">Works with all AI platforms</div>
             </div>
           </div>
         </div>

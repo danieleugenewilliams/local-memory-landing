@@ -28,7 +28,7 @@ const Hero = () => {
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            Works with Claude Desktop, OpenCode, ChatGPT, Cursor, and any custom agent. Features lightning-fast FAISS vector search and comprehensive REST API.
+            Works with Claude Code, Claude Desktop, OpenCode, Cursor, and any custom agent. Features lightning-fast FAISS vector search and comprehensive REST API.
           </p>
           
           {/* CTA Buttons */}
