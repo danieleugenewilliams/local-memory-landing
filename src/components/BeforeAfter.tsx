@@ -2,12 +2,12 @@ const BeforeAfter = () => {
   return (
     <section className="py-32 bg-muted/20">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Before */}
           <div className="space-y-6 animate-slide-in-left">
             <div className="inline-flex items-center gap-2 text-destructive">
-              <span className="text-2xl">😕</span>
-              <h3 className="text-2xl font-bold">Before: Confused Agent</h3>
+              <span className="text-xl sm:text-2xl">😕</span>
+              <h3 className="text-xl sm:text-2xl font-bold">Before: Confused Agent</h3>
             </div>
             
             <div className="bg-code-bg rounded-lg p-6 border border-border">
@@ -53,8 +53,8 @@ const BeforeAfter = () => {
           {/* After */}
           <div className="space-y-6 animate-slide-in-right">
             <div className="inline-flex items-center gap-2 text-memory-green">
-              <span className="text-2xl">🚀</span>
-              <h3 className="text-2xl font-bold">After: Expert Agent</h3>
+              <span className="text-xl sm:text-2xl">🚀</span>
+              <h3 className="text-xl sm:text-2xl font-bold">After: Expert Agent</h3>
             </div>
             
             <div className="bg-code-bg rounded-lg p-6 border border-primary/20 shadow-glow">

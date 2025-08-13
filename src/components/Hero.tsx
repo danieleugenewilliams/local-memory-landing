@@ -18,7 +18,7 @@ const Hero = () => {
           </div>
           
           {/* Main headline */}
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
             Give Any AI Agent{" "}
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
               Persistent Memory
@@ -27,7 +27,7 @@ const Hero = () => {
           </h1>
           
           {/* Subtitle */}
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in leading-relaxed">
             Works with Claude Desktop, OpenCode, ChatGPT, Cursor, and any custom agent. Features lightning-fast FAISS vector search and comprehensive REST API.
           </p>
           
@@ -42,18 +42,18 @@ const Hero = () => {
           </div>
           
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-in">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto animate-fade-in">
             <div className="text-center">
-              <div className="text-2xl font-bold text-memory-green">2.7K+</div>
-              <div className="text-sm text-muted-foreground">GitHub Stars</div>
+              <div className="text-xl sm:text-2xl font-bold text-memory-green">2.7K+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">GitHub Stars</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-memory-blue">10K+</div>
-              <div className="text-sm text-muted-foreground">Downloads</div>
+              <div className="text-xl sm:text-2xl font-bold text-memory-blue">10K+</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Downloads</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-memory-purple">v2.7.3</div>
-              <div className="text-sm text-muted-foreground">Latest Version</div>
+              <div className="text-xl sm:text-2xl font-bold text-memory-purple">v2.7.3</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Latest Version</div>
             </div>
           </div>
         </div>

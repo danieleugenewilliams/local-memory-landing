@@ -2,18 +2,18 @@ const CodeExample = () => {
   return (
     <section className="py-32 bg-background">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
             Simple Setup, Powerful Results
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Works with MCP tools and REST API for universal compatibility
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
           {/* MCP Setup */}
-          <div className="bg-code-bg rounded-2xl p-8 border border-primary/20 shadow-glow overflow-x-auto">
+          <div className="bg-code-bg rounded-2xl p-4 sm:p-6 lg:p-8 border border-primary/20 shadow-glow overflow-x-auto">
             <div className="text-sm font-mono">
               <div className="text-code-comment mb-4">// MCP Setup (Claude Desktop, OpenCode)</div>
               
@@ -47,7 +47,7 @@ const CodeExample = () => {
           </div>
 
           {/* REST API Setup */}
-          <div className="bg-code-bg rounded-2xl p-8 border border-primary/20 shadow-glow overflow-x-auto">
+          <div className="bg-code-bg rounded-2xl p-4 sm:p-6 lg:p-8 border border-primary/20 shadow-glow overflow-x-auto">
             <div className="text-sm font-mono">
               <div className="text-code-comment mb-4">// REST API Usage (Any AI platform)</div>
               

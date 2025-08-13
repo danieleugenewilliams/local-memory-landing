@@ -11,7 +11,7 @@ const Header = () => {
           <span className="font-bold text-xl">Local Memory</span>
         </div>
         
-        <nav className="flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6">
           <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Features
           </a>
@@ -28,6 +28,13 @@ const Header = () => {
             Get Started
           </Button>
         </nav>
+        
+        {/* Mobile menu button */}
+        <div className="md:hidden">
+          <Button variant="cta" size="sm">
+            Get Started
+          </Button>
+        </div>
       </div>
     </header>
   );

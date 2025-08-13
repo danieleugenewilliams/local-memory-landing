@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-border bg-background">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
