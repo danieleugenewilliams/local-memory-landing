@@ -6,18 +6,18 @@ const CtaSection = () => {
       <div className="container max-w-screen-2xl mx-auto px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Ready to Give Your AI Real Memory?
+            Ready to Give Your AI Persistent Memory?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">
-            Join engineering teams who've moved beyond toy demos to production AI that understands their real codebases.
+            Transform any AI from generic to personalized intelligence. Works with Claude Desktop, OpenCode, ChatGPT, Cursor, and more.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button variant="default" size="lg" className="w-full sm:w-auto">
-              Start Free - Download Now
+              Get Started on GitHub
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Book Enterprise Demo
+              View Documentation
             </Button>
           </div>
           
@@ -29,13 +29,13 @@ const CtaSection = () => {
             </div>
             <div>
               <div className="text-memory-blue text-2xl mb-2">🔒</div>
-              <div className="font-bold text-foreground">100% Local</div>
-              <div className="text-sm text-muted-foreground">Your code never leaves your servers</div>
+              <div className="font-bold text-foreground">100% Private</div>
+              <div className="text-sm text-muted-foreground">Your data never leaves your machine</div>
             </div>
             <div>
-              <div className="text-memory-purple text-2xl mb-2">🚀</div>
-              <div className="font-bold text-foreground">Production Ready</div>
-              <div className="text-sm text-muted-foreground">Used by enterprise teams today</div>
+              <div className="text-memory-purple text-2xl mb-2">🌐</div>
+              <div className="font-bold text-foreground">Universal Support</div>
+              <div className="text-sm text-muted-foreground">Works with all AI platforms</div>
             </div>
           </div>
         </div>

@@ -4,10 +4,10 @@ const SolutionSection = () => {
       <div className="container max-w-screen-2xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Local Memory: The Missing Layer for Enterprise AI
+            Local Memory: Universal AI Memory System
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A persistent memory system that learns your codebase, patterns, and decisions
+            A persistent memory system that works with all AI platforms and learns from every interaction
           </p>
         </div>
         
@@ -15,13 +15,13 @@ const SolutionSection = () => {
         <div className="max-w-4xl mx-auto mb-16">
           <div className="bg-card rounded-2xl p-8 border border-border">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-              {/* AI Agent */}
+              {/* AI Platforms */}
               <div className="text-center">
                 <div className="w-20 h-20 bg-memory-blue/20 rounded-2xl flex items-center justify-center mb-4 mx-auto">
                   <span className="text-2xl">🤖</span>
                 </div>
-                <h3 className="font-bold text-foreground">AI Agent</h3>
-                <p className="text-sm text-muted-foreground">Claude, ChatGPT, etc.</p>
+                <h3 className="font-bold text-foreground">Any AI Platform</h3>
+                <p className="text-sm text-muted-foreground">Claude, ChatGPT, Cursor, etc.</p>
               </div>
               
               {/* Arrow */}
@@ -33,19 +33,19 @@ const SolutionSection = () => {
                   <span className="text-2xl">🧠</span>
                 </div>
                 <h3 className="font-bold text-foreground">Local Memory</h3>
-                <p className="text-sm text-muted-foreground">Persistent Learning Layer</p>
+                <p className="text-sm text-muted-foreground">MCP + REST API</p>
               </div>
               
               {/* Arrow */}
               <div className="text-memory-blue text-2xl lg:rotate-0 rotate-90">↔</div>
               
-              {/* Your Codebase */}
+              {/* Your Data */}
               <div className="text-center">
                 <div className="w-20 h-20 bg-memory-purple/20 rounded-2xl flex items-center justify-center mb-4 mx-auto">
-                  <span className="text-2xl">💻</span>
+                  <span className="text-2xl">💾</span>
                 </div>
-                <h3 className="font-bold text-foreground">Your Codebase</h3>
-                <p className="text-sm text-muted-foreground">500K+ lines, real patterns</p>
+                <h3 className="font-bold text-foreground">Your Knowledge</h3>
+                <p className="text-sm text-muted-foreground">Private, local, secure</p>
               </div>
             </div>
           </div>
@@ -56,40 +56,40 @@ const SolutionSection = () => {
           <div className="bg-card rounded-2xl p-8 border border-border animate-slide-in-left">
             <div className="text-memory-green text-2xl mb-4">✓</div>
             <h3 className="text-xl font-bold text-foreground mb-2">
-              Remembers architectural decisions across sessions
+              Lightning-fast FAISS vector search
             </h3>
             <p className="text-muted-foreground">
-              Never explain your system design twice
+              Sub-millisecond semantic search across millions of memories
             </p>
           </div>
           
           <div className="bg-card rounded-2xl p-8 border border-border animate-slide-in-right">
             <div className="text-memory-green text-2xl mb-4">✓</div>
             <h3 className="text-xl font-bold text-foreground mb-2">
-              Learns your coding patterns and conventions
+              Works with ALL AI platforms
             </h3>
             <p className="text-muted-foreground">
-              AI adapts to your team's style automatically
+              MCP for Claude/OpenCode, REST API for everything else
             </p>
           </div>
           
           <div className="bg-card rounded-2xl p-8 border border-border animate-slide-in-left">
             <div className="text-memory-green text-2xl mb-4">✓</div>
             <h3 className="text-xl font-bold text-foreground mb-2">
-              Builds expertise about your domain and business logic
+              AI-powered relationship discovery
             </h3>
             <p className="text-muted-foreground">
-              Deep understanding of your specific requirements
+              Automatically finds connections between memories and concepts
             </p>
           </div>
           
           <div className="bg-card rounded-2xl p-8 border border-border animate-slide-in-right">
             <div className="text-memory-green text-2xl mb-4">✓</div>
             <h3 className="text-xl font-bold text-foreground mb-2">
-              Works with ANY AI platform
+              Complete privacy and control
             </h3>
             <p className="text-muted-foreground">
-              Claude, ChatGPT, OpenCode, and more
+              All data stays on your machine - no cloud dependencies
             </p>
           </div>
         </div>
@@ -98,7 +98,7 @@ const SolutionSection = () => {
         <div className="mt-12 text-center">
           <div className="inline-flex items-center gap-2 bg-card rounded-full px-6 py-3 border border-memory-green/20">
             <span className="text-memory-green">🔒</span>
-            <span className="font-medium text-foreground">100% Local - Your code never leaves your infrastructure</span>
+            <span className="font-medium text-foreground">100% Local - Your data never leaves your machine</span>
           </div>
         </div>
       </div>
