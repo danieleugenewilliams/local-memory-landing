@@ -1,7 +1,7 @@
 const SolutionSection = () => {
   return (
-    <section className="py-24 bg-muted/20">
-      <div className="container max-w-screen-2xl mx-auto px-4">
+    <section className="py-32 bg-muted/20">
+      <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Local Memory: Universal AI Memory System

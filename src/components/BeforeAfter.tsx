@@ -1,7 +1,7 @@
 const BeforeAfter = () => {
   return (
-    <section className="py-24 bg-muted/20">
-      <div className="container max-w-screen-2xl mx-auto px-4">
+    <section className="py-32 bg-muted/20">
+      <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Before */}
           <div className="space-y-6 animate-slide-in-left">

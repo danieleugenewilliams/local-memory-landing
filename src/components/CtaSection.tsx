@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 
 const CtaSection = () => {
   return (
-    <section className="py-24 bg-hero-gradient">
-      <div className="container max-w-screen-2xl mx-auto px-4 text-center">
+    <section className="py-32 bg-hero-gradient">
+      <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Ready to Give Your AI Persistent Memory?
