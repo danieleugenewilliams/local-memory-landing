@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import BeforeAfter from "@/components/BeforeAfter";
 import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
+import Features from "@/components/Features";
 import CodeExample from "@/components/CodeExample";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
@@ -15,6 +16,7 @@ const Index = () => {
       <BeforeAfter />
       <ProblemSection />
       <SolutionSection />
+      <Features />
       <CodeExample />
       <CtaSection />
       <Footer />

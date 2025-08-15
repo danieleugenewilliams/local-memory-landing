@@ -15,15 +15,6 @@ const Header = () => {
           <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Features
           </a>
-          <a href="#docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Documentation
-          </a>
-          <a href="#enterprise" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Enterprise
-          </a>
-          <Button variant="outline" size="sm">
-            GitHub
-          </Button>
           <Button variant="cta" size="sm">
             Get Started
           </Button>

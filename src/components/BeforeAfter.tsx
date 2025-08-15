@@ -1,6 +1,6 @@
 const BeforeAfter = () => {
   return (
-    <section className="py-32 bg-muted/20">
+    <section className="py-24 bg-muted/20">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Before */}

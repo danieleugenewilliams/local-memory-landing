@@ -11,11 +11,10 @@ const Hero = () => {
       
       <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 py-32 lg:py-40">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center rounded-full border border-primary/20 bg-card/50 px-3 py-1 text-sm mb-8 animate-fade-in">
-            <span className="text-memory-green">✓</span>
-            <span className="ml-2 text-foreground">Universal AI memory for all platforms</span>
-          </div>
+          {/* Problem Statement */}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-8 animate-fade-in leading-tight">
+            AI Agents Are Smart... But They Forget Everything
+          </h2>
           
           {/* Main headline */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
@@ -37,15 +36,15 @@ const Hero = () => {
               Get Started with Local Memory
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              View on GitHub
+              Watch Demo
             </Button>
           </div>
           
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto animate-fade-in">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-memory-green">2.7K+</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">GitHub Stars</div>
+              <div className="text-xl sm:text-2xl font-bold text-memory-green">100%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Local & Private</div>
             </div>
             <div className="text-center">
               <div className="text-xl sm:text-2xl font-bold text-memory-blue">10K+</div>

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const CtaSection = () => {
   return (
-    <section className="py-32 bg-hero-gradient">
+    <section className="py-24 bg-hero-gradient">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
@@ -14,10 +14,7 @@ const CtaSection = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button variant="default" size="lg" className="w-full sm:w-auto">
-              Get Started on GitHub
-            </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              View Documentation
+              Get Started with Local Memory
             </Button>
           </div>
           

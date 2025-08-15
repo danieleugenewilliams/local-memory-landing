@@ -1,6 +1,6 @@
 const CodeExample = () => {
   return (
-    <section className="py-32 bg-background">
+    <section className="py-24 bg-background">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
