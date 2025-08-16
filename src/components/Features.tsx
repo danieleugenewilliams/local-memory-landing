@@ -4,10 +4,10 @@ const Features = () => {
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
-            Powerful Features for Persistent AI Memory
+            Persistent Knowledge Storage for AI Assistants
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to give your AI agents long-term memory and learning capabilities
+            Cross-session memory sharing with dual protocol support (MCP + REST) for any AI platform
           </p>
         </div>
         

@@ -28,7 +28,7 @@ const Hero = () => {
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            Works with Claude Code, Claude Desktop, OpenCode, Cursor, and any custom agent. Features lightning-fast FAISS vector search and comprehensive REST API.
+            The only memory system with native MCP integration + universal REST API. 26 AI memory tools for any platform.
           </p>
           
           {/* CTA Buttons */}
@@ -48,8 +48,8 @@ const Hero = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto animate-fade-in">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-memory-green">100%</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Local & Private</div>
+              <div className="text-xl sm:text-2xl font-bold text-memory-green">26</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div className="text-center">
               <div className="text-xl sm:text-2xl font-bold text-memory-blue">10K+</div>

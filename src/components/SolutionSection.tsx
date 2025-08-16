@@ -4,10 +4,10 @@ const SolutionSection = () => {
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
-            Local Memory: Universal AI Memory System
+            Local Memory: Future-Proof MCP Protocol Support
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            A persistent memory system that works with all AI platforms and learns from every interaction
+            Enhanced AI capabilities with persistent memory - single binary deployment for any platform
           </p>
         </div>
         
