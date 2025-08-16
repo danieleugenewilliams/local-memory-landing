@@ -4,6 +4,7 @@ import BeforeAfter from "@/components/BeforeAfter";
 import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
 import Features from "@/components/Features";
+import Demo from "@/components/Demo";
 import CodeExample from "@/components/CodeExample";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
@@ -17,6 +18,7 @@ const Index = () => {
       <ProblemSection />
       <SolutionSection />
       <Features />
+      <Demo />
       <CodeExample />
       <CtaSection />
       <Footer />

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -32,12 +33,16 @@ const Hero = () => {
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in">
-            <Button variant="hero" size="lg" className="w-full sm:w-auto">
-              Get Started with Local Memory
-            </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Watch Demo
-            </Button>
+            <Link to="/payment">
+              <Button variant="hero" size="lg" className="w-full sm:w-auto">
+                Get Started with Local Memory
+              </Button>
+            </Link>
+            <a href="#demo">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                Watch Demo
+              </Button>
+            </a>
           </div>
           
           {/* Stats */}

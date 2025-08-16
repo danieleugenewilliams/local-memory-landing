@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CtaSection = () => {
   return (
@@ -13,9 +14,11 @@ const CtaSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="default" size="lg" className="w-full sm:w-auto">
-              Get Started with Local Memory
-            </Button>
+            <Link to="/payment">
+              <Button variant="default" size="lg" className="w-full sm:w-auto">
+                Get Started with Local Memory
+              </Button>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 text-center">
