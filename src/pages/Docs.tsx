@@ -60,7 +60,7 @@ const DocsPage = () => {
                     <li>• <strong>Custom Agents</strong> - Standard HTTP calls</li>
                   </ul>
                   <p className="text-xs text-muted-foreground mt-3 italic">
-                    Full memory capabilities through 20+ REST API endpoints
+                     Full memory capabilities through 26+ REST API endpoints
                   </p>
                 </div>
               </div>
@@ -268,7 +268,7 @@ const DocsPage = () => {
                     </div>
                     
                     <p className="text-xs text-muted-foreground mt-3">
-                      🌐 Access 20+ endpoints at http://localhost:3001/api/v1/
+                       🌐 Access 26+ endpoints at http://localhost:3001/api/v1/
                     </p>
                   </div>
                 </div>
@@ -389,14 +389,14 @@ const DocsPage = () => {
                   <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold">Native MCP Integration</h4>
-                    <p className="text-sm text-muted-foreground">20 tools for Claude Desktop & Code</p>
+                     <p className="text-sm text-muted-foreground">26 tools for Claude Desktop & Code</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold">Universal REST API</h4>
-                    <p className="text-sm text-muted-foreground">20+ endpoints for any platform</p>
+                     <p className="text-sm text-muted-foreground">26+ endpoints for any platform</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
