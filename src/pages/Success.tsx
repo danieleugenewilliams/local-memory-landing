@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 
 const SuccessPage = () => {
   const [downloadLinks, setDownloadLinks] = useState<{[key: string]: string}>({});
@@ -144,6 +145,8 @@ const SuccessPage = () => {
               </div>
             </CardContent>
           </Card>
+          
+          <PostPurchaseAgentSetup />
         </div>
       </div>
       <Footer />

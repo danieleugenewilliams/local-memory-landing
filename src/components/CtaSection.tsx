@@ -12,6 +12,11 @@ const CtaSection = () => {
           <p className="text-lg sm:text-xl text-foreground mb-8">
             Transform any AI from generic to personalized intelligence. Works with Claude Code, Claude Desktop, OpenCode, Cursor, and more.
           </p>
+          <p className="text-sm text-foreground/80 mb-8">
+            <span className="inline-block bg-memory-blue/20 px-3 py-1 rounded-full text-memory-blue font-medium">
+              ✨ Purchase → Download → Give your agent our setup prompt → Done!
+            </span>
+          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link to="/payment">
@@ -24,8 +29,8 @@ const CtaSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 text-center">
             <div>
               <div className="text-memory-green text-xl sm:text-2xl mb-2">⚡</div>
-              <div className="font-bold text-foreground text-sm sm:text-base">5 Minute Setup</div>
-              <div className="text-xs sm:text-sm text-foreground">npm install and you're running</div>
+              <div className="font-bold text-foreground text-sm sm:text-base">Agent-Assisted Setup</div>
+              <div className="text-xs sm:text-sm text-foreground">Your AI handles the installation</div>
             </div>
             <div>
               <div className="text-memory-blue text-xl sm:text-2xl mb-2">🔒</div>

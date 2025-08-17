@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Download, Zap, Shield, Globe } from "lucide-react";
+import { CheckCircle, Download, Zap, Shield, Globe, Bot, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 
 const DocsPage = () => {
   return (
@@ -78,10 +79,10 @@ const DocsPage = () => {
         </Card>
 
         {/* Quick Start */}
-        <Card className="mb-8 border-green-200">
+        <Card className="mb-8 border-memory-green/30">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Zap className="w-6 h-6 text-green-600" />
+              <Zap className="w-6 h-6 text-memory-green" />
               <CardTitle className="text-xl">Quick Start (2 minutes)</CardTitle>
             </div>
             <CardDescription>Get up and running in just a few steps</CardDescription>
@@ -89,31 +90,71 @@ const DocsPage = () => {
           <CardContent className="space-y-4">
             <div className="grid gap-4 md:grid-cols-3">
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm font-bold">1</div>
+                <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">1</div>
                 <div>
-                  <h4 className="font-semibold">Download</h4>
+                  <h4 className="font-semibold">Purchase & Download</h4>
                   <p className="text-sm text-muted-foreground">Get the binary for your OS</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm font-bold">2</div>
+                <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">2</div>
                 <div>
-                  <h4 className="font-semibold">Install Ollama</h4>
-                  <p className="text-sm text-muted-foreground">Visit ollama.ai and pull model</p>
+                  <h4 className="font-semibold">Copy Agent Prompt</h4>
+                  <p className="text-sm text-muted-foreground">Get setup instructions for your OS</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm font-bold">3</div>
+                <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">3</div>
                 <div>
-                  <h4 className="font-semibold">Run</h4>
-                  <p className="text-sm text-muted-foreground">Execute and start remembering</p>
+                  <h4 className="font-semibold">Let Agent Install</h4>
+                  <p className="text-sm text-muted-foreground">Your AI handles everything else</p>
                 </div>
               </div>
+            </div>
+            
+            <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
+              <h4 className="font-semibold text-memory-blue mb-2">🤖 The Easiest Installation Ever</h4>
+              <p className="text-sm text-muted-foreground">
+                After purchasing and downloading, just give your AI agent our detailed setup prompt. 
+                Your agent will install Ollama, configure MCP integration, set up proper file paths, 
+                and verify everything works. No manual installation needed!
+              </p>
             </div>
           </CardContent>
         </Card>
 
-        {/* System Requirements */}
+        {/* Section 1: Agent Setup Prompts (Recommended) */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Bot className="w-8 h-8 text-memory-blue" />
+              <h2 className="text-3xl font-bold text-foreground">Agent Setup Prompts</h2>
+              <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">Recommended</span>
+            </div>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              The easiest way to install Local Memory. After purchasing and downloading, just copy our detailed prompts 
+              to your AI agent and let it handle the complete installation and configuration.
+            </p>
+          </div>
+
+          <PostPurchaseAgentSetup />
+        </div>
+
+        {/* Section 2: Manual Setup Instructions */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Settings className="w-8 h-8 text-muted-foreground" />
+              <h2 className="text-3xl font-bold text-foreground">Manual Setup Instructions</h2>
+              <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">Advanced</span>
+            </div>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              For developers who prefer manual installation or need custom configurations. 
+              These step-by-step instructions provide complete control over the setup process.
+            </p>
+          </div>
+
+          {/* System Requirements */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -463,13 +504,14 @@ const DocsPage = () => {
               <div>
                 <h4 className="font-semibold mb-2">Need Help?</h4>
                 <p className="text-sm text-muted-foreground">
-                  Join our <a href="https://discord.gg/pjVX4BWu" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> for 
+                  Join our <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> for 
                   support and discussion.
                 </p>
               </div>
             </div>
           </CardContent>
         </Card>
+        </div>
 
           {/* CTA */}
           <div className="text-center">

@@ -30,6 +30,10 @@ const Features = () => {
                 <span className="text-memory-blue mt-1">•</span>
                 <span>REST API for custom implementations</span>
               </li>
+              <li className="flex items-start gap-2">
+                <span className="text-memory-blue mt-1">•</span>
+                <span>Agent-assisted installation and setup</span>
+              </li>
             </ul>
           </div>
 
