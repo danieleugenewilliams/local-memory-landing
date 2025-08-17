@@ -7,25 +7,22 @@ import Footer from "@/components/Footer";
 
 const PaymentPage = () => {
   const handlePayment = () => {
-    // You need to create a Payment Link in your Stripe Dashboard
-    // Go to: https://dashboard.stripe.com/payment-links
-    // Create a new payment link for your $29 product
-    // Then replace this URL with your actual payment link
+    const paymentLinkUrl = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
     
-    const paymentLinkUrl = 'https://buy.stripe.com/test_14A4gB3Z47nE1qvbFlds400';
-    
-    // For testing, let's show instructions
-    if (paymentLinkUrl.includes('REPLACE_WITH_YOUR_PAYMENT_LINK')) {
-      alert(`To complete the setup:
+    // Check if environment variable is configured
+    if (!paymentLinkUrl || paymentLinkUrl.includes('your_payment_link_here')) {
+      alert(`Payment link not configured. Please set VITE_STRIPE_PAYMENT_LINK in your environment variables.
+
+To complete the setup:
 
 1. Go to https://dashboard.stripe.com/payment-links
 2. Click "Create payment link"
 3. Select your $29 product/price
 4. Set success URL to: ${window.location.origin}/success
 5. Copy the payment link URL
-6. Replace the URL in the code
+6. Add it to your .env file as VITE_STRIPE_PAYMENT_LINK
 
-This is much simpler than the client-only integration!`);
+This keeps your payment configuration secure and maintainable!`);
       return;
     }
     

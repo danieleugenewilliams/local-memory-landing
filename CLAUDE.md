@@ -78,6 +78,7 @@ Note: The project has both frontend (Vite) and backend (Express) components that
 
 The project uses environment variables for Stripe configuration:
 - `VITE_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key (frontend)
+- `VITE_STRIPE_PAYMENT_LINK` - Stripe payment link URL (frontend)
 - `STRIPE_SECRET_KEY` - Stripe secret key (backend)
 - `STRIPE_PRICE_ID` - Stripe price ID for the product
 - `STRIPE_WEBHOOK_SECRET` - Webhook signature verification
