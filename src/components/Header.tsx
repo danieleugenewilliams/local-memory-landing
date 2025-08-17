@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
   const isHomepage = location.pathname === '/';
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -16,37 +19,58 @@ const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-6">
-          {isHomepage && (
-            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Features
-            </a>
-          )}
+          <a href={isHomepage ? "#features" : "/#features"} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Features
+          </a>
           <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Docs
           </Link>
-          {isHomepage && (
-            <Link to="/payment">
-              <Button variant="cta" size="sm">
-                Get Started
-              </Button>
-            </Link>
-          )}
+          <Link to="/payment">
+            <Button variant="cta" size="sm">
+              Get Started
+            </Button>
+          </Link>
         </nav>
         
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mr-4">
-            Docs
-          </Link>
-          {isHomepage && (
-            <Link to="/payment">
-              <Button variant="cta" size="sm">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="container px-6 py-4 space-y-4 text-right">
+            <a 
+              href={isHomepage ? "#features" : "/#features"}
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Features
+            </a>
+            <Link 
+              to="/docs" 
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Docs
+            </Link>
+            <Link to="/payment" onClick={() => setIsMobileMenuOpen(false)}>
+              <Button variant="cta" size="sm" className="w-full">
                 Get Started
               </Button>
             </Link>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
