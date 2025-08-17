@@ -56,7 +56,7 @@ const SolutionSection = () => {
           <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border animate-slide-in-left">
             <div className="text-memory-green text-xl sm:text-2xl mb-4">✓</div>
             <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">
-              Lightning-fast FAISS vector search
+              Lightning-fast Qdrant vector search
             </h3>
             <p className="text-muted-foreground">
               Sub-millisecond semantic search across millions of memories
