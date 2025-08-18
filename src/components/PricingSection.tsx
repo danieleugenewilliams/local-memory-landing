@@ -114,7 +114,6 @@ const PricingSection = () => {
         {/* Trust Signals */}
         <div className="text-center">
           <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-6">
-            <span>✅ 30-day guarantee</span>
             <span>✅ Secure Stripe payment</span>
             <span>✅ Instant download</span>
             <span>✅ Email support</span>

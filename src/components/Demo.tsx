@@ -1,65 +1,188 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+
+interface MemoryParams {
+  content: string;
+  importance?: number;
+  tags?: string[];
+  source?: string;
+}
+
+interface SearchParams {
+  query: string;
+  limit?: number;
+}
+
+interface QuestionParams {
+  question: string;
+  context_limit?: number;
+}
+
+interface UserPromptParams {
+  prompt: string;
+}
+
+type CommandParams = MemoryParams | SearchParams | QuestionParams | UserPromptParams;
 
 const Demo = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [memories, setMemories] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [commandHistory, setCommandHistory] = useState([]);
+  const [currentCommand, setCurrentCommand] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+  const cliScrollRef = useRef<HTMLDivElement>(null);
 
   const demoSteps = [
     {
-      title: "Store a Memory",
-      description: "Watch as we store information about a React optimization",
-      action: "store_memory",
-      input: "React performance tip: Use React.memo() for expensive components that re-render frequently. Wrap functional components to prevent unnecessary re-renders when props haven't changed.",
-      response: "✅ Memory stored successfully with importance: 8"
+      title: "Development Task",
+      description: "Developer describes new API endpoint requirement",
+      action: "user_input",
+      command: `# User prompt`,
+      params: {
+        prompt: "I need to implement a user preferences API endpoint that allows users to update their notification settings, privacy preferences, and display options. It should follow our existing API patterns and team conventions."
+      },
+      response: "I'll help you implement this API endpoint. Let me search for relevant context from your previous work..."
     },
     {
-      title: "Store Another Memory", 
-      description: "Let's add knowledge about debugging",
-      action: "store_memory",
-      input: "Debugging strategy: When React components aren't updating, check if state mutations are happening. Always use setState() or hooks properly - never mutate state directly.",
-      response: "✅ Memory stored successfully with importance: 7"
+      title: "Search API Patterns", 
+      description: "Agent searches for team's API architecture and conventions",
+      action: "mcp__local-memory-go__search_memories",
+      command: `search`,
+      params: {
+        query: "API architecture patterns team conventions authentication",
+        limit: 10
+      },
+      response: `Found 4 memories:
+
+1. API Authentication: All endpoints use JWT middleware with role-based access. Standard pattern: authenticate -> authorize -> validate -> process. Use existing authMiddleware from /middleware/auth.js (Score: 0.92)
+   Tags: api-architecture, authentication, middleware, team-conventions
+
+2. RESTful API Conventions: Team uses /api/v1/{resource}/{id}/{sub-resource} pattern. All responses follow {success: boolean, data: any, error?: string} format. Use HTTP status codes consistently. (Score: 0.89)
+   Tags: api-architecture, rest, conventions, response-format
+
+3. Database Schema Patterns: User-related settings stored in separate tables. user_preferences table with JSON columns for flexibility. Always use transactions for multi-table updates. (Score: 0.85)
+   Tags: database, user-management, schema-design
+
+4. Error Handling Standards: Use custom ApiError class. Validation errors return 400 with field-specific messages. Authentication errors return 401. Use express-validator for input validation. (Score: 0.83)
+   Tags: error-handling, validation, api-architecture`
     },
     {
-      title: "Search Memories",
-      description: "Now let's search for React-related knowledge",
-      action: "search_memories", 
-      input: "React performance optimization",
-      response: "Found 1 relevant memory:\n• React performance tip: Use React.memo() for expensive components..."
+      title: "Search Requirements",
+      description: "Agent finds business requirements and feature specifications",
+      action: "mcp__local-memory-go__search_memories",
+      command: `search`,
+      params: {
+        query: "user preferences notification settings requirements privacy",
+        limit: 8
+      },
+      response: `Found 3 memories:
+
+1. User Preferences Feature Requirements: Support email/SMS/push notification toggles, privacy settings (profile visibility, data sharing), and UI preferences (theme, language, timezone). Must be GDPR compliant with audit logging. (Score: 0.94)
+   Tags: requirements, user-preferences, privacy, gdpr, business-analysis
+
+2. Notification Service Integration: Use NotificationService.updateUserPreferences() method. Requires user_id and preferences object. Service handles queue updates automatically. Located in /services/NotificationService.js (Score: 0.88)
+   Tags: integration, notification-service, api-integration
+
+3. Privacy Compliance Notes: User preference changes must be logged in audit_logs table. Include user_id, changed_fields, old_values, new_values, timestamp. Required for GDPR data subject requests. (Score: 0.82)
+   Tags: privacy, gdpr, audit-logging, compliance`
     },
     {
-      title: "Ask a Question",
-      description: "Let's ask the AI a question using stored memories",
-      action: "ask_question",
-      input: "How do I optimize React component performance?",
-      response: "Based on your stored memories, I recommend using React.memo() for expensive components that re-render frequently. This will prevent unnecessary re-renders when props haven't changed, significantly improving performance."
+      title: "Generate Implementation",
+      description: "Agent creates implementation plan using stored context",
+      action: "mcp__local-memory-go__ask_question",
+      command: `ask`,
+      params: {
+        question: "Based on our API patterns and user preferences requirements, how should I implement this endpoint?",
+        context_limit: 7
+      },
+      response: `**Answer:** Based on your team's patterns and requirements, here's the implementation approach:
+
+**Endpoint Structure:**
+\`PUT /api/v1/users/:userId/preferences\` following your RESTful conventions
+
+**Implementation Steps:**
+1. Use existing authMiddleware for JWT authentication
+2. Add role-based authorization (users can only update their own preferences)
+3. Validate input using express-validator for notification/privacy/display settings
+4. Update user_preferences table with transaction for data consistency
+5. Call NotificationService.updateUserPreferences() for real-time updates
+6. Log changes to audit_logs table for GDPR compliance
+7. Return standardized response format: {success: true, data: updatedPreferences}
+
+**Key Components Needed:**
+- Route: /routes/api/v1/users.js
+- Controller: UserPreferencesController.updatePreferences()
+- Validation: schemas/userPreferencesSchema.js
+- Database: user_preferences table updates with JSON column handling
+
+**Based on 7 memories:**
+1. API Authentication: JWT middleware with role-based access...
+2. RESTful API Conventions: /api/v1/{resource}/{id}/{sub-resource} pattern...
+3. User Preferences Feature Requirements: notification toggles, privacy settings...
+4. Privacy Compliance Notes: audit logging for GDPR compliance...`
     }
   ];
+
+  // Cursor blinking effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Autoscroll CLI to bottom when new content is added
+  useEffect(() => {
+    if (cliScrollRef.current) {
+      cliScrollRef.current.scrollTop = cliScrollRef.current.scrollHeight;
+    }
+  }, [commandHistory, currentCommand, isTyping]);
+
+  const typeCommand = async (command: string, params: CommandParams) => {
+    setCurrentCommand("");
+    
+    // Special handling for user prompts - show as plain text
+    const fullCommand = command === "# User prompt" 
+      ? `${(params as UserPromptParams).prompt}`
+      : `${command}(${JSON.stringify(params, null, 2)})`;
+    
+    // Type out the command character by character (much faster)
+    for (let i = 0; i <= fullCommand.length; i++) {
+      setCurrentCommand(fullCommand.slice(0, i));
+      await new Promise(resolve => setTimeout(resolve, 8)); // Reduced from 30ms to 8ms
+    }
+    
+    // Very brief pause before showing response (local-memory is fast!)
+    await new Promise(resolve => setTimeout(resolve, 150)); // Reduced from 800ms to 150ms
+  };
 
   const executeStep = async (stepIndex: number) => {
     setIsTyping(true);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
     const step = demoSteps[stepIndex];
     
-    if (step.action === "store_memory") {
-      setMemories(prev => [...prev, {
-        id: Date.now(),
-        content: step.input,
-        timestamp: new Date().toLocaleTimeString()
-      }]);
-    }
+    // Type the command
+    await typeCommand(step.command, step.params);
     
+    // Add command and response to history
+    setCommandHistory(prev => [...prev, {
+      command: step.command,
+      params: step.params,
+      response: step.response,
+      timestamp: new Date().toLocaleTimeString()
+    }]);
+    
+    // Note: In real usage, memories would be stored in the local-memory database
+    
+    setCurrentCommand("");
     setIsTyping(false);
     setCurrentStep(stepIndex + 1);
   };
 
   const resetDemo = () => {
     setCurrentStep(0);
-    setMemories([]);
+    setCommandHistory([]);
+    setCurrentCommand("");
     setIsTyping(false);
   };
 
@@ -71,7 +194,7 @@ const Demo = () => {
             See <em>Local Memory</em> in Action
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Watch how AI agents gain persistent memory and learning capabilities
+            Watch how Claude uses persistent memory to implement a complex API endpoint using team patterns and business requirements
           </p>
         </div>
 
@@ -79,7 +202,7 @@ const Demo = () => {
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Demo Controls */}
             <div className="space-y-6">
-              <div className="bg-card rounded-2xl p-6 border border-border">
+              <div className="bg-card rounded-2xl p-6 border border-border h-fit">
                 <h3 className="text-lg font-bold text-foreground mb-4">Interactive Demo</h3>
                 
                 {demoSteps.map((step, index) => (
@@ -107,7 +230,7 @@ const Demo = () => {
                         size="sm"
                         className="w-full"
                       >
-                        {isTyping ? 'Processing...' : `Execute ${step.action.replace('_', ' ')}`}
+                        {isTyping ? 'Processing...' : `Run ${step.command}`}
                       </Button>
                     )}
                   </div>
@@ -115,7 +238,7 @@ const Demo = () => {
 
                 {currentStep >= demoSteps.length && (
                   <Button onClick={resetDemo} variant="outline" className="w-full">
-                    Reset Demo
+                    Replay Session
                   </Button>
                 )}
               </div>
@@ -123,57 +246,78 @@ const Demo = () => {
 
             {/* Demo Output */}
             <div className="space-y-6">
-              {/* Memory Storage */}
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="text-lg font-bold text-foreground mb-4">Stored Memories</h3>
-                <div className="space-y-3 max-h-48 overflow-y-auto">
-                  {memories.length === 0 ? (
-                    <p className="text-muted-foreground text-sm">No memories stored yet...</p>
-                  ) : (
-                    memories.map((memory) => (
-                      <div key={memory.id} className="bg-muted/50 rounded-lg p-3">
-                        <div className="text-xs text-muted-foreground mb-1">{memory.timestamp}</div>
-                        <div className="text-sm text-foreground">{memory.content.substring(0, 100)}...</div>
+              {/* Claude Code CLI Terminal */}
+              <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg h-fit">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-slate-400 font-mono">Claude Code CLI - Local Memory Demo</span>
+                </div>
+                
+                <div 
+                  ref={cliScrollRef}
+                  className="font-mono text-sm text-green-400 overflow-y-auto"
+                  style={{ height: '515px' }}
+                >
+                  {/* Welcome message */}
+                  {commandHistory.length === 0 && currentStep === 0 && (
+                    <div className="text-slate-400 mb-4">
+                      <span className="text-blue-400">❯</span> # Working on a large e-commerce web app. Local Memory has context from previous sessions.
+                      <br />
+                      <span className="text-slate-500"># Click "Run User prompt" to start implementing a new API endpoint...</span>
+                    </div>
+                  )}
+                  
+                  {/* Command History */}
+                  {commandHistory.map((entry, index) => (
+                    <div key={index} className="mb-4">
+                      <div className="text-blue-400">
+                        <span className="text-blue-400">❯</span> {entry.command === "# User prompt" 
+                          ? <span className="text-white"> {`${(entry.params as UserPromptParams).prompt}`}</span>
+                          : <span>
+                              {entry.command}(
+                              {JSON.stringify(entry.params, null, 2).split('\n').map((line, i) => (
+                                <div key={i} className={i === 0 ? "inline" : "ml-4 text-cyan-300"}>{line}</div>
+                              ))}
+                            </span>
+                        }
                       </div>
-                    ))
+                      <div className="text-gray-200 mt-2 ml-2 whitespace-pre-line">
+                        {entry.response}
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {/* Current Command Being Typed */}
+                  {isTyping && currentCommand && (
+                    <div className="text-blue-400">
+                      <span className="text-blue-400">❯</span> {currentCommand.startsWith('>') 
+                        ? <span className="text-white">{currentCommand}</span>
+                        : currentCommand.split('\n').map((line, i) => (
+                          <div key={i} className={i === 0 ? "inline" : "ml-4 text-cyan-300"}>{line}</div>
+                        ))}<span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>▊</span>
+                    </div>
+                  )}
+                  
+                  {/* Waiting for input prompt */}
+                  {!isTyping && currentStep < demoSteps.length && commandHistory.length > 0 && (
+                    <div className="text-slate-400">
+                      <span className="text-blue-400">❯</span> <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>▊</span>
+                    </div>
+                  )}
+                  
+                  {/* Demo Complete */}
+                  {currentStep >= demoSteps.length && commandHistory.length > 0 && (
+                    <div className="text-green-400 mt-4">
+                      <span className="text-blue-400">❯</span> # Based on the context retrieved from my memories, I will develop a detailed implementation plan.
+                      <br />
+                      <span className="text-slate-400"># Local Memory bridges the gap between scattered context and actionable code.</span>
+                    </div>
                   )}
                 </div>
-              </div>
-
-              {/* Current Action */}
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <h3 className="text-lg font-bold text-foreground mb-4">Current Action</h3>
-                {currentStep === 0 ? (
-                  <p className="text-muted-foreground">Click "Execute store memory" to begin the demo</p>
-                ) : currentStep <= demoSteps.length ? (
-                  <div className="space-y-3">
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <div className="text-xs text-memory-blue mb-1">INPUT:</div>
-                      <div className="text-sm text-foreground">{demoSteps[currentStep - 1]?.input}</div>
-                    </div>
-                    {!isTyping && currentStep > 0 && (
-                      <div className="bg-memory-green/10 rounded-lg p-3">
-                        <div className="text-xs text-memory-green mb-1">OUTPUT:</div>
-                        <div className="text-sm text-foreground whitespace-pre-line">{demoSteps[currentStep - 1]?.response}</div>
-                      </div>
-                    )}
-                    {isTyping && (
-                      <div className="bg-muted/50 rounded-lg p-3">
-                        <div className="text-xs text-muted-foreground mb-1">PROCESSING...</div>
-                        <div className="flex items-center gap-2">
-                          <div className="animate-spin w-4 h-4 border-2 border-memory-blue border-t-transparent rounded-full"></div>
-                          <span className="text-sm text-muted-foreground"><em>Local Memory</em> is thinking...</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="bg-memory-green/10 rounded-lg p-4 text-center">
-                    <div className="text-memory-green text-2xl mb-2">🎉</div>
-                    <div className="font-semibold text-foreground">Demo Complete!</div>
-                    <div className="text-sm text-muted-foreground mt-1">You've seen how AI agents can store, search, and use persistent memories</div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
