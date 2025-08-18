@@ -1,11 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Copy, Bot, Terminal } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Copy, Bot, Terminal, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const PostPurchaseAgentSetup = () => {
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
+  const [openPrompts, setOpenPrompts] = useState<{[key: string]: boolean}>({});
+
+  const togglePrompt = (promptId: string) => {
+    setOpenPrompts(prev => ({
+      ...prev,
+      [promptId]: !prev[promptId]
+    }));
+  };
 
   const copyToClipboard = (text: string, promptId: string) => {
     navigator.clipboard.writeText(text);
@@ -38,7 +47,7 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 Run this exact command to add local-memory as an MCP server:
-claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/claude-memories.db --session-id "claude-code-session" --log-level info
+claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/local-memories.db --session-id "claude-code-session" --log-level info
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit ~/.claude_desktop_config.json (create if it doesn't exist):
@@ -46,7 +55,7 @@ Edit ~/.claude_desktop_config.json (create if it doesn't exist):
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--db-path", "~/.local-memory/claude-desktop-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
+      "args": ["--db-path", "~/.local-memory/local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
       "env": {
         "QDRANT_ENABLED": "true",
         "QDRANT_URL": "http://localhost:6333"
@@ -91,7 +100,7 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE (if using):
 Run this exact command in terminal:
-claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe" --db-path "%USERPROFILE%\\.local-memory\\claude-memories.db" --session-id "claude-code-session" --log-level info
+claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe" --db-path "%USERPROFILE%\\.local-memory\\local-memories.db" --session-id "claude-code-session" --log-level info
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
@@ -99,7 +108,7 @@ Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
   "mcpServers": {
     "local-memory": {
       "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
-      "args": ["--db-path", "%USERPROFILE%\\\\.local-memory\\\\claude-desktop-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
+      "args": ["--db-path", "%USERPROFILE%\\\\.local-memory\\\\local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
       "env": {
         "QDRANT_ENABLED": "true",
         "QDRANT_URL": "http://localhost:6333"
@@ -144,7 +153,7 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 Run this exact command:
-claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/claude-memories.db --session-id "claude-code-session" --log-level info
+claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/local-memories.db --session-id "claude-code-session" --log-level info
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit ~/.claude_desktop_config.json (create if it doesn't exist):
@@ -152,7 +161,7 @@ Edit ~/.claude_desktop_config.json (create if it doesn't exist):
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--db-path", "~/.local-memory/claude-desktop-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
+      "args": ["--db-path", "~/.local-memory/local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
       "env": {
         "QDRANT_ENABLED": "true",
         "QDRANT_URL": "http://localhost:6333"
@@ -197,9 +206,9 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 - Verify: curl http://localhost:6333/health
 
 STEP 3 - START REST API SERVER:
-Basic (SQLite): local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/api-memories.db --session-id "rest-api-session" --log-level info
+Basic (SQLite): local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/local-memories.db --session-id "rest-api-session" --log-level info
 
-High Performance (Qdrant): QDRANT_ENABLED=true QDRANT_URL=http://localhost:6333 local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/api-memories.db --session-id "rest-api-session" --log-level info
+High Performance (Qdrant): QDRANT_ENABLED=true QDRANT_URL=http://localhost:6333 local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/local-memories.db --session-id "rest-api-session" --log-level info
 
 STEP 4 - VERIFY API:
 Test the health endpoint: curl http://localhost:3001/api/v1/health
@@ -237,112 +246,192 @@ Use my downloaded binary - don't download a new one. This gives you 26+ REST end
         
         <CardContent className="space-y-6">
           {/* macOS Prompt */}
-          <div className="border border-border rounded-lg p-4 bg-card">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🍎</span>
-                <h4 className="font-semibold">macOS Installation Prompt</h4>
+          <Collapsible open={openPrompts['macos']} onOpenChange={() => togglePrompt('macos')}>
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🍎</span>
+                  <h4 className="font-semibold">macOS Installation Prompt</h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(macosPrompt, 'macos')}
+                    className="gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copiedPrompt === 'macos' ? 'Copied!' : 'Copy'}
+                  </Button>
+                  <CollapsibleTrigger asChild>
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['macos'] ? 'rotate-180' : ''}`} />
+                      {openPrompts['macos'] ? 'Hide' : 'Show'} Full Prompt
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => copyToClipboard(macosPrompt, 'macos')}
-                className="gap-2"
-              >
-                <Copy className="w-4 h-4" />
-                {copiedPrompt === 'macos' ? 'Copied!' : 'Copy'}
-              </Button>
+              
+              <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                  {macosPrompt.substring(0, 300)}...
+                </pre>
+              </div>
+              
+              <CollapsibleContent>
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                    {macosPrompt}
+                  </pre>
+                </div>
+              </CollapsibleContent>
+              
+              <p className="text-xs text-muted-foreground mt-2">
+                Includes MCP setup for Claude Code & Desktop with exact paths and commands
+              </p>
             </div>
-            <div className="bg-muted p-3 rounded-md max-h-40 overflow-y-auto border border-border">
-              <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                {macosPrompt.substring(0, 200)}...
-              </pre>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Includes MCP setup for Claude Code & Desktop with exact paths and commands
-            </p>
-          </div>
+          </Collapsible>
 
           {/* Windows Prompt */}
-          <div className="border border-border rounded-lg p-4 bg-card">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🪟</span>
-                <h4 className="font-semibold">Windows Installation Prompt</h4>
+          <Collapsible open={openPrompts['windows']} onOpenChange={() => togglePrompt('windows')}>
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🪟</span>
+                  <h4 className="font-semibold">Windows Installation Prompt</h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(windowsPrompt, 'windows')}
+                    className="gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copiedPrompt === 'windows' ? 'Copied!' : 'Copy'}
+                  </Button>
+                  <CollapsibleTrigger asChild>
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['windows'] ? 'rotate-180' : ''}`} />
+                      {openPrompts['windows'] ? 'Hide' : 'Show'} Full Prompt
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => copyToClipboard(windowsPrompt, 'windows')}
-                className="gap-2"
-              >
-                <Copy className="w-4 h-4" />
-                {copiedPrompt === 'windows' ? 'Copied!' : 'Copy'}
-              </Button>
+              
+              <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                  {windowsPrompt.substring(0, 300)}...
+                </pre>
+              </div>
+              
+              <CollapsibleContent>
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                    {windowsPrompt}
+                  </pre>
+                </div>
+              </CollapsibleContent>
+              
+              <p className="text-xs text-muted-foreground mt-2">
+                Complete Windows setup with PATH configuration and MCP integration
+              </p>
             </div>
-            <div className="bg-muted p-3 rounded-md max-h-40 overflow-y-auto border border-border">
-              <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                {windowsPrompt.substring(0, 200)}...
-              </pre>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Complete Windows setup with PATH configuration and MCP integration
-            </p>
-          </div>
+          </Collapsible>
 
           {/* Linux Prompt */}
-          <div className="border border-border rounded-lg p-4 bg-card">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🐧</span>
-                <h4 className="font-semibold">Linux Installation Prompt</h4>
+          <Collapsible open={openPrompts['linux']} onOpenChange={() => togglePrompt('linux')}>
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">🐧</span>
+                  <h4 className="font-semibold">Linux Installation Prompt</h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(linuxPrompt, 'linux')}
+                    className="gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copiedPrompt === 'linux' ? 'Copied!' : 'Copy'}
+                  </Button>
+                  <CollapsibleTrigger asChild>
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['linux'] ? 'rotate-180' : ''}`} />
+                      {openPrompts['linux'] ? 'Hide' : 'Show'} Full Prompt
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => copyToClipboard(linuxPrompt, 'linux')}
-                className="gap-2"
-              >
-                <Copy className="w-4 h-4" />
-                {copiedPrompt === 'linux' ? 'Copied!' : 'Copy'}
-              </Button>
+              
+              <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                  {linuxPrompt.substring(0, 300)}...
+                </pre>
+              </div>
+              
+              <CollapsibleContent>
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                    {linuxPrompt}
+                  </pre>
+                </div>
+              </CollapsibleContent>
+              
+              <p className="text-xs text-muted-foreground mt-2">
+                Linux installation with systemd service setup and permissions
+              </p>
             </div>
-            <div className="bg-muted p-3 rounded-md max-h-40 overflow-y-auto border border-border">
-              <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                {linuxPrompt.substring(0, 200)}...
-              </pre>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Linux installation with systemd service setup and permissions
-            </p>
-          </div>
+          </Collapsible>
 
           {/* REST API Prompt */}
-          <div className="border border-memory-green/30 rounded-lg p-4 bg-card">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-5 h-5 text-memory-green" />
-                <h4 className="font-semibold">REST API Setup (Universal)</h4>
+          <Collapsible open={openPrompts['api']} onOpenChange={() => togglePrompt('api')}>
+            <div className="border border-memory-green/30 rounded-lg p-4 bg-card">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Terminal className="w-5 h-5 text-memory-green" />
+                  <h4 className="font-semibold">REST API Setup (Universal)</h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(restApiPrompt, 'api')}
+                    className="gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {copiedPrompt === 'api' ? 'Copied!' : 'Copy'}
+                  </Button>
+                  <CollapsibleTrigger asChild>
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['api'] ? 'rotate-180' : ''}`} />
+                      {openPrompts['api'] ? 'Hide' : 'Show'} Full Prompt
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => copyToClipboard(restApiPrompt, 'api')}
-                className="gap-2"
-              >
-                <Copy className="w-4 h-4" />
-                {copiedPrompt === 'api' ? 'Copied!' : 'Copy'}
-              </Button>
+              
+              <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                  {restApiPrompt.substring(0, 300)}...
+                </pre>
+              </div>
+              
+              <CollapsibleContent>
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                    {restApiPrompt}
+                  </pre>
+                </div>
+              </CollapsibleContent>
+              
+              <p className="text-xs text-muted-foreground mt-2">
+                For OpenCode, ChatGPT, custom agents - works with any platform via HTTP
+              </p>
             </div>
-            <div className="bg-muted p-3 rounded-md max-h-40 overflow-y-auto border border-border">
-              <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                {restApiPrompt.substring(0, 200)}...
-              </pre>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              For OpenCode, ChatGPT, custom agents - works with any platform via HTTP
-            </p>
-          </div>
+          </Collapsible>
 
           <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
             <h4 className="font-semibold text-memory-blue mb-2">How It Works:</h4>

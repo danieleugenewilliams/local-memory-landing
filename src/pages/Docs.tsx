@@ -303,7 +303,7 @@ const DocsPage = () => {
                       <div className="bg-background p-3 rounded-md">
                         <p className="text-sm mb-2"><strong>Add local-memory server:</strong></p>
                         <code className="text-xs bg-muted px-2 py-1 rounded block mb-2">
-                          claude mcp add local-memory -- /path/to/local-memory --db-path ./claude-memories.db --session-id "claude-code-session"
+                          claude mcp add local-memory -- /path/to/local-memory --db-path ./local-memories.db --session-id "claude-code-session"
                         </code>
                         <p className="text-sm mb-2"><strong>Or import from Claude Desktop:</strong></p>
                         <code className="text-xs bg-muted px-2 py-1 rounded block mb-2">
@@ -325,7 +325,7 @@ const DocsPage = () => {
                            <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                            <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/path/to/local-memory",</div>
-                           <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--db-path", "./claude-memories.db", "--session-id", "claude-desktop-session"]</div>
+                           <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--db-path", "./local-memories.db", "--session-id", "claude-desktop-session"]</div>
                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                            <div>&nbsp;&nbsp;&#125;</div>
                            <div>&#125;</div>
@@ -359,7 +359,7 @@ const DocsPage = () => {
                       <div>
                         <p className="text-xs text-muted-foreground mb-1">Custom database location:</p>
                         <code className="text-xs bg-muted px-2 py-1 rounded block">
-                          ./local-memory --db-path ./my-memories.db --session-id my-session
+                          ./local-memory --db-path ./local-memories.db --session-id my-session
                         </code>
                       </div>
                       <div>
