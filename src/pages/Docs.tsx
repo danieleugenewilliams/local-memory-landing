@@ -261,15 +261,15 @@ const DocsPage = () => {
                   curl http://localhost:6333/healthz
                 </code>
                 
-                <div className="mt-3 p-2 bg-green-50 rounded-md">
-                  <p className="text-xs text-green-800">
+                <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
+                  <p className="text-xs text-green-300">
                     <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
                     Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
                   </p>
                 </div>
                 
-                <div className="mt-2 p-2 bg-blue-50 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-2 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
+                  <p className="text-xs text-blue-300">
                     <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
                   </p>
                 </div>
@@ -302,15 +302,15 @@ const DocsPage = () => {
                   curl http://localhost:6333/healthz
                 </code>
                 
-                <div className="mt-3 p-2 bg-green-50 rounded-md">
-                  <p className="text-xs text-green-800">
+                <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
+                  <p className="text-xs text-green-300">
                     <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
                     Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
                   </p>
                 </div>
                 
-                <div className="mt-2 p-2 bg-blue-50 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-2 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
+                  <p className="text-xs text-blue-300">
                     <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
                   </p>
                 </div>
@@ -343,15 +343,15 @@ const DocsPage = () => {
                   curl http://localhost:6333/healthz
                 </code>
                 
-                <div className="mt-3 p-2 bg-green-50 rounded-md">
-                  <p className="text-xs text-green-800">
+                <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
+                  <p className="text-xs text-green-300">
                     <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to {'<'}10ms. 
                     Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
                   </p>
                 </div>
                 
-                <div className="mt-2 p-2 bg-blue-50 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-2 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
+                  <p className="text-xs text-blue-300">
                     <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
                   </p>
                 </div>
@@ -482,8 +482,8 @@ const DocsPage = () => {
                   </div>
                 </div>
                 
-                <div className="mt-3 p-2 bg-blue-50 rounded-md">
-                  <p className="text-xs text-blue-800">
+                <div className="mt-3 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
+                  <p className="text-xs text-blue-300">
                     <strong>Tip:</strong> Start with SQLite mode for quick setup, add Qdrant later for production performance.
                     Local Memory automatically detects and uses the best available backend.
                   </p>

@@ -3,23 +3,109 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Download, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 
 const SuccessPage = () => {
+  const [searchParams] = useSearchParams();
   const [downloadLinks, setDownloadLinks] = useState<{[key: string]: string}>({});
+  const [isVerifying, setIsVerifying] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    // In a real implementation, you'd verify the payment and get secure download links
-    // For now, using placeholder links
-    setDownloadLinks({
-      macos: '/downloads/local-memory-macos.dmg',
-      windows: '/downloads/local-memory-windows.exe', 
-      linux: '/downloads/local-memory-linux.tar.gz'
-    });
-  }, []);
+    const verifyPaymentFlow = () => {
+      const sessionId = searchParams.get('session_id');
+      
+      if (!sessionId) {
+        console.error('No session_id found in URL');
+        setIsVerifying(false);
+        return;
+      }
+
+      // Check if payment was initiated from this browser
+      const paymentInitiated = sessionStorage.getItem('payment_initiated');
+      const storedTokenData = localStorage.getItem('payment_token');
+      
+      if (!paymentInitiated || !storedTokenData) {
+        console.error('Payment not initiated from this browser session');
+        setIsVerifying(false);
+        return;
+      }
+
+      try {
+        const tokenData = JSON.parse(storedTokenData);
+        const currentTime = Date.now();
+        
+        // Check if token has expired (30 minutes)
+        if (currentTime - tokenData.timestamp > 30 * 60 * 1000) {
+          console.error('Payment session has expired');
+          localStorage.removeItem('payment_token');
+          sessionStorage.removeItem('payment_initiated');
+          sessionStorage.removeItem('payment_token_backup');
+          setIsVerifying(false);
+          return;
+        }
+        
+        // Payment flow is valid - grant access to downloads
+        setIsVerified(true);
+        setDownloadLinks({
+          macos: '/downloads/local-memory-macos.dmg',
+          windows: '/downloads/local-memory-windows.exe', 
+          linux: '/downloads/local-memory-linux.tar.gz'
+        });
+        
+        // Clear all payment tokens to prevent reuse
+        localStorage.removeItem('payment_token');
+        sessionStorage.removeItem('payment_initiated');
+        sessionStorage.removeItem('payment_token_backup');
+        
+        // Store successful verification for page refreshes (1 hour)
+        sessionStorage.setItem('downloads_unlocked', JSON.stringify({
+          sessionId: sessionId,
+          timestamp: currentTime
+        }));
+        
+      } catch (error) {
+        console.error('Error verifying payment flow:', error);
+        localStorage.removeItem('payment_token');
+        sessionStorage.removeItem('payment_initiated');
+        setIsVerified(false);
+      } finally {
+        setIsVerifying(false);
+      }
+    };
+
+    // Check for existing unlocked downloads first (for page refreshes)
+    const unlockedDownloads = sessionStorage.getItem('downloads_unlocked');
+    if (unlockedDownloads) {
+      try {
+        const unlocked = JSON.parse(unlockedDownloads);
+        const currentTime = Date.now();
+        
+        // Check if unlock is still valid (1 hour)
+        if (currentTime - unlocked.timestamp < 60 * 60 * 1000) {
+          setIsVerified(true);
+          setDownloadLinks({
+            macos: '/downloads/local-memory-macos.dmg',
+            windows: '/downloads/local-memory-windows.exe', 
+            linux: '/downloads/local-memory-linux.tar.gz'
+          });
+          setIsVerifying(false);
+          return;
+        } else {
+          // Unlock has expired
+          sessionStorage.removeItem('downloads_unlocked');
+        }
+      } catch (error) {
+        console.error('Error parsing unlock data:', error);
+        sessionStorage.removeItem('downloads_unlocked');
+      }
+    }
+
+    verifyPaymentFlow();
+  }, [searchParams]);
 
   const handleDownload = (platform: string) => {
     const link = downloadLinks[platform];
@@ -34,6 +120,36 @@ const SuccessPage = () => {
     }
   };
 
+  // Redirect to payment page if not verified and not verifying
+  if (!isVerifying && !isVerified) {
+    return <Navigate to="/payment" replace />;
+  }
+
+  // Show loading state while verifying
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
+        <Header />
+        <div className="py-12">
+          <div className="container max-w-2xl mx-auto px-6">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 mx-auto mb-4 animate-spin">
+                <div className="w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full"></div>
+              </div>
+              <h1 className="text-3xl font-bold text-foreground mb-4">
+                Verifying Payment...
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Please wait while we confirm your purchase.
+              </p>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Header />
@@ -45,7 +161,7 @@ const SuccessPage = () => {
               Payment Successful!
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thank you for purchasing Local Memory. Download your platform-specific executable below.
+              Thank you for purchasing Local Memory! Download your platform-specific executable below.
             </p>
           </div>
 
@@ -128,17 +244,17 @@ const SuccessPage = () => {
                   <li><strong>Optional:</strong> Add to Claude Desktop MCP config for AI integration</li>
                 </ol>
                 
-                <div className="mt-4 p-3 bg-blue-50 rounded-md">
-                  <p className="text-sm font-medium text-blue-900 mb-1">Quick Start (2 minutes):</p>
-                  <p className="text-xs text-blue-800">
+                <div className="mt-4 p-3 bg-blue-900/20 border border-blue-700/30 rounded-md">
+                  <p className="text-sm font-medium text-blue-300 mb-1">Quick Start (2 minutes):</p>
+                  <p className="text-xs text-blue-300">
                     No Node.js required! Just download → install Ollama → run the binary. 
                     Creates memories.db automatically with AI-powered search and retrieval.
                   </p>
                 </div>
                 
-                <div className="mt-4 p-3 bg-green-50 rounded-md">
-                  <p className="text-sm font-medium text-green-900 mb-1">Performance Mode (Optional):</p>
-                  <p className="text-xs text-green-800">
+                <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
+                  <p className="text-sm font-medium text-green-300 mb-1">Performance Mode (Optional):</p>
+                  <p className="text-xs text-green-300">
                     Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
                     Local Memory auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
                   </p>

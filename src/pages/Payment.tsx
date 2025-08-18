@@ -6,6 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const PaymentPage = () => {
+  const generateToken = () => {
+    // Generate a random token for payment verification
+    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+  };
+
   const handlePayment = () => {
     const paymentLinkUrl = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
     
@@ -18,7 +23,7 @@ To complete the setup:
 1. Go to https://dashboard.stripe.com/payment-links
 2. Click "Create payment link"
 3. Select your $29 product/price
-4. Set success URL to: ${window.location.origin}/success
+4. Set success URL to: ${window.location.origin}/success?token={TOKEN}&session_id={CHECKOUT_SESSION_ID}
 5. Copy the payment link URL
 6. Add it to your .env file as VITE_STRIPE_PAYMENT_LINK
 
@@ -26,7 +31,23 @@ This keeps your payment configuration secure and maintainable!`);
       return;
     }
     
+    // Generate and store payment token
+    const token = generateToken();
+    const tokenData = {
+      token: token,
+      timestamp: Date.now()
+    };
+    
+    // Store token in localStorage for verification
+    localStorage.setItem('payment_token', JSON.stringify(tokenData));
+    
+    // Store token in sessionStorage as backup
+    sessionStorage.setItem('payment_initiated', 'true');
+    sessionStorage.setItem('payment_token_backup', token);
+    
     // Redirect to Stripe Payment Link
+    // Note: The success URL should be configured in Stripe Dashboard as:
+    // ${window.location.origin}/success?token=${token}&session_id={CHECKOUT_SESSION_ID}
     window.location.href = paymentLinkUrl;
   };
 

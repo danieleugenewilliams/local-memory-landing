@@ -10,6 +10,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-07-30.basil',
 });
 
+// In-memory store for successful payment sessions (24hr TTL)
+const successfulSessions = new Map<string, { timestamp: number; customerEmail?: string }>();
+
+// Auto-cleanup expired sessions every hour
+setInterval(() => {
+  const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
+  for (const [sessionId, data] of successfulSessions) {
+    if (data.timestamp < oneDayAgo) {
+      successfulSessions.delete(sessionId);
+    }
+  }
+}, 60 * 60 * 1000);
+
 app.use(cors());
 app.use(express.json());
 
@@ -60,7 +73,13 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
       const session = event.data.object as Stripe.Checkout.Session;
       console.log('Payment successful:', session.id);
       
-      // Here you could:
+      // Store successful session for download access verification
+      successfulSessions.set(session.id, {
+        timestamp: Date.now(),
+        customerEmail: session.customer_details?.email || undefined
+      });
+      
+      // Here you could also:
       // 1. Update your database with the purchase
       // 2. Send confirmation email
       // 3. Generate secure download links
@@ -75,18 +94,39 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
   res.json({ received: true });
 });
 
-// Verify payment status (optional endpoint for additional security)
+// Verify payment status and download access
 app.get('/api/verify-payment/:sessionId', async (req, res) => {
   try {
-    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    const sessionId = req.params.sessionId;
     
-    if (session.payment_status === 'paid') {
+    // First check if session is in our successful payments store
+    const storedSession = successfulSessions.get(sessionId);
+    if (storedSession) {
       res.json({ 
         paid: true, 
-        customerEmail: session.customer_details?.email 
+        customerEmail: storedSession.customerEmail,
+        verified: true
+      });
+      return;
+    }
+    
+    // Fallback: verify directly with Stripe (for edge cases)
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    
+    if (session.payment_status === 'paid') {
+      // Store for future requests (webhook might have missed this)
+      successfulSessions.set(sessionId, {
+        timestamp: Date.now(),
+        customerEmail: session.customer_details?.email || undefined
+      });
+      
+      res.json({ 
+        paid: true, 
+        customerEmail: session.customer_details?.email,
+        verified: true
       });
     } else {
-      res.json({ paid: false });
+      res.json({ paid: false, verified: false });
     }
   } catch (error) {
     console.error('Error verifying payment:', error);
