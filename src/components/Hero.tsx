@@ -12,53 +12,57 @@ const Hero = () => {
       
       <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 py-32 lg:py-40">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Problem Statement */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-8 animate-fade-in leading-tight">
-            AI Agents Are Smart... But They Forget Everything
-          </h2>
-          
-          {/* Main headline */}
+          {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
-            Give Any AI Agent{" "}
+            The AI Memory System That{" "}
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
-              Persistent Memory
-            </span>{" "}
-            and Learning
+              Cures 'Context Amnesia'
+            </span>
           </h1>
           
-          {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            The only memory system with native MCP integration + universal REST API. 26 AI memory tools for any platform.
+          {/* Problem Statement with emotional hook */}
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-8 animate-fade-in leading-tight">
+            AI Agents Are Smart... But They Have a Lousy Memory
+          </h2>
+          
+          {/* Subheading with performance focus + pain points */}
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-fade-in leading-relaxed">
+            Every new session. Every /clear. Every agent switch. Knowledge lost. Your AI is brilliant but has the memory of a goldfish.
           </p>
           
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in">
+          {/* Key Benefits (single line) */}
+          <div className="text-center mb-10 animate-fade-in">
+            <p className="text-base sm:text-lg text-muted-foreground font-medium space-x-6">
+              <p>Give your AI permanent memory across ALL coding agents.</p>
+              <p>Claude → Codex → Gemini → OpenCode - Your context travels with you.</p>
+            </p>
+          </div>
+          
+          {/* Urgency Banner */}
+          <div className="mb-6 p-3 bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg animate-fade-in">
+            <p className="text-sm font-medium text-orange-600 dark:text-orange-400">
+              🔥 Early access: spots limited to the first 1,000 customers
+            </p>
+          </div>
+          
+          {/* Primary CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
               <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                Get Started with Local Memory
+                🚀 Get Early Access - $29
               </Button>
             </Link>
             <a href="#demo">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Watch Demo
+                See It In Action →
               </Button>
             </a>
           </div>
           
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto animate-fade-in">
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-memory-green">26</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">MCP Tools</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-memory-blue">10K+</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Downloads</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-memory-purple">v2.7.3</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Latest Version</div>
-            </div>
+          
+          {/* Trust badges */}
+          <div className="mt-6 text-center text-sm text-muted-foreground animate-fade-in">
+            🔒 One-time payment • 🛡️ 30-day guarantee • ⚡ Instant access
           </div>
         </div>
       </div>

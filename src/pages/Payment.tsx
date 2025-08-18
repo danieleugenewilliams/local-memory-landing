@@ -46,10 +46,7 @@ This keeps your payment configuration secure and maintainable!`);
 
           <Card className="border-2">
             <CardHeader className="text-center pb-4">
-              <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🧠</span>
-              </div>
-              <CardTitle className="text-2xl">Local Memory Pro</CardTitle>
+              <CardTitle className="text-2xl">Local Memory</CardTitle>
               <CardDescription className="text-lg">
                 One-time purchase, lifetime updates
               </CardDescription>
@@ -66,8 +63,7 @@ This keeps your payment configuration secure and maintainable!`);
                   "100% local - your data never leaves your machine",
                   "Works with Claude, GPT, Cursor, and more",
                   "Semantic memory search and retrieval",
-                  "Lifetime updates and support",
-                  "5-minute setup with npm install"
+                  "2-minute setup with LLM prompts"
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <Check className="w-5 h-5 text-green-600 flex-shrink-0" />

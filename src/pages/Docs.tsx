@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
+import Performance from "@/components/Performance";
 
 const DocsPage = () => {
   return (
@@ -123,6 +124,9 @@ const DocsPage = () => {
           </CardContent>
         </Card>
 
+        {/* Performance Benchmarks */}
+        <Performance />
+
         {/* Section 1: Agent Setup Prompts (Recommended) */}
         <div className="mb-12">
           <div className="text-center mb-8">
@@ -231,6 +235,129 @@ const DocsPage = () => {
               </div>
             </div>
 
+            {/* Step 2.5 - Qdrant (Optional) */}
+            <div className="border-l-4 border-purple-500 pl-4">
+              <h3 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h3>
+              <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
+              <div className="bg-muted p-3 rounded-md space-y-2">
+                <p className="text-sm"><strong>Download Qdrant binary:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                </code>
+                <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
+                
+                <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  tar -xzf qdrant.tar.gz && chmod +x qdrant
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  ./qdrant --uri localhost:6334 {`>`} qdrant.log 2{`>`}&1 &
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl http://localhost:6333/healthz
+                </code>
+                
+                <div className="mt-3 p-2 bg-green-50 rounded-md">
+                  <p className="text-xs text-green-800">
+                    <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
+                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
+                  </p>
+                </div>
+                
+                <div className="mt-2 p-2 bg-blue-50 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2.5 - Qdrant (Optional) */}
+            <div className="border-l-4 border-purple-500 pl-4">
+              <h3 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h3>
+              <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
+              <div className="bg-muted p-3 rounded-md space-y-2">
+                <p className="text-sm"><strong>Download Qdrant binary:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                </code>
+                <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
+                
+                <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  tar -xzf qdrant.tar.gz && chmod +x qdrant
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  ./qdrant --uri localhost:6334 &gt; qdrant.log 2&gt;&1 &amp;
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl http://localhost:6333/healthz
+                </code>
+                
+                <div className="mt-3 p-2 bg-green-50 rounded-md">
+                  <p className="text-xs text-green-800">
+                    <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
+                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
+                  </p>
+                </div>
+                
+                <div className="mt-2 p-2 bg-blue-50 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2.5 - Qdrant (Optional) */}
+            <div className="border-l-4 border-purple-500 pl-4">
+              <h3 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h3>
+              <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
+              <div className="bg-muted p-3 rounded-md space-y-2">
+                <p className="text-sm"><strong>Download Qdrant binary:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                </code>
+                <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
+                
+                <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  tar -xzf qdrant.tar.gz && chmod +x qdrant
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  ./qdrant --uri localhost:6334 {'>'} qdrant.log 2{'>'}&1 &
+                </code>
+                
+                <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
+                <code className="text-sm bg-background px-2 py-1 rounded block">
+                  curl http://localhost:6333/healthz
+                </code>
+                
+                <div className="mt-3 p-2 bg-green-50 rounded-md">
+                  <p className="text-xs text-green-800">
+                    <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to {'<'}10ms. 
+                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
+                  </p>
+                </div>
+                
+                <div className="mt-2 p-2 bg-blue-50 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Step 3 */}
             <div className="border-l-4 border-orange-500 pl-4">
               <h3 className="font-semibold text-lg mb-2">Step 3: Choose Your Integration Method</h3>
@@ -306,12 +433,60 @@ const DocsPage = () => {
                           ./local-memory --db-path ./my-memories.db --session-id my-session
                         </code>
                       </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">With Qdrant for high performance (requires Qdrant running):</p>
+                        <code className="text-xs bg-muted px-2 py-1 rounded block">
+                          QDRANT_ENABLED=true ./local-memory --session-id my-project
+                        </code>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground mb-1">Full configuration with Qdrant and custom Ollama:</p>
+                        <code className="text-xs bg-muted px-2 py-1 rounded block">
+                          QDRANT_ENABLED=true QDRANT_URL=http://localhost:6333 ./local-memory --session-id full-setup --ollama-url http://localhost:11434
+                        </code>
+                      </div>
                     </div>
                     
                     <p className="text-xs text-muted-foreground mt-3">
                        🌐 Access 26+ endpoints at http://localhost:3001/api/v1/
                     </p>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Performance Comparison */}
+            <div className="border-l-4 border-amber-500 pl-4">
+              <h3 className="font-semibold text-lg mb-2">Performance Optimization</h3>
+              <p className="text-muted-foreground mb-3">Choose your configuration based on performance needs:</p>
+              
+              <div className="bg-muted p-4 rounded-lg">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-background p-3 rounded-md">
+                    <h4 className="font-semibold text-sm mb-2 text-green-600">🚀 Qdrant Mode (Recommended)</h4>
+                    <ul className="text-xs space-y-1 text-muted-foreground">
+                      <li>• Vector search: {'<'}10ms latency</li>
+                      <li>• Enterprise performance</li>
+                      <li>• Auto-detected when available</li>
+                      <li>• Falls back to SQLite gracefully</li>
+                    </ul>
+                  </div>
+                  <div className="bg-background p-3 rounded-md">
+                    <h4 className="font-semibold text-sm mb-2 text-blue-600">💾 SQLite Mode (Default)</h4>
+                    <ul className="text-xs space-y-1 text-muted-foreground">
+                      <li>• Vector search: ~100ms latency</li>
+                      <li>• Zero dependencies</li>
+                      <li>• Works anywhere</li>
+                      <li>• Great for development</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="mt-3 p-2 bg-blue-50 rounded-md">
+                  <p className="text-xs text-blue-800">
+                    <strong>Tip:</strong> Start with SQLite mode for quick setup, add Qdrant later for production performance.
+                    Local Memory automatically detects and uses the best available backend.
+                  </p>
                 </div>
               </div>
             </div>
@@ -511,6 +686,7 @@ const DocsPage = () => {
             </div>
           </CardContent>
         </Card>
+        
         </div>
 
           {/* CTA */}

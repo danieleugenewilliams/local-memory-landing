@@ -1,12 +1,10 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import BeforeAfter from "@/components/BeforeAfter";
-import ProblemSection from "@/components/ProblemSection";
-import SolutionSection from "@/components/SolutionSection";
-import Features from "@/components/Features";
+import ProblemSolution from "@/components/ProblemSolution";
 import Demo from "@/components/Demo";
-import CodeExample from "@/components/CodeExample";
-import CtaSection from "@/components/CtaSection";
+import WhyLocalMemory from "@/components/WhyLocalMemory";
+import TrustedByDevelopers from "@/components/TrustedByDevelopers";
+import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,13 +12,11 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
-      <BeforeAfter />
-      <ProblemSection />
-      <SolutionSection />
-      <Features />
+      <ProblemSolution />
       <Demo />
-      <CodeExample />
-      <CtaSection />
+      <WhyLocalMemory />
+      <TrustedByDevelopers />
+      <PricingSection />
       <Footer />
     </div>
   );

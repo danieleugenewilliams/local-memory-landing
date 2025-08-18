@@ -122,6 +122,7 @@ const SuccessPage = () => {
                 <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
                   <li>Download the executable for your platform above</li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
+                  <li><strong>Optional - Install Qdrant (5-8x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract, and run: <code className="bg-background px-1 rounded">./qdrant</code></li>
                   <li><strong>Run Local Memory:</strong> <code className="bg-background px-1 rounded">./local-memory --session-id my-project</code></li>
                   <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
                   <li><strong>Optional:</strong> Add to Claude Desktop MCP config for AI integration</li>
@@ -132,6 +133,14 @@ const SuccessPage = () => {
                   <p className="text-xs text-blue-800">
                     No Node.js required! Just download → install Ollama → run the binary. 
                     Creates memories.db automatically with AI-powered search and retrieval.
+                  </p>
+                </div>
+                
+                <div className="mt-4 p-3 bg-green-50 rounded-md">
+                  <p className="text-sm font-medium text-green-900 mb-1">Performance Mode (Optional):</p>
+                  <p className="text-xs text-green-800">
+                    Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
+                    Local Memory auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
                   </p>
                 </div>
               </div>

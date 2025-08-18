@@ -11,17 +11,29 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-6 lg:px-8">
-        <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-          <div className="w-8 h-8 bg-hero-gradient rounded-lg flex items-center justify-center">
-            <span className="text-sm font-bold text-foreground">LM</span>
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
+            <div className="flex items-center gap-0">
+              <span 
+                className="text-white font-black text-xs leading-none transform -skew-x-[25deg] translate-y-[-3px] -mr-0.5"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              >
+                L
+              </span>
+              <span 
+                className="text-white font-black text-xs leading-none transform -skew-x-[25deg] translate-y-[3px]"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              >
+                M
+              </span>
+            </div>
           </div>
-          <span className="font-bold text-xl">Local Memory</span>
+          <div className="h-8 flex items-center">
+            <span className="font-medium leading-none transform -skew-x-[8deg]" style={{ fontSize: '36px', lineHeight: '36px' }}>Local Memory</span>
+          </div>
         </Link>
         
         <nav className="hidden md:flex items-center space-x-6">
-          <a href={isHomepage ? "#features" : "/#features"} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Features
-          </a>
           <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Docs
           </Link>
@@ -49,13 +61,6 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="container px-6 py-4 space-y-4 text-right">
-            <a 
-              href={isHomepage ? "#features" : "/#features"}
-              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Features
-            </a>
             <Link 
               to="/docs" 
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
