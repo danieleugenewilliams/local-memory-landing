@@ -1,0 +1,37 @@
+{
+  "CallerReference": "localmemory-downloads-1755527971",
+  "Comment": "Local Memory Secure Downloads",
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "S3-localmemory-secure-downloads",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "MinTTL": 86400,
+    "DefaultTTL": 86400,
+    "MaxTTL": 31536000,
+    "ForwardedValues": {
+      "QueryString": false,
+      "Cookies": {
+        "Forward": "none"
+      }
+    },
+    "Compress": true,
+    "TrustedSigners": {
+      "Enabled": false,
+      "Quantity": 0
+    }
+  },
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "S3-localmemory-secure-downloads",
+        "DomainName": "localmemory-secure-downloads.s3.amazonaws.com",
+        "OriginPath": "/downloads",
+        "S3OriginConfig": {
+          "OriginAccessIdentity": "origin-access-identity/cloudfront/E3BRSAQ989FKA"
+        }
+      }
+    ]
+  },
+  "Enabled": true,
+  "PriceClass": "PriceClass_100"
+}

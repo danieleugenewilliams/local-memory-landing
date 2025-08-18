@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hash Generation Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+</head>
+<body>
+    <h1>Hash Generation Test</h1>
+    <p>Testing hash generation consistency between frontend and backend</p>
+    
+    <script>
+        // Same logic as in Success.tsx
+        const SECRET = "d9e7e7dca5bddb2a5a0d6a99fc0ae8bf6847a700f7928f7f82a7f4b3223bf84";
+        
+        const generateSecureUrls = (sessionId, paymentTimestamp) => {
+          const platforms = ['macos', 'windows', 'linux'];
+          const urls = {};
+          
+          const timeWindow = Math.floor(paymentTimestamp / 43200);
+          
+          platforms.forEach(platform => {
+            const data = `${SECRET}:${sessionId}:${timeWindow}:${platform}`;
+            const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
+            urls[platform] = `https://localmemory.co/downloads/${timeWindow}/${hash}/${platform}/local-memory-${platform}`;
+          });
+          
+          return urls;
+        };
+        
+        // Test with current time window
+        const sessionId = 'production';
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        const timeWindow = Math.floor(currentTimestamp / 43200);
+        
+        console.log('Current timestamp:', currentTimestamp);
+        console.log('Current time window:', timeWindow);
+        
+        const urls = generateSecureUrls(sessionId, currentTimestamp);
+        
+        console.log('Generated URLs:');
+        Object.entries(urls).forEach(([platform, url]) => {
+          console.log(`${platform}:`, url);
+          
+          // Extract hash from URL for comparison
+          const match = url.match(/downloads\/\d+\/([a-f0-9]+)\//);
+          if (match) {
+            console.log(`${platform} hash:`, match[1]);
+          }
+        });
+        
+        // Display results
+        document.body.innerHTML += '<h2>Results:</h2>';
+        document.body.innerHTML += `<p><strong>Time Window:</strong> ${timeWindow}</p>`;
+        Object.entries(urls).forEach(([platform, url]) => {
+          const match = url.match(/downloads\/\d+\/([a-f0-9]+)\//);
+          const hash = match ? match[1] : 'N/A';
+          document.body.innerHTML += `<p><strong>${platform}:</strong> ${hash}</p>`;
+        });
+    </script>
+</body>
+</html>

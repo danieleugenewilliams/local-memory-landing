@@ -7,12 +7,59 @@ import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
+import CryptoJS from "crypto-js";
 
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
   const [downloadLinks, setDownloadLinks] = useState<{[key: string]: string}>({});
   const [isVerifying, setIsVerifying] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
+
+  // Generate secure download URLs using time-based hashing
+  const generateSecureDownloadUrls = (sessionId: string, paymentTimestamp: number) => {
+    const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
+    
+    const platforms = ['macos-intel', 'macos-arm', 'windows', 'linux'];
+    const urls: {[key: string]: string} = {};
+    
+    platforms.forEach(platform => {
+      // Convert timestamp to seconds if it's in milliseconds
+      const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
+      
+      // Calculate 12-hour time window (matches backend logic)
+      const timeWindow = Math.floor(timestampInSeconds / 43200);
+      
+      // Generate hash matching backend logic: SECRET:sessionId:timeWindow:platform
+      const data = `${DOWNLOAD_SECRET}:${sessionId}:${timeWindow}:${platform}`;
+      const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
+      
+      // Debug logging
+      console.log(`Debug ${platform}:`, {
+        paymentTimestamp,
+        timestampInSeconds,
+        timeWindow,
+        sessionId,
+        data,
+        hash
+      });
+      
+      // Production: route through main domain to CloudFront
+      const getBinaryName = (platform: string) => {
+        switch (platform) {
+          case 'macos-intel': return 'local-memory-macos-intel';
+          case 'macos-arm': return 'local-memory-macos-arm';
+          case 'windows': return 'local-memory-windows.exe';
+          case 'linux': return 'local-memory-linux';
+          default: return `local-memory-${platform}`;
+        }
+      };
+      
+      const binaryName = getBinaryName(platform);
+      urls[platform] = `https://localmemory.co/downloads/${timeWindow}/${hash}/${platform}/${binaryName}`;
+    });
+    
+    return urls;
+  };
 
   useEffect(() => {
     const verifyPaymentFlow = () => {
@@ -37,40 +84,49 @@ const SuccessPage = () => {
       try {
         const tokenData = JSON.parse(storedTokenData);
         const currentTime = Date.now();
+        const paymentTimestamp = tokenData.initiated || tokenData.timestamp;
         
-        // Check if token has expired (30 minutes)
+        // Check if token has expired (30 minutes from initiation)
         if (currentTime - tokenData.timestamp > 30 * 60 * 1000) {
           console.error('Payment session has expired');
           localStorage.removeItem('payment_token');
           sessionStorage.removeItem('payment_initiated');
           sessionStorage.removeItem('payment_token_backup');
+          sessionStorage.removeItem('payment_timestamp');
           setIsVerifying(false);
           return;
         }
         
-        // Payment flow is valid - grant access to downloads
-        setIsVerified(true);
-        setDownloadLinks({
-          macos: '/downloads/local-memory-macos.dmg',
-          windows: '/downloads/local-memory-windows.exe', 
-          linux: '/downloads/local-memory-linux.tar.gz'
-        });
+        // Verify download time window (48 hours from payment initiation)
+        if (currentTime - paymentTimestamp > 48 * 60 * 60 * 1000) {
+          console.error('Download window has expired (48 hours)');
+          setIsVerifying(false);
+          return;
+        }
         
-        // Clear all payment tokens to prevent reuse
+        // Payment flow is valid - generate secure download URLs
+        const secureUrls = generateSecureDownloadUrls(sessionId, paymentTimestamp);
+        setIsVerified(true);
+        setDownloadLinks(secureUrls);
+        
+        // Clear payment tokens to prevent reuse
         localStorage.removeItem('payment_token');
         sessionStorage.removeItem('payment_initiated');
         sessionStorage.removeItem('payment_token_backup');
+        sessionStorage.removeItem('payment_timestamp');
         
         // Store successful verification for page refreshes (1 hour)
         sessionStorage.setItem('downloads_unlocked', JSON.stringify({
           sessionId: sessionId,
-          timestamp: currentTime
+          timestamp: currentTime,
+          paymentTimestamp: paymentTimestamp
         }));
         
       } catch (error) {
         console.error('Error verifying payment flow:', error);
         localStorage.removeItem('payment_token');
         sessionStorage.removeItem('payment_initiated');
+        sessionStorage.removeItem('payment_timestamp');
         setIsVerified(false);
       } finally {
         setIsVerifying(false);
@@ -86,14 +142,18 @@ const SuccessPage = () => {
         
         // Check if unlock is still valid (1 hour)
         if (currentTime - unlocked.timestamp < 60 * 60 * 1000) {
-          setIsVerified(true);
-          setDownloadLinks({
-            macos: '/downloads/local-memory-macos.dmg',
-            windows: '/downloads/local-memory-windows.exe', 
-            linux: '/downloads/local-memory-linux.tar.gz'
-          });
-          setIsVerifying(false);
-          return;
+          // Verify download time window (48 hours from original payment)
+          if (currentTime - unlocked.paymentTimestamp < 48 * 60 * 60 * 1000) {
+            setIsVerified(true);
+            // Regenerate secure URLs with original payment timestamp
+            const secureUrls = generateSecureDownloadUrls(unlocked.sessionId, unlocked.paymentTimestamp);
+            setDownloadLinks(secureUrls);
+            setIsVerifying(false);
+            return;
+          } else {
+            console.error('Download window has expired');
+            sessionStorage.removeItem('downloads_unlocked');
+          }
         } else {
           // Unlock has expired
           sessionStorage.removeItem('downloads_unlocked');
@@ -107,16 +167,35 @@ const SuccessPage = () => {
     verifyPaymentFlow();
   }, [searchParams]);
 
-  const handleDownload = (platform: string) => {
+  const handleDownload = async (platform: string) => {
     const link = downloadLinks[platform];
-    if (link) {
-      // Create temporary link and trigger download
-      const a = document.createElement('a');
-      a.href = link;
-      a.download = `local-memory-${platform}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+    if (!link) {
+      alert('Download link not available. Please refresh the page and try again.');
+      return;
+    }
+    
+    try {
+      console.log(`Starting download for ${platform}:`, link);
+      
+      // For development/testing: Use CloudFront URL directly for actual downloads
+      const cloudFrontUrl = link.replace('https://localmemory.co/downloads/', 'https://d3g3vv5lpyh0pb.cloudfront.net/');
+      
+      // Create a temporary link element to trigger download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = cloudFrontUrl;
+      downloadLink.download = `local-memory-${platform}${platform === 'windows' ? '.exe' : ''}`;
+      downloadLink.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      
+      console.log(`Download initiated for ${platform}`);
+      
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please contact support if this issue persists.');
     }
   };
 
@@ -177,14 +256,13 @@ const SuccessPage = () => {
               <div className="grid gap-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">🍎</span>
                     <div>
-                      <div className="font-semibold">macOS</div>
-                      <div className="text-sm text-muted-foreground">Intel & Apple Silicon</div>
+                      <div className="font-semibold">macOS (Apple Silicon)</div>
+                      <div className="text-sm text-muted-foreground">M1, M2, M3, M4 chips</div>
                     </div>
                   </div>
                   <Button 
-                    onClick={() => handleDownload('macos')}
+                    onClick={() => handleDownload('macos-arm')}
                     variant="outline"
                     size="sm"
                     className="gap-2"
@@ -196,7 +274,24 @@ const SuccessPage = () => {
 
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">🪟</span>
+                    <div>
+                      <div className="font-semibold">macOS (Intel)</div>
+                      <div className="text-sm text-muted-foreground">x64 Intel processors</div>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={() => handleDownload('macos-intel')}
+                    variant="outline"
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download
+                  </Button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex items-center gap-3">
                     <div>
                       <div className="font-semibold">Windows</div>
                       <div className="text-sm text-muted-foreground">Windows 10/11</div>
@@ -215,7 +310,6 @@ const SuccessPage = () => {
 
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">🐧</span>
                     <div>
                       <div className="font-semibold">Linux</div>
                       <div className="text-sm text-muted-foreground">x64 binary</div>

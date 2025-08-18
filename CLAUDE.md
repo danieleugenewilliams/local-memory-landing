@@ -58,9 +58,17 @@ Note: The project has both frontend (Vite) and backend (Express) components that
 
 ### Payment Flow
 1. User clicks CTA button → redirects to `/payment`
-2. Payment page creates Stripe checkout session
-3. Stripe processes payment → redirects to `/success`
-4. Success page provides download links for executables
+2. Payment page stores timestamp and creates Stripe checkout session
+3. Stripe processes payment → redirects to `/success?session_id={CHECKOUT_SESSION_ID}`
+4. Success page generates time-based secure download URLs using SHA256 hashing
+5. Download URLs are cryptographically secure and expire after 48 hours
+
+### Secure Download System
+- **Time-Based URL Generation**: Uses payment timestamp + session ID + secret for unique URLs
+- **Cryptographic Security**: SHA256 hashing prevents URL guessing or enumeration
+- **Expiration**: Download URLs automatically expire 48 hours after payment
+- **Session Binding**: URLs are tied to specific Stripe session IDs
+- **Frontend-Only**: No backend required for URL generation (uses stored payment timestamp)
 
 ## Key Technologies
 
@@ -76,9 +84,10 @@ Note: The project has both frontend (Vite) and backend (Express) components that
 
 ## Environment Configuration
 
-The project uses environment variables for Stripe configuration:
+The project uses environment variables for Stripe configuration and secure downloads:
 - `VITE_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key (frontend)
 - `VITE_STRIPE_PAYMENT_LINK` - Stripe payment link URL (frontend)
+- `VITE_DOWNLOAD_SECRET` - 64-character random string for secure download URLs (frontend)
 - `STRIPE_SECRET_KEY` - Stripe secret key (backend)
 - `STRIPE_PRICE_ID` - Stripe price ID for the product
 - `STRIPE_WEBHOOK_SECRET` - Webhook signature verification
