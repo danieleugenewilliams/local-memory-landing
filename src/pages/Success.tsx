@@ -239,13 +239,13 @@ const SuccessPage = () => {
               Payment Successful!
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thank you for purchasing Local Memory! Download your platform-specific executable below.
+              Thank you for purchasing <em>Local Memory</em>! Download your platform-specific executable below.
             </p>
           </div>
 
           <Card className="border-2 border-green-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">Download Local Memory</CardTitle>
+              <CardTitle className="text-xl">Download <em>Local Memory</em></CardTitle>
               <CardDescription>
                 Choose your operating system to download the executable
               </CardDescription>
@@ -332,7 +332,7 @@ const SuccessPage = () => {
                   <li>Download the executable for your platform above</li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
                   <li><strong>Optional - Install Qdrant (5-8x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract, and run: <code className="bg-background px-1 rounded">./qdrant</code></li>
-                  <li><strong>Run Local Memory:</strong> <code className="bg-background px-1 rounded">./local-memory --session-id my-project</code></li>
+                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">./local-memory --session-id my-project</code></li>
                   <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
                   <li><strong>Optional:</strong> Add to Claude Desktop MCP config for AI integration</li>
                 </ol>
@@ -349,7 +349,7 @@ const SuccessPage = () => {
                   <p className="text-sm font-medium text-green-300 mb-1">Performance Mode (Optional):</p>
                   <p className="text-xs text-green-300">
                     Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
-                    Local Memory auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
+                    <em>Local Memory</em> auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
                   </p>
                 </div>
                 

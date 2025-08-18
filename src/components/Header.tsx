@@ -29,7 +29,7 @@ const Header = () => {
             </div>
           </div>
           <div className="h-8 flex items-center">
-            <span className="font-medium leading-none transform -skew-x-[8deg]" style={{ fontSize: '36px', lineHeight: '36px' }}>Local Memory</span>
+            <span className="font-medium leading-none" style={{ fontSize: '36px', lineHeight: '36px' }}>Local Memory</span>
           </div>
         </Link>
         

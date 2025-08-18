@@ -18,7 +18,7 @@ const TrustedByDevelopers = () => {
             <div className="text-center">
               <div className="text-4xl mb-6">💬</div>
               <blockquote className="text-xl sm:text-2xl text-foreground mb-6 italic leading-relaxed">
-                "...I just wanted to share that the local memory MCP has really helped boost my productivity with [my project]. I'll package everything up and share it with you tomorrow... Thanks so much again for sharing!"
+                "...I just wanted to share that the <em>local memory</em> MCP has really helped boost my productivity with [my project]. I'll package everything up and share it with you tomorrow... Thanks so much again for sharing!"
               </blockquote>
               <cite className="text-sm text-muted-foreground font-medium">
                 — Early Access Developer

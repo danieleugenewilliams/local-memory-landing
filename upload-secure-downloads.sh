@@ -68,12 +68,15 @@ upload_for_time_window() {
         echo "  S3: s3://$BUCKET_NAME/$s3_key"
         echo "  URL: https://localmemory.co/$s3_key"
         
-        # Upload to S3
-        aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
+        # Upload to S3 with error handling
+        if aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
             --content-type "application/octet-stream" \
-            --metadata "platform=$platform,time-window=$time_window"
-        
-        echo -e "${GREEN}✓ Uploaded $platform binary${NC}\n"
+            --metadata "platform=$platform,time-window=$time_window"; then
+            echo -e "${GREEN}✓ Uploaded $platform binary${NC}\n"
+        else
+            echo -e "${RED}✗ Failed to upload $platform binary${NC}\n"
+            return 1
+        fi
     done
 }
 

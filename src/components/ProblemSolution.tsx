@@ -16,7 +16,7 @@ const ProblemSolution = () => {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-sm font-medium mb-4">
-                😤 Before Local Memory
+                😤 Before <em>Local Memory</em>
               </div>
               <h3 className="text-2xl font-bold text-foreground">The Frustration Cycle</h3>
             </div>
@@ -68,7 +68,7 @@ const ProblemSolution = () => {
           <div className="space-y-6">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-400 rounded-full text-sm font-medium mb-4">
-                ✨ After Local Memory
+                ✨ After <em>Local Memory</em>
               </div>
               <h3 className="text-2xl font-bold text-foreground">The Flow State</h3>
             </div>

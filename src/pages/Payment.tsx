@@ -61,7 +61,7 @@ This keeps your payment configuration secure and maintainable!`);
         <div className="container max-w-2xl mx-auto px-6">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-4">
-              Get Local Memory
+              Get <em>Local Memory</em>
             </h1>
             <p className="text-lg text-muted-foreground">
               Transform your AI with persistent memory that never forgets
@@ -70,7 +70,7 @@ This keeps your payment configuration secure and maintainable!`);
 
           <Card className="border-2">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl">Local Memory</CardTitle>
+              <CardTitle className="text-2xl"><em>Local Memory</em></CardTitle>
               <CardDescription className="text-lg">
                 One-time purchase, lifetime updates
               </CardDescription>

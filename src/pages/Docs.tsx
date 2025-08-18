@@ -15,7 +15,7 @@ const DocsPage = () => {
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
-              Local Memory Documentation
+              <em>Local Memory</em> Documentation
             </h1>
             <p className="text-xl text-muted-foreground">
               The only memory system that works natively with both MCP-enabled AI agents and traditional platforms
@@ -29,7 +29,7 @@ const DocsPage = () => {
               <Globe className="w-6 h-6 text-blue-500" />
               <CardTitle className="text-xl">Universal AI Platform Support</CardTitle>
             </div>
-            <CardDescription>Local Memory is the first solution designed for both modern MCP-enabled agents and traditional AI platforms</CardDescription>
+            <CardDescription><em>Local Memory</em> is the first solution designed for both modern MCP-enabled agents and traditional AI platforms</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
@@ -71,7 +71,7 @@ const DocsPage = () => {
             <div className="bg-muted p-4 rounded-lg">
               <h4 className="font-semibold mb-2">What Makes This Unique?</h4>
               <p className="text-sm text-muted-foreground">
-                Most AI memory solutions only work with one type of platform. Local Memory is the first to provide 
+                Most AI memory solutions only work with one type of platform. <em>Local Memory</em> is the first to provide 
                 <strong> seamless native integration for MCP agents</strong> while maintaining 
                 <strong> full REST API compatibility</strong> for traditional platforms - giving you the best of both worlds.
               </p>
@@ -116,7 +116,7 @@ const DocsPage = () => {
             <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
               <h4 className="font-semibold text-memory-blue mb-2">🤖 The Easiest Installation Ever</h4>
               <p className="text-sm text-muted-foreground">
-                After purchasing and downloading, just give your AI agent our detailed setup prompt. 
+                The easiest way to install <em>Local Memory</em>. After purchasing and downloading, just copy our detailed prompts 
                 Your agent will install Ollama, configure MCP integration, set up proper file paths, 
                 and verify everything works. No manual installation needed!
               </p>
@@ -200,7 +200,7 @@ const DocsPage = () => {
             
             {/* Step 1 */}
             <div className="border-l-4 border-blue-500 pl-4">
-              <h3 className="font-semibold text-lg mb-2">Step 1: Download Local Memory</h3>
+              <h3 className="font-semibold text-lg mb-2">Step 1: Download <em>Local Memory</em></h3>
               <p className="text-muted-foreground mb-3">Get the binary for your operating system:</p>
               <div className="bg-muted p-3 rounded-md">
                 <p className="text-sm mb-2"><strong>Linux/macOS:</strong></p>
@@ -275,7 +275,7 @@ const DocsPage = () => {
                 <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
                   <p className="text-xs text-green-300">
                     <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to {'<'}10ms. 
-                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
+                    <em>Local Memory</em> auto-detects Qdrant and falls back to SQLite if unavailable.
                   </p>
                 </div>
                 
@@ -290,7 +290,7 @@ const DocsPage = () => {
             {/* Step 3 */}
             <div className="border-l-4 border-orange-500 pl-4">
               <h3 className="font-semibold text-lg mb-2">Step 3: Choose Your Integration Method</h3>
-              <p className="text-muted-foreground mb-3">Local Memory supports two integration methods:</p>
+              <p className="text-muted-foreground mb-3"><em>Local Memory</em> supports two integration methods:</p>
               
               <div className="space-y-4">
                 <div className="bg-muted p-4 rounded-lg">
@@ -414,7 +414,7 @@ const DocsPage = () => {
                 <div className="mt-3 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
                   <p className="text-xs text-blue-300">
                     <strong>Tip:</strong> Start with SQLite mode for quick setup, add Qdrant later for production performance.
-                    Local Memory automatically detects and uses the best available backend.
+                    <em>Local Memory</em> automatically detects and uses the best available backend.
                   </p>
                 </div>
               </div>
@@ -461,7 +461,7 @@ const DocsPage = () => {
               <Zap className="w-5 h-5" />
               Technical Architecture
             </CardTitle>
-            <CardDescription>What makes Local Memory unique in the AI ecosystem</CardDescription>
+            <CardDescription>What makes <em>Local Memory</em> unique in the AI ecosystem</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -511,7 +511,7 @@ const DocsPage = () => {
                 <h4 className="font-semibold mb-2">Why This Matters</h4>
                 <p className="text-sm text-muted-foreground">
                   The AI landscape is rapidly evolving. While older platforms rely on manual API integration, 
-                  new MCP-enabled agents can discover and use tools automatically. Local Memory bridges this gap, 
+                  new MCP-enabled agents can discover and use tools automatically. <em>Local Memory</em> bridges this gap, 
                   ensuring your memory system works seamlessly regardless of which AI platform you choose - today or tomorrow.
                 </p>
               </div>
@@ -625,7 +625,7 @@ const DocsPage = () => {
             <Link to="/payment">
               <Button size="lg" className="gap-2">
                 <Download className="w-4 h-4" />
-                Get Local Memory
+                Get <em>Local Memory</em>
               </Button>
             </Link>
           </div>

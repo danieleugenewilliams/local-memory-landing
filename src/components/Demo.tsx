@@ -68,7 +68,7 @@ const Demo = () => {
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
-            See Local Memory in Action
+            See <em>Local Memory</em> in Action
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Watch how AI agents gain persistent memory and learning capabilities
@@ -162,7 +162,7 @@ const Demo = () => {
                         <div className="text-xs text-muted-foreground mb-1">PROCESSING...</div>
                         <div className="flex items-center gap-2">
                           <div className="animate-spin w-4 h-4 border-2 border-memory-blue border-t-transparent rounded-full"></div>
-                          <span className="text-sm text-muted-foreground">Local Memory is thinking...</span>
+                          <span className="text-sm text-muted-foreground"><em>Local Memory</em> is thinking...</span>
                         </div>
                       </div>
                     )}
