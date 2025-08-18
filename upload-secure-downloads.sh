@@ -37,16 +37,14 @@ get_time_window() {
 generate_hash() {
     local platform=$1
     local time_window=$2
-    local session_id=${3:-"production"}
     
-    local data="${SECRET}:${session_id}:${time_window}:${platform}"
+    local data="${SECRET}:download-access:${time_window}:${platform}"
     echo -n "$data" | openssl dgst -sha256 | cut -d' ' -f2 | cut -c1-16
 }
 
 # Function to upload binary for a specific time window
 upload_for_time_window() {
     local time_window=$1
-    local session_id=${2:-"production"}
     
     echo -e "${YELLOW}Uploading binaries for time window: $time_window${NC}"
     
@@ -60,7 +58,7 @@ upload_for_time_window() {
         fi
         
         # Generate hash for this platform/window combination
-        local hash=$(generate_hash "$platform" "$time_window" "$session_id")
+        local hash=$(generate_hash "$platform" "$time_window")
         
         # S3 key matching frontend URL structure
         local s3_key="downloads/$time_window/$hash/$platform/$binary_name"
@@ -73,7 +71,7 @@ upload_for_time_window() {
         # Upload to S3
         aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
             --content-type "application/octet-stream" \
-            --metadata "platform=$platform,time-window=$time_window,session-id=$session_id"
+            --metadata "platform=$platform,time-window=$time_window"
         
         echo -e "${GREEN}✓ Uploaded $platform binary${NC}\n"
     done
@@ -83,21 +81,19 @@ upload_for_time_window() {
 upload_multiple_windows() {
     local current_time=$(date +%s)
     local current_window=$(get_time_window $current_time)
-    local session_id=${1:-"production"}
     
     echo -e "${YELLOW}Starting upload for secure downloads...${NC}"
     echo "Current timestamp: $current_time"
     echo "Current time window: $current_window"
-    echo "Session ID: $session_id"
     echo ""
     
     # Upload for current window
-    upload_for_time_window "$current_window" "$session_id"
+    upload_for_time_window "$current_window"
     
     # Upload for next window (in case we're near the boundary)
     local next_window=$((current_window + 1))
     echo -e "${YELLOW}Also uploading for next time window: $next_window${NC}"
-    upload_for_time_window "$next_window" "$session_id"
+    upload_for_time_window "$next_window"
     
     echo -e "${GREEN}✓ Upload complete for both time windows${NC}"
 }
@@ -124,12 +120,11 @@ cleanup_old_windows() {
 # Function to verify uploads
 verify_uploads() {
     local time_window=${1:-$(get_time_window)}
-    local session_id=${2:-"production"}
     
     echo -e "${YELLOW}Verifying uploads for time window: $time_window${NC}"
     
     for platform in "${PLATFORMS[@]}"; do
-        local hash=$(generate_hash "$platform" "$time_window" "$session_id")
+        local hash=$(generate_hash "$platform" "$time_window")
         local s3_key="downloads/$time_window/$hash/$platform/$(get_binary_name "$platform")"
         
         if aws s3 ls "s3://$BUCKET_NAME/$s3_key" > /dev/null 2>&1; then
@@ -148,11 +143,11 @@ case "${1:-help}" in
             exit 1
         fi
         
-        upload_multiple_windows "${2:-production}"
+        upload_multiple_windows
         ;;
     
     "verify")
-        verify_uploads "$2" "${3:-production}"
+        verify_uploads "$2"
         ;;
     
     "cleanup")
@@ -166,10 +161,10 @@ case "${1:-help}" in
     
     "test-hash")
         if [[ -z "$2" || -z "$3" ]]; then
-            echo "Usage: $0 test-hash <platform> <time_window> [session_id]"
+            echo "Usage: $0 test-hash <platform> <time_window>"
             exit 1
         fi
-        hash=$(generate_hash "$2" "$3" "${4:-production}")
+        hash=$(generate_hash "$2" "$3")
         echo "Hash for platform '$2' in window '$3': $hash"
         ;;
     
@@ -177,11 +172,11 @@ case "${1:-help}" in
         echo "Local Memory Secure Download Upload Script"
         echo ""
         echo "Usage:"
-        echo "  $0 upload [session_id]       - Upload binaries for current + next time window"
-        echo "  $0 verify [window] [session] - Verify uploads exist"
+        echo "  $0 upload                    - Upload binaries for current + next time window"
+        echo "  $0 verify [window]           - Verify uploads exist"
         echo "  $0 cleanup                   - Remove old time windows"
         echo "  $0 window                    - Show current time window"
-        echo "  $0 test-hash <platform> <window> [session] - Test hash generation"
+        echo "  $0 test-hash <platform> <window> - Test hash generation"
         echo ""
         echo "Setup:"
         echo "  1. Place binaries in: $BINARIES_DIR/"
@@ -193,8 +188,7 @@ case "${1:-help}" in
         echo "  3. Run: $0 upload"
         echo ""
         echo "Examples:"
-        echo "  $0 upload                    # Upload with session 'production'"
-        echo "  $0 upload test-session      # Upload with custom session ID"
+        echo "  $0 upload                    # Upload for all users"
         echo "  $0 verify                   # Verify current window uploads"
         echo "  $0 cleanup                  # Clean up old windows"
         ;;

@@ -16,7 +16,7 @@ const SuccessPage = () => {
   const [isVerified, setIsVerified] = useState(false);
 
   // Generate secure download URLs using time-based hashing
-  const generateSecureDownloadUrls = (sessionId: string, paymentTimestamp: number) => {
+  const generateSecureDownloadUrls = (paymentTimestamp: number) => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
     const platforms = ['macos-intel', 'macos-arm', 'windows', 'linux'];
@@ -29,8 +29,8 @@ const SuccessPage = () => {
       // Calculate 12-hour time window (matches backend logic)
       const timeWindow = Math.floor(timestampInSeconds / 43200);
       
-      // Generate hash matching backend logic: SECRET:sessionId:timeWindow:platform
-      const data = `${DOWNLOAD_SECRET}:${sessionId}:${timeWindow}:${platform}`;
+      // Generate hash with fixed identifier for scalability: SECRET:download-access:timeWindow:platform
+      const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:${platform}`;
       const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
       
       // Debug logging
@@ -38,7 +38,6 @@ const SuccessPage = () => {
         paymentTimestamp,
         timestampInSeconds,
         timeWindow,
-        sessionId,
         data,
         hash
       });
@@ -105,7 +104,7 @@ const SuccessPage = () => {
         }
         
         // Payment flow is valid - generate secure download URLs
-        const secureUrls = generateSecureDownloadUrls(sessionId, paymentTimestamp);
+        const secureUrls = generateSecureDownloadUrls(paymentTimestamp);
         setIsVerified(true);
         setDownloadLinks(secureUrls);
         
@@ -146,7 +145,7 @@ const SuccessPage = () => {
           if (currentTime - unlocked.paymentTimestamp < 48 * 60 * 60 * 1000) {
             setIsVerified(true);
             // Regenerate secure URLs with original payment timestamp
-            const secureUrls = generateSecureDownloadUrls(unlocked.sessionId, unlocked.paymentTimestamp);
+            const secureUrls = generateSecureDownloadUrls(unlocked.paymentTimestamp);
             setDownloadLinks(secureUrls);
             setIsVerifying(false);
             return;
@@ -352,6 +351,17 @@ const SuccessPage = () => {
                     Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
                     Local Memory auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
                   </p>
+                </div>
+                
+                <div className="mt-4 p-3 bg-amber-900/20 border border-amber-700/30 rounded-md">
+                  <p className="text-sm font-medium text-amber-300 mb-1">macOS Security Notice:</p>
+                  <p className="text-xs text-amber-300 mb-2">
+                    macOS may show "cannot verify developer" warning. To bypass:
+                  </p>
+                  <div className="text-xs text-amber-200 space-y-1">
+                    <p><strong>Option 1:</strong> Right-click the binary → "Open" → click "Open" in dialog</p>
+                    <p><strong>Option 2:</strong> Run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine /path/to/local-memory-macos-*</code></p>
+                  </div>
                 </div>
               </div>
 

@@ -209,6 +209,17 @@ const DocsPage = () => {
                 </code>
                 <p className="text-sm mt-3 mb-2"><strong>Windows:</strong></p>
                 <p className="text-sm text-muted-foreground">Add to PATH or run from download folder</p>
+                
+                <div className="mt-4 p-3 bg-amber-900/20 border border-amber-700/30 rounded-md">
+                  <p className="text-sm font-medium text-amber-300 mb-1">macOS Security Notice:</p>
+                  <p className="text-xs text-amber-300 mb-2">
+                    macOS may show "cannot verify developer" warning. To bypass:
+                  </p>
+                  <div className="text-xs text-amber-200 space-y-1">
+                    <p><strong>Option 1:</strong> Right-click the binary → "Open" → click "Open" in dialog</p>
+                    <p><strong>Option 2:</strong> Run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine /path/to/local-memory-macos-*</code></p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -232,88 +243,6 @@ const DocsPage = () => {
                 <code className="text-sm bg-background px-2 py-1 rounded block">
                   ollama pull qwen2.5:7b
                 </code>
-              </div>
-            </div>
-
-            {/* Step 2.5 - Qdrant (Optional) */}
-            <div className="border-l-4 border-purple-500 pl-4">
-              <h3 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h3>
-              <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
-              <div className="bg-muted p-3 rounded-md space-y-2">
-                <p className="text-sm"><strong>Download Qdrant binary:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-                </code>
-                <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
-                
-                <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  tar -xzf qdrant.tar.gz && chmod +x qdrant
-                </code>
-                
-                <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  ./qdrant --uri localhost:6334 {`>`} qdrant.log 2{`>`}&1 &
-                </code>
-                
-                <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  curl http://localhost:6333/healthz
-                </code>
-                
-                <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-xs text-green-300">
-                    <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
-                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
-                  </p>
-                </div>
-                
-                <div className="mt-2 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
-                  <p className="text-xs text-blue-300">
-                    <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2.5 - Qdrant (Optional) */}
-            <div className="border-l-4 border-purple-500 pl-4">
-              <h3 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h3>
-              <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
-              <div className="bg-muted p-3 rounded-md space-y-2">
-                <p className="text-sm"><strong>Download Qdrant binary:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-                </code>
-                <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
-                
-                <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  tar -xzf qdrant.tar.gz && chmod +x qdrant
-                </code>
-                
-                <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  ./qdrant --uri localhost:6334 &gt; qdrant.log 2&gt;&1 &amp;
-                </code>
-                
-                <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
-                <code className="text-sm bg-background px-2 py-1 rounded block">
-                  curl http://localhost:6333/healthz
-                </code>
-                
-                <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-xs text-green-300">
-                    <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
-                    Local Memory auto-detects Qdrant and falls back to SQLite if unavailable.
-                  </p>
-                </div>
-                
-                <div className="mt-2 p-2 bg-blue-900/20 border border-blue-700/30 rounded-md">
-                  <p className="text-xs text-blue-300">
-                    <strong>Alternative:</strong> Use Docker: <code className="bg-background px-1 rounded">docker run -p 6333:6333 qdrant/qdrant</code>
-                  </p>
-                </div>
               </div>
             </div>
 
@@ -667,6 +596,7 @@ const DocsPage = () => {
               <div>
                 <h4 className="font-semibold mb-2">Common Issues</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• <strong>macOS "cannot verify developer" warning:</strong> Right-click binary → "Open" or run <code className="bg-background px-1 rounded">sudo xattr -rd com.apple.quarantine /path/to/local-memory-macos-*</code></li>
                   <li>• <strong>Claude Code server not found:</strong> Run <code className="bg-background px-1 rounded">claude mcp list</code> to check status</li>
                   <li>• <strong>MCP commands not working:</strong> Ensure Claude Code is installed and authenticated</li>
                   <li>• <strong>MCP connection failed:</strong> Check Claude Desktop config path and syntax</li>
