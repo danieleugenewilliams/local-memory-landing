@@ -29,37 +29,35 @@ const DocsPage = () => {
               <Globe className="w-6 h-6 text-blue-500" />
               <CardTitle className="text-xl">Universal AI Platform Support</CardTitle>
             </div>
-            <CardDescription><em>Local Memory</em> is the first solution designed for both modern MCP-enabled agents and traditional AI platforms</CardDescription>
+            <CardDescription><em>Local Memory</em> is designed for both modern MCP-enabled agents and traditional AI platforms</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-3">
                 <h4 className="font-semibold text-green-400 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
                   MCP-Enabled Agents (Native Integration)
                 </h4>
                 <div className="bg-muted p-4 rounded-lg">
                   <ul className="space-y-2 text-sm">
-                    <li>• <strong>Claude Code</strong> - Terminal AI with `claude mcp` commands</li>
-                    <li>• <strong>Claude Desktop</strong> - Native app with config file</li>
+                    <li>• <strong>Claude Code</strong> - Setup with `claude mcp`</li>
+                    <li>• <strong>Claude Desktop</strong> - Setup with config file</li>
                     <li>• <strong>Future MCP Agents</strong> - Automatic compatibility</li>
                   </ul>
                   <p className="text-xs text-muted-foreground mt-3 italic">
-                    Memory tools appear natively in the agent's toolkit - no API calls needed
+                    Memory tools appear natively in the agent's toolkit
                   </p>
                 </div>
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-semibold text-blue-400 flex items-center gap-2">
-                  <Globe className="w-5 h-5" />
+                <h4 className="font-semibold text-green-400 flex items-center gap-2">
                   Traditional AI Platforms (REST API)
                 </h4>
                 <div className="bg-muted p-4 rounded-lg">
                   <ul className="space-y-2 text-sm">
-                    <li>• <strong>OpenCode</strong> - Via REST endpoints</li>
-                    <li>• <strong>ChatGPT</strong> - Through API integration</li>
-                    <li>• <strong>Custom Agents</strong> - Standard HTTP calls</li>
+                    <li>• <strong>OpenCode</strong> - Via REST & JSON-RPC endpoints</li>
+                    <li>• <strong>Tool-Aware Agents</strong> - Via REST endpoints</li>
+                    <li>• <strong>Custom Agents</strong> - Via REST endpoints</li>
                   </ul>
                   <p className="text-xs text-muted-foreground mt-3 italic">
                      Full memory capabilities through 26+ REST API endpoints
@@ -101,7 +99,7 @@ const DocsPage = () => {
                 <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">2</div>
                 <div>
                   <h4 className="font-semibold">Copy Agent Prompt</h4>
-                  <p className="text-sm text-muted-foreground">Get setup instructions for your OS</p>
+                  <p className="text-sm text-muted-foreground">Setup instructions for your OS</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -116,8 +114,8 @@ const DocsPage = () => {
             <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
               <h4 className="font-semibold text-memory-blue mb-2">🤖 The Easiest Installation Ever</h4>
               <p className="text-sm text-muted-foreground">
-                The easiest way to install <em>Local Memory</em>. After purchasing and downloading, just copy our detailed prompts 
-                Your agent will install Ollama, configure MCP integration, set up proper file paths, 
+                After purchasing and downloading <em>Local Memory</em>, just copy our detailed prompts. 
+                Your agent will install Ollama (optional), Qdrant (optional), configure MCP integration, set up proper file paths, 
                 and verify everything works. No manual installation needed!
               </p>
             </div>
