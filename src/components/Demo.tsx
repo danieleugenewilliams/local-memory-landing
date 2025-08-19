@@ -37,7 +37,7 @@ const Demo = () => {
       title: "Development Task",
       description: "Developer describes new API endpoint requirement",
       action: "user_input",
-      command: `# User prompt`,
+      command: `user prompt`,
       params: {
         prompt: "I need to implement a user preferences API endpoint that allows users to update their notification settings, privacy preferences, and display options. It should follow our existing API patterns and team conventions."
       },
@@ -131,10 +131,35 @@ const Demo = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Autoscroll CLI to bottom when new content is added
+  // Smart scroll behavior: smooth scroll during typing, position at step start when complete
   useEffect(() => {
     if (cliScrollRef.current) {
-      cliScrollRef.current.scrollTop = cliScrollRef.current.scrollHeight;
+      if (isTyping) {
+        // During typing, smoothly scroll to bottom to show current activity
+        setTimeout(() => {
+          if (cliScrollRef.current) {
+            cliScrollRef.current.scrollTo({
+              top: cliScrollRef.current.scrollHeight,
+              behavior: 'smooth'
+            });
+          }
+        }, 100);
+      } else if (commandHistory.length > 0) {
+        // When step completes, scroll to show the start of the latest completed step within CLI
+        setTimeout(() => {
+          if (cliScrollRef.current) {
+            const latestStepElement = document.getElementById(`step-${commandHistory.length - 1}`);
+            if (latestStepElement) {
+              const cliContainer = cliScrollRef.current;
+              const stepOffsetTop = latestStepElement.offsetTop - cliContainer.offsetTop;
+              cliContainer.scrollTo({
+                top: stepOffsetTop,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }, 200);
+      }
     }
   }, [commandHistory, currentCommand, isTyping]);
 
@@ -142,7 +167,7 @@ const Demo = () => {
     setCurrentCommand("");
     
     // Special handling for user prompts - show as plain text
-    const fullCommand = command === "# User prompt" 
+    const fullCommand = command === "user prompt" 
       ? `${(params as UserPromptParams).prompt}`
       : `${command}(${JSON.stringify(params, null, 2)})`;
     
@@ -194,7 +219,7 @@ const Demo = () => {
             See <em>Local Memory</em> in Action
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Watch how Claude uses persistent memory to implement a complex API endpoint using team patterns and business requirements
+            Watch how this coding agent uses persistent memory to implement a complex API endpoint using team patterns and business requirements.
           </p>
         </div>
 
@@ -236,17 +261,15 @@ const Demo = () => {
                   </div>
                 ))}
 
-                {currentStep >= demoSteps.length && (
-                  <Button onClick={resetDemo} variant="outline" className="w-full">
-                    Replay Session
-                  </Button>
-                )}
+                <Button onClick={resetDemo} variant="outline" className="w-full">
+                  Restart Session
+                </Button>
               </div>
             </div>
 
             {/* Demo Output */}
             <div className="space-y-6">
-              {/* Claude Code CLI Terminal */}
+              {/* Code CLI Terminal */}
               <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg h-fit">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex gap-2">
@@ -254,7 +277,7 @@ const Demo = () => {
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <span className="text-sm text-slate-400 font-mono">Claude Code CLI - Local Memory Demo</span>
+                  <span className="text-sm text-slate-400 font-mono">Code CLI - Local Memory Demo</span>
                 </div>
                 
                 <div 
@@ -262,20 +285,18 @@ const Demo = () => {
                   className="font-mono text-sm text-green-400 overflow-y-auto"
                   style={{ height: '515px' }}
                 >
-                  {/* Welcome message */}
-                  {commandHistory.length === 0 && currentStep === 0 && (
-                    <div className="text-slate-400 mb-4">
-                      <span className="text-blue-400">❯</span> # Working on a large e-commerce web app. Local Memory has context from previous sessions.
-                      <br />
-                      <span className="text-slate-500"># Click "Run User prompt" to start implementing a new API endpoint...</span>
-                    </div>
-                  )}
+                  {/* Welcome message - always visible */}
+                  <div className="text-slate-400 mb-4">
+                    <span className="text-blue-400">❯</span> # Working on a large e-commerce web app. Local Memory has context from previous sessions.
+                    <br />
+                    <span className="text-slate-500"># Click "Run user prompt" to start implementing a new API endpoint...</span>
+                  </div>
                   
                   {/* Command History */}
                   {commandHistory.map((entry, index) => (
-                    <div key={index} className="mb-4">
+                    <div key={index} id={`step-${index}`} className="mb-4">
                       <div className="text-blue-400">
-                        <span className="text-blue-400">❯</span> {entry.command === "# User prompt" 
+                        <span className="text-blue-400">❯</span> {entry.command === "user prompt" 
                           ? <span className="text-white"> {`${(entry.params as UserPromptParams).prompt}`}</span>
                           : <span>
                               {entry.command}(

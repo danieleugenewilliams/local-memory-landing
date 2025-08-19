@@ -14,9 +14,9 @@ const Hero = () => {
         <div className="mx-auto max-w-4xl text-center">
           {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
-            The AI System That{" "}
+            <p><em>Local Memory</em>:</p>
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
-              Cures 'Context Amnesia'
+              The AI System That Cures 'Context Amnesia'
             </span>
           </h1>
           
@@ -28,8 +28,8 @@ const Hero = () => {
           {/* Key Benefits (single line) */}
           <div className="text-center mb-10 animate-fade-in">
             <p className="text-base sm:text-lg text-muted-foreground font-medium space-x-6">
-              <p>Give your AI permanent memory across ALL coding agents.</p>
-              <p>Claude → OpenCode → Qwen - Your context travels with you.</p>
+              <p>Give your AI permanent memory across ALL coding agents with <em>Local Memory</em>.</p>
+              <p>Your context travels with you.</p>
             </p>
           </div>
           
