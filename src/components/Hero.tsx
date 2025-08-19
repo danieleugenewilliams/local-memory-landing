@@ -22,7 +22,7 @@ const Hero = () => {
           
           {/* Subheading with performance focus + pain points */}
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            Every new session, every `/clear`, every agent switch, knowledge is lost. AI is brilliant but has the memory of a goldfish.
+            Every new session, every `/clear`, every agent switch, knowledge is lost. AI is brilliant but has memory like a sieve.
           </p>
           
           {/* Key Benefits (single line) */}
@@ -37,7 +37,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
               <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                🚀 Give Your Coding Agent a Memory Upgrade Now
+                🚀 Give Your Coding Agent a Memory Upgrade Now - $29
               </Button>
             </Link>
             <a href="#demo">
@@ -50,7 +50,7 @@ const Hero = () => {
           
           {/* Trust badges */}
           <div className="mt-6 text-center text-sm text-muted-foreground animate-fade-in">
-            🔒 One-Time Payment • ⚡ Instant Access • 🛡️ 100% Local & Private
+            🔒 One-Time Secure Stripe Payment • ⚡ Instant Access • 🛡️ 100% Local & Private
           </div>
 
           <div className="text-sm text-muted-foreground">

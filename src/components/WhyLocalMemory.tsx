@@ -116,8 +116,15 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 <div className="text-3xl mb-4">🌐</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Any AI Platform</h3>
                 <p className="text-sm text-muted-foreground mb-4">Universal REST API</p>
-                <p className="text-xs text-muted-foreground"><em>OpenCode, ChatGPT, custom, etc.</em></p>
+                <p className="text-xs text-muted-foreground"><em>OpenCode, custom agent, etc.</em></p>
               </div>
+            </div>
+
+            {/* Unique Message */}
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground italic max-w-xl mx-auto">
+                The only AI memory system with native MCP integration AND universal REST API. Future-proof your AI workflow today.
+              </p>
             </div>
 
           </div>
