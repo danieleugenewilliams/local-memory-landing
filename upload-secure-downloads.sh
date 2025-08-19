@@ -10,14 +10,13 @@ BUCKET_NAME="localmemory-secure-downloads"
 BINARIES_DIR="./binaries"  # Directory containing your compiled binaries
 SECRET="d9e7e7a9f2b40547a5a0d6a99fc0ae8bf6847a700f7928f7f82a7f4b3223bf84"  # Same as VITE_DOWNLOAD_SECRET
 
-# Platforms and their binary names (using arrays for macOS compatibility)
-PLATFORMS=("macos-intel" "macos-arm" "windows" "linux")
+# Platforms and their zip file names (simplified to 3 platforms)
+PLATFORMS=("macos" "windows" "linux")
 get_binary_name() {
     case $1 in
-        "macos-intel") echo "local-memory-macos-intel" ;;
-        "macos-arm") echo "local-memory-macos-arm" ;;
-        "windows") echo "local-memory-windows.exe" ;;
-        "linux") echo "local-memory-linux" ;;
+        "macos") echo "local-memory-macos.zip" ;;
+        "windows") echo "local-memory-windows.zip" ;;
+        "linux") echo "local-memory-linux.zip" ;;
     esac
 }
 
@@ -70,7 +69,7 @@ upload_for_time_window() {
         
         # Upload to S3 with error handling
         if aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
-            --content-type "application/octet-stream" \
+            --content-type "application/zip" \
             --metadata "platform=$platform,time-window=$time_window"; then
             echo -e "${GREEN}✓ Uploaded $platform binary${NC}\n"
         else
@@ -182,11 +181,10 @@ case "${1:-help}" in
         echo "  $0 test-hash <platform> <window> - Test hash generation"
         echo ""
         echo "Setup:"
-        echo "  1. Place binaries in: $BINARIES_DIR/"
-        echo "     - local-memory-macos-intel"
-        echo "     - local-memory-macos-arm"
-        echo "     - local-memory-windows.exe"
-        echo "     - local-memory-linux"
+        echo "  1. Place ZIP archives in: $BINARIES_DIR/"
+        echo "     - local-memory-macos.zip (contains both Intel and ARM binaries)"
+        echo "     - local-memory-windows.zip (contains Windows executable)"
+        echo "     - local-memory-linux.zip (contains Linux binary)"
         echo "  2. Configure AWS CLI with appropriate credentials"
         echo "  3. Run: $0 upload"
         echo ""

@@ -19,7 +19,7 @@ const SuccessPage = () => {
   const generateSecureDownloadUrls = (paymentTimestamp: number) => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
-    const platforms = ['macos-intel', 'macos-arm', 'windows', 'linux'];
+    const platforms = ['macos', 'windows', 'linux'];
     const urls: {[key: string]: string} = {};
     
     platforms.forEach(platform => {
@@ -43,18 +43,17 @@ const SuccessPage = () => {
       });
       
       // Production: route through main domain to CloudFront
-      const getBinaryName = (platform: string) => {
+      const getZipName = (platform: string) => {
         switch (platform) {
-          case 'macos-intel': return 'local-memory-macos-intel';
-          case 'macos-arm': return 'local-memory-macos-arm';
-          case 'windows': return 'local-memory-windows.exe';
-          case 'linux': return 'local-memory-linux';
-          default: return `local-memory-${platform}`;
+          case 'macos': return 'local-memory-macos.zip';
+          case 'windows': return 'local-memory-windows.zip';
+          case 'linux': return 'local-memory-linux.zip';
+          default: return `local-memory-${platform}.zip`;
         }
       };
       
-      const binaryName = getBinaryName(platform);
-      urls[platform] = `https://localmemory.co/downloads/${timeWindow}/${hash}/${platform}/${binaryName}`;
+      const zipName = getZipName(platform);
+      urls[platform] = `https://localmemory.co/downloads/${timeWindow}/${hash}/${platform}/${zipName}`;
     });
     
     return urls;
@@ -176,13 +175,14 @@ const SuccessPage = () => {
     try {
       console.log(`Starting download for ${platform}:`, link);
       
-      // For development/testing: Use CloudFront URL directly for actual downloads
+      // Use CloudFront URL directly for actual downloads
+      // CloudFront origin path is '/downloads' so we need to remove the /downloads prefix to avoid double pathing
       const cloudFrontUrl = link.replace('https://localmemory.co/downloads/', 'https://d3g3vv5lpyh0pb.cloudfront.net/');
       
       // Create a temporary link element to trigger download
       const downloadLink = document.createElement('a');
       downloadLink.href = cloudFrontUrl;
-      downloadLink.download = `local-memory-${platform}${platform === 'windows' ? '.exe' : ''}`;
+      downloadLink.download = `local-memory-${platform}.zip`;
       downloadLink.target = '_blank';
       
       // Append to body, click, and remove
@@ -256,36 +256,18 @@ const SuccessPage = () => {
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-3">
                     <div>
-                      <div className="font-semibold">macOS (Apple Silicon)</div>
-                      <div className="text-sm text-muted-foreground">M1, M2, M3, M4 chips</div>
+                      <div className="font-semibold">macOS</div>
+                      <div className="text-sm text-muted-foreground">Universal - includes both Intel and Apple Silicon binaries</div>
                     </div>
                   </div>
                   <Button 
-                    onClick={() => handleDownload('macos-arm')}
+                    onClick={() => handleDownload('macos')}
                     variant="outline"
                     size="sm"
                     className="gap-2"
                   >
                     <Download className="w-4 h-4" />
-                    Download
-                  </Button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-semibold">macOS (Intel)</div>
-                      <div className="text-sm text-muted-foreground">x64 Intel processors</div>
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={() => handleDownload('macos-intel')}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download
+                    Download ZIP
                   </Button>
                 </div>
 
@@ -293,7 +275,7 @@ const SuccessPage = () => {
                   <div className="flex items-center gap-3">
                     <div>
                       <div className="font-semibold">Windows</div>
-                      <div className="text-sm text-muted-foreground">Windows 10/11</div>
+                      <div className="text-sm text-muted-foreground">Windows 10/11 - 64-bit executable</div>
                     </div>
                   </div>
                   <Button 
@@ -303,7 +285,7 @@ const SuccessPage = () => {
                     className="gap-2"
                   >
                     <Download className="w-4 h-4" />
-                    Download
+                    Download ZIP
                   </Button>
                 </div>
 
@@ -311,7 +293,7 @@ const SuccessPage = () => {
                   <div className="flex items-center gap-3">
                     <div>
                       <div className="font-semibold">Linux</div>
-                      <div className="text-sm text-muted-foreground">x64 binary</div>
+                      <div className="text-sm text-muted-foreground">x64 binary - tested on Ubuntu, Debian, CentOS, Alpine, Fedora</div>
                     </div>
                   </div>
                   <Button 
@@ -321,7 +303,7 @@ const SuccessPage = () => {
                     className="gap-2"
                   >
                     <Download className="w-4 h-4" />
-                    Download
+                    Download ZIP
                   </Button>
                 </div>
               </div>
@@ -329,10 +311,11 @@ const SuccessPage = () => {
               <div className="mt-6 p-4 bg-muted rounded-lg">
                 <h3 className="font-semibold mb-2">Next Steps:</h3>
                 <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
-                  <li>Download the executable for your platform above</li>
+                  <li>Download and extract the ZIP file for your platform above</li>
+                  <li><strong>macOS:</strong> Choose the correct binary (local-memory-intel or local-memory-arm) and make executable: <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
                   <li><strong>Optional - Install Qdrant (5-8x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract, and run: <code className="bg-background px-1 rounded">./qdrant</code></li>
-                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">./local-memory --session-id my-project</code></li>
+                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">./local-memory-* --session-id my-project</code></li>
                   <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
                   <li><strong>Optional:</strong> Add to Claude Desktop MCP config for AI integration</li>
                 </ol>
@@ -353,14 +336,15 @@ const SuccessPage = () => {
                   </p>
                 </div>
                 
-                <div className="mt-4 p-3 bg-amber-900/20 border border-amber-700/30 rounded-md">
-                  <p className="text-sm font-medium text-amber-300 mb-1">macOS Security Notice:</p>
-                  <p className="text-xs text-amber-300 mb-2">
-                    macOS may show "cannot verify developer" warning. To bypass:
+                <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
+                  <p className="text-sm font-medium text-green-300 mb-1">macOS ZIP Benefits:</p>
+                  <p className="text-xs text-green-300 mb-2">
+                    ZIP format reduces security warnings! But if needed:
                   </p>
-                  <div className="text-xs text-amber-200 space-y-1">
-                    <p><strong>Option 1:</strong> Right-click the binary → "Open" → click "Open" in dialog</p>
-                    <p><strong>Option 2:</strong> Run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine /path/to/local-memory-macos-*</code></p>
+                  <div className="text-xs text-green-200 space-y-1">
+                    <p><strong>Option 1:</strong> Right-click the extracted binary → "Open" → click "Open" in dialog</p>
+                    <p><strong>Option 2:</strong> Run: <code className="bg-green-800/30 px-1 rounded text-green-100">xattr -rd com.apple.quarantine local-memory-*</code></p>
+                    <p><strong>Included:</strong> Both Intel and ARM binaries in one convenient download</p>
                   </div>
                 </div>
               </div>
