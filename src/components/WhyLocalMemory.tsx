@@ -76,10 +76,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             Stop losing context when switching between AI tools.
           </p>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            <em>Local Memory</em> works everywhere:
-          </p>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Same memory. Same context. Every agent.
+            <em>Local Memory</em> works everywhere.
           </p>
         </div>
 

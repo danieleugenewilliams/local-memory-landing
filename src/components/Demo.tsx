@@ -223,11 +223,11 @@ const Demo = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_2fr_1fr] gap-6 lg:items-stretch">
             {/* Demo Controls */}
-            <div className="space-y-6">
-              <div className="bg-card rounded-2xl p-6 border border-border h-fit">
+            <div className="flex flex-col">
+              <div className="bg-card rounded-2xl p-6 border border-border flex-1">
                 <h3 className="text-lg font-bold text-foreground mb-4">Interactive Demo</h3>
                 
                 {demoSteps.map((step, index) => (
@@ -268,9 +268,9 @@ const Demo = () => {
             </div>
 
             {/* Demo Output */}
-            <div className="space-y-6">
+            <div className="flex flex-col">
               {/* Code CLI Terminal */}
-              <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg h-fit">
+              <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg flex-1">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -283,7 +283,7 @@ const Demo = () => {
                 <div 
                   ref={cliScrollRef}
                   className="font-mono text-sm text-green-400 overflow-y-auto"
-                  style={{ height: '515px' }}
+                  style={{ height: '556px' }}
                 >
                   {/* Welcome message - always visible */}
                   <div className="text-slate-400 mb-4">
@@ -341,30 +341,36 @@ const Demo = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Key Benefits */}
-          <div className="mt-12 grid sm:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-memory-green/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <span className="text-xl">💾</span>
+            {/* Key Benefits */}
+            <div className="flex flex-col md:col-span-2 lg:col-span-1">
+              <div className="bg-card rounded-2xl p-6 border border-border flex-1">
+                <h3 className="text-lg font-bold text-foreground mb-6">Why <em>Local Memory</em>?</h3>
+                
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-memory-green/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                      <span className="text-xl">⚡</span>
+                    </div>
+                    <h4 className="font-semibold text-foreground mb-2">Save 2+ Hours Daily</h4>
+                    <p className="text-sm text-muted-foreground">Skip searching docs and codebases. Get relevant team patterns instantly. Worth $100-300 daily.</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-memory-blue/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                      <span className="text-xl">🎯</span>
+                    </div>
+                    <h4 className="font-semibold text-foreground mb-2">Pays for Itself in 2 Days</h4>
+                    <p className="text-sm text-muted-foreground">Smart context selection maximizes expensive AI usage. 2,500%+ monthly ROI on time savings.</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                      <span className="text-xl">🚀</span>
+                    </div>
+                    <h4 className="font-semibold text-foreground mb-2">$2K-6K Monthly Value</h4>
+                    <p className="text-sm text-muted-foreground">Build on past learnings. Cumulative knowledge eliminates repeated context gathering.</p>
+                  </div>
+                </div>
               </div>
-              <h4 className="font-semibold text-foreground mb-2">Persistent Storage</h4>
-              <p className="text-sm text-muted-foreground">Memories persist across sessions and conversations</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-memory-blue/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <span className="text-xl">🔍</span>
-              </div>
-              <h4 className="font-semibold text-foreground mb-2">Intelligent Search</h4>
-              <p className="text-sm text-muted-foreground">Find relevant memories using semantic similarity</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <span className="text-xl">🧠</span>
-              </div>
-              <h4 className="font-semibold text-foreground mb-2">Contextual Answers</h4>
-              <p className="text-sm text-muted-foreground">AI uses stored knowledge to provide better responses</p>
             </div>
           </div>
         </div>
