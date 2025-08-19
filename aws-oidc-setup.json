@@ -1,0 +1,43 @@
+{
+  "trust-policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::155505548742:oidc-provider/token.actions.githubusercontent.com"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition": {
+          "StringEquals": {
+            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+          },
+          "StringLike": {
+            "token.actions.githubusercontent.com:sub": [
+              "repo:danieleugenewilliams/local-memory-golang:ref:refs/heads/main",
+              "repo:danieleugenewilliams/local-memory-golang:ref:refs/tags/v*"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "role-policy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:PutObject",
+          "s3:PutObjectAcl",
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "Resource": [
+          "arn:aws:s3:::localmemory-secure-downloads",
+          "arn:aws:s3:::localmemory-secure-downloads/downloads/*"
+        ]
+      }
+    ]
+  }
+}

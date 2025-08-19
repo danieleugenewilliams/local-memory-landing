@@ -1,0 +1,217 @@
+name: Update Binary Downloads
+
+on:
+  repository_dispatch:
+    types: [binaries-updated]
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update binaries (bypass safety checks)'
+        type: boolean
+        default: false
+
+jobs:
+  # Validate dispatch payload
+  validate-payload:
+    name: Validate Repository Dispatch
+    runs-on: ubuntu-latest
+    outputs:
+      is_valid: ${{ steps.validate.outputs.is_valid }}
+      ref_name: ${{ steps.validate.outputs.ref_name }}
+      is_tag: ${{ steps.validate.outputs.is_tag }}
+      build_url: ${{ steps.validate.outputs.build_url }}
+    
+    steps:
+    - name: Validate payload
+      id: validate
+      run: |
+        echo "🔍 Validating repository dispatch payload..."
+        
+        # Extract payload data
+        REF="${{ github.event.client_payload.ref || 'manual' }}"
+        REF_NAME="${{ github.event.client_payload.ref_name || 'manual' }}"
+        SHA="${{ github.event.client_payload.sha || 'unknown' }}"
+        REPOSITORY="${{ github.event.client_payload.repository || 'unknown' }}"
+        BUILD_URL="${{ github.event.client_payload.build_url || 'unknown' }}"
+        IS_TAG="${{ github.event.client_payload.is_tag || 'false' }}"
+        
+        echo "📋 Dispatch Information:"
+        echo "  Ref: $REF"
+        echo "  Ref Name: $REF_NAME"
+        echo "  SHA: $SHA"
+        echo "  Repository: $REPOSITORY"
+        echo "  Build URL: $BUILD_URL"
+        echo "  Is Tag: $IS_TAG"
+        echo ""
+        
+        # Validate required fields
+        if [[ -z "$REF_NAME" || "$REF_NAME" == "manual" ]]; then
+          if [[ "${{ inputs.force_update }}" == "true" ]]; then
+            echo "⚠️ Manual workflow dispatch - force update enabled"
+            echo "is_valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Invalid or missing ref_name in payload"
+            echo "is_valid=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        else
+          echo "✅ Valid payload received"
+          echo "is_valid=true" >> $GITHUB_OUTPUT
+        fi
+        
+        # Set outputs
+        echo "ref_name=$REF_NAME" >> $GITHUB_OUTPUT
+        echo "is_tag=$IS_TAG" >> $GITHUB_OUTPUT
+        echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
+
+  # Download binaries from GitHub Actions artifacts
+  download-binaries:
+    name: Download ZIP Packages from Build
+    runs-on: ubuntu-latest
+    needs: validate-payload
+    if: needs.validate-payload.outputs.is_valid == 'true'
+    
+    steps:
+    - name: Checkout landing page repository
+      uses: actions/checkout@v4
+
+    - name: Download ZIP packages from golang repo
+      run: |
+        echo "📦 Downloading ZIP packages from golang repository..."
+        
+        # Create temporary directory for downloads
+        mkdir -p temp-downloads
+        
+        # Note: In a production setup, you would use GitHub API to download artifacts
+        # or download from a release. For now, we'll simulate this with a placeholder
+        # that can be updated once the golang workflow creates actual artifacts.
+        
+        echo "🔄 This step will be implemented to download from:"
+        echo "  Repository: danieleugenewilliams/local-memory-golang"
+        echo "  Ref: ${{ needs.validate-payload.outputs.ref_name }}"
+        echo "  Build URL: ${{ needs.validate-payload.outputs.build_url }}"
+        
+        # TODO: Implement actual artifact download logic
+        # This could use:
+        # 1. GitHub API to download artifacts from the specific workflow run
+        # 2. Download from GitHub releases if it's a tag
+        # 3. Use a shared S3 bucket for artifact transfer
+        
+        echo "✅ Download step prepared (implementation pending)"
+
+    - name: Validate downloaded packages
+      run: |
+        echo "🔍 Validating downloaded ZIP packages..."
+        
+        # Expected ZIP files
+        EXPECTED_ZIPS=("local-memory-macos.zip" "local-memory-windows.zip" "local-memory-linux.zip")
+        
+        # TODO: Implement validation once download is working
+        echo "📋 Expected files:"
+        for zip_file in "${EXPECTED_ZIPS[@]}"; do
+          echo "  - $zip_file"
+        done
+        
+        echo "✅ Validation step prepared (implementation pending)"
+
+  # Update local binaries directory
+  update-local-binaries:
+    name: Update Local Binaries Directory
+    runs-on: ubuntu-latest
+    needs: [validate-payload, download-binaries]
+    if: needs.validate-payload.outputs.is_valid == 'true'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update binaries directory
+      run: |
+        echo "📁 Updating local binaries directory..."
+        
+        # Ensure binaries directory exists
+        mkdir -p binaries/
+        
+        # TODO: Copy downloaded ZIP files to binaries directory
+        # cp temp-downloads/*.zip binaries/
+        
+        echo "📋 Current binaries directory:"
+        ls -la binaries/ || echo "Directory empty or missing"
+        
+        echo "✅ Binaries directory update prepared (implementation pending)"
+
+    - name: Run upload script
+      run: |
+        echo "🚀 Running secure download upload script..."
+        
+        # Make upload script executable
+        chmod +x upload-secure-downloads.sh
+        
+        # Run upload for current and next time windows
+        if ./upload-secure-downloads.sh upload; then
+          echo "✅ Upload completed successfully"
+        else
+          echo "❌ Upload failed"
+          exit 1
+        fi
+
+    - name: Verify uploads
+      run: |
+        echo "🔍 Verifying S3 uploads..."
+        
+        # Verify uploads were successful
+        if ./upload-secure-downloads.sh verify; then
+          echo "✅ Upload verification successful"
+        else
+          echo "❌ Upload verification failed"
+          exit 1
+        fi
+
+  # Health check and notification
+  health-check:
+    name: Health Check and Notification
+    runs-on: ubuntu-latest
+    needs: [validate-payload, update-local-binaries]
+    if: always() && needs.validate-payload.outputs.is_valid == 'true'
+    
+    steps:
+    - name: Test download URLs
+      run: |
+        echo "🌐 Testing secure download URLs..."
+        
+        # Get current time window
+        CURRENT_TIME=$(date +%s)
+        TIME_WINDOW=$((CURRENT_TIME / 43200))
+        
+        echo "📊 Current time window: $TIME_WINDOW"
+        
+        # TODO: Test that download URLs are working
+        # This would involve generating test URLs and checking they return 200
+        
+        echo "✅ Health check prepared (implementation pending)"
+
+    - name: Report status
+      run: |
+        echo "📋 Binary Update Summary"
+        echo "======================="
+        echo "Trigger: Repository dispatch from golang repo"
+        echo "Ref: ${{ needs.validate-payload.outputs.ref_name }}"
+        echo "Is Tag: ${{ needs.validate-payload.outputs.is_tag }}"
+        echo "Build URL: ${{ needs.validate-payload.outputs.build_url }}"
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+        
+        if [[ "${{ needs.update-local-binaries.result }}" == "success" ]]; then
+          echo "✅ Binary update completed successfully"
+        else
+          echo "❌ Binary update failed"
+        fi
+
+    - name: Cleanup
+      if: always()
+      run: |
+        echo "🧹 Cleaning up temporary files..."
+        rm -rf temp-downloads/
+        echo "✅ Cleanup completed"
