@@ -135,7 +135,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               
               <Link to="/payment" className="flex justify-center">
                 <Button className="w-full sm:w-auto" size="lg">
-                  Upgrade Your Coding Agent's Memory Now - $29
+                  Upgrade Your Coding Agent's Memory Now
                 </Button>
               </Link>
               

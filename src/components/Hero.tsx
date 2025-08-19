@@ -38,7 +38,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
               <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                Upgrade Your Coding Agent's Memory Now - $29
+                Upgrade Your Coding Agent's Memory Now
               </Button>
             </Link>
             <a href="#demo">

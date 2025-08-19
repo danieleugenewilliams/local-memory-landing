@@ -101,7 +101,7 @@ This keeps your payment configuration secure and maintainable!`);
                 className="w-full h-12 text-lg font-semibold"
                 size="lg"
               >
-                Get Instant Access - $29
+                Get Instant Access
               </Button>
 
               <div className="text-center text-sm text-muted-foreground">
