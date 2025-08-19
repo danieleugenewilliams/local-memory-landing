@@ -534,7 +534,7 @@ const DocsPage = () => {
                   <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold">Native MCP Integration</h4>
-                     <p className="text-sm text-muted-foreground">26 tools for Claude Desktop & Code</p>
+                     <p className="text-sm text-muted-foreground">26+ tools for Claude Desktop & Code</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
