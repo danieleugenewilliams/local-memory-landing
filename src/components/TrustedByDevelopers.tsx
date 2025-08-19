@@ -18,27 +18,12 @@ const TrustedByDevelopers = () => {
             <div className="text-center">
               <div className="text-4xl mb-6">💬</div>
               <blockquote className="text-xl sm:text-2xl text-foreground mb-6 italic leading-relaxed">
-                "...I just wanted to share that the <em>local memory</em> MCP has really helped boost my productivity with [my project]. I'll package everything up and share it with you tomorrow... Thanks so much again for sharing!"
+                "I just wanted to share that the <em>local memory</em> MCP has really helped boost my productivity with [my project]. Thanks so much again for sharing!"
               </blockquote>
               <cite className="text-sm text-muted-foreground font-medium">
                 — Early Access Developer
               </cite>
               
-              {/* Before/After Metrics */}
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <div className="text-lg font-bold text-red-500 mb-1">Before</div>
-                  <div className="text-sm text-muted-foreground">AI Context Amnesia</div>
-                </div>
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <div className="text-lg font-bold text-memory-green mb-1">After</div>
-                  <div className="text-sm text-muted-foreground">Zero re-explaining</div>
-                </div>
-                <div className="bg-card rounded-lg p-4 border border-border">
-                  <div className="text-lg font-bold text-memory-blue mb-1">Time Saved</div>
-                  <div className="text-sm text-muted-foreground">4+ hours per day</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

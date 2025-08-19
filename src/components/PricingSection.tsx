@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 
 const PricingSection = () => {
   return (
-    <section className="py-24 bg-muted/30">
-      <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
+    <section className="relative overflow-hidden bg-background py-24">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-memory-blue/10 via-background to-memory-purple/10" />
+      
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black_40%,transparent_100%)]" />
+      
+      <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
             Premium Performance, Indie Price
@@ -41,7 +47,7 @@ const PricingSection = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-memory-blue">✓</span>
-                  <span>26 MCP tools included</span>
+                  <span>26+ MCP tools included</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-memory-blue">✓</span>

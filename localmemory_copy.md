@@ -10,7 +10,7 @@
 
 ### Key Benefits (3-column layout)
 ```
-⚡ 11ms Response Times          🔧 26 Native MCP Tools         🌐 Universal Compatibility
+⚡ 11ms Response Times          🔧 26+ Native MCP Tools         🌐 Universal Compatibility
 Production-grade performance   Appear directly in Claude       Works with any AI platform
 5-8x faster than alternatives  Desktop & Code                  MCP + REST API support
 ```
@@ -57,7 +57,7 @@ Production-grade performance   Appear directly in Claude       Works with any AI
 ```
 🖥️ Claude Desktop          💻 Claude Code             🌐 Any AI Platform
 Native MCP Integration     MCP + REST API Support     Universal REST API
-26 tools appear directly   Terminal & web integration  OpenCode, ChatGPT, custom agents
+26+ tools appear directly   Terminal & web integration  OpenCode, ChatGPT, custom agents
 ```
 
 ### Code Examples Tabs
@@ -124,7 +124,7 @@ Cross-platform support        Automatic DB creation       Graceful error handlin
 # 2 minutes to full AI memory
 ✅ Database created automatically
 ✅ Vector search optimized  
-✅ 26 MCP tools ready
+✅ 26+ MCP tools ready
 ✅ REST API listening on :3002
 ```
 
@@ -148,7 +148,7 @@ Cross-platform support        Automatic DB creation       Graceful error handlin
 $29 (normally $49)
 ━━━━━━━━━━━━━━━━━━━
 ✓ Complete local-memory system
-✓ All 26 MCP tools included
+✓ All 26+ MCP tools included
 ✓ Unlimited usage forever
 ✓ Priority email support
 ✓ Future updates included
@@ -239,7 +239,7 @@ $29 (normally $49)
 - **Storage**: SQLite database with optional Qdrant vector support
 - **Search**: Vector similarity + full-text + semantic AI search
 - **Performance**: Sub-20ms response times, ±1ms consistency
-- **Integration**: 26 MCP tools, 20+ REST endpoints
+- **Integration**: 26+ MCP tools, 20+ REST endpoints
 
 ### Architecture Benefits
 - **No Dependencies**: Single binary, no runtime requirements

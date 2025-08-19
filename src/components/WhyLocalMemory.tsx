@@ -73,132 +73,55 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             Shared Memories, Every Agent
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Stop losing context when switching between AI tools.
-          </p>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            <em>Local Memory</em> works everywhere.
+            Context amnesia is killing your productivity—it's time to fix that.
           </p>
         </div>
 
         {/* Compatibility Content */}
         <div className="animate-fade-in">
+
+            {/* Real User Testimonial - Prominent */}
+            <div className="max-w-4xl mx-auto mb-16">
+              <div className="bg-gradient-to-r from-memory-blue/10 to-memory-purple/10 border border-memory-blue/20 rounded-2xl p-8 lg:p-12">
+                <div className="text-center">
+                  <div className="text-4xl mb-6">💬</div>
+                  <blockquote className="text-xl sm:text-2xl text-foreground mb-6 italic leading-relaxed">
+                    "I just wanted to share that the <em>local memory</em> MCP has really helped boost my productivity with [my project]. Thanks so much again for sharing!"
+                  </blockquote>
+                  <cite className="text-sm text-muted-foreground font-medium">
+                    — Early Access Developer
+                  </cite>
+                  
+                </div>
+              </div>
+            </div>
+
             {/* Platform Grid */}
             <div className="grid sm:grid-cols-3 gap-6 lg:gap-8 mb-12 max-w-4xl mx-auto">
-              <div className="bg-card rounded-2xl p-6 border border-border text-center">
+              <div className="bg-gradient-to-br from-memory-blue/10 to-memory-blue/5 border border-memory-blue/20 rounded-2xl p-6 text-center">
                 <div className="text-3xl mb-4">🖥️</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Claude Desktop</h3>
                 <p className="text-sm text-muted-foreground mb-4">Native MCP Integration</p>
-                <p className="text-xs text-muted-foreground">26 tools appear directly</p>
+                <p className="text-xs text-muted-foreground"><em>26+ tools appear directly</em></p>
               </div>
               
-              <div className="bg-card rounded-2xl p-6 border border-border text-center">
+              <div className="bg-gradient-to-br from-memory-green/10 to-memory-green/5 border border-memory-green/20 rounded-2xl p-6 text-center">
                 <div className="text-3xl mb-4">💻</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Claude Code</h3>
                 <p className="text-sm text-muted-foreground mb-4">MCP + REST API</p>
-                <p className="text-xs text-muted-foreground">Terminal & web integration</p>
+                <p className="text-xs text-muted-foreground"><em>Terminal & web integration</em></p>
               </div>
               
-              <div className="bg-card rounded-2xl p-6 border border-border text-center">
+              <div className="bg-gradient-to-br from-memory-purple/10 to-memory-purple/5 border border-memory-purple/20 rounded-2xl p-6 text-center">
                 <div className="text-3xl mb-4">🌐</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Any AI Platform</h3>
                 <p className="text-sm text-muted-foreground mb-4">Universal REST API</p>
-                <p className="text-xs text-muted-foreground">OpenCode, ChatGPT, custom</p>
+                <p className="text-xs text-muted-foreground"><em>OpenCode, ChatGPT, custom, etc.</em></p>
               </div>
             </div>
 
-            {/* Quick Setup Example */}
-            <div className="max-w-3xl mx-auto">
-              <div className="bg-card rounded-2xl border border-border p-6">
-                <h4 className="text-lg font-semibold text-foreground mb-4 text-center">
-                  2 Minutes to Full AI Memory
-                </h4>
-                
-                <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Bot className="w-5 h-5 text-memory-blue" />
-                    <h5 className="font-semibold text-memory-blue">Just Copy & Paste to Your AI Agent</h5>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    No manual installation needed! Copy the prompt below and paste it into Claude or any AI agent. 
-                    Your agent will handle the complete setup automatically.
-                  </p>
-                  
-                  <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                    <div className="bg-muted rounded-lg p-4 mb-2">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg">🍎</span>
-                          <span className="font-medium">macOS Setup Prompt</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={copyToClipboard}
-                            className="gap-1"
-                          >
-                            <Copy className="w-3 h-3" />
-                            {copied ? 'Copied!' : 'Copy'}
-                          </Button>
-                          <CollapsibleTrigger asChild>
-                            <Button size="sm" variant="ghost" className="gap-1">
-                              <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                              {isOpen ? 'Hide' : 'Show'} Full Prompt
-                            </Button>
-                          </CollapsibleTrigger>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-background p-3 rounded border">
-                        <pre className="text-xs text-muted-foreground whitespace-pre-wrap">
-                          {macosPrompt.substring(0, 300)}...
-                        </pre>
-                      </div>
-                    </div>
-                    
-                    <CollapsibleContent>
-                      <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
-                        <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
-                          {macosPrompt}
-                        </pre>
-                      </div>
-                    </CollapsibleContent>
-                  </Collapsible>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="text-memory-green">✅</span>
-                    <span>Agent installs Ollama automatically</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-memory-green">✅</span>
-                    <span>26 MCP tools configured</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-memory-green">✅</span>
-                    <span>Claude Desktop & Code ready</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-memory-green">✅</span>
-                    <span>Optional Qdrant for 10x speed</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
-        {/* Micro-CTA */}
-        <div className="text-center mt-12">
-          <Link to="/payment">
-            <Button size="lg" className="mb-4">
-              🚀 Give Your Coding Agent Memory Now - $29
-            </Button>
-          </Link>
-          <div className="text-sm text-muted-foreground">
-            <em>"Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes."</em>
-          </div>
-        </div>
       </div>
     </section>
   );

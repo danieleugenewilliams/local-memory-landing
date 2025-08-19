@@ -137,7 +137,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>26 MCP tools for complete control</span>
+                <span>26+ MCP tools for complete control</span>
               </li>
             </ul>
           </div>
@@ -147,7 +147,7 @@ const Features = () => {
         <div className="mt-16 text-center">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">26</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">26+</div>
               <div className="text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div>

@@ -37,7 +37,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
               <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                🚀 Get Early Access - $29
+                🚀 Give Your Coding Agent a Memory Upgrade Now
               </Button>
             </Link>
             <a href="#demo">
@@ -50,8 +50,13 @@ const Hero = () => {
           
           {/* Trust badges */}
           <div className="mt-6 text-center text-sm text-muted-foreground animate-fade-in">
-            🔒 One-Time Payment • ⚡ Instant Access
+            🔒 One-Time Payment • ⚡ Instant Access • 🛡️ 100% Local & Private
           </div>
+
+          <div className="text-sm text-muted-foreground">
+            <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
+          </div>
+
         </div>
       </div>
     </section>

@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import ProblemSolution from "@/components/ProblemSolution";
 import Demo from "@/components/Demo";
 import WhyLocalMemory from "@/components/WhyLocalMemory";
-import TrustedByDevelopers from "@/components/TrustedByDevelopers";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 
@@ -15,7 +14,6 @@ const Index = () => {
       <ProblemSolution />
       <Demo />
       <WhyLocalMemory />
-      <TrustedByDevelopers />
       <PricingSection />
       <Footer />
     </div>
