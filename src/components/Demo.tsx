@@ -356,21 +356,21 @@ const Demo = () => {
                 <div className="space-y-6">
                   <div className="text-center">
                     <div className="w-12 h-12 bg-memory-green/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <span className="text-xl">⚡</span>
+                      <span className="text-xl">🕑</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Save 2+ Hours Daily</h4>
                     <p className="text-sm text-muted-foreground">Skip searching docs and codebases. Get relevant team patterns instantly. Worth $100-300 daily.</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-memory-blue/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <span className="text-xl">🎯</span>
+                      <span className="text-xl">🏦</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Pays for Itself in 2 Days</h4>
                     <p className="text-sm text-muted-foreground">Smart context selection maximizes expensive AI usage. 2,500%+ monthly ROI on time savings.</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                      <span className="text-xl">🚀</span>
+                      <span className="text-xl">📈</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">$2K-6K Monthly Value</h4>
                     <p className="text-sm text-muted-foreground">Build on past learnings. Cumulative knowledge eliminates repeated context gathering.</p>

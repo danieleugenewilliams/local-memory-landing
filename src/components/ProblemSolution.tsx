@@ -30,7 +30,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
-                <span className="text-red-500 text-xl flex-shrink-0">😤</span>
+                <span className="text-red-500 text-xl flex-shrink-0">😒</span>
                 <div>
                   <div className="font-medium text-foreground">"I literally just explained this error pattern"</div>
                   <div className="text-sm text-muted-foreground">Repeating the same debugging steps</div>
@@ -38,7 +38,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
-                <span className="text-red-500 text-xl flex-shrink-0">⏰</span>
+                <span className="text-red-500 text-xl flex-shrink-0">⌛️</span>
                 <div>
                   <div className="font-medium text-foreground">Context-switching hell with every new session or `/clear`</div>
                   <div className="text-sm text-muted-foreground">Lost productivity from constant re-onboarding</div>
@@ -54,7 +54,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
-                <span className="text-red-500 text-xl flex-shrink-0">🤯</span>
+                <span className="text-red-500 text-xl flex-shrink-0">😤</span>
                 <div>
                   <div className="font-medium text-foreground">Starting over with each agent switch</div>
                   <div className="text-sm text-muted-foreground">Claude → OpenCode → Qwen → back to square one</div>
@@ -89,7 +89,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
-                <span className="text-green-500 text-xl flex-shrink-0">🚀</span>
+                <span className="text-green-500 text-xl flex-shrink-0">🤓</span>
                 <div>
                   <div className="font-medium text-foreground">Progressive understanding of your architecture</div>
                   <div className="text-sm text-muted-foreground">AI agents get smarter about your codebase over time</div>
@@ -97,7 +97,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
-                <span className="text-green-500 text-xl flex-shrink-0">🎯</span>
+                <span className="text-green-500 text-xl flex-shrink-0">🚀</span>
                 <div>
                   <div className="font-medium text-foreground">Jump straight to solving, not explaining</div>
                   <div className="text-sm text-muted-foreground">Skip the context-setting and dive into productive work immediately</div>

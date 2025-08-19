@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { forwardRef } from "react";
 
-const Hero = () => {
+const Hero = forwardRef<HTMLElement>((props, ref) => {
   return (
-    <section className="relative overflow-hidden bg-background">
+    <section ref={ref} className="relative overflow-hidden bg-background">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-memory-blue/10 via-background to-memory-purple/10" />
       
@@ -14,7 +15,7 @@ const Hero = () => {
         <div className="mx-auto max-w-4xl text-center">
           {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
-            <p><em>Local Memory</em>:</p>
+            <p><em>Local Memory</em> :</p>
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
               The AI System That Cures 'Context Amnesia'
             </span>
@@ -37,7 +38,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
               <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                🚀 Give Your Coding Agent a Memory Upgrade Now - $29
+                Upgrade Your Coding Agent's Memory Now - $29
               </Button>
             </Link>
             <a href="#demo">
@@ -61,6 +62,8 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+});
+
+Hero.displayName = "Hero";
 
 export default Hero;
