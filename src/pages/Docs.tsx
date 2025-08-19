@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import Performance from "@/components/Performance";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const DocsPage = () => {
   return (
@@ -630,6 +631,7 @@ const DocsPage = () => {
         </div>
       </div>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

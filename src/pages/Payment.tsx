@@ -106,7 +106,6 @@ This keeps your payment configuration secure and maintainable!`);
 
               <div className="text-center text-sm text-muted-foreground">
                 <p>Secure payment powered by Stripe</p>
-                <p className="mt-1">30-day money-back guarantee</p>
               </div>
             </CardContent>
           </Card>
