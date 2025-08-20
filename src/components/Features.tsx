@@ -1,3 +1,5 @@
+import { Wrench } from "lucide-react";
+
 const Features = () => {
   return (
     <section id="features" className="py-24 bg-background">
@@ -132,7 +134,7 @@ const Features = () => {
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
-                <span className="text-memory-purple mt-1">•</span>
+                <Wrench className="text-memory-purple mt-1 w-4 h-4" />
                 <span>Single binary deployment</span>
               </li>
               <li className="flex items-start gap-2">

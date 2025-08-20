@@ -4,9 +4,21 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
-  const location = useLocation();
-  const isHomepage = location.pathname === '/';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const handleNavClick = (path: string) => {
+    if (location.pathname === path) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleMobileNavClick = (path: string) => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname === path) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -34,12 +46,30 @@ const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/docs" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link 
+            to="/" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => handleNavClick('/')}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/features" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => handleNavClick('/features')}
+          >
+            Features
+          </Link>
+          <Link 
+            to="/docs" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => handleNavClick('/docs')}
+          >
             Docs
           </Link>
           <Link to="/payment">
             <Button variant="cta" size="sm">
-              Get Started
+              Purchase
             </Button>
           </Link>
         </nav>
@@ -62,15 +92,29 @@ const Header = () => {
         <div className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="container px-6 py-4 space-y-4 text-right">
             <Link 
+              to="/" 
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => handleMobileNavClick('/')}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/features" 
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => handleMobileNavClick('/features')}
+            >
+              Features
+            </Link>
+            <Link 
               to="/docs" 
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => handleMobileNavClick('/docs')}
             >
               Docs
             </Link>
-            <Link to="/payment" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="cta" size="sm" className="w-full">
-                Get Started
+            <Link to="/payment" onClick={() => setIsMobileMenuOpen(false)} className="mt-4 block">
+              <Button variant="cta" size="sm">
+                Purchase
               </Button>
             </Link>
           </div>
