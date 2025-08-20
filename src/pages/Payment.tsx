@@ -83,9 +83,9 @@ This keeps your payment configuration secure and maintainable!`);
             <CardContent className="space-y-6">
               <div className="space-y-3">
                 {[
-                  "Cross-platform executables (macOS, Windows, Linux)",
+                  "Works with Claude, GPT, Cursor, VScode, and more",
                   "100% local - your data never leaves your machine",
-                  "Works with Claude, GPT, Cursor, and more",
+                  "Cross-platform (macOS, Windows, Linux)",
                   "Semantic memory search and retrieval",
                   "2-minute setup with LLM prompts"
                 ].map((feature, index) => (

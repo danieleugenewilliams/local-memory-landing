@@ -5,6 +5,7 @@ import ProblemSolution from "@/components/ProblemSolution";
 import Demo from "@/components/Demo";
 import WhyLocalMemory from "@/components/WhyLocalMemory";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -60,6 +61,7 @@ const Index = () => {
       <Demo />
       <WhyLocalMemory />
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

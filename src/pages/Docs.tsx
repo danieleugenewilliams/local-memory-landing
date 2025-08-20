@@ -45,7 +45,7 @@ const DocsPage = () => {
                     <li>• <strong>Future MCP Agents</strong> - Automatic compatibility</li>
                   </ul>
                   <p className="text-xs text-muted-foreground mt-3 italic">
-                    Memory tools appear natively in the agent's toolkit
+                    <em>Your AI's memory appears like magic—no configuration needed.</em>
                   </p>
                 </div>
               </div>
@@ -56,23 +56,21 @@ const DocsPage = () => {
                 </h4>
                 <div className="bg-muted p-4 rounded-lg">
                   <ul className="space-y-2 text-sm">
-                    <li>• <strong>OpenCode</strong> - Via REST & JSON-RPC endpoints</li>
-                    <li>• <strong>Tool-Aware Agents</strong> - Via REST endpoints</li>
-                    <li>• <strong>Custom Agents</strong> - Via REST endpoints</li>
+                    <li>• <strong>OpenCode</strong> - Uses REST & JSON-RPC</li>
+                    <li>• <strong>GPT & Others</strong> - Connect via REST</li>
+                    <li>• <strong>Your Custom Setup</strong> - Choose REST or JSON-RPC</li>
                   </ul>
                   <p className="text-xs text-muted-foreground mt-3 italic">
-                     Full memory capabilities through 26+ REST API endpoints
+                     <em>Connect once, remember everything—just like adding a browser extension.</em>
                   </p>
                 </div>
               </div>
             </div>
             
             <div className="bg-muted p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">What Makes This Unique?</h4>
+              <h4 className="font-semibold mb-2">Why This Changes Everything</h4>
               <p className="text-sm text-muted-foreground">
-                Most AI memory solutions only work with one type of platform. <em>Local Memory</em> is the first to provide 
-                <strong> seamless native integration for MCP agents</strong> while maintaining 
-                <strong> full REST API compatibility</strong> for traditional platforms - giving you the best of both worlds.
+                Think of it like this: Most memory tools are like USB drives that only work with one computer. <em>Local Memory</em> is like cloud storage that works everywhere—except it stays on your computer for privacy.
               </p>
             </div>
           </CardContent>
@@ -82,42 +80,47 @@ const DocsPage = () => {
         <Card className="mb-8 border-memory-green/30">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <Zap className="w-6 h-6 text-memory-green" />
-              <CardTitle className="text-xl">Quick Start (2 minutes)</CardTitle>
+              <Settings className="w-6 h-6 text-memory-blue" />
+              <CardTitle className="text-xl">Setup So Easy, Your AI Does It For You</CardTitle>
             </div>
-            <CardDescription>Get up and running in just a few steps</CardDescription>
+            <CardDescription>No technical knowledge required—seriously.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-4">
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">1</div>
                 <div>
-                  <h4 className="font-semibold">Purchase & Download</h4>
-                  <p className="text-sm text-muted-foreground">Get the binary for your OS</p>
+                  <h4 className="font-semibold">Download Local Memory</h4>
+                  <p className="text-sm text-muted-foreground">(like downloading any app)</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">2</div>
                 <div>
-                  <h4 className="font-semibold">Copy Agent Prompt</h4>
-                  <p className="text-sm text-muted-foreground">Setup instructions for your OS</p>
+                  <h4 className="font-semibold">Copy our setup instructions</h4>
+                  <p className="text-sm text-muted-foreground">(we provide everything)</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">3</div>
                 <div>
-                  <h4 className="font-semibold">Let Agent Install</h4>
-                  <p className="text-sm text-muted-foreground">Your AI handles everything else</p>
+                  <h4 className="font-semibold">Paste into your AI assistant</h4>
+                  <p className="text-sm text-muted-foreground">(Claude, ChatGPT, etc.)</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-memory-green/20 text-memory-green flex items-center justify-center text-sm font-bold">4</div>
+                <div>
+                  <h4 className="font-semibold">Your AI installs everything</h4>
+                  <p className="text-sm text-muted-foreground">(it helps you with all the technical details)</p>
                 </div>
               </div>
             </div>
             
             <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
-              <h4 className="font-semibold text-memory-blue mb-2">🤖 The Easiest Installation Ever</h4>
+              <h4 className="font-semibold text-memory-blue mb-2">That's it. Your AI now has permanent memory.</h4>
               <p className="text-sm text-muted-foreground">
-                After purchasing and downloading <em>Local Memory</em>, just copy our detailed prompts. 
-                Your agent will install Ollama (optional), Qdrant (optional), configure MCP integration, set up proper file paths, 
-                and verify everything works. No manual installation needed!
+                No coding, no terminal commands, no confusion.
               </p>
             </div>
           </CardContent>

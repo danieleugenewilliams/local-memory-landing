@@ -6,7 +6,7 @@ const Performance = () => {
     <Card className="mb-8">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Zap className="w-6 h-6 text-memory-green" />
+          <Zap className="w-6 h-6 text-memory-blue" />
           <CardTitle className="text-xl">Performance Benchmarks</CardTitle>
         </div>
         <CardDescription>
@@ -21,60 +21,44 @@ const Performance = () => {
               <thead className="bg-muted">
                 <tr>
                   <th className="text-left p-4 font-semibold text-foreground">Metric</th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground">Before</th>
-                  <th className="text-center p-4 font-semibold text-muted-foreground">After</th>
-                  <th className="text-center p-4 font-semibold text-foreground">Improvement</th>
+                  <th className="text-left p-4 font-semibold text-foreground">Before</th>
+                  <th className="text-left p-4 font-semibold text-foreground">After</th>
+                  <th className="text-left p-4 font-semibold text-foreground">Improvement</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-t border-border">
                   <td className="p-4 font-medium text-foreground">Vector Search</td>
-                  <td className="p-4 text-center text-muted-foreground">50-100ms</td>
-                  <td className="p-4 text-center text-memory-green font-semibold">11-15ms</td>
-                  <td className="p-4 text-center">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-green/20 text-memory-green rounded-md text-sm font-bold">
-                      🚀 5-8x FASTER
+                  <td className="p-4 text-left text-red-500 text-muted-foreground">50-100ms</td>
+                  <td className="p-4 text-left text-memory-green font-muted">11-15ms</td>
+                  <td className="p-4 text-left">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
+                      5-8x FASTER
                     </span>
                   </td>
                 </tr>
                 <tr className="border-t border-border">
                   <td className="p-4 font-medium text-foreground">Memory Usage</td>
-                  <td className="p-4 text-center text-muted-foreground">200MB+</td>
-                  <td className="p-4 text-center text-memory-blue font-semibold">16MB</td>
-                  <td className="p-4 text-center">
+                  <td className="p-4 text-left text-red-500 text-muted-foreground">200MB+</td>
+                  <td className="p-4 text-left text-memory-green font-muted">16MB</td>
+                  <td className="p-4 text-left">
                     <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
-                      🚀 12x LIGHTER
+                      12x LIGHTER
                     </span>
                   </td>
                 </tr>
                 <tr className="border-t border-border">
                   <td className="p-4 font-medium text-foreground">Dependencies</td>
-                  <td className="p-4 text-center text-muted-foreground">Node.js, Python, Docker</td>
-                  <td className="p-4 text-center text-memory-purple font-semibold">Zero</td>
-                  <td className="p-4 text-center">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
-                      🚀 ACTUALLY ZERO
+                  <td className="p-4 text-left text-red-500 text-muted-foreground">Node.js, Typescript</td>
+                  <td className="p-4 text-left text-memory-green font-muted">Zero</td>
+                  <td className="p-4 text-left">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
+                      ACTUALLY ZERO
                     </span>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
-
-        {/* Performance Stats */}
-        <div className="grid grid-cols-3 gap-6">
-          <div className="text-center bg-muted/50 rounded-lg p-4">
-            <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">11-15ms</div>
-            <div className="text-sm text-muted-foreground">Vector Search</div>
-          </div>
-          <div className="text-center bg-muted/50 rounded-lg p-4">
-            <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">±1ms</div>
-            <div className="text-sm text-muted-foreground">Consistency</div>
-          </div>
-          <div className="text-center bg-muted/50 rounded-lg p-4">
-            <div className="text-2xl sm:text-3xl font-bold text-memory-purple mb-2">16MB</div>
-            <div className="text-sm text-muted-foreground">Memory Usage</div>
           </div>
         </div>
 
