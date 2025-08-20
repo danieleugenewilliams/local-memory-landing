@@ -221,14 +221,10 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
       <Card className="border-2 border-memory-blue/30 bg-card">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Bot className="w-6 h-6 text-memory-blue" />
-            <CardTitle className="text-xl">Agent Setup Prompts</CardTitle>
           </div>
           <CardDescription>
-            After downloading, copy the prompt for your platform and give it to your AI agent
           </CardDescription>
           <Badge variant="secondary" className="w-fit mx-auto bg-memory-blue/10 text-memory-blue border-memory-blue/20">
-            ✨ Just copy, paste, and let your agent handle everything
           </Badge>
         </CardHeader>
         
@@ -275,7 +271,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               </CollapsibleContent>
               
               <p className="text-xs text-muted-foreground mt-2">
-                Includes MCP setup for Claude Code & Desktop with exact paths and commands
+                <em>Includes MCP setup for Claude Code & Desktop with exact paths and commands</em>
               </p>
             </div>
           </Collapsible>
@@ -322,7 +318,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               </CollapsibleContent>
               
               <p className="text-xs text-muted-foreground mt-2">
-                Complete Windows setup with PATH configuration and MCP integration
+                <em>Complete Windows setup with PATH configuration and MCP integration</em>
               </p>
             </div>
           </Collapsible>
@@ -369,7 +365,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               </CollapsibleContent>
               
               <p className="text-xs text-muted-foreground mt-2">
-                Linux installation with systemd service setup and permissions
+                <em>Linux installation with systemd service setup and permissions</em>
               </p>
             </div>
           </Collapsible>
@@ -416,7 +412,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               </CollapsibleContent>
               
               <p className="text-xs text-muted-foreground mt-2">
-                For OpenCode, ChatGPT, custom agents - works with any platform via HTTP
+                <em>For OpenCode, ChatGPT, custom agents - works with any platform via HTTP</em>
               </p>
             </div>
           </Collapsible>
@@ -424,12 +420,12 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
           <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
             <h4 className="font-semibold text-memory-blue mb-2">How It Works:</h4>
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
-              <li>Copy the prompt for your operating system</li>
-              <li>Paste it into your AI agent (Claude, ChatGPT, etc.)</li>
-              <li>Your agent will handle the complete installation and configuration</li>
-              <li>Agent creates proper directories, sets permissions, installs Ollama</li>
-              <li>Configures MCP integration with exact paths and commands</li>
-              <li>Verifies everything works and tests the installation</li>
+              <li>Copy the prompt applicable to your operating system.</li>
+              <li>Paste it into your AI agent (Claude, ChatGPT, etc.).</li>
+              <li>Your agent will handle the complete installation and configuration.</li>
+              <li>The agent creates proper directories, sets permissions, and installs Ollama.</li>
+              <li>MCP integration is configured with exact paths and commands.</li>
+              <li>The installation is tested and verified to be working properly.</li>
             </ol>
           </div>
         </CardContent>

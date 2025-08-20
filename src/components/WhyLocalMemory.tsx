@@ -190,7 +190,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             {/* Unique Message */}
             <div className="text-center">
               <p className="text-sm text-muted-foreground italic max-w-xl mx-auto">
-                The only AI memory system with native MCP integration AND universal REST API. Future-proof your AI workflow today.
+                The only AI memory system with native MCP integration <b>and</b> universal REST API. Future-proof your AI workflow today!
               </p>
             </div>
 

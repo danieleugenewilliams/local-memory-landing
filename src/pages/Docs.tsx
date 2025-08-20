@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Shield, Bot, Settings, Zap, Globe, Terminal } from "lucide-react";
+import { Download, Shield, Bot, Settings, Zap, Globe, Terminal, Plug } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,20 +18,19 @@ const DocsPage = () => {
               <em>Local Memory</em> Documentation
             </h1>
             <p className="text-xl text-muted-foreground">
-              Complete installation and usage guide for Local Memory
-            </p>
+              Here's the complete installation and user guide for <em>Local Memory</em>.</p>
           </div>
 
           {/* Quick Navigation */}
           <Card className="mb-8 border-memory-blue/30">
             <CardHeader>
               <CardTitle className="text-xl">Quick Navigation</CardTitle>
-              <CardDescription>Jump to the section you need</CardDescription>
+              <CardDescription>Jump to the section you need.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <h4 className="font-semibold">🚀 Get Started Fast</h4>
+                  <h4 className="font-semibold">Getting Started</h4>
                   <div className="space-y-1 text-sm">
                     <a href="#quick-start" className="block text-memory-blue hover:underline">• Quick Start (2 minutes)</a>
                     <a href="#agent-setup" className="block text-memory-blue hover:underline">• Agent Setup Prompts</a>
@@ -39,18 +38,18 @@ const DocsPage = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold">🛠️ Usage</h4>
+                  <h4 className="font-semibold">Usage</h4>
                   <div className="space-y-1 text-sm">
                     <a href="#coding-agents" className="block text-memory-blue hover:underline">• Coding Agents</a>
                     <a href="#claude-desktop" className="block text-memory-blue hover:underline">• Claude Desktop</a>
                     <a href="#rest-api" className="block text-memory-blue hover:underline">• REST API</a>
                     <a href="#cli-commands" className="block text-memory-blue hover:underline">• CLI Commands</a>
+                    <a href="#api-reference" className="block text-memory-blue hover:underline">• API Documentation</a>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold">📡 Reference</h4>
+                  <h4 className="font-semibold">Resources</h4>
                   <div className="space-y-1 text-sm">
-                    <a href="#api-reference" className="block text-memory-blue hover:underline">• API Documentation</a>
                     <a href="#troubleshooting" className="block text-memory-blue hover:underline">• Troubleshooting</a>
                     <a href="#community" className="block text-memory-blue hover:underline">• Community</a>
                   </div>
@@ -67,12 +66,12 @@ const DocsPage = () => {
             <div id="quick-start" className="mb-12">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <Zap className="w-8 h-8 text-memory-green" />
+                  <Plug className="w-8 h-8 text-memory-green" />
                   <h3 className="text-2xl font-bold text-foreground">Quick Start</h3>
-                  <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">2 Minutes</span>
+                  <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">2 minutes to install</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  Zero-config setup. Download, start, and connect to any AI agent.
+                  Download, start, and connect to any AI agent with zero-config setup.
                 </p>
               </div>
 
@@ -80,7 +79,7 @@ const DocsPage = () => {
                 {/* Step 1: Download */}
                 <div className="border-l-4 border-memory-blue pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 1: Download Local Memory</h4>
-                  <p className="text-muted-foreground mb-3">Download the binary for your platform</p>
+                  <p className="text-muted-foreground mb-3">Download the binary for your platform.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <p className="text-sm mb-2"><strong>After purchasing, you'll receive download links for:</strong></p>
                     <div className="grid md:grid-cols-3 gap-2 text-sm text-muted-foreground">
@@ -94,13 +93,13 @@ const DocsPage = () => {
                 {/* Step 2: Start */}
                 <div className="border-l-4 border-memory-green pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 2: Start Local Memory</h4>
-                  <p className="text-muted-foreground mb-3">One command starts everything</p>
+                  <p className="text-muted-foreground mb-3">One command starts everything.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <code className="text-sm bg-background px-2 py-1 rounded block mb-2">
                       local-memory start
                     </code>
                     <p className="text-xs text-muted-foreground">
-                      ✨ Auto-detects Ollama, Qdrant, and configures everything automatically
+                      <em>Auto-detects Ollama, Qdrant, and configures everything automatically</em>
                     </p>
                   </div>
                 </div>
@@ -108,7 +107,7 @@ const DocsPage = () => {
                 {/* Step 3: Connect */}
                 <div className="border-l-4 border-memory-purple pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 3: Connect Your AI Agent</h4>
-                  <p className="text-muted-foreground mb-3">Choose your preferred integration method</p>
+                  <p className="text-muted-foreground mb-3">Choose your preferred integration method.</p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-muted p-3 rounded-md">
                       <h5 className="font-semibold text-sm mb-2">Claude Code:</h5>
@@ -151,7 +150,7 @@ const DocsPage = () => {
                   <span className="bg-memory-blue/20 text-memory-blue px-3 py-1 rounded-full text-sm font-medium">Alternative Method</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  Prefer having your AI agent handle the setup? Copy our detailed prompts 
+                  Prefer having your AI agent handle the setup? After downloading <em>Local Memory</em>, copy our detailed prompts 
                   and let your AI assistant handle the complete installation and configuration.
                 </p>
               </div>
@@ -165,10 +164,10 @@ const DocsPage = () => {
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Settings className="w-8 h-8 text-muted-foreground" />
                   <h3 className="text-2xl font-bold text-foreground">Advanced Setup</h3>
-                  <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">For Custom Configurations</span>
+                  <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">Custom Configurations</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  For developers who need custom configurations or want to understand the underlying setup process.
+                  This is for developers who need custom configurations or those who want to understand the underlying setup process.
                 </p>
               </div>
 
@@ -226,7 +225,7 @@ const DocsPage = () => {
                     <h4 className="font-semibold text-lg mb-2">Step 1: Download <em>Local Memory</em></h4>
                     <p className="text-muted-foreground mb-3">Get the binary for your operating system:</p>
                     <div className="bg-muted p-3 rounded-md">
-                      <p className="text-sm mb-2"><strong>Linux/macOS:</strong></p>
+                      <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
                         chmod +x local-memory && mv local-memory /usr/local/bin
                       </code>
@@ -454,7 +453,7 @@ const DocsPage = () => {
 
           {/* Using Local Memory */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Using Local Memory</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Using <em>Local Memory</em></h2>
 
             {/* Coding Agents */}
             <div id="coding-agents" className="mb-8">
@@ -590,7 +589,7 @@ const DocsPage = () => {
                     <Globe className="w-5 h-5 text-memory-green" />
                     REST API
                   </CardTitle>
-                  <CardDescription>Universal HTTP interface for any platform (26 endpoints)</CardDescription>
+                  <CardDescription>Universal HTTP interface for any platform (26+ endpoints)</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
@@ -693,16 +692,16 @@ const DocsPage = () => {
 
           {/* API Reference */}
           <div id="api-reference" className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">API Reference</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">API Documentation</h2>
             
             {/* REST API */}
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Globe className="w-5 h-5" />
-                  REST API (26 Endpoints)
+                  REST API (26+ Endpoints)
                 </CardTitle>
-                <CardDescription>Universal HTTP interface for any platform</CardDescription>
+                <CardDescription><em>Local Memory</em> has a universal HTTP interface for any platform.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
@@ -926,12 +925,12 @@ const DocsPage = () => {
             <Card id="troubleshooting" className="mb-8">
               <CardHeader>
                 <CardTitle>Troubleshooting</CardTitle>
-                <CardDescription>Common issues and solutions</CardDescription>
+                <CardDescription>Here are some frequent concerns and solutions.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold mb-2">Common Issues</h4>
+                    <h4 className="font-semibold mb-2">Common Challenges</h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       <li>• <strong>Command not found:</strong> Ensure binary is in PATH or use <code className="bg-background px-1 rounded">./local-memory</code></li>
                        <li>• <strong>Port already in use:</strong> Stop existing process with <code className="bg-background px-1 rounded">local-memory stop</code> (auto-detects available port)</li>
@@ -979,14 +978,14 @@ const DocsPage = () => {
             <Card id="community" className="mb-8">
               <CardHeader>
                 <CardTitle>Community & Support</CardTitle>
-                <CardDescription>Get help and connect with other users</CardDescription>
+                <CardDescription>Get help and connect with other users.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <h5 className="font-semibold mb-3">🆘 Getting Help</h5>
                     <div className="space-y-2 text-sm">
-                      <div>💬 <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> - Live support and discussion</div>
+                      <div>💬 <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>: Live support and discussion</div>
                       <div>📚 <strong>Documentation:</strong> This page covers most use cases</div>
                       <div>🐛 <strong>Bug Reports:</strong> Use GitHub issues for reproducible problems</div>
                       <div>💡 <strong>Feature Requests:</strong> Share ideas in Discord #feature-requests</div>
@@ -1008,7 +1007,7 @@ const DocsPage = () => {
           
           {/* CTA */}
           <div className="text-center">
-            <p className="text-muted-foreground mb-4">Need to purchase Local Memory?</p>
+            <p className="text-muted-foreground mb-4">Need to purchase <em>Local Memory</em>?</p>
             <Link to="/payment">
               <Button size="lg" className="gap-2">
                 <Download className="w-4 h-4" />
