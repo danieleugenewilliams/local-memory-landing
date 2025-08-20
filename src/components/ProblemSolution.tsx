@@ -11,17 +11,17 @@ const ProblemSolution = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto lg:items-stretch">
           {/* Before - Problem */}
-          <div className="space-y-6">
+          <div className="space-y-6 flex flex-col">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-2xl font-medium mb-4">
                 BEFORE <em>Local Memory</em>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
+            <div className="space-y-4 flex-1">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">🔄</span>
                 <div>
                   <div className="font-medium text-foreground">"What was that auth flow again?"</div>
@@ -29,7 +29,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">😒</span>
                 <div>
                   <div className="font-medium text-foreground">"I literally just explained this error pattern"</div>
@@ -37,7 +37,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">⌛️</span>
                 <div>
                   <div className="font-medium text-foreground">Context-switching hell with every new session or `/clear`</div>
@@ -45,7 +45,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">📝</span>
                 <div>
                   <div className="font-medium text-foreground">Copy/pasting the same explanations</div>
@@ -53,7 +53,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">😤</span>
                 <div>
                   <div className="font-medium text-foreground">Starting over with each agent switch</div>
@@ -64,15 +64,15 @@ const ProblemSolution = () => {
           </div>
 
           {/* After - Solution */}
-          <div className="space-y-6">
+          <div className="space-y-6 flex flex-col">
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-400 rounded-full text-2xl font-medium mb-4">
                 AFTER <em>Local Memory</em>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
+            <div className="space-y-4 flex-1">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">✨</span>
                 <div>
                   <div className="font-medium text-foreground">"Remember that refactor we discussed yesterday?"</div>
@@ -80,7 +80,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🧠</span>
                 <div>
                   <div className="font-medium text-foreground">Every code review comment saved forever</div>
@@ -88,7 +88,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🤓</span>
                 <div>
                   <div className="font-medium text-foreground">Progressive understanding of your architecture</div>
@@ -96,7 +96,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🚀</span>
                 <div>
                   <div className="font-medium text-foreground">Jump straight to solving, not explaining</div>
@@ -104,11 +104,11 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
                 <div>
                   <div className="font-medium text-foreground">Seamless context across ALL your agents</div>
-                  <div className="text-sm text-muted-foreground">Claude, Codex, Gemini, OpenCode - same memory available anywhere</div>
+                  <div className="text-sm text-muted-foreground">Claude, OpenCode, etc. - same memory available anywhere</div>
                 </div>
               </div>
             </div>

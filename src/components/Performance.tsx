@@ -1,16 +1,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap } from "lucide-react";
+import { Award, Medal, Trophy, Zap } from "lucide-react";
 
 const Performance = () => {
   return (
     <Card className="mb-8">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Zap className="w-6 h-6 text-memory-blue" />
+          <Trophy className="w-6 h-6 text-memory-blue" />
           <CardTitle className="text-xl">Performance Benchmarks</CardTitle>
         </div>
         <CardDescription>
-          Enterprise-grade performance with minimal resource usage
+          Enjoy enterprise-grade performance with minimal resource usage.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">

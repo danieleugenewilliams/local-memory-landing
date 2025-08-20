@@ -18,7 +18,7 @@ const FeaturesPage = () => {
               <em>Local Memory</em> Features
             </h1>
             <p className="text-xl text-muted-foreground">
-              The only memory system that works natively with both MCP-enabled AI agents and traditional platforms
+              It's the only memory system that works natively with both MCP-enabled AI agents and traditional agent platforms.
             </p>
           </div>
 
@@ -27,9 +27,9 @@ const FeaturesPage = () => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Globe className="w-6 h-6 text-blue-500" />
-                <CardTitle className="text-xl">Universal AI Platform Support</CardTitle>
+                <CardTitle className="text-xl">Universal AI Memory Platform</CardTitle>
               </div>
-              <CardDescription><em>Local Memory</em> is designed for both modern MCP-enabled agents and traditional AI platforms</CardDescription>
+              <CardDescription><em>Local Memory</em> is designed for both modern MCP-enabled agents and traditional AI platforms.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid gap-6 md:grid-cols-2">
@@ -44,7 +44,7 @@ const FeaturesPage = () => {
                       <li>• <strong>Future MCP Agents</strong> - Automatic compatibility</li>
                     </ul>
                     <p className="text-xs text-muted-foreground mt-3 italic">
-                      <em>Your AI's memory appears like magic—no configuration needed.</em>
+                      <em>All your AI agents store, retrieve, and analyze shared contextual memories effortlessly.</em>
                     </p>
                   </div>
                 </div>
@@ -60,29 +60,29 @@ const FeaturesPage = () => {
                       <li>• <strong>Your Custom Setup</strong> - Uses REST or JSON-RPC</li>
                     </ul>
                     <p className="text-xs text-muted-foreground mt-3 italic">
-                       <em>Connect once, remember everything—just like adding a browser extension.</em>
+                       <em>Connect once, give all your AI agents instant access to shared memories and context.</em>
                     </p>
                   </div>
                 </div>
               </div>
               
               <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold mb-2">Why This Changes Everything</h4>
+                <h4 className="font-semibold mb-2">How Is This Transformational for Agentic Workflows?</h4>
                 <p className="text-sm text-muted-foreground">
-                  Think of it like this: Most memory tools are like USB drives that only work with one computer. <em>Local Memory</em> is like cloud storage that works everywhere—except it stays on your computer for privacy.
+                  Think of it like this: Most memory tools are like USB drives that only work with one computer at a time, at that moment. <em>Local Memory</em> is like cloud storage that works with all of your agents, except it stays private on your machine.
                 </p>
               </div>
             </CardContent>
           </Card>
 
           {/* Quick Start */}
-          <Card className="mb-8 border-memory-green/30">
+          <Card className="mb-8 border-memory-muted/30">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="w-6 h-6 text-memory-blue" />
                 <CardTitle className="text-xl">Setup So Easy, Your AI Does It For You</CardTitle>
               </div>
-              <CardDescription>No technical knowledge required—seriously.</CardDescription>
+              <CardDescription>No technical knowledge is required—seriously.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-4">
@@ -117,9 +117,9 @@ const FeaturesPage = () => {
               </div>
               
               <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold mb-2">That's it. Your AI now has permanent memory.</h4>
+                <h4 className="font-semibold mb-2">Could Transforming All AI Agents Really Be This Simple?</h4>
                 <p className="text-sm text-muted-foreground">
-                  No coding, no terminal commands, no confusion.
+                  No coding, no terminal commands, no confusion. All of your AI agents will have access to contextual memories to deliver exponentially better outcomes.
                 </p>
               </div>
             </CardContent>
@@ -135,7 +135,7 @@ const FeaturesPage = () => {
                 <Wrench className="w-5 h-5 text-memory-blue" />
                 Technical Architecture
               </CardTitle>
-              <CardDescription>What makes <em>Local Memory</em> unique in the AI ecosystem</CardDescription>
+              <CardDescription><em>Local Memory</em> is unique to the AI ecosystem.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -174,7 +174,7 @@ const FeaturesPage = () => {
                         <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
                         <div>
                           <p className="text-sm"><strong>Temporal Analysis</strong></p>
-                          <p className="text-xs text-muted-foreground">Track learning patterns over time</p>
+                          <p className="text-xs text-muted-foreground">Tracks learning patterns over time</p>
                         </div>
                       </div>
                     </div>
@@ -182,11 +182,11 @@ const FeaturesPage = () => {
                 </div>
                 
                 <div className="bg-muted p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Why This Matters</h4>
+                  <h4 className="font-semibold mb-2">Why This Matters?</h4>
                   <p className="text-sm text-muted-foreground">
                     The AI landscape is rapidly evolving. While older platforms rely on manual API integration, 
                     new MCP-enabled agents can discover and use tools automatically. <em>Local Memory</em> bridges this gap, 
-                    ensuring your memory system works seamlessly regardless of which AI platform you choose - today or tomorrow.
+                    ensuring your memory system works seamlessly regardless of which AI platform you choose today, tomorrow, or the next day.
                   </p>
                 </div>
               </div>
@@ -258,7 +258,7 @@ const FeaturesPage = () => {
                   <div className="flex items-start gap-3">
                     <span className="text-memory-green mt-1 text-lg">•</span>
                     <div>
-                      <h4 className="font-semibold">Privacy-First</h4>
+                      <h4 className="font-semibold">Privacy First</h4>
                       <p className="text-sm text-muted-foreground">All data stays on your machine</p>
                     </div>
                   </div>
@@ -277,19 +277,9 @@ const FeaturesPage = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Need Help?</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Join our <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> for 
-                    support and discussion, or check our comprehensive documentation for detailed setup instructions.
+                    Join our <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord</a> community for 
+                    support and discussion, or check our comprehensive <a href="/docs" className="text-memory-blue hover:underline">documentation</a> for detailed setup instructions.
                   </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">What's Included</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Complete installation with AI-guided setup</li>
-                    <li>• 26+ memory tools and API endpoints</li>
-                    <li>• Support for all major AI platforms</li>
-                    <li>• Discord community access</li>
-                    <li>• Regular updates and improvements</li>
-                  </ul>
                 </div>
               </div>
             </CardContent>
@@ -299,16 +289,14 @@ const FeaturesPage = () => {
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Ready to give your AI permanent memory?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/docs">
-                <Button variant="outline" size="lg" className="gap-2">
-                  <Shield className="w-4 h-4" />
-                  View Documentation
+              <Link to="/payment">
+                <Button variant="hero" size="lg" className="gap-2">
+                  Purchase <em>Local Memory</em>
                 </Button>
               </Link>
-              <Link to="/payment">
-                <Button size="lg" className="gap-2">
-                  <Download className="w-4 h-4" />
-                  Purchase <em>Local Memory</em>
+              <Link to="/docs">
+                <Button variant="outline" size="lg" className="gap-2">
+                  View Documentation
                 </Button>
               </Link>
             </div>

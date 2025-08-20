@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Payment from "./pages/Payment";
 import Success from "./pages/Success";
 import Docs from "./pages/Docs";
+import AutoScrollToTop from "./components/AutoScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AutoScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/features" element={<Features />} />

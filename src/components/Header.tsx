@@ -67,6 +67,14 @@ const Header = () => {
           >
             Docs
           </Link>
+          <a 
+            href="https://discord.gg/pjVX4BWu" 
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Community
+          </a>
           <Link to="/payment">
             <Button variant="cta" size="sm">
               Purchase
@@ -112,6 +120,15 @@ const Header = () => {
             >
               Docs
             </Link>
+            <a 
+              href="https://discord.gg/pjVX4BWu" 
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Community
+            </a>
             <Link to="/payment" onClick={() => setIsMobileMenuOpen(false)} className="mt-4 block">
               <Button variant="cta" size="sm">
                 Purchase
