@@ -24,28 +24,24 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-2. Extract: tar -xzf qdrant.tar.gz
-3. Make executable and move: chmod +x qdrant && sudo mv qdrant /usr/local/bin/
-4. Start Qdrant: qdrant --config-path "" &
-5. Verify: curl http://localhost:6333/health (should return OK)
-6. Set environment: export QDRANT_ENABLED=true && export QDRANT_URL=http://localhost:6333
+1. Create local-memory directory: mkdir -p ~/.local-memory
+2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+3. Extract: tar -xzf qdrant.tar.gz
+4. Make executable and move: chmod +x qdrant && mv qdrant ~/.local-memory/
+5. Start Qdrant: cd ~/.local-memory && ./qdrant &
+6. Verify: curl http://localhost:6333/health (should return OK)
+7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 Run this exact command to add local-memory as an MCP server:
-claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/local-memories.db --session-id "claude-code-session" --log-level info
+claude mcp add local-memory /usr/local/bin/local-memory
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit ~/.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": ["--db-path", "~/.local-memory/local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
-      "env": {
-        "QDRANT_ENABLED": "true",
-        "QDRANT_URL": "http://localhost:6333"
-      }
+      "command": "/usr/local/bin/local-memory"
     }
   }
 }
@@ -113,7 +109,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>26+ MCP tools included</span>
+                  <span>26 MCP tools included</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
@@ -173,7 +169,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 <div className="text-3xl mb-4">🖥️</div>
                 <h3 className="text-lg font-bold text-foreground mb-2">Claude Desktop</h3>
                 <p className="text-sm text-muted-foreground mb-4">Native MCP Integration</p>
-                <p className="text-xs text-muted-foreground"><em>26+ tools appear directly</em></p>
+                <p className="text-xs text-muted-foreground"><em>26 tools appear directly</em></p>
               </div>
               
               <div className="bg-gradient-to-br from-memory-green/10 to-memory-green/5 border border-memory-green/20 rounded-2xl p-6 text-center">

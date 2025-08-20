@@ -68,10 +68,7 @@ Native MCP Integration     MCP + REST API Support     Universal REST API
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--db-path", "~/.local-memory/memories.db",
-        "--session-id", "claude-desktop-session"
-      ]
+      "args": []
     }
   }
 }
@@ -79,10 +76,7 @@ Native MCP Integration     MCP + REST API Support     Universal REST API
 
 #### Tab 2: Claude Code (MCP)
 ```bash
-claude mcp add local-memory -- \
-  /path/to/local-memory-mcp \
-  --db-path ./memories.db \
-  --session-id "claude-code-session"
+claude mcp add local-memory /path/to/local-memory-mcp
 ```
 
 #### Tab 3: Universal REST API
@@ -119,7 +113,7 @@ Cross-platform support        Automatic DB creation       Graceful error handlin
 ### Quick Start
 ```
 # Download, extract, run
-./local-memory-mcp --db-path ./memories.db
+local-memory start
 
 # 2 minutes to full AI memory
 ✅ Database created automatically

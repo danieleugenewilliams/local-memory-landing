@@ -265,7 +265,7 @@ curl -X POST http://localhost:3002/api/v1/memories \
 ### Local Development Setup
 ```bash
 # Start local-memory server with REST API
-./bin/local-memory-mcp --rest-api-only --rest-port 3002 --db-path ./agent-memories.db --session-id "agent-session"
+local-memory start
 ```
 
 ### Production Considerations

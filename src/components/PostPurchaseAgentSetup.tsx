@@ -38,28 +38,24 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-2. Extract: tar -xzf qdrant.tar.gz
-3. Make executable and move: chmod +x qdrant && sudo mv qdrant /usr/local/bin/
-4. Start Qdrant: qdrant --config-path "" &
-5. Verify: curl http://localhost:6333/health (should return OK)
-6. Set environment: export QDRANT_ENABLED=true && export QDRANT_URL=http://localhost:6333
+1. Create local-memory directory: mkdir -p ~/.local-memory
+2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+3. Extract: tar -xzf qdrant.tar.gz
+4. Make executable and move: chmod +x qdrant && mv qdrant ~/.local-memory/
+5. Start Qdrant: cd ~/.local-memory && ./qdrant &
+6. Verify: curl http://localhost:6333/health (should return OK)
+7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 Run this exact command to add local-memory as an MCP server:
-claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/local-memories.db --session-id "claude-code-session" --log-level info
+claude mcp add local-memory /usr/local/bin/local-memory
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit ~/.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": ["--db-path", "~/.local-memory/local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
-      "env": {
-        "QDRANT_ENABLED": "true",
-        "QDRANT_URL": "http://localhost:6333"
-      }
+      "command": "/usr/local/bin/local-memory"
     }
   }
 }
@@ -91,28 +87,23 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Download Qdrant for Windows from: https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip
-2. Extract to C:\\Program Files\\Qdrant\\
-3. Add C:\\Program Files\\Qdrant to PATH
-4. Start Qdrant: qdrant.exe
+1. Create local-memory directory: mkdir "%USERPROFILE%\\.local-memory"
+2. Download Qdrant for Windows from: https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip
+3. Extract to %USERPROFILE%\\.local-memory\\
+4. Start Qdrant: cd "%USERPROFILE%\\.local-memory" && qdrant.exe
 5. Verify: curl http://localhost:6333/health (should return OK)
-6. Set environment variables: QDRANT_ENABLED=true and QDRANT_URL=http://localhost:6333
+6. Qdrant storage will be created in %USERPROFILE%\\.local-memory\\qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE (if using):
 Run this exact command in terminal:
-claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe" --db-path "%USERPROFILE%\\.local-memory\\local-memories.db" --session-id "claude-code-session" --log-level info
+claude mcp add local-memory "C:\\Program Files\\LocalMemory\\local-memory.exe"
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
-      "args": ["--db-path", "%USERPROFILE%\\\\.local-memory\\\\local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
-      "env": {
-        "QDRANT_ENABLED": "true",
-        "QDRANT_URL": "http://localhost:6333"
-      }
+      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe"
     }
   }
 }
@@ -143,29 +134,24 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz -o qdrant.tar.gz
-2. Extract: tar -xzf qdrant.tar.gz
-3. Make executable and install: chmod +x qdrant && sudo mv qdrant /usr/local/bin/
-4. Start Qdrant: qdrant --config-path "" &
-5. Verify: curl http://localhost:6333/health (should return OK)
-6. Set environment: export QDRANT_ENABLED=true && export QDRANT_URL=http://localhost:6333
-7. For persistence, add to ~/.bashrc: echo 'export QDRANT_ENABLED=true' >> ~/.bashrc
+1. Create local-memory directory: mkdir -p ~/.local-memory
+2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz -o qdrant.tar.gz
+3. Extract: tar -xzf qdrant.tar.gz
+4. Make executable and move: chmod +x qdrant && mv qdrant ~/.local-memory/
+5. Start Qdrant: cd ~/.local-memory && ./qdrant &
+6. Verify: curl http://localhost:6333/health (should return OK)
+7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 Run this exact command:
-claude mcp add local-memory -- /usr/local/bin/local-memory --db-path ~/.local-memory/local-memories.db --session-id "claude-code-session" --log-level info
+claude mcp add local-memory /usr/local/bin/local-memory
 
 STEP 4 - CONFIGURE MCP FOR CLAUDE DESKTOP:
 Edit ~/.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": ["--db-path", "~/.local-memory/local-memories.db", "--session-id", "claude-desktop-session", "--log-level", "info"],
-      "env": {
-        "QDRANT_ENABLED": "true",
-        "QDRANT_URL": "http://localhost:6333"
-      }
+      "command": "/usr/local/bin/local-memory"
     }
   }
 }
@@ -199,23 +185,25 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-- macOS: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz && tar -xzf qdrant.tar.gz && chmod +x qdrant && sudo mv qdrant /usr/local/bin/
-- Linux: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz -o qdrant.tar.gz && tar -xzf qdrant.tar.gz && chmod +x qdrant && sudo mv qdrant /usr/local/bin/
-- Windows: Download from https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip, extract to C:\\Program Files\\Qdrant\\, add to PATH
-- Start Qdrant: qdrant --config-path "" &
+- Create directory: mkdir -p ~/.local-memory (Linux/macOS) or mkdir "%USERPROFILE%\\.local-memory" (Windows)
+- macOS: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz && tar -xzf qdrant.tar.gz && chmod +x qdrant && mv qdrant ~/.local-memory/
+- Linux: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz -o qdrant.tar.gz && tar -xzf qdrant.tar.gz && chmod +x qdrant && mv qdrant ~/.local-memory/
+- Windows: Download from https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip, extract to %USERPROFILE%\\.local-memory\\
+- Start Qdrant: cd ~/.local-memory && ./qdrant & (or cd "%USERPROFILE%\\.local-memory" && qdrant.exe for Windows)
 - Verify: curl http://localhost:6333/health
+- Storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - START REST API SERVER:
-Basic (SQLite): local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/local-memories.db --session-id "rest-api-session" --log-level info
+Basic (Zero-config): local-memory start
 
-High Performance (Qdrant): QDRANT_ENABLED=true QDRANT_URL=http://localhost:6333 local-memory --rest-api-only --rest-port 3001 --db-path ~/.local-memory/local-memories.db --session-id "rest-api-session" --log-level info
+High Performance (with Qdrant): local-memory start
 
 STEP 4 - VERIFY API:
-Test the health endpoint: curl http://localhost:3001/api/v1/health
+Test the health endpoint: curl http://localhost:3002/api/v1/health
 Should return: {"status":"ok"}
 
 STEP 5 - API ENDPOINTS:
-Base URL: http://localhost:3001/api/v1/
+Base URL: http://localhost:3002/api/v1/
 Key endpoints:
 - POST /memories - Store new memory
 - GET /memories/search?q=query - Search memories
@@ -226,7 +214,7 @@ PERFORMANCE COMPARISON:
 - SQLite mode: ~100ms search response time
 - Qdrant mode: ~10ms search response time (10x faster)
 
-Use my downloaded binary - don't download a new one. This gives you 26+ REST endpoints for any AI platform with optional high-performance Qdrant backend.`;
+Use my downloaded binary - don't download a new one. This gives you 26 REST endpoints for any AI platform with optional high-performance Qdrant backend.`;
 
   return (
     <div className="mt-8">

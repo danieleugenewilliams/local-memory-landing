@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Download, Zap, Shield, Globe, Settings, Wrench, Key } from "lucide-react";
+import { Download, Shield, Globe, Settings, Wrench, Key } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -208,14 +208,14 @@ const FeaturesPage = () => {
                     <span className="text-memory-green mt-1 text-lg">•</span>
                     <div>
                       <h4 className="font-semibold">Native MCP Integration</h4>
-                       <p className="text-sm text-muted-foreground">26+ tools for Claude Desktop & Code</p>
+                        <p className="text-sm text-muted-foreground">26 tools for Claude Desktop & Code</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-memory-green mt-1 text-lg">•</span>
                     <div>
                       <h4 className="font-semibold">Universal REST API</h4>
-                       <p className="text-sm text-muted-foreground">26+ endpoints for any platform</p>
+                        <p className="text-sm text-muted-foreground">26 endpoints for any platform</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
