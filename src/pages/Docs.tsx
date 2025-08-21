@@ -63,7 +63,7 @@ const DocsPage = () => {
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Easy Install & Setup</h2>
 
             {/* Quick Start (NEW - Primary Path) */}
-            <div id="quick-start" className="mb-12">
+            <div id="quick-start" className="mb-12 scroll-target">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Plug className="w-8 h-8 text-memory-green" />
@@ -142,7 +142,7 @@ const DocsPage = () => {
                     </div>
 
             {/* Agent Setup Prompts */}
-            <div id="agent-setup" className="mb-12">
+            <div id="agent-setup" className="mb-12 scroll-target">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Bot className="w-8 h-8 text-memory-blue" />
@@ -159,7 +159,7 @@ const DocsPage = () => {
             </div>
 
             {/* Advanced Setup */}
-            <div id="manual-setup" className="mb-12">
+            <div id="manual-setup" className="mb-12 scroll-target">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Settings className="w-8 h-8 text-muted-foreground" />
@@ -456,7 +456,7 @@ const DocsPage = () => {
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Using <em>Local Memory</em></h2>
 
             {/* Coding Agents */}
-            <div id="coding-agents" className="mb-8">
+            <div id="coding-agents" className="mb-8 scroll-target">
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -530,7 +530,7 @@ const DocsPage = () => {
             </div>
 
             {/* Claude Desktop */}
-            <div id="claude-desktop" className="mb-8">
+            <div id="claude-desktop" className="mb-8 scroll-target">
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -582,7 +582,7 @@ const DocsPage = () => {
             </div>
 
             {/* REST API */}
-            <div id="rest-api" className="mb-8">
+            <div id="rest-api" className="mb-8 scroll-target">
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -639,7 +639,7 @@ const DocsPage = () => {
             </div>
 
             {/* CLI Commands */}
-            <div id="cli-commands" className="mb-8">
+            <div id="cli-commands" className="mb-8 scroll-target">
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -691,7 +691,7 @@ const DocsPage = () => {
           </div>
 
           {/* API Reference */}
-          <div id="api-reference" className="mb-12">
+          <div id="api-reference" className="mb-12 scroll-target">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">API Documentation</h2>
             
             {/* REST API */}
@@ -922,10 +922,10 @@ const DocsPage = () => {
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Help & Community</h2>
 
             {/* Troubleshooting */}
-            <Card id="troubleshooting" className="mb-8">
+            <Card id="troubleshooting" className="mb-8 scroll-target">
               <CardHeader>
                 <CardTitle>Troubleshooting</CardTitle>
-                <CardDescription>Here are some frequent concerns and solutions.</CardDescription>
+                <CardDescription>Here are some common concerns and remedies.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -975,7 +975,7 @@ const DocsPage = () => {
             </Card>
 
             {/* Community */}
-            <Card id="community" className="mb-8">
+            <Card id="community" className="mb-8 scroll-target">
               <CardHeader>
                 <CardTitle>Community & Support</CardTitle>
                 <CardDescription>Get help and connect with other users.</CardDescription>

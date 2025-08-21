@@ -67,4 +67,9 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Utility class for anchor targets to account for sticky header */
+  .scroll-target {
+    scroll-margin-top: 5rem; /* 80px - accounts for header height plus breathing room */
+  }
 }
