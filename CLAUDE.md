@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a React/TypeScript landing page for Local Memory, built with Vite and shadcn/ui components. The application includes Stripe payment integration for selling software downloads and features a comprehensive AI agent memory system.
 
+## Local Memory
+
+Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.
+
 ## Development Commands
 
 ### Core Development
@@ -14,10 +18,6 @@ This is a React/TypeScript landing page for Local Memory, built with Vite and sh
 - `npm run build:dev` - Build in development mode
 - `npm run lint` - Run ESLint on the codebase
 - `npm run preview` - Preview production build locally
-
-### Backend Server
-- `npm run dev:server` - Start Express backend server (port 3001)
-- Backend handles Stripe payment processing and webhook endpoints
 
 Note: The project has both frontend (Vite) and backend (Express) components that need to run simultaneously for full functionality.
 

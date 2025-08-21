@@ -314,10 +314,10 @@ const SuccessPage = () => {
                   <li>Download and extract the ZIP file for your platform above</li>
                   <li><strong>macOS:</strong> Choose the correct binary (local-memory-intel or local-memory-arm) and make executable: <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
-                  <li><strong>Optional - Install Qdrant (10x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract to <code className="bg-background px-1 rounded">~/.local-memory/</code>, and run: <code className="bg-background px-1 rounded">cd ~/.local-memory && ./qdrant &</code></li>
+                  <li><strong>Recommended - Install Qdrant (10x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract to <code className="bg-background px-1 rounded">~/.local-memory/</code>, and run: <code className="bg-background px-1 rounded">cd ~/.local-memory && ./qdrant &</code></li>
                   <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">local-memory start</code></li>
                   <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
-                  <li><strong>Optional:</strong> Add to Claude Desktop MCP config for AI integration</li>
+                  <li><strong>Recommended:</strong> Add to Claude Desktop MCP config for AI integration</li>
                 </ol>
                 
                 <div className="mt-4 p-3 bg-blue-900/20 border border-blue-700/30 rounded-md">
@@ -329,7 +329,7 @@ const SuccessPage = () => {
                 </div>
                 
                 <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-sm font-medium text-green-300 mb-1">Performance Mode (Optional):</p>
+                  <p className="text-sm font-medium text-green-300 mb-1">Performance Mode (recommended feature):</p>
                   <p className="text-xs text-green-300">
                     Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
                     <em>Local Memory</em> auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.

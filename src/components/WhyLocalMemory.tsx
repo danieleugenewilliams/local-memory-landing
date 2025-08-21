@@ -16,13 +16,14 @@ STEP 1 - INSTALL BINARY:
 3. Move it to /usr/local/bin/local-memory: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
 4. Verify it works: /usr/local/bin/local-memory --version
 
+INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
 1. Download and install Ollama from https://ollama.ai/download/mac
 2. After installation, pull the required model: ollama pull nomic-embed-text
-3. Optionally pull chat model: ollama pull qwen2.5:7b
+3. Pull chat model: ollama pull qwen2.5:7b
 4. Verify Ollama is running: ollama list
 
-STEP 2.5 - INSTALL QDRANT (OPTIONAL - HIGH PERFORMANCE):
+STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
 1. Create local-memory directory: mkdir -p ~/.local-memory
 2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
@@ -135,7 +136,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </Button>
               </Link>
               
-              <div className="text-sm text-muted-foreground">
+              <div className="mt-2 text-sm text-muted-foreground">
                 <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
               </div>
 

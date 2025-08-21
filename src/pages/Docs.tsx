@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Shield, Bot, Settings, Zap, Globe, Terminal, Plug } from "lucide-react";
+import { Download, Bot, Settings, Globe, Terminal, Plug, Apple } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -76,29 +76,32 @@ const DocsPage = () => {
               </div>
 
               <div className="max-w-4xl mx-auto space-y-6">
-                {/* Step 1: Download */}
+                {/* Step 1: Confirm Purchase */}
                 <div className="border-l-4 border-memory-blue pl-4">
-                  <h4 className="font-semibold text-lg mb-2">Step 1: Download Local Memory</h4>
-                  <p className="text-muted-foreground mb-3">Download the binary for your platform.</p>
+                  <h4 className="font-semibold text-lg mb-2">Step 1: Confirm Purchase</h4>
+                  <p className="text-muted-foreground mb-3">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
                   <div className="bg-muted p-3 rounded-md">
-                    <p className="text-sm mb-2"><strong>After purchasing, you'll receive download links for:</strong></p>
-                    <div className="grid md:grid-cols-3 gap-2 text-sm text-muted-foreground">
-                      <div>• macOS (Apple Silicon & Intel)</div>
-                      <div>• Linux (x64)</div>
-                      <div>• Windows 10/11</div>
-                    </div>
+                    <Link to="/payment" target="_blank">
+                      <Button variant="hero" size="lg" className="gap-2">
+                        Purchase <em>Local Memory</em>
+                      </Button>
+                    </Link>
                   </div>
                 </div>
 
                 {/* Step 2: Start */}
                 <div className="border-l-4 border-memory-green pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 2: Start Local Memory</h4>
-                  <p className="text-muted-foreground mb-3">One command starts everything.</p>
+                  <p className="text-muted-foreground mb-3">Copy, paste, and run the command below.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <code className="text-sm bg-background px-2 py-1 rounded block mb-2">
-                      local-memory start
+                      &gt; local-memory start
                     </code>
-                    <p className="text-xs text-muted-foreground">
+                    <div className="mt-2 p-2 bg-amber-900/20 border border-amber-700/30 rounded text-xs">
+                      <p className="text-amber-300 font-medium mb-1">macOS users:</p>
+                      <p className="text-amber-200">Before running the above command, first run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground mb-2">
                       <em>Auto-detects Ollama, Qdrant, and configures everything automatically</em>
                     </p>
                   </div>
@@ -124,22 +127,33 @@ const DocsPage = () => {
                   </div>
                 </div>
 
-                {/* Success Indicator */}
-                <div className="bg-green-950/20 border border-green-700/30 rounded-lg p-4">
-                  <h5 className="font-semibold text-green-300 mb-2">🎉 You're Done!</h5>
-                  <p className="text-sm text-green-200">
-                    All your AI agents now have access to shared, persistent memory. 
-                     Try asking Claude to "remember this conversation" or use any of the 26 memory tools.
+                {/* Step 4: Success */}
+                <div className="border-l-4 border-memory-orange pl-4">
+                  <h4 className="font-semibold text-lg mb-2">Step 4: You're Done!</h4>
+                  <p className="text-muted-foreground mb-3">All your AI agents now have access to shared, persistent memory.</p>
+                  <div className="bg-muted p-3 rounded-md">
+                    <p className="text-sm text-muted-foreground">
+                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the <a href="#api-reference" className="text-memory-blue hover:underline">26 memory tools</a>.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4 bg-muted/20 p-4 rounded border border-memory-blue/30">
+                  <h5 className="font-semibold mb-3 text-memory-blue">💡 <strong>Pro Tip:</strong> Add instructions to use <em>Local Memory</em> in your agent files.</h5>
+                  <p className="text-sm text-muted-foreground mb-3">Copy and paste this section into your agent files like CLAUDE.md, AGENTS.md, or .github/copilot-instructions.md:</p>
+                  <div className="bg-background p-3 rounded-md">
+                    <pre className="text-xs text-muted-foreground whitespace-pre-wrap">
+{`## Local Memory
+
+Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.`}
+                    </pre>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2 italic">
+                    This prompts your AI agents to automatically use Local Memory for persistent context across conversations.
                   </p>
                 </div>
-                      </div>
-                      
-                      <div className="bg-muted/30 p-3 rounded">
-                        <p className="text-sm text-muted-foreground">
-                          💡 <strong>Tip:</strong> Use <code className="bg-background px-1 rounded">local-memory --help</code> or <code className="bg-background px-1 rounded">local-memory [command] --help</code> for detailed command information.
-                        </p>
-                      </div>
-                    </div>
+              </div>
+            </div>
 
             {/* Agent Setup Prompts */}
             <div id="agent-setup" className="mb-12 scroll-target">
@@ -162,53 +176,14 @@ const DocsPage = () => {
             <div id="manual-setup" className="mb-12 scroll-target">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <Settings className="w-8 h-8 text-muted-foreground" />
+                  <Settings className="w-8 h-8 text-memory-purple" />
                   <h3 className="text-2xl font-bold text-foreground">Advanced Setup</h3>
-                  <span className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">Custom Configurations</span>
+                <span className="bg-memory-purple/20 text-memory-purple px-3 py-1 rounded-full text-sm font-medium">Custom Configurations</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                   This is for developers who need custom configurations or those who want to understand the underlying setup process.
                 </p>
               </div>
-
-              {/* Migration Notice */}
-              <div className="mb-6 p-4 bg-amber-900/20 border border-amber-700/30 rounded-md max-w-4xl mx-auto">
-                <p className="text-sm font-medium text-amber-300 mb-1">⚡ Simplified Setup Available:</p>
-                <p className="text-xs text-amber-300">
-                  We recommend trying the <a href="#quick-start" className="underline">Quick Start</a> approach above first! 
-                  The new <code>local-memory start</code> command handles most of this automatically.
-                </p>
-              </div>
-
-              {/* System Requirements */}
-              <Card id="system-requirements" className="mb-8">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="w-5 h-5" />
-                    System Requirements
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <h4 className="font-semibold mb-2">Supported Platforms</h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• macOS (Apple Silicon & Intel)</li>
-                        <li>• Linux (x64)</li>
-                        <li>• Windows 10/11</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Resources</h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• 50MB disk space</li>
-                        <li>• 8GB+ RAM recommended</li>
-                        <li>• No Node.js dependencies</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Installation Steps */}
               <Card className="mb-8">
@@ -223,226 +198,173 @@ const DocsPage = () => {
                   {/* Step 1 */}
                   <div className="border-l-4 border-blue-500 pl-4">
                     <h4 className="font-semibold text-lg mb-2">Step 1: Download <em>Local Memory</em></h4>
-                    <p className="text-muted-foreground mb-3">Get the binary for your operating system:</p>
+                    <p className="text-muted-foreground mb-3">Copy and paste your OS-specific binary into your preferred location.</p>
                     <div className="bg-muted p-3 rounded-md">
                       <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
-                        chmod +x local-memory && mv local-memory /usr/local/bin
+                        chmod +x local-memory && mv local-memory /path/to/your/preferred/location
                       </code>
                       <p className="text-sm mt-3 mb-2"><strong>Windows:</strong></p>
-                      <p className="text-sm text-muted-foreground">Add to PATH or run from download folder</p>
-                      
-                      <div className="mt-4 p-3 bg-amber-900/20 border border-amber-700/30 rounded-md">
-                        <p className="text-sm font-medium text-amber-300 mb-1">macOS Security Notice:</p>
-                        <p className="text-xs text-amber-300 mb-2">
-                          macOS may show "cannot verify developer" warning. To bypass:
-                        </p>
-                        <div className="text-xs text-amber-200 space-y-1">
-                          <p><strong>Option 1:</strong> Right-click the binary → "Open" → click "Open" in dialog</p>
-                          <p><strong>Option 2:</strong> Run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine /path/to/local-memory-macos-*</code></p>
-                        </div>
-                      </div>
+                      <code className="text-sm bg-background px-2 py-1 rounded">
+                        mv local-memory.exe
+                      </code>
+                      <p className="mt-2 text-sm text-muted-foreground">&nbsp; Move to C:\path\to\your\preferred\location, then add to PATH variable.</p>
+
+                      <details className="mt-2 bg-amber-900/20 border border-amber-700/30 rounded p-2">
+                        <summary className="cursor-pointer text-xs font-medium text-amber-300">
+                          macOS Security Notice
+                        </summary>
+                        <p className="text-amber-200 text-xs mt-2">Before installation, run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
+                      </details>
                     </div>
                   </div>
 
-                  {/* Step 2 */}
+                  {/* Step 2 - Dependencies */}
                   <div className="border-l-4 border-green-500 pl-4">
-                    <h4 className="font-semibold text-lg mb-2">Step 2: Install Ollama (Required)</h4>
-                    <p className="text-muted-foreground mb-3">Ollama provides AI-powered memory features:</p>
-                    <div className="bg-muted p-3 rounded-md space-y-2">
-                      <p className="text-sm"><strong>Install Ollama:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
+                    <h4 className="font-semibold text-lg mb-2">Step 2: Install Recommended Features</h4>
+                    <p className="text-muted-foreground mb-3">Install Ollama.</p>
+                    
+                    <div className="bg-muted p-3 rounded-md">
+                      <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
+                      <code className="text-sm bg-background px-2 py-1 rounded">
                         curl -fsSL https://ollama.ai/install.sh | sh
                       </code>
-                      <p className="text-sm text-muted-foreground">Or download from <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> for Windows</p>
-                      
-                      <p className="text-sm mt-3"><strong>Pull required model (350MB):</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
+                      <p className="text-sm mt-3 mb-2"><strong>Windows:</strong></p>
+                      <p className="text-sm text-muted-foreground mb-3">Download from <a href="https://ollama.ai" className="text-blue-500 hover:underline" target="_blank">ollama.ai</a></p>
+
+                      <p className="text-sm mb-2"><strong>Pull required model:</strong></p>
+                      <code className="text-sm bg-background px-2 py-1 rounded">
                         ollama pull nomic-embed-text
                       </code>
-                      
-                      <p className="text-sm mt-3"><strong>Optional - Enhanced chat model:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
-                        ollama pull qwen2.5:7b
-                      </code>
-                    </div>
-                  </div>
 
-                  {/* Step 2.5 - Qdrant */}
-                  <div className="border-l-4 border-purple-500 pl-4">
-                    <h4 className="font-semibold text-lg mb-2">Step 2.5: Install Qdrant (Optional - 5-8x Faster Search)</h4>
-                    <p className="text-muted-foreground mb-3">Qdrant provides lightning-fast vector search for enhanced performance:</p>
-                    <div className="bg-muted p-3 rounded-md space-y-2">
-                      <p className="text-sm"><strong>Create directory and download Qdrant:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
-                        mkdir -p ~/.local-memory
-                      </code>
-                      <code className="text-sm bg-background px-2 py-1 rounded block break-all">
-                        curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-                      </code>
-                      <p className="text-sm text-muted-foreground">For Linux: use <code className="bg-background px-1 rounded">qdrant-x86_64-unknown-linux-gnu.tar.gz</code></p>
-                      
-                      <p className="text-sm mt-3"><strong>Extract and setup:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
-                        tar -xzf qdrant.tar.gz && chmod +x qdrant && mv qdrant ~/.local-memory/
-                      </code>
-                      
-                      <p className="text-sm mt-3"><strong>Start Qdrant server:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
-                        cd ~/.local-memory && ./qdrant &
-                      </code>
-                      
-                      <p className="text-sm mt-3"><strong>Verify installation:</strong></p>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">
-                        curl http://localhost:6333/healthz
-                      </code>
-                      
-                      <div className="mt-3 p-2 bg-green-900/20 border border-green-700/30 rounded-md">
-                        <p className="text-xs text-green-300">
-                          <strong>Performance Benefit:</strong> Qdrant reduces search latency from ~100ms to &lt;10ms. 
-                          <em>Local Memory</em> auto-detects Qdrant and falls back to SQLite if unavailable.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Step 3 */}
-                  <div className="border-l-4 border-orange-500 pl-4">
-                    <h4 className="font-semibold text-lg mb-2">Step 3: Choose Your Integration Method</h4>
-                    <p className="text-muted-foreground mb-3"><em>Local Memory</em> supports two integration methods:</p>
-                    
-                    <div className="space-y-4">
-                      <div className="bg-muted p-4 rounded-lg">
-                        <h5 className="font-semibold text-green-400 mb-2">Option A: MCP Integration (Recommended for Claude)</h5>
-                        <p className="text-sm text-muted-foreground mb-3">For Claude Desktop, Claude Code, and other MCP-enabled agents</p>
-                        
-                        <div className="space-y-4">
-                          <div>
-                            <h6 className="font-semibold text-sm mb-2">Claude Code (Terminal AI):</h6>
-                            <div className="bg-background p-3 rounded-md">
-                              <p className="text-sm mb-2"><strong>Add local-memory server:</strong></p>
-                              <code className="text-xs bg-muted px-2 py-1 rounded block mb-2">
-                                claude mcp add local-memory /path/to/local-memory
-                              </code>
-                              <p className="text-sm mb-2"><strong>Or import from Claude Desktop:</strong></p>
-                              <code className="text-xs bg-muted px-2 py-1 rounded block mb-2">
-                                claude mcp add-from-claude-desktop
-                              </code>
-                              <p className="text-sm mb-2"><strong>Manage servers:</strong></p>
-                              <code className="text-xs bg-muted px-2 py-1 rounded block">
-                                claude mcp list | claude mcp get local-memory | claude mcp remove local-memory
-                              </code>
-                            </div>
-                          </div>
-                          
-                          <div>
-                            <h6 className="font-semibold text-sm mb-2">Claude Desktop (Native App):</h6>
-                            <div className="bg-background p-3 rounded-md">
-                              <p className="text-sm mb-2">Edit <code className="bg-muted px-1 rounded">~/.claude_desktop_config.json</code>:</p>
-                               <div className="text-xs font-mono text-muted-foreground bg-muted p-2 rounded">
-                                 <div>&#123;</div>
-                                 <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
-                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
-                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/path/to/local-memory",</div>
-                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": []</div>
-                                 <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
-                                 <div>&nbsp;&nbsp;&#125;</div>
-                                 <div>&#125;</div>
-                     </div>
-
-                     <div className="p-4 bg-muted rounded-lg">
-                       <h5 className="font-semibold mb-3">📋 Complete CLI Command Reference (12 Commands):</h5>
-                       <div className="grid md:grid-cols-3 gap-6">
-                         <div>
-                           <h6 className="font-semibold mb-2 text-memory-blue">Core Operations (4)</h6>
-                           <div className="space-y-1 text-xs font-mono">
-                             <div><code>remember</code> <span className="text-muted-foreground">- Store memories</span></div>
-                             <div><code>search</code> <span className="text-muted-foreground">- Search memories</span></div>
-                             <div><code>forget</code> <span className="text-muted-foreground">- Delete memories</span></div>
-                             <div><code>relate</code> <span className="text-muted-foreground">- Create relationships</span></div>
-                           </div>
-                         </div>
-                         
-                         <div>
-                           <h6 className="font-semibold mb-2 text-memory-green">System Management (4)</h6>
-                           <div className="space-y-1 text-xs font-mono">
-                             <div><code>start</code> <span className="text-muted-foreground">- Start daemon</span></div>
-                             <div><code>start-server</code> <span className="text-muted-foreground">- Start REST server</span></div>
-                             <div><code>stop</code> <span className="text-muted-foreground">- Stop services</span></div>
-                             <div><code>status</code> <span className="text-muted-foreground">- Check status</span></div>
-                           </div>
-                         </div>
-                         
-                         <div>
-                           <h6 className="font-semibold mb-2 text-memory-purple">Setup & Maintenance (4)</h6>
-                           <div className="space-y-1 text-xs font-mono">
-                             <div><code>setup</code> <span className="text-muted-foreground">- Initial configuration</span></div>
-                             <div><code>install</code> <span className="text-muted-foreground">- Install to targets</span></div>
-                             <div><code>validate</code> <span className="text-muted-foreground">- Validate configuration</span></div>
-                             <div><code>doctor</code> <span className="text-muted-foreground">- Diagnose issues</span></div>
-                           </div>
-                         </div>
-                       </div>
-                       
-                       <div className="mt-4 text-xs text-muted-foreground">
-                         <strong>Usage:</strong> <code className="bg-background px-1 rounded">local-memory [command] [options]</code> 
-                         or <code className="bg-background px-1 rounded">local-memory --help</code> for full reference
-                       </div>
-                     </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <p className="text-xs text-muted-foreground mt-3">
-                          ✨ Memory tools will appear natively in Claude's interface - no API calls needed
-                        </p>
-                      </div>
-                      
-                      <div className="bg-muted p-4 rounded-lg">
-                        <h5 className="font-semibold text-blue-400 mb-2">Option B: REST API Integration (Universal)</h5>
-                        <p className="text-sm text-muted-foreground mb-3">For OpenCode, ChatGPT, custom agents, and web applications</p>
-                        <div className="bg-background p-3 rounded-md">
-                          <p className="text-sm mb-2"><strong>Start REST API server:</strong></p>
-                           <code className="text-sm bg-muted px-2 py-1 rounded block">
-                             local-memory start
-                           </code>
-                          
-                          <p className="text-xs text-muted-foreground mt-3">
-                              🌐 Access 26 endpoints at http://localhost:3002/api/v1/
+                      <details className="mt-4 bg-blue-50/5 border border-blue-500/20 rounded p-2">
+                        <summary className="cursor-pointer text-xs font-medium text-blue-400">
+                          Recommended: Qdrant (10x faster search)
+                        </summary>
+                        <div className="mt-2 space-y-1">
+                          <code className="text-xs bg-background px-2 py-1 rounded block">
+                            curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                          </code>
+                          <code className="text-xs bg-background px-2 py-1 rounded block">
+                            tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/
+                          </code>
+                          <code className="text-xs bg-background px-2 py-1 rounded block">
+                            cd ~/.local-memory && ./qdrant &
+                          </code>
+                          <p className="text-xs text-muted-foreground mt-4">
+                            See Pro Tip below for more details.
                           </p>
                         </div>
+                      </details>
+                    </div>
+
+                    <div className="mt-4 bg-muted/20 p-4 rounded border border-memory-blue/30">
+                      <h5 className="font-semibold mb-3 text-memory-blue">💡 <strong>Pro Tip:</strong> Use Qdrant for lightning-fast search performance</h5>
+                      <p className="text-sm text-muted-foreground mb-3">Setting up Qdrant with <em>Local Memory</em> dramatically improves search speed from ~100ms to &lt;10ms. This is especially valuable for large memory databases and frequent semantic searches.</p>
+                      <div className="text-sm text-muted-foreground space-y-2">
+                        <div>• <strong>Instant Results:</strong> Sub-10ms semantic search across thousands of memories</div>
+                        <div>• <strong>Auto-Detection:</strong> Local Memory automatically detects and uses Qdrant when available</div>
+                        <div>• <strong>Graceful Fallback:</strong> Falls back to SQLite if Qdrant is unavailable</div>
+                        <div>• <strong>Zero Config:</strong> Works out-of-the-box with default Qdrant settings</div>
                       </div>
+                      <p className="text-xs text-muted-foreground mt-2 italic">
+                        For power users: Qdrant enables advanced vector operations and scales to millions of memories with consistent performance.
+                      </p>
                     </div>
                   </div>
 
-                  {/* Step 4 */}
-                  <div className="border-l-4 border-pink-500 pl-4">
-                    <h4 className="font-semibold text-lg mb-2">Step 4: Verify Installation</h4>
-                    <div className="space-y-4">
-                      <div>
-                        <h5 className="font-semibold text-sm mb-2">For MCP Integration:</h5>
-                        <div className="space-y-2">
-                          <div>
-                            <p className="text-sm text-muted-foreground mb-1"><strong>Claude Code:</strong> Use `claude mcp list` to verify server is added</p>
-                            <div className="bg-green-950/20 p-2 rounded text-xs text-green-400">
-                              ✅ Success: Server "local-memory" should appear in list with status "running"
-                            </div>
+                  {/* Step 3 - Integration */}
+                  <div className="border-l-4 border-orange-500 pl-4">
+                    <h4 className="font-semibold text-lg mb-2">Step 3: Connect to Your AI Editor</h4>
+                    <p className="text-muted-foreground mb-3">Add 'local-memory' to your preferred AI editor:</p>
+                    
+                    {/* Primary: MCP Integration */}
+                    <div className="bg-muted p-3 rounded-md mb-4">
+                      <p className="text-sm font-medium mb-3">🔗 MCP Integration (Recommended)</p>
+                      
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm font-medium">Claude Code:</p>
+                          <code className="text-xs bg-background px-2 py-1 rounded block">
+                            claude mcp add local-memory -- /usr/local/bin/local-memory
+                          </code>
+                        </div>
+                        
+                        <div>
+                          <p className="text-sm font-medium">Claude Desktop:</p>
+                          <p className="text-xs text-muted-foreground mb-1">~/.claude_desktop_config.json:</p>
+                          <div className="text-xs font-mono bg-background p-2 rounded">
+                            &#123;"mcpServers":&#123;"local-memory":&#123;"command":"/usr/local/bin/local-memory"&#125;&#125;&#125;
                           </div>
-                          <div>
-                            <p className="text-sm text-muted-foreground mb-1"><strong>Claude Desktop:</strong> Restart app and look for memory tools</p>
-                            <div className="bg-green-950/20 p-2 rounded text-xs text-green-400">
-                              ✅ Success: You'll see tools like "store_memory", "search_memories", "ask_question" available
-                            </div>
+                        </div>
+                        
+                        <div>
+                          <p className="text-sm font-medium">VS Code (Copilot):</p>
+                          <p className="text-xs text-muted-foreground mb-1">.vscode/mcp.json:</p>
+                          <div className="text-xs font-mono bg-background p-2 rounded">
+                            &#123;"servers":&#123;"local-memory":&#123;"command":"/usr/local/bin/local-memory","args":[]&#125;&#125;&#125;
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <p className="text-sm font-medium">Cursor:</p>
+                          <p className="text-xs text-muted-foreground mb-1">.cursor/mcp.json:</p>
+                          <div className="text-xs font-mono bg-background p-2 rounded">
+                            &#123;"servers":&#123;"local-memory":&#123;"command":"/usr/local/bin/local-memory","args":[]&#125;&#125;&#125;
                           </div>
                         </div>
                       </div>
                       
-                      <div>
-                        <h5 className="font-semibold text-sm mb-2">For REST API:</h5>
-                        <code className="text-sm bg-background px-2 py-1 rounded block">
-                          curl http://localhost:3001/api/v1/health
+                      <details className="mt-3 bg-blue-50/5 border border-blue-500/20 rounded p-2">
+                        <summary className="cursor-pointer text-xs font-medium text-blue-400">
+                          ➕ More Editors
+                        </summary>
+                        <div className="mt-2">
+                          <p className="text-sm font-medium">Windsurf:</p>
+                          <p className="text-xs text-muted-foreground mb-1">Settings &gt; MCP Configuration:</p>
+                          <div className="text-xs font-mono bg-background p-2 rounded">
+                            &#123;"mcpServers":&#123;"local-memory":&#123;"command":"/usr/local/bin/local-memory"&#125;&#125;&#125;
+                          </div>
+                        </div>
+                      </details>
+                    </div>
+
+                    {/* Alternative: REST API - Collapsible */}
+                    <details className="bg-blue-50/5 border border-blue-500/20 rounded-md p-3">
+                      <summary className="cursor-pointer text-sm font-medium text-blue-400">
+                        🌐 Alternative: REST API (for other editors)
+                      </summary>
+                      <div className="mt-3">
+                        <code className="text-xs bg-background px-2 py-1 rounded block">
+                          local-memory start
                         </code>
-                        <p className="text-sm mt-2 text-muted-foreground">Should return: <code className="bg-background px-1 rounded">&#123;"status":"ok"&#125;</code></p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Access 26 endpoints at http://localhost:3002/api/v1/
+                        </p>
+                      </div>
+                    </details>
+                  </div>
+
+                  {/* Step 4 - Verify */}
+                  <div className="border-l-4 border-pink-500 pl-4">
+                    <h4 className="font-semibold text-lg mb-2">Step 4: Test Installation</h4>
+                    <p className="text-muted-foreground mb-3">Quick verification steps:</p>
+                    
+                    <div className="bg-muted p-3 rounded-md space-y-3">
+                      <div>
+                        <p className="text-sm font-medium">✅ MCP Integration:</p>
+                        <code className="text-xs bg-background px-2 py-1 rounded block mb-1">
+                          claude mcp list
+                        </code>
+                        <p className="text-xs text-muted-foreground">Should show "local-memory" server</p>
+                      </div>
+                      
+                      <div>
+                        <p className="text-sm font-medium">✅ REST API:</p>
+                        <code className="text-xs bg-background px-2 py-1 rounded block mb-1">
+                          curl http://localhost:3002/api/v1/health
+                        </code>
+                        <p className="text-xs text-muted-foreground">Should return &#123;"status":"ok"&#125;</p>
                       </div>
                     </div>
                   </div>
@@ -808,6 +730,7 @@ const DocsPage = () => {
             </Card>
 
             {/* MCP Protocol */}
+            <div id="mcp-reference" className="scroll-target" />
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
