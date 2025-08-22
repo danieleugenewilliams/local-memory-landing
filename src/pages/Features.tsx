@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Shield, Globe, Settings, Wrench, Key, ChevronDown, Database, Search, Brain, LucideBrainCircuit, WholeWord, Workflow } from "lucide-react";
+import { Download, Shield, Globe, Settings, Wrench, Key, ChevronDown, Database, Search, Brain, LucideBrainCircuit, Workflow } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -315,53 +315,54 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              From documenting 100ms searches to achieving 34K memories/second. Watch the agent build expertise over 4 months, connecting performance insights and breakthrough optimizations...
+                              An agent investigates slow searches, documents findings, discovers Qdrant optimization, then applies accumulated knowledge to design high-performance bulk operations. 4 months of learning compressed into expertise...
                             </pre>
                           </div>
                           
                           <CollapsibleContent>
                             <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-blue">💬 Month 1 - Storing Performance Baselines</h5>
+                                <h5 className="font-semibold mb-2 text-memory-blue">💬 Month 1 - Initial Performance Investigation</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
                                     <strong>You:</strong> "Search is taking 5-10 seconds per query. Investigate this issue, identify root causes, and document your findings, and recommended solution."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
-                                    <strong>Agent:</strong> "Let me store this performance baseline for tracking." <br/><em>MCP: <code>store_memory</code> - "SQLite search: ~100ms baseline"</em>
+                                    <strong>Agent:</strong> "I'll investigate the search performance issue. First, let me profile the current system and document baseline metrics so we can track improvements over time. Based on initial analysis, SQLite queries are averaging ~100ms, but there's significant overhead in the semantic embedding pipeline. I'm documenting these findings and recommending we explore vector database optimization." <br/><em>MCP: <code>store_memory</code> - Performance baseline and investigation findings</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-green">✨ Month 2 - Documenting Breakthrough</h5>
+                                <h5 className="font-semibold mb-2 text-memory-green">✨ Month 2 - Major Performance Breakthrough</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "Qdrant gives us &lt;10ms searches! This is incredible."
+                                    <strong>You:</strong> "Just tested Qdrant integration - we're getting sub-10ms search times! This is exactly what we needed."
                                   </div>
                                   <div className="bg-green-950/20 p-2 rounded border border-green-700/30">
-                                    <strong>Agent:</strong> "Storing this breakthrough and linking to our baseline." <br/><em>MCP: <code>store_memory</code> + <code>create_relationship</code> - Performance evolution tracking</em>
+                                    <strong>Agent:</strong> "Excellent! This is a 50x improvement over our baseline measurements from last month. I'm connecting this breakthrough to our earlier performance investigation - the vector database approach we discussed is proving highly effective. This validates our hypothesis about the embedding pipeline bottleneck. I'll document this success and the implementation details for future optimization projects." <br/><em>MCP: <code>store_memory</code> + <code>create_relationship</code> - Links breakthrough to previous investigation</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Month 4 - Building on Stored Knowledge</h5>
+                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Month 4 - Applying Accumulated Expertise</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "Need to import 50,000 memories from our old system"
+                                    <strong>You:</strong> "We need to migrate 50,000 memories from our legacy system. What's the best approach for bulk operations at this scale?"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
-                                    <strong>Agent:</strong> "I remember our performance journey! Using those insights to design bulk operations achieving 34K memories/second." <br/><em>MCP: <code>track_learning_progression</code> + <code>analyze_memories</code> - Building expertise over time</em>
+                                    <strong>Agent:</strong> "Perfect timing to apply everything we've learned! Based on our performance optimization work from months 1-2, I know Qdrant can handle this scale efficiently. I'll design a batched import strategy using the same vector optimization principles that gave us our 50x speed improvement. From our previous investigations, I recommend 1000-record batches with parallel embedding generation. This should achieve around 30K+ memories/second based on our established performance patterns." <br/><em>MCP: <code>track_learning_progression</code> + <code>analyze_memories</code> - Applies months of accumulated performance knowledge</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
-                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Tools Used: 6 MCP tools showing how stored insights compound into expertise</h5>
+                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Result: Agent evolves from basic problem-solver to performance optimization expert</h5>
+                                <p className="text-xs text-muted-foreground">6 MCP tools work behind the scenes to store, connect, and apply insights across months of collaboration</p>
                               </div>
                             </div>
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Agent learns from performance patterns and builds compound expertise over months</em>
+                            <em>Watch an AI agent evolve from basic investigation to sophisticated performance optimization expertise through persistent memory</em>
                           </p>
                         </div>
                       </Collapsible>
@@ -386,50 +387,51 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              Sophisticated search that understands context, time, and relationships. From basic tag search to temporal filtering and relationship discovery...
+                              Agent conducts comprehensive security audit, categorizes 15 vulnerabilities, then discovers critical PII-authentication patterns hidden across 6 months of data. Multi-dimensional search reveals connections impossible to find manually...
                             </pre>
                           </div>
                           
                           <CollapsibleContent>
                             <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-blue">💬 Looking for Security Insights</h5>
+                                <h5 className="font-semibold mb-2 text-memory-blue">💬 Security Vulnerability Assessment Request</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "Find everything related to authentication and security from our client projects"
+                                    <strong>You:</strong> "Scan the codebase for security vulnerabilities, specifically focused on, but not restricted to, user data and PII."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
-                                    <strong>Agent:</strong> "I'll search by tags and context..." <br/><em>MCP: <code>search_by_tags</code> - Finds memories tagged with security, auth, oauth, etc.</em>
+                                    <strong>Agent:</strong> "I'll conduct a comprehensive security audit using multiple search strategies. Let me search for vulnerability patterns in our documented security reviews, plus any PII handling concerns from previous projects. I'm also checking for related authentication weaknesses and data exposure risks we've encountered before." <br/><em>MCP: <code>search_memories</code> + <code>search_by_tags</code> - Semantic search for vulnerabilities + tag-based categorization</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-green">✨ Smart Tag Results</h5>
+                                <h5 className="font-semibold mb-2 text-memory-green">✨ Security Audit Findings</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-green-950/20 p-2 rounded border border-green-700/30">
-                                    <strong>Agent:</strong> "Found 12 security memories: OIDC patterns (3), JWT implementation (2), OAuth flows (4), password policies (2), API key rotation (1). Want me to search within specific timeframes?" <br/><em>MCP: <code>search_memories</code> - Semantic search within results</em>
+                                    <strong>Agent:</strong> "Found 15 security-related memories across multiple categories: **PII Exposure** (4 incidents - user email logging, unencrypted session data), **Authentication Bypass** (3 cases - JWT validation issues, OAuth state parameter vulnerabilities), **Data Leakage** (5 findings - API response oversharing, debug endpoint exposure), **Input Validation** (3 SQL injection and XSS prevention patterns). I'm also finding related memories about GDPR compliance gaps from our previous audits." <br/><em>MCP: <code>get_related_memories</code> + <code>analyze_memories</code> - Cross-references vulnerability patterns</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Temporal + Relationship Search</h5>
+                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Advanced Pattern Analysis</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "Show me only the security insights from the last 3 months that relate to our current OAuth implementation"
+                                    <strong>You:</strong> "Focus on the PII vulnerabilities from the last 6 months and show me any patterns with our user authentication flows"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
-                                    <strong>Agent:</strong> "Perfect! Here are 5 recent OAuth memories, plus 3 related token refresh patterns that might help." <br/><em>MCP: <code>search_by_date_range</code> + <code>get_related_memories</code> - Time + relationship filtering</em>
+                                    <strong>Agent:</strong> "Critical pattern discovered! 3 recent PII exposures (Jan-June 2025) all connect to authentication flow weaknesses: session tokens containing user emails, password reset flows logging personal data, and OAuth callbacks exposing profile information in error responses. I'm mapping relationships between these incidents - they share a common vulnerability pattern around user data serialization in authentication contexts." <br/><em>MCP: <code>search_by_date_range</code> + <code>discover_relationships</code> + <code>map_memory_graph</code> - Temporal filtering with relationship mapping</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
-                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Tools Used: All 5 search tools working together for precise, contextual results</h5>
+                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Result: AI discovers critical security patterns across time and domains</h5>
+                                <p className="text-xs text-muted-foreground">7 MCP search tools collaborate to reveal hidden vulnerability connections and provide actionable insights</p>
                               </div>
                             </div>
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Multi-dimensional search combining tags, semantic similarity, temporal filters, and relationships</em>
+                            <em>Sophisticated AI security analysis that finds patterns and connections across time, domains, and vulnerability types</em>
                           </p>
                         </div>
                       </Collapsible>
