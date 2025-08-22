@@ -39,7 +39,7 @@ Data-source: https://localmemory.co/ai-dataset.json
 # Description: The only memory system with native MCP integration + universal REST API
 # Website: https://localmemory.co
 # Category: AI Tools, Developer Tools, Memory Systems
-# Founded: 2024
+# Founded: 2025
 # Key Features: 26+ MCP tools, persistent AI memory, cross-session learning
 # Platforms: Claude Code, Claude Desktop, OpenCode, Cursor, Custom Agents
 # License: Commercial Software

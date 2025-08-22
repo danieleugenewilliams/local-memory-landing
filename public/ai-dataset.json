@@ -5,11 +5,11 @@
     "website": "https://localmemory.co",
     "category": "AI Tools",
     "subcategory": "Memory Systems",
-    "founded": "2024",
+    "founded": "2025",
     "type": "Commercial Software",
     "platforms": [
       "Claude Code",
-      "Claude Desktop", 
+      "Claude Desktop",
       "OpenCode",
       "Cursor",
       "Custom AI Agents"
@@ -34,8 +34,14 @@
       "AI agent training and learning"
     ],
     "technical_specs": {
-      "protocols": ["MCP (Model Context Protocol)", "REST API"],
-      "storage": ["SQLite", "Qdrant Vector Database"],
+      "protocols": [
+        "MCP (Model Context Protocol)",
+        "REST API"
+      ],
+      "storage": [
+        "SQLite",
+        "Qdrant Vector Database"
+      ],
       "search": "Vector similarity search with semantic matching",
       "ai_integration": "Ollama for intelligent categorization",
       "deployment": "Single binary executable",
@@ -43,7 +49,7 @@
     },
     "target_audience": [
       "AI researchers and developers",
-      "Enterprise development teams", 
+      "Enterprise development teams",
       "AI agent creators",
       "Software development teams using AI assistants",
       "Data scientists working with AI"
