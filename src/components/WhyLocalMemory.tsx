@@ -131,7 +131,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               </div>
               
               <Link to="/payment" className="flex justify-center">
-                <Button className="w-full sm:w-auto" size="lg">
+                <Button variant="hero" className="w-full sm:w-auto" size="lg">
                   Upgrade Your Coding Agent's Memory Now
                 </Button>
               </Link>
@@ -195,7 +195,22 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               </p>
             </div>
 
-          </div>
+            {/* Final CTA on Landing Page */}
+
+            <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
+              <Link to="/payment">
+                <Button variant="hero" size="lg" className="w-full sm:w-auto">
+                  Upgrade Your Coding Agent's Memory Now
+                </Button>
+              </Link>
+              <a href="/features">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  Want to learn more? →
+                </Button>
+              </a>
+            </div>
+
+        </div>
 
       </div>
     </section>
