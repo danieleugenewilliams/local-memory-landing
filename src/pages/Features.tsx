@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Shield, Globe, Settings, Wrench, Key, ChevronDown, Database, Search, Brain, LucideBrainCircuit, Workflow } from "lucide-react";
+import { Download, Shield, Globe, Settings, Wrench, Key, ChevronDown, Database, Search, Brain, LucideBrainCircuit, Workflow, HelpCircle } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -285,7 +285,7 @@ const FeaturesPage = () => {
                 Agent Collaboration Scenarios
               </CardTitle>
               <CardDescription>
-                Real agent conversations showing how Local Memory transforms AI from stateless helpers into learning, evolving collaborators. Click to see full interactions.
+                Below are real agent conversations showing how <em>Local Memory</em> transforms AI from stateless helpers into learning, evolving collaborators. Click to see full interactions.
               </CardDescription>
             </CardHeader>
               <CardContent>
@@ -362,7 +362,7 @@ const FeaturesPage = () => {
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Watch an AI agent evolve from basic investigation to sophisticated performance optimization expertise through persistent memory</em>
+                            <em>AI agent evolves from basic investigation to performance optimization expertise through persistent memory</em>
                           </p>
                         </div>
                       </Collapsible>
@@ -431,7 +431,7 @@ const FeaturesPage = () => {
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Sophisticated AI security analysis that finds patterns and connections across time, domains, and vulnerability types</em>
+                            <em>Sophisticated AI security analysis finds patterns and connections across time, domains, and vulnerability types</em>
                           </p>
                         </div>
                       </Collapsible>
@@ -500,7 +500,7 @@ const FeaturesPage = () => {
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Cross-agent memory discovery that finds and connects implementations from different team members to solve complex infrastructure challenges</em>
+                            <em>Cross-agent memory finds and connects implementations from different team members to solve complex infrastructure challenges</em>
                           </p>
                         </div>
                       </Collapsible>
@@ -568,7 +568,7 @@ const FeaturesPage = () => {
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Real learning progression tracking from prototype to production - showing actual expertise building over months of development work</em>
+                            <em>Real learning progression tracks from prototype to production, showing actual expertise building over months of development work</em>
                           </p>
                         </div>
                       </Collapsible>
@@ -576,28 +576,6 @@ const FeaturesPage = () => {
                     </div>
                   </div>
 
-
-                  {/* Setup Reference */}
-                  <div className="bg-muted/20 p-6 rounded-lg border border-memory-blue/30">
-                    <h4 className="font-semibold text-memory-blue mb-3">🚀 Ready to Experience Collaborative Intelligence?</h4>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      All setup and configuration details are covered in the sections above. Choose your preferred path:
-                    </p>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div>
-                        <a href="#quick-start" className="text-memory-blue hover:underline font-medium">📚 Quick Start</a>
-                        <p className="text-xs text-muted-foreground">2-minute zero-config setup</p>
-                      </div>
-                      <div>
-                        <a href="#agent-setup" className="text-memory-blue hover:underline font-medium">🤖 Agent Setup</a>
-                        <p className="text-xs text-muted-foreground">Let AI handle installation</p>
-                      </div>
-                      <div>
-                        <a href="#api-reference" className="text-memory-blue hover:underline font-medium">⚙️ API Reference</a>
-                        <p className="text-xs text-muted-foreground">26 tools + REST endpoints</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
             </CardContent>
           </Card>
@@ -605,7 +583,10 @@ const FeaturesPage = () => {
           {/* Support */}
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Support & Community</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-memory-blue" />
+                Support & Community
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">

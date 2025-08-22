@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -58,7 +56,7 @@ This keeps your payment configuration secure and maintainable!`);
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Header />
       <div className="py-12">
-        <div className="container max-w-2xl mx-auto px-6">
+        <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-4">
               Get <em>Local Memory</em>
@@ -68,47 +66,74 @@ This keeps your payment configuration secure and maintainable!`);
             </p>
           </div>
 
-          <Card className="border-2">
-            <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl"><em>Local Memory</em></CardTitle>
-              <CardDescription className="text-lg">
-                One-time purchase, lifetime updates
-              </CardDescription>
-              <div className="flex items-center justify-center gap-2 mt-4">
-                <span className="text-3xl font-bold">$29</span>
-                <Badge variant="secondary">Limited Time</Badge>
+          <div className="bg-card rounded-2xl border-2 border-memory-blue/50 relative overflow-hidden mb-6">
+            <div className="p-8 text-center">
+              <div className="text-3xl mb-2">🎯</div>
+              <h3 className="text-xl font-bold text-foreground mb-2">Early Access Special</h3>
+              <div className="flex items-center justify-center gap-2 mb-6">
+                <span className="text-4xl font-bold text-foreground">$29</span>
+                <div className="text-left">
+                  <div className="text-sm text-muted-foreground line-through">normally $49</div>
+                  <div className="text-sm text-memory-blue font-medium">40% OFF</div>
+                </div>
               </div>
-            </CardHeader>
-            
-            <CardContent className="space-y-6">
-              <div className="space-y-3">
-                {[
-                  "Works with Claude, GPT, Cursor, VScode, and more",
-                  "100% local - your data never leaves your machine",
-                  "Cross-platform (macOS, Windows, Linux)",
-                  "Semantic memory search and retrieval",
-                  "2-minute setup with LLM prompts"
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
+              
+              <div className="grid grid-cols-3 gap-4 mb-6 text-sm px-4">
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>Complete memory system</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>One-Time Secure Stripe Payment</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>Unlimited usage forever</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>$2K-6K Monthly Value</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>26 MCP tools included</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>2,500%+ monthly ROI</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>100% Local & Private</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>Worth $100-300 daily</span>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-green-500">✓</span>
+                  <span>Instant Access</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center">
+                <Button 
+                  onClick={handlePayment}
+                  variant="hero" 
+                  className="w-full sm:w-auto" 
+                  size="lg"
+                >
+                  Get Instant Access
+                </Button>
+              </div>
+              
+              <div className="mt-2 text-sm text-muted-foreground">
+                <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
               </div>
 
-              <Button 
-                onClick={handlePayment}
-                className="w-full h-12 text-lg font-semibold"
-                size="lg"
-              >
-                Get Instant Access
-              </Button>
-
-              <div className="text-center text-sm text-muted-foreground">
-                <p>Secure payment powered by Stripe</p>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
       <Footer />
