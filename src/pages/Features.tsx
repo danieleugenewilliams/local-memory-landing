@@ -456,50 +456,51 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              Agent finds hidden connections across your knowledge domains and time. From pattern recognition to meta-strategy identification...
+                              Agent discovers cross-agent knowledge and suggests workflow enhancements based on other team members' previous implementations...
                             </pre>
                           </div>
                           
                           <CollapsibleContent>
                             <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-blue">💬 Working on Database Optimization</h5>
+                                <h5 className="font-semibold mb-2 text-memory-blue">💬 S3 Security Infrastructure Issue</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "I feel like I've solved similar performance problems before"
+                                    <strong>You:</strong> "I found a critical security flaw in our S3 secure download implementation. We need to completely redesign our approach to ensure downloads are properly secured, and implement automation so that new builds trigger secure uploads to S3 with fresh download links."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
-                                    <strong>Agent:</strong> "Let me find connections in your knowledge..." <br/><em>MCP: <code>discover_relationships</code> - Finds hidden patterns across your memories</em>
+                                    <strong>Agent:</strong> "This is a significant infrastructure challenge. Let me search our knowledge base for related CI/CD automation work and security implementations. I'll also check for any existing S3 upload strategies or GitHub Actions workflows from our team's previous projects." <br/><em>MCP: <code>search_memories</code> + <code>search_by_tags</code> - Searches across all team knowledge</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-green">✨ Discovered Connections</h5>
+                                <h5 className="font-semibold mb-2 text-memory-green">✨ Cross-Agent Discovery</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-green-950/20 p-2 rounded border border-green-700/30">
-                                    <strong>Agent:</strong> "Found 5 relationships! Your database indexing work 'builds_on' API caching patterns from last month. Both follow 'selective data loading' principle." <br/><em>MCP: <code>map_memory_graph</code> + <code>create_relationship</code> - Visualizes knowledge connections</em>
+                                    <strong>Agent:</strong> "Excellent discovery! I found memories from the **golang agent** who already implemented a comprehensive GitHub Actions workflow with S3 integration. They built a 3-phase system: **Enhanced GitHub Actions → Cross-Repository Automation → Production Reliability**. The workflow includes ZIP packaging, AWS OIDC authentication, time-windowed uploads, and cross-repo dispatch notifications. This solves exactly the automation challenge you're facing!" <br/><em>MCP: <code>get_related_memories</code> + <code>discover_relationships</code> - Finds cross-agent implementations</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Strategic Pattern Recognition</h5>
+                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Workflow Enhancement Strategy</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "What patterns do you see in my problem-solving approach?"
+                                    <strong>You:</strong> "Can we enhance their workflow to automatically notify our webapp when new binaries are available?"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
-                                    <strong>Agent:</strong> "Fascinating! You consistently solve performance through 'selective access' - database indexes, API field filtering, CDN edge caching. This is your signature strategy." <br/><em>MCP: <code>analyze_memories</code> + <code>get_related_memories</code> - Finds meta-patterns in thinking</em>
+                                    <strong>Agent:</strong> "Perfect enhancement! Based on the golang agent's implementation, I recommend adding a **repository dispatch trigger** to their existing workflow. When golang builds complete and upload to S3, it dispatches to the webapp repository, triggering our `.github/workflows/update-binaries.yml` to generate fresh secure download URLs. This creates a seamless automation pipeline: **golang build → S3 upload → webapp notification → secure link generation → customer access**." <br/><em>MCP: <code>map_memory_graph</code> + <code>analyze_memories</code> - Connects implementations across agents</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
-                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Tools Used: 6 relationship tools that reveal hidden connections in your knowledge</h5>
+                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Result: Cross-agent knowledge connection enables complete automation redesign</h5>
+                                <p className="text-xs text-muted-foreground">6 MCP relationship tools reveal how golang agent's existing work solves webapp's security and automation challenges</p>
                               </div>
                             </div>
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>AI discovers your thinking patterns and strategic approaches across all domains</em>
+                            <em>Cross-agent memory discovery that finds and connects implementations from different team members to solve complex infrastructure challenges</em>
                           </p>
                         </div>
                       </Collapsible>
