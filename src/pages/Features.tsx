@@ -525,7 +525,7 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              Agent identifies knowledge gaps and guides learning with AI analysis tools. From gap detection to personalized learning paths...
+                              Track real learning progression from prototype to production. See how expertise builds over months of development...
                             </pre>
                           </div>
                           
@@ -535,40 +535,40 @@ const FeaturesPage = () => {
                                 <h5 className="font-semibold mb-2 text-memory-blue">💬 Learning Assessment Request</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "I feel like I'm missing something important in my React knowledge"
+                                    <strong>You:</strong> "I built this prototype in TypeScript, but after using it and getting user feedback, I decided to refactor the entire platform in GoLang. Through this process, I've learned about modern memory management, vector databases, semantic search, MCP solution architecture, and AI integration. Help me understand what knowledge I've gained and where I still have gaps."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
-                                    <strong>Agent:</strong> "Let me analyze your learning patterns..." <br/><em>MCP: <code>detect_knowledge_gaps</code> + <code>track_learning_progression</code> - Scans memories for missing concepts</em>
+                                    <strong>Agent:</strong> "Fascinating journey! Let me analyze your learning progression from the TypeScript prototype through the GoLang refactor..." <br/><em>MCP: <code>detect_knowledge_gaps</code> + <code>track_learning_progression</code> - Analyzes months of development memories</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-green">✨ Gap Analysis Results</h5>
+                                <h5 className="font-semibold mb-2 text-memory-green">📊 Month 1-2: Foundation Building</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-green-950/20 p-2 rounded border border-green-700/30">
-                                    <strong>Agent:</strong> "You know state and props well, but haven't explored: useCallback, useMemo, React.memo for performance. Also missing: error boundaries and custom hooks patterns." <br/><em>MCP: <code>analyze_temporal_patterns</code> - Shows learning progression over time</em>
+                                    <strong>Agent:</strong> "**Month 1**: You started with TypeScript prototype knowledge, then learned Go fundamentals and cross-compilation challenges. **Month 2**: Major breakthrough with CGO issues and dependency management - you discovered modernc.org/sqlite as a pure Go solution." <br/><em>MCP: <code>analyze_temporal_patterns</code> - Identifies learning milestones and breakthrough moments</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg mb-4">
-                                <h5 className="font-semibold mb-2 text-memory-purple">🚀 Guided Learning Path</h5>
+                                <h5 className="font-semibold mb-2 text-memory-purple">⚡ Month 3-4: Advanced Architecture</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "What should I learn next and how should I organize it?"
+                                    <strong>You:</strong> "What advanced concepts have I actually mastered, and what gaps remain?"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
-                                    <strong>Agent:</strong> "Based on your current projects, start with useCallback. I'll create a React Performance category to track your progress and organize related concepts." <br/><em>MCP: <code>create_category</code> + <code>categorize_memory</code> - Organizes learning by topic</em>
+                                    <strong>Agent:</strong> "**Month 3**: You mastered vector databases - transitioned from FAISS research to production Qdrant implementation with 10ms search latency. **Month 4**: Advanced to MCP protocol architecture, 26-tool implementation, and GitHub Actions automation. **Knowledge Gap**: You haven't explored distributed systems scaling or Kubernetes deployment patterns yet." <br/><em>MCP: <code>create_category</code> + <code>categorize_memory</code> - Auto-organizes by Vector DB, MCP Architecture, DevOps domains</em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
-                                <h5 className="font-semibold mb-2 text-memory-orange">📈 Tools Used: 7 AI-powered analysis tools that understand and guide your learning patterns</h5>
+                                <h5 className="font-semibold mb-2 text-memory-orange">🎯 Expert Assessment: You've progressed from TypeScript developer to GoLang systems architect with production AI integration expertise - 4 months of measurable growth tracked across 200+ development memories</h5>
                               </div>
                             </div>
                           </CollapsibleContent>
                           
                           <p className="text-xs text-muted-foreground mt-2">
-                            <em>Personalized learning guidance based on your actual knowledge patterns and project needs</em>
+                            <em>Real learning progression tracking from prototype to production - showing actual expertise building over months of development work</em>
                           </p>
                         </div>
                       </Collapsible>
