@@ -8,7 +8,9 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:license": "node test-license-integration.js",
+    "test:license:verbose": "VITE_DOWNLOAD_SECRET=test-secret-for-development-only-do-not-use-in-production-this-must-be-64-chars node test-license-integration.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

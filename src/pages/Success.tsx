@@ -61,32 +61,70 @@ const SuccessPage = () => {
     return urls;
   };
 
-  // Generate cryptographically secure product key using same pattern as download URLs
+  // Generate self-contained cryptographically secure product key
   const generateProductKey = (sessionId: string, paymentTimestamp: number) => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
-    // Convert timestamp to seconds if it's in milliseconds (for consistency)
+    // Convert timestamp to seconds if it's in milliseconds
     const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
     
-    // Use session ID and timestamp for uniqueness, same secret for security
-    const data = `${DOWNLOAD_SECRET}:product-key:${sessionId}:${timestampInSeconds}`;
-    const hash = CryptoJS.SHA256(data).toString();
+    let attemptCount = 0;
+    const maxAttempts = 10;
     
-    // Extract 16 characters, convert to uppercase, remove ambiguous chars (0, O, 1, I)
-    const cleanHash = hash.toUpperCase().replace(/[01OI]/g, '');
-    const keyChars = cleanHash.slice(0, 16);
+    while (attemptCount < maxAttempts) {
+      // Add salt for retry attempts if needed
+      const saltSuffix = attemptCount > 0 ? `:retry:${attemptCount}` : '';
+      
+      // Step 1: Generate session ID hash (4 chars)
+      const sessionData = `${DOWNLOAD_SECRET}:session:${sessionId}${saltSuffix}`;
+      const sessionHash = CryptoJS.SHA256(sessionData).toString().toUpperCase().replace(/[01OI]/g, '');
+      
+      // Step 2: Generate timestamp encoding (4 chars) 
+      // Use offset from 2020-01-01 to compress timestamp
+      const epoch2020 = 1577836800; // 2020-01-01 00:00:00 UTC
+      const timestampOffset = timestampInSeconds - epoch2020;
+      const timestampData = `${DOWNLOAD_SECRET}:timestamp:${timestampOffset}${saltSuffix}`;
+      const timestampHash = CryptoJS.SHA256(timestampData).toString().toUpperCase().replace(/[01OI]/g, '');
+      
+      // Step 3: Generate verification hash (8 chars)
+      const verificationData = `${DOWNLOAD_SECRET}:verify:${sessionId}:${timestampInSeconds}${saltSuffix}`;
+      const verificationHash = CryptoJS.SHA256(verificationData).toString().toUpperCase().replace(/[01OI]/g, '');
+      
+      // Step 4: Generate integrity checksum (4 chars)
+      const checksumData = `${sessionHash.slice(0, 4)}:${timestampHash.slice(0, 4)}:${verificationHash.slice(0, 8)}`;
+      const checksumHash = CryptoJS.SHA256(checksumData).toString().toUpperCase().replace(/[01OI]/g, '');
+      
+      // Check if we have enough characters after filtering for all segments
+      if (sessionHash.length >= 4 && timestampHash.length >= 4 && 
+          verificationHash.length >= 8 && checksumHash.length >= 4) {
+        
+        const sessionChars = sessionHash.slice(0, 4);
+        const timestampChars = timestampHash.slice(0, 4);
+        const verificationChars = verificationHash.slice(0, 8);
+        const checksumChars = checksumHash.slice(0, 4);
+        
+        // Format as LM-XXXX-XXXX-XXXX-XXXX-XXXX (self-contained)
+        const formattedKey = `LM-${sessionChars}-${timestampChars}-${verificationChars.slice(0, 4)}-${verificationChars.slice(4, 8)}-${checksumChars}`;
+        
+        console.log('Self-contained product key generated:', {
+          sessionId: sessionId.slice(0, 8) + '...',
+          timestampInSeconds,
+          timestampOffset,
+          attemptCount,
+          keyLength: formattedKey.length,
+          format: 'LM-SESS-TIME-VER1-VER2-VER3-CHKS'
+        });
+        
+        return formattedKey;
+      }
+      
+      console.warn(`Attempt ${attemptCount + 1}: Insufficient characters after filtering, retrying with salt...`);
+      attemptCount++;
+    }
     
-    // Format as LM-XXXX-XXXX-XXXX-XXXX for readability
-    const formattedKey = `LM-${keyChars.slice(0, 4)}-${keyChars.slice(4, 8)}-${keyChars.slice(8, 12)}-${keyChars.slice(12, 16)}`;
-    
-    console.log('Product key generated:', {
-      sessionId: sessionId.slice(0, 8) + '...',
-      timestampInSeconds,
-      keyLength: formattedKey.length,
-      format: formattedKey.slice(0, 10) + '...'
-    });
-    
-    return formattedKey;
+    // Fallback: This should statistically never happen
+    console.error('Failed to generate self-contained key with sufficient characters after 10 attempts');
+    throw new Error('Unable to generate secure product key - please refresh and try again');
   };
 
   useEffect(() => {
