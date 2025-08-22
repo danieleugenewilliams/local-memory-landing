@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, CheckCircle } from "lucide-react";
+import { Download, CheckCircle, Copy, Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -12,8 +12,10 @@ import CryptoJS from "crypto-js";
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
   const [downloadLinks, setDownloadLinks] = useState<{[key: string]: string}>({});
+  const [productKey, setProductKey] = useState<string>('');
   const [isVerifying, setIsVerifying] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   // Generate secure download URLs using time-based hashing
   const generateSecureDownloadUrls = (paymentTimestamp: number) => {
@@ -59,6 +61,34 @@ const SuccessPage = () => {
     return urls;
   };
 
+  // Generate cryptographically secure product key using same pattern as download URLs
+  const generateProductKey = (sessionId: string, paymentTimestamp: number) => {
+    const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
+    
+    // Convert timestamp to seconds if it's in milliseconds (for consistency)
+    const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
+    
+    // Use session ID and timestamp for uniqueness, same secret for security
+    const data = `${DOWNLOAD_SECRET}:product-key:${sessionId}:${timestampInSeconds}`;
+    const hash = CryptoJS.SHA256(data).toString();
+    
+    // Extract 16 characters, convert to uppercase, remove ambiguous chars (0, O, 1, I)
+    const cleanHash = hash.toUpperCase().replace(/[01OI]/g, '');
+    const keyChars = cleanHash.slice(0, 16);
+    
+    // Format as LM-XXXX-XXXX-XXXX-XXXX for readability
+    const formattedKey = `LM-${keyChars.slice(0, 4)}-${keyChars.slice(4, 8)}-${keyChars.slice(8, 12)}-${keyChars.slice(12, 16)}`;
+    
+    console.log('Product key generated:', {
+      sessionId: sessionId.slice(0, 8) + '...',
+      timestampInSeconds,
+      keyLength: formattedKey.length,
+      format: formattedKey.slice(0, 10) + '...'
+    });
+    
+    return formattedKey;
+  };
+
   useEffect(() => {
     const verifyPaymentFlow = () => {
       const sessionId = searchParams.get('session_id');
@@ -102,10 +132,12 @@ const SuccessPage = () => {
           return;
         }
         
-        // Payment flow is valid - generate secure download URLs
+        // Payment flow is valid - generate secure download URLs and product key
         const secureUrls = generateSecureDownloadUrls(paymentTimestamp);
+        const generatedKey = generateProductKey(sessionId, paymentTimestamp);
         setIsVerified(true);
         setDownloadLinks(secureUrls);
+        setProductKey(generatedKey);
         
         // Clear payment tokens to prevent reuse
         localStorage.removeItem('payment_token');
@@ -117,7 +149,8 @@ const SuccessPage = () => {
         sessionStorage.setItem('downloads_unlocked', JSON.stringify({
           sessionId: sessionId,
           timestamp: currentTime,
-          paymentTimestamp: paymentTimestamp
+          paymentTimestamp: paymentTimestamp,
+          productKey: generatedKey
         }));
         
       } catch (error) {
@@ -146,6 +179,13 @@ const SuccessPage = () => {
             // Regenerate secure URLs with original payment timestamp
             const secureUrls = generateSecureDownloadUrls(unlocked.paymentTimestamp);
             setDownloadLinks(secureUrls);
+            // Restore product key if available, or regenerate if missing
+            if (unlocked.productKey) {
+              setProductKey(unlocked.productKey);
+            } else {
+              const regeneratedKey = generateProductKey(unlocked.sessionId, unlocked.paymentTimestamp);
+              setProductKey(regeneratedKey);
+            }
             setIsVerifying(false);
             return;
           } else {
@@ -195,6 +235,25 @@ const SuccessPage = () => {
     } catch (error) {
       console.error('Download failed:', error);
       alert('Download failed. Please contact support if this issue persists.');
+    }
+  };
+
+  const handleCopyProductKey = async () => {
+    try {
+      await navigator.clipboard.writeText(productKey);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy product key:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = productKey;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
     }
   };
 
@@ -307,12 +366,62 @@ const SuccessPage = () => {
                   </Button>
                 </div>
               </div>
+            </CardContent>
+          </Card>
 
-              <div className="mt-6 p-4 bg-muted rounded-lg">
+          {/* Product Key Section */}
+          <Card className="border-2 border-memory-blue/50 mt-6">
+            <CardHeader className="text-center">
+              <CardTitle className="text-lg flex items-center justify-center gap-2">
+                🔑 Your Product License Key
+              </CardTitle>
+              <CardDescription>
+                Save this key - you'll need it to activate Local Memory
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-muted p-4 rounded-lg mb-4">
+                <div className="flex items-center justify-between gap-3">
+                  <code className="text-lg font-mono text-foreground bg-background px-3 py-2 rounded border flex-1 text-center">
+                    {productKey}
+                  </code>
+                  <Button
+                    onClick={handleCopyProductKey}
+                    variant="outline"
+                    size="sm"
+                    className="gap-2 min-w-[100px]"
+                  >
+                    {isCopied ? (
+                      <>
+                        <Check className="w-4 h-4" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" />
+                        Copy
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p>• Keep this key safe - it's unique to your purchase</p>
+                <p>• You'll use this key when setting up Local Memory</p>
+                <p>• The key is cryptographically tied to your payment session</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6">
+            <CardContent className="pt-6">
+              <div className="p-4 bg-muted rounded-lg">
                 <h3 className="font-semibold mb-2">Next Steps:</h3>
                 <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
                   <li>Download and extract the ZIP file for your platform above</li>
                   <li><strong>macOS:</strong> Choose the correct binary (local-memory-intel or local-memory-arm) and make executable: <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
+                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">{`local-memory --license-key ${productKey}`}</code> with your product key above</li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
                   <li><strong>Recommended - Install Qdrant (10x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract to <code className="bg-background px-1 rounded">~/.local-memory/</code>, and run: <code className="bg-background px-1 rounded">cd ~/.local-memory && ./qdrant &</code></li>
                   <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">local-memory start</code></li>
@@ -359,7 +468,7 @@ const SuccessPage = () => {
             </CardContent>
           </Card>
           
-          <PostPurchaseAgentSetup />
+          <PostPurchaseAgentSetup productKey={productKey} />
         </div>
       </div>
       <Footer />

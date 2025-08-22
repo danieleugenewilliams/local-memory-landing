@@ -62,7 +62,7 @@ This keeps your payment configuration secure and maintainable!`);
               Get <em>Local Memory</em>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Transform your AI with persistent memory that never forgets
+              Transform your AI with persistent memory that never forgets.
             </p>
           </div>
 

@@ -5,7 +5,11 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Copy, Bot, Terminal, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-const PostPurchaseAgentSetup = () => {
+interface PostPurchaseAgentSetupProps {
+  productKey: string;
+}
+
+const PostPurchaseAgentSetup = ({ productKey }: PostPurchaseAgentSetupProps) => {
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
   const [openPrompts, setOpenPrompts] = useState<{[key: string]: boolean}>({});
 
@@ -26,10 +30,11 @@ const PostPurchaseAgentSetup = () => {
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-2. Install Ollama from https://ollama.ai/download/mac, then: ollama pull nomic-embed-text
-3. Start everything: local-memory start (auto-detects and configures everything)
-4. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
-5. For Claude Desktop, add to ~/.claude_desktop_config.json:
+2. Activate license: local-memory --license-key ${productKey}
+3. Install Ollama from https://ollama.ai/download/mac, then: ollama pull nomic-embed-text
+4. Start everything: local-memory start (auto-detects and configures everything)
+5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
+6. For Claude Desktop, add to ~/.claude_desktop_config.json:
 {
   "mcpServers": {
     "local-memory": {
@@ -37,7 +42,7 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
     }
   }
 }
-6. Restart Claude Desktop and verify memory tools appear
+7. Restart Claude Desktop and verify memory tools appear
 
 DETAILED SETUP (if you prefer manual control):
 
@@ -45,7 +50,8 @@ STEP 1 - INSTALL BINARY:
 1. Find the local-memory binary in ~/Downloads (exact filename will be "local-memory-macos" or similar)
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Move it to /usr/local/bin/local-memory: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Verify it works: /usr/local/bin/local-memory --version
+4. Activate license: /usr/local/bin/local-memory --license-key ${productKey}
+5. Verify it works: /usr/local/bin/local-memory --version
 
 INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
@@ -128,10 +134,11 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" (create directory first)
 2. Add "C:\\Program Files\\LocalMemory" to system PATH
-3. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
-4. Start everything: local-memory.exe start (auto-detects and configures everything)
-5. Add to Claude Code: claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
-6. For Claude Desktop, add to %USERPROFILE%\\.claude_desktop_config.json:
+3. Activate license: local-memory.exe --license-key ${productKey}
+4. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
+5. Start everything: local-memory.exe start (auto-detects and configures everything)
+6. Add to Claude Code: claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
+7. For Claude Desktop, add to %USERPROFILE%\\.claude_desktop_config.json:
 {
   "mcpServers": {
     "local-memory": {
@@ -148,7 +155,8 @@ STEP 1 - INSTALL BINARY:
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
 4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH environment variable
-5. Verify: open new cmd/PowerShell and run: local-memory.exe --version
+5. Activate license: local-memory.exe --license-key ${productKey}
+6. Verify: open new cmd/PowerShell and run: local-memory.exe --version
 
 INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
@@ -230,10 +238,11 @@ Use my existing downloaded binary from C:\\Downloads - don't download a new one.
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-2. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
-3. Start everything: local-memory start (auto-detects and configures everything)
-4. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
-5. For Claude Desktop, add to ~/.claude_desktop_config.json:
+2. Activate license: local-memory --license-key ${productKey}
+3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
+4. Start everything: local-memory start (auto-detects and configures everything)
+5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
+6. For Claude Desktop, add to ~/.claude_desktop_config.json:
 {
   "mcpServers": {
     "local-memory": {
@@ -249,7 +258,8 @@ STEP 1 - INSTALL BINARY:
 1. Find the local-memory binary in ~/Downloads (likely named "local-memory-linux")
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Install to system: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Verify installation: /usr/local/bin/local-memory --version
+4. Activate license: /usr/local/bin/local-memory --license-key ${productKey}
+5. Verify installation: /usr/local/bin/local-memory --version
 
 INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
@@ -335,9 +345,10 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary (choose your platform):
    - macOS/Linux: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
    - Windows: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" and add to PATH
-2. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
-3. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
-4. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
+2. Activate license: local-memory --license-key ${productKey}
+3. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
+4. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
+5. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
 
 DETAILED SETUP (if you prefer manual control):
 

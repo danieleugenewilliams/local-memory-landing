@@ -7,7 +7,7 @@ const ProblemSolution = () => {
             AI Agents Are Smart...But They Have a Lousy Memory
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stop losing context. Start building on yesterday's progress. Give your AI permanent memory.
+            Stop losing context. Start building on yesterday's progress.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ const ProblemSolution = () => {
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">😒</span>
                 <div>
-                  <div className="font-medium text-foreground">"I literally just explained this error pattern"</div>
+                  <div className="font-medium text-foreground">"I literally just explained this error pattern!"</div>
                   <div className="text-sm text-muted-foreground">Repeating the same debugging steps</div>
                 </div>
               </div>
@@ -40,7 +40,7 @@ const ProblemSolution = () => {
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">⌛️</span>
                 <div>
-                  <div className="font-medium text-foreground">Context-switching hell with every new session or `/clear`</div>
+                  <div className="font-medium text-foreground">Context-switching hell with every new session or '/clear'</div>
                   <div className="text-sm text-muted-foreground">Lost productivity from constant re-onboarding</div>
                 </div>
               </div>
