@@ -61,70 +61,43 @@ const SuccessPage = () => {
     return urls;
   };
 
-  // Generate self-contained cryptographically secure product key
-  const generateProductKey = (sessionId: string, paymentTimestamp: number) => {
+  // Generate timestamp-less cryptographically secure product key
+  const generateProductKey = (sessionId: string) => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
-    // Convert timestamp to seconds if it's in milliseconds
-    const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
+    // Step 1: Create base hash from session + secret (controllable parameters only)
+    const baseInput = `${sessionId}-${DOWNLOAD_SECRET}`;
+    const baseHash = CryptoJS.SHA256(baseInput).toString();
     
-    let attemptCount = 0;
-    const maxAttempts = 10;
+    // Step 2: Create verification components from base hash (4 chars each for 5 segments)
+    const sessionHash = baseHash.substring(0, 4);
+    const verificationHash = baseHash.substring(4, 8);
+    const integrityHash = baseHash.substring(8, 12);
+    const checksumSeed = baseHash.substring(12, 16);
+    const extraHash = baseHash.substring(16, 20);
     
-    while (attemptCount < maxAttempts) {
-      // Add salt for retry attempts if needed
-      const saltSuffix = attemptCount > 0 ? `:retry:${attemptCount}` : '';
-      
-      // Step 1: Generate session ID hash (4 chars)
-      const sessionData = `${DOWNLOAD_SECRET}:session:${sessionId}${saltSuffix}`;
-      const sessionHash = CryptoJS.SHA256(sessionData).toString().toUpperCase().replace(/[01OI]/g, '');
-      
-      // Step 2: Generate timestamp encoding (4 chars) 
-      // Use offset from 2020-01-01 to compress timestamp
-      const epoch2020 = 1577836800; // 2020-01-01 00:00:00 UTC
-      const timestampOffset = timestampInSeconds - epoch2020;
-      const timestampData = `${DOWNLOAD_SECRET}:timestamp:${timestampOffset}${saltSuffix}`;
-      const timestampHash = CryptoJS.SHA256(timestampData).toString().toUpperCase().replace(/[01OI]/g, '');
-      
-      // Step 3: Generate verification hash (8 chars)
-      const verificationData = `${DOWNLOAD_SECRET}:verify:${sessionId}:${timestampInSeconds}${saltSuffix}`;
-      const verificationHash = CryptoJS.SHA256(verificationData).toString().toUpperCase().replace(/[01OI]/g, '');
-      
-      // Step 4: Generate integrity checksum (4 chars)
-      const checksumData = `${sessionHash.slice(0, 4)}:${timestampHash.slice(0, 4)}:${verificationHash.slice(0, 8)}`;
-      const checksumHash = CryptoJS.SHA256(checksumData).toString().toUpperCase().replace(/[01OI]/g, '');
-      
-      // Check if we have enough characters after filtering for all segments
-      if (sessionHash.length >= 4 && timestampHash.length >= 4 && 
-          verificationHash.length >= 8 && checksumHash.length >= 4) {
-        
-        const sessionChars = sessionHash.slice(0, 4);
-        const timestampChars = timestampHash.slice(0, 4);
-        const verificationChars = verificationHash.slice(0, 8);
-        const checksumChars = checksumHash.slice(0, 4);
-        
-        // Format as LM-XXXX-XXXX-XXXX-XXXX-XXXX (self-contained)
-        const formattedKey = `LM-${sessionChars}-${timestampChars}-${verificationChars.slice(0, 4)}-${verificationChars.slice(4, 8)}-${checksumChars}`;
-        
-        console.log('Self-contained product key generated:', {
-          sessionId: sessionId.slice(0, 8) + '...',
-          timestampInSeconds,
-          timestampOffset,
-          attemptCount,
-          keyLength: formattedKey.length,
-          format: 'LM-SESS-TIME-VER1-VER2-VER3-CHKS'
-        });
-        
-        return formattedKey;
-      }
-      
-      console.warn(`Attempt ${attemptCount + 1}: Insufficient characters after filtering, retrying with salt...`);
-      attemptCount++;
-    }
+    // Step 3: Generate checksum from all components
+    const checksumInput = `${sessionHash}${verificationHash}${integrityHash}${checksumSeed}${extraHash}`;
+    const checksumHash = CryptoJS.SHA256(checksumInput).toString();
+    const checksum = checksumHash.substring(0, 4);
     
-    // Fallback: This should statistically never happen
-    console.error('Failed to generate self-contained key with sufficient characters after 10 attempts');
-    throw new Error('Unable to generate secure product key - please refresh and try again');
+    // Step 4: Combine into 5-segment format matching golang expectations
+    const rawKey = `LM-${sessionHash}-${verificationHash}-${integrityHash}-${extraHash}-${checksum}`.toUpperCase();
+    
+    // Step 5: Filter unwanted characters [01OI578] to match golang expectations
+    const filtered = rawKey.replace(/[01OI578]/g, (match) => {
+      const replacements = { '0': 'A', '1': 'B', 'O': 'C', 'I': 'D', '5': 'E', '7': 'F', '8': 'G' };
+      return replacements[match] || match;
+    });
+    
+    console.log('Timestamp-less product key generated:', {
+      sessionId: sessionId.slice(0, 8) + '...',
+      keyLength: filtered.length,
+      format: 'LM-XXXX-XXXX-XXXX-XXXX-XXXX',
+      algorithm: 'deterministic-hash-based'
+    });
+    
+    return filtered;
   };
 
   useEffect(() => {
@@ -172,7 +145,7 @@ const SuccessPage = () => {
         
         // Payment flow is valid - generate secure download URLs and product key
         const secureUrls = generateSecureDownloadUrls(paymentTimestamp);
-        const generatedKey = generateProductKey(sessionId, paymentTimestamp);
+        const generatedKey = generateProductKey(sessionId);
         setIsVerified(true);
         setDownloadLinks(secureUrls);
         setProductKey(generatedKey);
@@ -221,7 +194,7 @@ const SuccessPage = () => {
             if (unlocked.productKey) {
               setProductKey(unlocked.productKey);
             } else {
-              const regeneratedKey = generateProductKey(unlocked.sessionId, unlocked.paymentTimestamp);
+              const regeneratedKey = generateProductKey(unlocked.sessionId);
               setProductKey(regeneratedKey);
             }
             setIsVerifying(false);

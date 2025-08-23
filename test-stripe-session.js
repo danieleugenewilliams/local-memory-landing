@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 
 const DOWNLOAD_SECRET = '9a8b7c6d5e4f3a2b1c9d8e7f6a5b4c3d2e1f9a8b7c6d5e4f3a2b1c9d8e7f6a5b4c3d';
 const sessionId = 'cs_test_a1b5xJCOMXIvJSyQt24jvDnuu2DWEaCYQpzTH5E7AvkvoZPeNFSjWFvnTA';
-const paymentTimestamp = 1640995200000; // milliseconds
+const paymentTimestamp = Date.now(); // Current timestamp
 
 // Convert timestamp to seconds
 const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
@@ -36,7 +36,7 @@ const checksumChars = checksumHash.slice(0, 4);
 // Format as LM-XXXX-XXXX-XXXX-XXXX-XXXX (self-contained)
 const formattedKey = `LM-${sessionChars}-${timestampChars}-${verificationChars.slice(0, 4)}-${verificationChars.slice(4, 8)}-${checksumChars}`;
 
-console.log('=== Self-Contained Key Generation Test ===');
+console.log('=== Stripe Session Key Generation Test ===');
 console.log('Session ID:', sessionId);
 console.log('Timestamp (seconds):', timestampInSeconds);
 console.log('Timestamp Offset:', timestampOffset);
@@ -44,15 +44,15 @@ console.log('');
 console.log('Generated Key:', formattedKey);
 console.log('Key Length:', formattedKey.length);
 console.log('');
+console.log('Character Analysis:');
+const chars = formattedKey.replace(/[LM-]/g, '').split('').sort();
+const uniqueChars = [...new Set(chars)];
+console.log('All characters used:', uniqueChars.join(', '));
+console.log('Contains 5, 7, or 8?', /[578]/.test(formattedKey));
+console.log('');
 console.log('Key Structure:');
 console.log('  LM-' + sessionChars + ' (session hash)');
 console.log('     ' + timestampChars + ' (timestamp hash)');
 console.log('     ' + verificationChars.slice(0, 4) + ' (verification 1)');
 console.log('     ' + verificationChars.slice(4, 8) + ' (verification 2)');
 console.log('     ' + checksumChars + ' (checksum)');
-console.log('');
-console.log('Verification Data:');
-console.log('  Session Hash Length:', sessionHash.length, '(need 4)');
-console.log('  Timestamp Hash Length:', timestampHash.length, '(need 4)');
-console.log('  Verification Hash Length:', verificationHash.length, '(need 8)');
-console.log('  Checksum Hash Length:', checksumHash.length, '(need 4)');
