@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
+  <defs>
+    <linearGradient id='yellowGradient' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' style='stop-color:#facc15;stop-opacity:1' />
+      <stop offset='100%' style='stop-color:#ca8a04;stop-opacity:1' />
+    </linearGradient>
+  </defs>
+  <rect width='32' height='32' rx='3' fill='url(#yellowGradient)' />
+  <g transform='translate(16, 16)'>
+    <text x='-6' y='-2' fill='white' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='12' transform='skewX(-25)'>L</text>
+    <text x='2' y='4' fill='white' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='12' transform='skewX(-25)'>M</text>
+  </g>
+</svg>

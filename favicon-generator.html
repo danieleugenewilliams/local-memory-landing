@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { margin: 0; padding: 20px; background: #f0f0f0; }
+        .favicon-container { 
+            width: 32px; 
+            height: 32px; 
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .l-letter {
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 900;
+            font-size: 12px;
+            transform: skewX(-25deg) translateY(-3px);
+            position: absolute;
+            left: 8px;
+        }
+        .m-letter {
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 900;
+            font-size: 12px;
+            transform: skewX(-25deg) translateY(3px);
+            position: absolute;
+            right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="favicon-container">
+        <span class="l-letter">L</span>
+        <span class="m-letter">M</span>
+    </div>
+</body>
+</html>
