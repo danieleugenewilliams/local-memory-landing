@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, CheckCircle, Copy, Check } from "lucide-react";
+import { Download, CheckCircle, Copy, Check, Car } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import CryptoJS from "crypto-js";
 
 const SuccessPage = () => {
@@ -294,38 +293,30 @@ const SuccessPage = () => {
               Payment Successful!
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thank you for purchasing <em>Local Memory</em>! Download the universal package containing all platform binaries below.
+              Thank you for purchasing <em>Local Memory</em>!
             </p>
           </div>
 
           <Card className="border-2 border-green-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-xl">Download <em>Local Memory</em></CardTitle>
-              <CardDescription>
-                Universal package containing binaries for all platforms
-              </CardDescription>
+              <CardTitle className="text-lg flex items-center justify-center">
+
+              </CardTitle>
             </CardHeader>
-            
             <CardContent>
               <div className="flex flex-col items-center space-y-4">
-                <div className="w-full p-6 border-2 border-dashed border-green-300 rounded-lg bg-green-50">
-                  <div className="text-center space-y-3">
-                    <div className="text-lg font-semibold text-green-800">Universal Package</div>
-                    <div className="text-sm text-green-700">
-                      • macOS (Intel + Apple Silicon)<br/>
-                      • Windows 10/11 (64-bit)<br/>
-                      • Linux x64 (all major distributions)
-                    </div>
+                <div className="w-full p-6 border-2 border-none rounded-lg bg-muted-50">
+                  <div className="text-center mt-2 space-y-3">
                     <Button 
                       onClick={handleDownload}
                       className="gap-2 bg-green-600 hover:bg-green-700"
                       size="lg"
                     >
                       <Download className="w-5 h-5" />
-                      Download Local Memory
+                      Download <em>Local Memory</em>
                     </Button>
                     <div className="text-xs text-green-600 mt-2">
-                      One ZIP file • All platforms • Includes installation guide
+                      One ZIP file • All supported platforms • Includes installation guide
                     </div>
                   </div>
                 </div>
@@ -373,7 +364,6 @@ const SuccessPage = () => {
               <div className="text-sm text-muted-foreground space-y-2">
                 <p>• Keep this key safe - it's unique to your purchase</p>
                 <p>• You'll use this key when setting up Local Memory</p>
-                <p>• The key is cryptographically tied to your payment session</p>
               </div>
             </CardContent>
           </Card>
@@ -381,29 +371,19 @@ const SuccessPage = () => {
           <Card className="mt-6">
             <CardContent className="pt-6">
               <div className="p-4 bg-muted rounded-lg">
-                <h3 className="font-semibold mb-2">Next Steps:</h3>
+                <h3 className="font-semibold mb-2">Quick Start:</h3>
                 <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
-                  <li>Download and extract the universal ZIP file above</li>
-                  <li><strong>Choose Your Binary:</strong> 
-                    <br/>• <strong>macOS Intel:</strong> <code className="bg-background px-1 rounded">local-memory-macos-intel</code>
-                    <br/>• <strong>macOS Apple Silicon:</strong> <code className="bg-background px-1 rounded">local-memory-macos-arm</code>
-                    <br/>• <strong>Windows:</strong> <code className="bg-background px-1 rounded">local-memory-windows.exe</code>
-                    <br/>• <strong>Linux:</strong> <code className="bg-background px-1 rounded">local-memory-linux</code>
-                  </li>
-                  <li><strong>Make Executable (macOS/Linux):</strong> <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
-                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* license validate {productKey}</code> with your product key above</li>
-                  <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
-                  <li><strong>Recommended - Install Qdrant (10x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract to <code className="bg-background px-1 rounded">~/.local-memory/</code>, and run: <code className="bg-background px-1 rounded">cd ~/.local-memory && ./qdrant &</code></li>
-                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">./local-memory-* start</code></li>
-                  <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
-                  <li><strong>Recommended:</strong> Add to Claude Desktop MCP config for AI integration</li>
+                  <li><strong>Download & Extract:</strong> Use the download button above to get the universal ZIP file</li>
+                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* license activate {productKey}</code> with your license key above</li>
+                  <li><strong>Start Local Memory:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* start</code> (auto-installs dependencies)</li>
+                  <li><strong>Ready!</strong> Your AI memory system is now running at <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">localhost:3001</a></li>
                 </ol>
                 
                 <div className="mt-4 p-3 bg-blue-900/20 border border-blue-700/30 rounded-md">
                   <p className="text-sm font-medium text-blue-300 mb-1">Quick Start (2 minutes):</p>
                   <p className="text-xs text-blue-300">
                     No Node.js required! Just download → install Ollama → run the binary. 
-                    Creates memories.db automatically with AI-powered search and retrieval.
+                    Creates local-memories.db automatically with AI-powered search and retrieval.
                   </p>
                 </div>
                 
@@ -422,7 +402,6 @@ const SuccessPage = () => {
                   </p>
                   <div className="text-xs text-green-200 space-y-1">
                     <p><strong>✅ No platform guessing:</strong> Contains all binaries - choose after download</p>
-                    <p><strong>✅ Team-friendly:</strong> Share one ZIP across mixed Windows/Mac/Linux teams</p>
                     <p><strong>✅ Future-proof:</strong> Includes both Intel and Apple Silicon Mac binaries</p>
                     <p><strong>✅ macOS security:</strong> Right-click binary → "Open" or run: <code className="bg-green-800/30 px-1 rounded text-green-100">xattr -rd com.apple.quarantine local-memory-*</code></p>
                   </div>
@@ -430,16 +409,17 @@ const SuccessPage = () => {
               </div>
 
               <div className="text-center mt-6">
-                <Badge variant="secondary" className="mb-2">Need Help?</Badge>
+                <Badge variant="secondary" className="mb-2">Need More Help?</Badge>
                 <p className="text-sm text-muted-foreground">
-                  Check out our <Link to="/docs" className="text-blue-600 hover:underline">documentation</Link> or 
-                  join our <a href="https://discord.gg/pjVX4BWu" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a>
+                  For advanced setup, AI agent prompts, and detailed guides: <Link to="/docs" className="text-blue-600 hover:underline font-medium">Visit Documentation</Link>
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Join our community: <a href="https://discord.gg/5mJMDKbY" className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer">Discord Server</a>
                 </p>
               </div>
             </CardContent>
           </Card>
           
-          <PostPurchaseAgentSetup productKey={productKey} />
         </div>
       </div>
       <Footer />
