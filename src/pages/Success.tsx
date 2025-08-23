@@ -11,54 +11,40 @@ import CryptoJS from "crypto-js";
 
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
-  const [downloadLinks, setDownloadLinks] = useState<{[key: string]: string}>({});
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
   const [productKey, setProductKey] = useState<string>('');
   const [isVerifying, setIsVerifying] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
-  // Generate secure download URLs using time-based hashing
-  const generateSecureDownloadUrls = (paymentTimestamp: number) => {
+  // Generate secure download URL for universal ZIP using time-based hashing
+  const generateSecureDownloadUrl = (paymentTimestamp: number) => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
-    const platforms = ['macos', 'windows', 'linux'];
-    const urls: {[key: string]: string} = {};
+    // Convert timestamp to seconds if it's in milliseconds
+    const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
     
-    platforms.forEach(platform => {
-      // Convert timestamp to seconds if it's in milliseconds
-      const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
-      
-      // Calculate 12-hour time window (matches backend logic)
-      const timeWindow = Math.floor(timestampInSeconds / 43200);
-      
-      // Generate hash with fixed identifier for scalability: SECRET:download-access:timeWindow:platform
-      const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:${platform}`;
-      const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
-      
-      // Debug logging
-      console.log(`Debug ${platform}:`, {
-        paymentTimestamp,
-        timestampInSeconds,
-        timeWindow,
-        data,
-        hash
-      });
-      
-      // Production: route through main domain to CloudFront
-      const getZipName = (platform: string) => {
-        switch (platform) {
-          case 'macos': return 'local-memory-macos.zip';
-          case 'windows': return 'local-memory-windows.zip';
-          case 'linux': return 'local-memory-linux.zip';
-          default: return `local-memory-${platform}.zip`;
-        }
-      };
-      
-      const zipName = getZipName(platform);
-      urls[platform] = `https://localmemory.co/downloads/${timeWindow}/${hash}/${platform}/${zipName}`;
+    // Calculate 12-hour time window (matches backend logic)
+    const timeWindow = Math.floor(timestampInSeconds / 43200);
+    
+    // Generate hash for universal ZIP (platform-agnostic)
+    const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:universal`;
+    const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
+    
+    // Debug logging
+    console.log(`Debug universal ZIP:`, {
+      paymentTimestamp,
+      timestampInSeconds,
+      timeWindow,
+      data,
+      hash
     });
     
-    return urls;
+    // Universal ZIP filename
+    const universalZipName = 'local-memory-universal.zip';
+    
+    // Production: route through main domain to CloudFront
+    return `https://localmemory.co/downloads/${timeWindow}/${hash}/universal/${universalZipName}`;
   };
 
   // Generate timestamp-less cryptographically secure product key
@@ -143,11 +129,11 @@ const SuccessPage = () => {
           return;
         }
         
-        // Payment flow is valid - generate secure download URLs and product key
-        const secureUrls = generateSecureDownloadUrls(paymentTimestamp);
+        // Payment flow is valid - generate secure download URL and product key
+        const secureUrl = generateSecureDownloadUrl(paymentTimestamp);
         const generatedKey = generateProductKey(sessionId);
         setIsVerified(true);
-        setDownloadLinks(secureUrls);
+        setDownloadUrl(secureUrl);
         setProductKey(generatedKey);
         
         // Clear payment tokens to prevent reuse
@@ -187,9 +173,9 @@ const SuccessPage = () => {
           // Verify download time window (48 hours from original payment)
           if (currentTime - unlocked.paymentTimestamp < 48 * 60 * 60 * 1000) {
             setIsVerified(true);
-            // Regenerate secure URLs with original payment timestamp
-            const secureUrls = generateSecureDownloadUrls(unlocked.paymentTimestamp);
-            setDownloadLinks(secureUrls);
+            // Regenerate secure URL with original payment timestamp
+            const secureUrl = generateSecureDownloadUrl(unlocked.paymentTimestamp);
+            setDownloadUrl(secureUrl);
             // Restore product key if available, or regenerate if missing
             if (unlocked.productKey) {
               setProductKey(unlocked.productKey);
@@ -216,24 +202,23 @@ const SuccessPage = () => {
     verifyPaymentFlow();
   }, [searchParams]);
 
-  const handleDownload = async (platform: string) => {
-    const link = downloadLinks[platform];
-    if (!link) {
+  const handleDownload = async () => {
+    if (!downloadUrl) {
       alert('Download link not available. Please refresh the page and try again.');
       return;
     }
     
     try {
-      console.log(`Starting download for ${platform}:`, link);
+      console.log('Starting universal ZIP download:', downloadUrl);
       
       // Use CloudFront URL directly for actual downloads
       // CloudFront origin path is '/downloads' so we need to remove the /downloads prefix to avoid double pathing
-      const cloudFrontUrl = link.replace('https://localmemory.co/downloads/', 'https://d3g3vv5lpyh0pb.cloudfront.net/');
+      const cloudFrontUrl = downloadUrl.replace('https://localmemory.co/downloads/', 'https://d3g3vv5lpyh0pb.cloudfront.net/');
       
       // Create a temporary link element to trigger download
       const downloadLink = document.createElement('a');
       downloadLink.href = cloudFrontUrl;
-      downloadLink.download = `local-memory-${platform}.zip`;
+      downloadLink.download = 'local-memory-universal.zip';
       downloadLink.target = '_blank';
       
       // Append to body, click, and remove
@@ -241,7 +226,7 @@ const SuccessPage = () => {
       downloadLink.click();
       document.body.removeChild(downloadLink);
       
-      console.log(`Download initiated for ${platform}`);
+      console.log('Universal ZIP download initiated');
       
     } catch (error) {
       console.error('Download failed:', error);
@@ -309,7 +294,7 @@ const SuccessPage = () => {
               Payment Successful!
             </h1>
             <p className="text-lg text-muted-foreground">
-              Thank you for purchasing <em>Local Memory</em>! Download your platform-specific executable below.
+              Thank you for purchasing <em>Local Memory</em>! Download the universal package containing all platform binaries below.
             </p>
           </div>
 
@@ -317,64 +302,32 @@ const SuccessPage = () => {
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Download <em>Local Memory</em></CardTitle>
               <CardDescription>
-                Choose your operating system to download the executable
+                Universal package containing binaries for all platforms
               </CardDescription>
             </CardHeader>
             
-            <CardContent className="space-y-4">
-              <div className="grid gap-4">
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-semibold">macOS</div>
-                      <div className="text-sm text-muted-foreground">Universal - includes both Intel and Apple Silicon binaries</div>
+            <CardContent>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="w-full p-6 border-2 border-dashed border-green-300 rounded-lg bg-green-50">
+                  <div className="text-center space-y-3">
+                    <div className="text-lg font-semibold text-green-800">Universal Package</div>
+                    <div className="text-sm text-green-700">
+                      • macOS (Intel + Apple Silicon)<br/>
+                      • Windows 10/11 (64-bit)<br/>
+                      • Linux x64 (all major distributions)
+                    </div>
+                    <Button 
+                      onClick={handleDownload}
+                      className="gap-2 bg-green-600 hover:bg-green-700"
+                      size="lg"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Local Memory
+                    </Button>
+                    <div className="text-xs text-green-600 mt-2">
+                      One ZIP file • All platforms • Includes installation guide
                     </div>
                   </div>
-                  <Button 
-                    onClick={() => handleDownload('macos')}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download ZIP
-                  </Button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-semibold">Windows</div>
-                      <div className="text-sm text-muted-foreground">Windows 10/11 - 64-bit executable</div>
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={() => handleDownload('windows')}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download ZIP
-                  </Button>
-                </div>
-
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-semibold">Linux</div>
-                      <div className="text-sm text-muted-foreground">x64 binary - tested on Ubuntu, Debian, CentOS, Alpine, Fedora</div>
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={() => handleDownload('linux')}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download ZIP
-                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -430,12 +383,18 @@ const SuccessPage = () => {
               <div className="p-4 bg-muted rounded-lg">
                 <h3 className="font-semibold mb-2">Next Steps:</h3>
                 <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
-                  <li>Download and extract the ZIP file for your platform above</li>
-                  <li><strong>macOS:</strong> Choose the correct binary (local-memory-intel or local-memory-arm) and make executable: <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
-                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">{`local-memory --license-key ${productKey}`}</code> with your product key above</li>
+                  <li>Download and extract the universal ZIP file above</li>
+                  <li><strong>Choose Your Binary:</strong> 
+                    <br/>• <strong>macOS Intel:</strong> <code className="bg-background px-1 rounded">local-memory-macos-intel</code>
+                    <br/>• <strong>macOS Apple Silicon:</strong> <code className="bg-background px-1 rounded">local-memory-macos-arm</code>
+                    <br/>• <strong>Windows:</strong> <code className="bg-background px-1 rounded">local-memory-windows.exe</code>
+                    <br/>• <strong>Linux:</strong> <code className="bg-background px-1 rounded">local-memory-linux</code>
+                  </li>
+                  <li><strong>Make Executable (macOS/Linux):</strong> <code className="bg-background px-1 rounded">chmod +x local-memory-*</code></li>
+                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* license validate {productKey}</code> with your product key above</li>
                   <li><strong>Install Ollama:</strong> Visit <a href="https://ollama.ai" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ollama.ai</a> and download, then run: <code className="bg-background px-1 rounded">ollama pull nomic-embed-text</code></li>
                   <li><strong>Recommended - Install Qdrant (10x faster search):</strong> Download from <a href="https://github.com/qdrant/qdrant/releases/latest" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Qdrant releases</a>, extract to <code className="bg-background px-1 rounded">~/.local-memory/</code>, and run: <code className="bg-background px-1 rounded">cd ~/.local-memory && ./qdrant &</code></li>
-                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">local-memory start</code></li>
+                  <li><strong>Run <em>Local Memory</em>:</strong> <code className="bg-background px-1 rounded">./local-memory-* start</code></li>
                   <li><strong>Verify:</strong> Check <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">http://localhost:3001/api/v1/health</a></li>
                   <li><strong>Recommended:</strong> Add to Claude Desktop MCP config for AI integration</li>
                 </ol>
@@ -457,14 +416,15 @@ const SuccessPage = () => {
                 </div>
                 
                 <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-sm font-medium text-green-300 mb-1">macOS ZIP Benefits:</p>
+                  <p className="text-sm font-medium text-green-300 mb-1">Universal ZIP Benefits:</p>
                   <p className="text-xs text-green-300 mb-2">
-                    ZIP format reduces security warnings! But if needed:
+                    One download for all platforms! Simplified experience with license keys.
                   </p>
                   <div className="text-xs text-green-200 space-y-1">
-                    <p><strong>Option 1:</strong> Right-click the extracted binary → "Open" → click "Open" in dialog</p>
-                    <p><strong>Option 2:</strong> Run: <code className="bg-green-800/30 px-1 rounded text-green-100">xattr -rd com.apple.quarantine local-memory-*</code></p>
-                    <p><strong>Included:</strong> Both Intel and ARM binaries in one convenient download</p>
+                    <p><strong>✅ No platform guessing:</strong> Contains all binaries - choose after download</p>
+                    <p><strong>✅ Team-friendly:</strong> Share one ZIP across mixed Windows/Mac/Linux teams</p>
+                    <p><strong>✅ Future-proof:</strong> Includes both Intel and Apple Silicon Mac binaries</p>
+                    <p><strong>✅ macOS security:</strong> Right-click binary → "Open" or run: <code className="bg-green-800/30 px-1 rounded text-green-100">xattr -rd com.apple.quarantine local-memory-*</code></p>
                   </div>
                 </div>
               </div>

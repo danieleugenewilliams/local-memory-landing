@@ -8,17 +8,10 @@ set -e
 # Configuration
 BUCKET_NAME="localmemory-secure-downloads"
 BINARIES_DIR="./binaries"  # Directory containing your compiled binaries
-SECRET="d9e7e7a9f2b40547a5a0d6a99fc0ae8bf6847a700f7928f7f82a7f4b3223bf84"  # Same as VITE_DOWNLOAD_SECRET
+SECRET="9a8b7c6d5e4f3a2b1c9d8e7f6a5b4c3d2e1f9a8b7c6d5e4f3a2b1c9d8e7f6a5b4c3d"  # Same as VITE_DOWNLOAD_SECRET
 
-# Platforms and their zip file names (simplified to 3 platforms)
-PLATFORMS=("macos" "windows" "linux")
-get_binary_name() {
-    case $1 in
-        "macos") echo "local-memory-macos.zip" ;;
-        "windows") echo "local-memory-windows.zip" ;;
-        "linux") echo "local-memory-linux.zip" ;;
-    esac
-}
+# Universal ZIP file containing all platforms
+UNIVERSAL_ZIP="local-memory-universal.zip"
 
 # Colors for output
 RED='\033[0;31m'
@@ -32,51 +25,47 @@ get_time_window() {
     echo $((timestamp / 43200))  # 12-hour windows
 }
 
-# Function to generate hash (matches frontend logic)
+# Function to generate hash for universal ZIP (matches frontend logic)
 generate_hash() {
-    local platform=$1
-    local time_window=$2
+    local time_window=$1
     
-    local data="${SECRET}:download-access:${time_window}:${platform}"
+    local data="${SECRET}:download-access:${time_window}:universal"
     echo -n "$data" | openssl dgst -sha256 | cut -d' ' -f2 | cut -c1-16
 }
 
-# Function to upload binary for a specific time window
+# Function to upload universal ZIP for a specific time window
 upload_for_time_window() {
     local time_window=$1
     
-    echo -e "${YELLOW}Uploading binaries for time window: $time_window${NC}"
+    echo -e "${YELLOW}Uploading universal ZIP for time window: $time_window${NC}"
     
-    for platform in "${PLATFORMS[@]}"; do
-        local binary_name=$(get_binary_name "$platform")
-        local binary_path="$BINARIES_DIR/$binary_name"
-        
-        if [[ ! -f "$binary_path" ]]; then
-            echo -e "${RED}Warning: Binary not found: $binary_path${NC}"
-            continue
-        fi
-        
-        # Generate hash for this platform/window combination
-        local hash=$(generate_hash "$platform" "$time_window")
-        
-        # S3 key matching frontend URL structure
-        local s3_key="downloads/$time_window/$hash/$platform/$binary_name"
-        
-        echo -e "${GREEN}Uploading $platform binary...${NC}"
-        echo "  Local: $binary_path"
-        echo "  S3: s3://$BUCKET_NAME/$s3_key"
-        echo "  URL: https://localmemory.co/$s3_key"
-        
-        # Upload to S3 with error handling
-        if aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
-            --content-type "application/zip" \
-            --metadata "platform=$platform,time-window=$time_window"; then
-            echo -e "${GREEN}✓ Uploaded $platform binary${NC}\n"
-        else
-            echo -e "${RED}✗ Failed to upload $platform binary${NC}\n"
-            return 1
-        fi
-    done
+    local binary_path="$BINARIES_DIR/$UNIVERSAL_ZIP"
+    
+    if [[ ! -f "$binary_path" ]]; then
+        echo -e "${RED}Error: Universal ZIP not found: $binary_path${NC}"
+        return 1
+    fi
+    
+    # Generate hash for this time window
+    local hash=$(generate_hash "$time_window")
+    
+    # S3 key matching frontend URL structure
+    local s3_key="downloads/$time_window/$hash/universal/$UNIVERSAL_ZIP"
+    
+    echo -e "${GREEN}Uploading universal ZIP...${NC}"
+    echo "  Local: $binary_path"
+    echo "  S3: s3://$BUCKET_NAME/$s3_key"
+    echo "  URL: https://localmemory.co/$s3_key"
+    
+    # Upload to S3 with error handling
+    if aws s3 cp "$binary_path" "s3://$BUCKET_NAME/$s3_key" \
+        --content-type "application/zip" \
+        --metadata "platform=universal,time-window=$time_window"; then
+        echo -e "${GREEN}✓ Uploaded universal ZIP${NC}\n"
+    else
+        echo -e "${RED}✗ Failed to upload universal ZIP${NC}\n"
+        return 1
+    fi
 }
 
 # Function to upload for multiple time windows (current + future)
@@ -84,7 +73,7 @@ upload_multiple_windows() {
     local current_time=$(date +%s)
     local current_window=$(get_time_window $current_time)
     
-    echo -e "${YELLOW}Starting upload for secure downloads...${NC}"
+    echo -e "${YELLOW}Starting upload for secure universal ZIP downloads...${NC}"
     echo "Current timestamp: $current_time"
     echo "Current time window: $current_window"
     echo ""
@@ -97,7 +86,7 @@ upload_multiple_windows() {
     echo -e "${YELLOW}Also uploading for next time window: $next_window${NC}"
     upload_for_time_window "$next_window"
     
-    echo -e "${GREEN}✓ Upload complete for both time windows${NC}"
+    echo -e "${GREEN}✓ Universal ZIP upload complete for both time windows${NC}"
 }
 
 # Function to cleanup old time windows
@@ -123,18 +112,16 @@ cleanup_old_windows() {
 verify_uploads() {
     local time_window=${1:-$(get_time_window)}
     
-    echo -e "${YELLOW}Verifying uploads for time window: $time_window${NC}"
+    echo -e "${YELLOW}Verifying universal ZIP upload for time window: $time_window${NC}"
     
-    for platform in "${PLATFORMS[@]}"; do
-        local hash=$(generate_hash "$platform" "$time_window")
-        local s3_key="downloads/$time_window/$hash/$platform/$(get_binary_name "$platform")"
-        
-        if aws s3 ls "s3://$BUCKET_NAME/$s3_key" > /dev/null 2>&1; then
-            echo -e "${GREEN}✓ $platform binary verified${NC}"
-        else
-            echo -e "${RED}✗ $platform binary missing${NC}"
-        fi
-    done
+    local hash=$(generate_hash "$time_window")
+    local s3_key="downloads/$time_window/$hash/universal/$UNIVERSAL_ZIP"
+    
+    if aws s3 ls "s3://$BUCKET_NAME/$s3_key" > /dev/null 2>&1; then
+        echo -e "${GREEN}✓ Universal ZIP verified${NC}"
+    else
+        echo -e "${RED}✗ Universal ZIP missing${NC}"
+    fi
 }
 
 # Main script logic
@@ -162,12 +149,12 @@ case "${1:-help}" in
         ;;
     
     "test-hash")
-        if [[ -z "$2" || -z "$3" ]]; then
-            echo "Usage: $0 test-hash <platform> <time_window>"
+        if [[ -z "$2" ]]; then
+            echo "Usage: $0 test-hash <time_window>"
             exit 1
         fi
-        hash=$(generate_hash "$2" "$3")
-        echo "Hash for platform '$2' in window '$3': $hash"
+        hash=$(generate_hash "$2")
+        echo "Hash for universal ZIP in window '$2': $hash"
         ;;
     
     *)
@@ -178,13 +165,11 @@ case "${1:-help}" in
         echo "  $0 verify [window]           - Verify uploads exist"
         echo "  $0 cleanup                   - Remove old time windows"
         echo "  $0 window                    - Show current time window"
-        echo "  $0 test-hash <platform> <window> - Test hash generation"
+        echo "  $0 test-hash <window>           - Test hash generation"
         echo ""
         echo "Setup:"
-        echo "  1. Place ZIP archives in: $BINARIES_DIR/"
-        echo "     - local-memory-macos.zip (contains both Intel and ARM binaries)"
-        echo "     - local-memory-windows.zip (contains Windows executable)"
-        echo "     - local-memory-linux.zip (contains Linux binary)"
+        echo "  1. Place universal ZIP archive in: $BINARIES_DIR/"
+        echo "     - local-memory-universal.zip (contains all platform binaries)"
         echo "  2. Configure AWS CLI with appropriate credentials"
         echo "  3. Run: $0 upload"
         echo ""
