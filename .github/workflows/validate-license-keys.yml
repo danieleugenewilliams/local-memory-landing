@@ -38,20 +38,17 @@ jobs:
     - name: Install Node.js dependencies
       run: npm ci
       
-    - name: Checkout golang repository for Linux binary
-      uses: actions/checkout@v4
-      with:
-        repository: danieleugenewilliams/local-memory-golang
-        path: local-memory-golang
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Build golang binary for Linux testing
+    - name: Setup Linux binary for testing
       run: |
-        echo "📦 Building golang binary for Linux platform..."
-        cd local-memory-golang
-        mkdir -p ../bin
-        GOOS=linux GOARCH=amd64 go build -o ../bin/local-memory cmd/local-memory/main.go
-        echo "✅ Built Linux golang binary successfully"
+        echo "📦 Using existing Linux binary for validation..."
+        if [ -f "bin/local-memory-linux" ]; then
+          cp bin/local-memory-linux bin/local-memory
+          chmod +x bin/local-memory
+          echo "✅ Linux binary ready for testing"
+        else
+          echo "❌ Linux binary not found at bin/local-memory-linux"
+          exit 1
+        fi
         
     - name: Verify binary is executable
       run: |
