@@ -396,13 +396,109 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
           {/* API Reference */}
           <div id="api-reference" className="mb-12 scroll-target">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">API Documentation</h2>
-            
+
+            {/* MCP Protocol */}
+            <div id="mcp-reference" className="scroll-target" />
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="w-5 h-5" />
+                  MCP Protocol (26 Tools)
+                </CardTitle>
+                <CardDescription><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-3 gap-6 text-sm">
+                  <div className="space-y-4">
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Memory Operations (4)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>store_memory</div>
+                        <div>update_memory</div>
+                        <div>delete_memory</div>
+                        <div>get_memory_by_id</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-green">Search Operations (3)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>search_memories</div>
+                        <div>search_by_tags</div>
+                        <div>search_by_date_range</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-purple">AI Analysis (3)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>ask_question</div>
+                        <div>analyze_memories</div>
+                        <div>summarize_memories</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Temporal Analysis (3)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>analyze_temporal_patterns</div>
+                        <div>track_learning_progression</div>
+                        <div>detect_knowledge_gaps</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-green">Relationships (4)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>get_related_memories</div>
+                        <div>discover_relationships</div>
+                        <div>create_relationship</div>
+                        <div>map_memory_graph</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-purple">Categorization (4)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>categorize_memory</div>
+                        <div>create_category</div>
+                        <div>list_categories</div>
+                        <div>get_category_stats</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Statistics (2)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>get_session_stats</div>
+                        <div>get_domain_stats</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h6 className="font-semibold mb-2 text-memory-green">Management (3)</h6>
+                      <div className="space-y-1 font-mono text-xs">
+                        <div>list_sessions</div>
+                        <div>create_domain</div>
+                        <div>list_domains</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </CardContent>
+            </Card>
+
             {/* REST API */}
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Globe className="w-5 h-5" />
-                  REST API (26 Endpoints)
+                  REST API (24 Endpoints)
                 </CardTitle>
                 <CardDescription>
                   <p className="mt-2"><em>Local Memory</em> has a universal HTTP interface for any platform.</p>
@@ -432,10 +528,9 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-purple">AI Operations (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-purple">AI Operations (2)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /ask</div>
-                        <div>POST /summarize</div>
                         <div>POST /analyze</div>
                       </div>
                     </div>
@@ -496,101 +591,6 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               </CardContent>
             </Card>
 
-            {/* MCP Protocol */}
-            <div id="mcp-reference" className="scroll-target" />
-            <Card className="mb-6">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bot className="w-5 h-5" />
-                  MCP Protocol (26 Tools)
-                </CardTitle>
-                <CardDescription><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-3 gap-6 text-sm">
-                  <div className="space-y-4">
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-blue">Memory Operations (4)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>store_memory</div>
-                        <div>update_memory</div>
-                        <div>delete_memory</div>
-                        <div>get_memory_by_id</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Search Operations (3)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>search_memories</div>
-                        <div>search_by_tags</div>
-                        <div>search_by_date_range</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-purple">AI Analysis (3)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>ask_question</div>
-                        <div>summarize_memories</div>
-                        <div>analyze_memories</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-blue">Temporal Analysis (3)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>analyze_temporal_patterns</div>
-                        <div>track_learning_progression</div>
-                        <div>detect_knowledge_gaps</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Relationships (4)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>get_related_memories</div>
-                        <div>discover_relationships</div>
-                        <div>create_relationship</div>
-                        <div>map_memory_graph</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-purple">Categorization (4)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>categorize_memory</div>
-                        <div>create_category</div>
-                        <div>list_categories</div>
-                        <div>get_category_stats</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-blue">Statistics (2)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>get_session_stats</div>
-                        <div>get_domain_stats</div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Management (3)</h6>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>list_sessions</div>
-                        <div>create_domain</div>
-                        <div>list_domains</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </CardContent>
-            </Card>
           </div>
 
           {/* Help & Community */}
