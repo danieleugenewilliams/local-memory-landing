@@ -29,7 +29,7 @@ const PostPurchaseAgentSetup = ({ productKey }: PostPurchaseAgentSetupProps) => 
   const macosPrompt = `I just purchased and downloaded local-memory to ~/Downloads. Please help me install and configure it completely:
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
+1. Install binary: chmod +x ~/Downloads/local-memory* && xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
 2. Activate license: local-memory --license-key ${productKey}
 3. Install Ollama from https://ollama.ai/download/mac, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
@@ -38,7 +38,10 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory"
+      "command": "/usr/local/bin/local-memory",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -92,7 +95,9 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -103,7 +108,9 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -113,7 +120,10 @@ Add to Windsurf Settings > MCP Configuration:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory"
+      "command": "/usr/local/bin/local-memory",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -142,7 +152,10 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe"
+      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -186,7 +199,10 @@ Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe"
+      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -197,7 +213,9 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -208,7 +226,9 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
   "servers": {
     "local-memory": {
       "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -218,7 +238,10 @@ Add to Windsurf Settings > MCP Configuration:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe"
+      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -237,7 +260,7 @@ Use my existing downloaded binary from C:\\Downloads - don't download a new one.
   const linuxPrompt = `I purchased and downloaded local-memory to ~/Downloads. Please help me install and configure it completely:
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
+1. Install binary: chmod +x ~/Downloads/local-memory* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
 2. Activate license: local-memory --license-key ${productKey}
 3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
@@ -246,7 +269,10 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory"
+      "command": "/usr/local/bin/local-memory",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -290,7 +316,10 @@ Edit ~/.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory"
+      "command": "/usr/local/bin/local-memory",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -301,7 +330,9 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -312,7 +343,9 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": []
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -322,7 +355,10 @@ Add to Windsurf Settings > MCP Configuration:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory"
+      "command": "/usr/local/bin/local-memory",
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
