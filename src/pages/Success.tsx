@@ -26,9 +26,17 @@ const SuccessPage = () => {
     // Calculate 12-hour time window (matches backend logic)
     const timeWindow = Math.floor(timestampInSeconds / 43200);
     
-    // Generate hash for universal ZIP (platform-agnostic)
+    // Generate hash for universal ZIP using golang license key algorithm (matches license key generation)
     const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:universal`;
-    const hash = CryptoJS.SHA256(data).toString().slice(0, 16);
+    const rawHash = CryptoJS.SHA256(data).toString().toUpperCase();
+    
+    // Apply character filtering and replacement (matches golang app algorithm)
+    const cleanHash = rawHash.replace(/[01OI578]/g, (match) => {
+      const replacements = { '0': 'A', '1': 'B', 'O': 'C', 'I': 'D', '5': 'E', '7': 'F', '8': 'G' };
+      return replacements[match] || match;
+    });
+    
+    const hash = cleanHash.slice(0, 16);
     
     // Debug logging
     console.log(`Debug universal ZIP:`, {

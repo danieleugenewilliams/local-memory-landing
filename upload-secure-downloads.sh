@@ -25,12 +25,21 @@ get_time_window() {
     echo $((timestamp / 43200))  # 12-hour windows
 }
 
-# Function to generate hash for universal ZIP (matches frontend logic)
+# Function to generate hash for universal ZIP (matches golang license key algorithm)
 generate_hash() {
     local time_window=$1
     
     local data="${SECRET}:download-access:${time_window}:universal"
-    echo -n "$data" | openssl dgst -sha256 | cut -d' ' -f2 | cut -c1-16
+    
+    # Generate SHA256 hash and convert to uppercase
+    local raw_hash=$(echo -n "$data" | openssl dgst -sha256 | cut -d' ' -f2 | tr '[:lower:]' '[:upper:]')
+    
+    # Apply character filtering and replacement (matches golang app algorithm)
+    # Replace [01OI578] with [ABCDEFG] respectively
+    local clean_hash=$(echo "$raw_hash" | sed 's/0/A/g; s/1/B/g; s/O/C/g; s/I/D/g; s/5/E/g; s/7/F/g; s/8/G/g')
+    
+    # Take first 16 characters
+    echo "${clean_hash:0:16}"
 }
 
 # Function to upload universal ZIP for a specific time window
