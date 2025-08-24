@@ -55,43 +55,127 @@ const SuccessPage = () => {
     return `https://localmemory.co/downloads/${timeWindow}/${hash}/universal/${universalZipName}`;
   };
 
+  // Client-side license key format validation
+  const validateLicenseKeyFormat = (key: string): { valid: boolean; errors: string[] } => {
+    const errors: string[] = [];
+    
+    // Length check
+    if (key.length !== 27) {
+      errors.push(`Invalid length: ${key.length} (expected 27)`);
+    }
+    
+    // Pattern check
+    if (!key.startsWith('LM-')) {
+      errors.push('Must start with "LM-"');
+    }
+    
+    // Segment check
+    const segments = key.split('-');
+    if (segments.length !== 6) {
+      errors.push(`Invalid segment count: ${segments.length} (expected 6)`);
+    } else {
+      // Check each segment length (after LM-)
+      for (let i = 1; i < segments.length; i++) {
+        if (segments[i].length !== 4) {
+          errors.push(`Segment ${i} has invalid length: ${segments[i].length} (expected 4)`);
+        }
+      }
+    }
+    
+    // Character set check
+    const validPattern = /^LM-[A-Z2-469]{4}-[A-Z2-469]{4}-[A-Z2-469]{4}-[A-Z2-469]{4}-[A-Z2-469]{4}$/;
+    if (!validPattern.test(key)) {
+      errors.push('Contains invalid characters (allowed: A-Z, 2-4, 6, 9)');
+    }
+    
+    // Forbidden character check
+    const forbiddenChars = key.match(/[01OI578]/g);
+    if (forbiddenChars) {
+      errors.push(`Contains forbidden characters: ${forbiddenChars.join(', ')} (not allowed: 0,1,O,I,5,7,8)`);
+    }
+    
+    return { valid: errors.length === 0, errors };
+  };
+
   // Generate timestamp-less cryptographically secure product key
-  const generateProductKey = (sessionId: string) => {
-    const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
-    
-    // Step 1: Create base hash from session + secret (controllable parameters only)
-    const baseInput = `${sessionId}-${DOWNLOAD_SECRET}`;
-    const baseHash = CryptoJS.SHA256(baseInput).toString();
-    
-    // Step 2: Create verification components from base hash (4 chars each for 5 segments)
-    const sessionHash = baseHash.substring(0, 4);
-    const verificationHash = baseHash.substring(4, 8);
-    const integrityHash = baseHash.substring(8, 12);
-    const checksumSeed = baseHash.substring(12, 16);
-    const extraHash = baseHash.substring(16, 20);
-    
-    // Step 3: Generate checksum from all components
-    const checksumInput = `${sessionHash}${verificationHash}${integrityHash}${checksumSeed}${extraHash}`;
-    const checksumHash = CryptoJS.SHA256(checksumInput).toString();
-    const checksum = checksumHash.substring(0, 4);
-    
-    // Step 4: Combine into 5-segment format matching golang expectations
-    const rawKey = `LM-${sessionHash}-${verificationHash}-${integrityHash}-${extraHash}-${checksum}`.toUpperCase();
-    
-    // Step 5: Filter unwanted characters [01OI578] to match golang expectations
-    const filtered = rawKey.replace(/[01OI578]/g, (match) => {
-      const replacements = { '0': 'A', '1': 'B', 'O': 'C', 'I': 'D', '5': 'E', '7': 'F', '8': 'G' };
-      return replacements[match] || match;
-    });
-    
-    console.log('Timestamp-less product key generated:', {
-      sessionId: sessionId.slice(0, 8) + '...',
-      keyLength: filtered.length,
-      format: 'LM-XXXX-XXXX-XXXX-XXXX-XXXX',
-      algorithm: 'deterministic-hash-based'
-    });
-    
-    return filtered;
+  const generateProductKey = (sessionId: string): string => {
+    try {
+      const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
+      
+      // Validation checks
+      if (!sessionId) {
+        throw new Error('Session ID is required for license key generation');
+      }
+      
+      if (!DOWNLOAD_SECRET) {
+        throw new Error('VITE_DOWNLOAD_SECRET environment variable is not configured');
+      }
+      
+      if (DOWNLOAD_SECRET.length < 32) {
+        throw new Error('VITE_DOWNLOAD_SECRET must be at least 32 characters for security');
+      }
+      
+      // Step 1: Create base hash from session + secret (controllable parameters only)
+      const baseInput = `${sessionId}-${DOWNLOAD_SECRET}`;
+      const baseHash = CryptoJS.SHA256(baseInput).toString();
+      
+      // Step 2: Create verification components from base hash (4 chars each for 5 segments)
+      // FIXED: Match golang reference implementation segment ordering
+      const sessionHash = baseHash.substring(0, 4);
+      const verificationHash = baseHash.substring(4, 8);
+      const integrityHash = baseHash.substring(8, 12);
+      const extraHash = baseHash.substring(12, 16);        // FIXED: Moved to 4th position
+      const checksumSeed = baseHash.substring(16, 20);     // FIXED: Moved to 5th position
+      
+      // Step 3: Generate checksum from all components in correct order
+      const checksumInput = `${sessionHash}${verificationHash}${integrityHash}${extraHash}${checksumSeed}`;
+      const checksumHash = CryptoJS.SHA256(checksumInput).toString();
+      const checksum = checksumHash.substring(0, 4);
+      
+      // Step 4: Combine into 5-segment format matching golang expectations
+      const rawKey = `LM-${sessionHash}-${verificationHash}-${integrityHash}-${extraHash}-${checksum}`.toUpperCase();
+      
+      // Step 5: Filter unwanted characters [01OI578] to match golang expectations
+      const filtered = rawKey.replace(/[01OI578]/g, (match) => {
+        const replacements = { '0': 'A', '1': 'B', 'O': 'C', 'I': 'D', '5': 'E', '7': 'F', '8': 'G' };
+        return replacements[match] || match;
+      });
+      
+      // Step 6: Validate the generated key
+      const validation = validateLicenseKeyFormat(filtered);
+      if (!validation.valid) {
+        throw new Error(`Generated license key failed validation: ${validation.errors.join(', ')}`);
+      }
+      
+      console.log('✅ License key generated successfully:', {
+        sessionId: sessionId.slice(0, 8) + '...',
+        keyLength: filtered.length,
+        format: 'LM-XXXX-XXXX-XXXX-XXXX-XXXX',
+        algorithm: 'deterministic-hash-based-v2-fixed',
+        segmentOrder: 'session-verification-integrity-extra-checksum',
+        validationStatus: 'PASSED'
+      });
+      
+      return filtered;
+      
+    } catch (error) {
+      console.error('❌ License key generation failed:', error);
+      
+      // Store error for debugging
+      const errorDetails = {
+        sessionId: sessionId?.slice(0, 8) + '...' || 'undefined',
+        error: error instanceof Error ? error.message : 'Unknown error',
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href
+      };
+      
+      // Store in session storage for debugging
+      sessionStorage.setItem('license_key_generation_error', JSON.stringify(errorDetails));
+      
+      // Return a fallback error key that will be rejected
+      return 'LM-ERROR-ERROR-ERROR-ERROR-ERROR';
+    }
   };
 
   useEffect(() => {
@@ -140,6 +224,22 @@ const SuccessPage = () => {
         // Payment flow is valid - generate secure download URL and product key
         const secureUrl = generateSecureDownloadUrl(paymentTimestamp);
         const generatedKey = generateProductKey(sessionId);
+        
+        // Validate the generated key before using it
+        const keyValidation = validateLicenseKeyFormat(generatedKey);
+        if (!keyValidation.valid) {
+          console.error('❌ Generated license key failed validation:', keyValidation.errors);
+          // Store error for support purposes
+          sessionStorage.setItem('license_key_validation_error', JSON.stringify({
+            sessionId: sessionId.slice(0, 8) + '...',
+            generatedKey,
+            errors: keyValidation.errors,
+            timestamp: new Date().toISOString()
+          }));
+          setIsVerifying(false);
+          return;
+        }
+        
         setIsVerified(true);
         setDownloadUrl(secureUrl);
         setProductKey(generatedKey);
@@ -186,7 +286,15 @@ const SuccessPage = () => {
             setDownloadUrl(secureUrl);
             // Restore product key if available, or regenerate if missing
             if (unlocked.productKey) {
-              setProductKey(unlocked.productKey);
+              // Validate the stored key
+              const storedKeyValidation = validateLicenseKeyFormat(unlocked.productKey);
+              if (storedKeyValidation.valid) {
+                setProductKey(unlocked.productKey);
+              } else {
+                console.warn('⚠️ Stored license key is invalid, regenerating...', storedKeyValidation.errors);
+                const regeneratedKey = generateProductKey(unlocked.sessionId);
+                setProductKey(regeneratedKey);
+              }
             } else {
               const regeneratedKey = generateProductKey(unlocked.sessionId);
               setProductKey(regeneratedKey);
@@ -344,31 +452,59 @@ const SuccessPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted p-4 rounded-lg mb-4">
-                <div className="flex items-center justify-between gap-3">
-                  <code className="text-lg font-mono text-foreground bg-background px-3 py-2 rounded border flex-1 text-center">
-                    {productKey}
-                  </code>
-                  <Button
-                    onClick={handleCopyProductKey}
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 min-w-[100px]"
-                  >
-                    {isCopied ? (
-                      <>
-                        <Check className="w-4 h-4" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4" />
-                        Copy
-                      </>
-                    )}
-                  </Button>
+              {productKey === 'LM-ERROR-ERROR-ERROR-ERROR-ERROR' ? (
+                // Error state - license key generation failed
+                <div className="bg-red-50 border-2 border-red-200 p-4 rounded-lg mb-4">
+                  <div className="text-center space-y-3">
+                    <div className="text-red-600 font-medium">
+                      ⚠️ License Key Generation Error
+                    </div>
+                    <p className="text-sm text-red-700">
+                      There was an issue generating your license key. Please try refreshing the page or contact support.
+                    </p>
+                    <div className="space-y-2">
+                      <Button
+                        onClick={() => window.location.reload()}
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                      >
+                        🔄 Refresh Page
+                      </Button>
+                      <p className="text-xs text-red-600">
+                        If this issue persists, please contact support with your session ID: {searchParams.get('session_id')?.slice(0, 12)}...
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                // Normal state - valid license key
+                <div className="bg-muted p-4 rounded-lg mb-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <code className="text-lg font-mono text-foreground bg-background px-3 py-2 rounded border flex-1 text-center">
+                      {productKey}
+                    </code>
+                    <Button
+                      onClick={handleCopyProductKey}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 min-w-[100px]"
+                    >
+                      {isCopied ? (
+                        <>
+                          <Check className="w-4 h-4" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" />
+                          Copy
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
               
               <div className="text-sm text-muted-foreground space-y-2">
                 <p>• Keep this key safe - it's unique to your purchase</p>

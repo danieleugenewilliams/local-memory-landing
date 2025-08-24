@@ -71,10 +71,10 @@ This keeps your payment configuration secure and maintainable!`);
               <div className="text-3xl mb-2">🎯</div>
               <h3 className="text-xl font-bold text-foreground mb-2">Early Access Special</h3>
               <div className="flex items-center justify-center gap-2 mb-6">
-                <span className="text-4xl font-bold text-foreground">$29</span>
+                <span className="text-4xl font-bold text-foreground">$79</span>
                 <div className="text-left">
-                  <div className="text-sm text-muted-foreground line-through">normally $49</div>
-                  <div className="text-sm text-memory-blue font-medium">40% OFF</div>
+                  <div className="text-sm text-muted-foreground line-through">normally $99</div>
+                  <div className="text-sm text-memory-blue font-medium">20% OFF</div>
                 </div>
               </div>
               

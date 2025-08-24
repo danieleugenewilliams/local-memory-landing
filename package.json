@@ -10,7 +10,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:license": "node test-license-integration.js",
-    "test:license:verbose": "VITE_DOWNLOAD_SECRET=test-secret-for-development-only-do-not-use-in-production-this-must-be-64-chars node test-license-integration.js"
+    "test:license:verbose": "VITE_DOWNLOAD_SECRET=test-secret-for-development-only-do-not-use-in-production-this-must-be-64-chars node test-license-integration.js",
+    "test:license-keys": "node test-license-key-validation.js",
+    "test:license-keys:verbose": "node test-license-key-validation.js --verbose",
+    "monitor:license-keys": "node monitor-license-keys.js",
+    "monitor:license-keys:fast": "node monitor-license-keys.js --interval=10 --alert-threshold=0.9"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

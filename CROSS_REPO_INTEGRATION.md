@@ -39,10 +39,10 @@ graph TB
 - **Outputs**: ZIP packages uploaded to S3, repository dispatch to landing page
 
 ### local-memory-landing (Target Repository)  
-- **Primary Function**: Receive binary updates and manage secure download system
-- **Key File**: `.github/workflows/update-binaries.yml`
-- **Triggers**: Repository dispatch from golang repo
-- **Outputs**: Updated secure download URLs, customer-facing download page
+- **Primary Function**: Provides secure download interface and license key generation
+- **Key File**: `.github/workflows/validate-license-keys.yml`
+- **Triggers**: Direct pushes to Success.tsx or license key related files
+- **Outputs**: Customer-facing download page with license key generation
 
 ## Workflow Dependencies
 
@@ -52,36 +52,40 @@ graph TB
 
 **Jobs and Dependencies**:
 ```yaml
-build → package-zips → [notify-landing-page, upload-to-s3]
-                    ↓
+build → package-zips → validate-license-keys → [upload-to-s3, notify-landing-page]
+                                          ↓
 test-linux ← build
 test-macos ← build  
 test-windows ← build
 integration-test ← build
-release ← [build, package-zips, test-linux, test-macos, test-windows, integration-test]
+release ← [build, package-zips, test-linux, test-macos, test-windows, integration-test, validate-license-keys]
 ```
 
 **Key Jobs**:
 - **`build`**: Creates platform-specific binaries with aligned naming conventions
-- **`package-zips`**: Packages binaries into ZIP files with README instructions
-- **`notify-landing-page`**: Sends repository dispatch to landing page
-- **`upload-to-s3`**: Uploads ZIP packages to secure download bucket
+- **`package-zips`**: Packages binaries into universal ZIP file with README instructions
+- **`validate-license-keys`**: Validates frontend license key generation before deployment
+- **`upload-to-s3`**: Uploads universal ZIP package to secure download bucket
+- **`notify-landing-page`**: Sends repository dispatch to landing page (notification only)
 - **`release`**: Creates GitHub releases with all assets
 
-### 2. Binary Update Workflow (local-memory-landing)
+### 2. License Key Validation Workflow (local-memory-landing)
 
-**File**: `/.github/workflows/update-binaries.yml`
+**File**: `/.github/workflows/validate-license-keys.yml`
 
 **Jobs and Dependencies**:
 ```yaml
-validate-payload → download-binaries → update-local-binaries → health-check
+validate-license-keys → (test success)
 ```
 
 **Key Jobs**:
-- **`validate-payload`**: Validates repository dispatch data
-- **`download-binaries`**: Downloads ZIP packages from golang repo
-- **`update-local-binaries`**: Updates local binaries and runs upload script
-- **`health-check`**: Verifies download system functionality
+- **`validate-license-keys`**: Validates frontend license key generation algorithm
+  - Tests format validation (length, pattern, character set)
+  - Tests cryptographic validation (using golang binary)  
+  - Tests deterministic generation (same inputs = same outputs)
+  - Blocks deployments if validation fails
+
+**Note**: The binary distribution is now handled entirely by the golang workflow. This workflow only validates that the landing page generates valid license keys.
 
 ## Security Configuration
 
@@ -180,9 +184,9 @@ validate-payload → download-binaries → update-local-binaries → health-chec
 - `cmd/server/main.go` - Binary entry point
 
 ### Critical Files (local-memory-landing)
-- `.github/workflows/update-binaries.yml` - Binary update automation
-- `upload-secure-downloads.sh` - S3 upload script
-- `src/pages/Success.tsx` - Download page with secure URL generation
+- `.github/workflows/validate-license-keys.yml` - License key validation workflow
+- `test-license-key-validation.js` - Cross-platform license key testing
+- `src/pages/Success.tsx` - Download page with license key generation
 - `CLAUDE.md` - Project configuration and environment variables
 
 ### Configuration Files
