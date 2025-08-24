@@ -38,32 +38,20 @@ jobs:
     - name: Install Node.js dependencies
       run: npm ci
       
-    - name: Check for existing binary in bin/ directory
-      id: check_binary
-      run: |
-        if [ -f "bin/local-memory" ]; then
-          echo "✅ Found existing local-memory binary in bin/ directory"
-          echo "has_binary=true" >> $GITHUB_OUTPUT
-        else
-          echo "❌ No binary found in bin/ directory"
-          echo "has_binary=false" >> $GITHUB_OUTPUT
-        fi
-        
-    - name: Checkout golang repository (if no binary)
-      if: steps.check_binary.outputs.has_binary == 'false'
+    - name: Checkout golang repository for Linux binary
       uses: actions/checkout@v4
       with:
         repository: danieleugenewilliams/local-memory-golang
         path: local-memory-golang
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build golang binary for testing (if no binary)
-      if: steps.check_binary.outputs.has_binary == 'false'
+    - name: Build golang binary for Linux testing
       run: |
-        echo "📦 Building golang binary from source..."
+        echo "📦 Building golang binary for Linux platform..."
         cd local-memory-golang
-        go build -o ../bin/local-memory cmd/local-memory/main.go
-        echo "✅ Built golang binary successfully"
+        mkdir -p ../bin
+        GOOS=linux GOARCH=amd64 go build -o ../bin/local-memory cmd/local-memory/main.go
+        echo "✅ Built Linux golang binary successfully"
         
     - name: Verify binary is executable
       run: |
