@@ -38,6 +38,18 @@ jobs:
     - name: Install Node.js dependencies
       run: npm ci
       
+    - name: Debug - List repository contents
+      run: |
+        echo "📋 Listing repository contents..."
+        ls -la
+        echo ""
+        echo "📋 Checking bin directory..."
+        if [ -d "bin" ]; then
+          ls -la bin/
+        else
+          echo "❌ bin directory not found"
+        fi
+        
     - name: Setup Linux binary for testing
       run: |
         echo "📦 Using existing Linux binary for validation..."
