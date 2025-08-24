@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import CryptoJS from "crypto-js";
 
 const SuccessPage = () => {
@@ -376,50 +377,18 @@ const SuccessPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="mt-6">
+          <Card className="border-2 border-memory-purple/50 mt-6">
             <CardContent className="pt-6">
               <div className="p-4 bg-muted rounded-lg">
                 <h3 className="font-semibold mb-2">Quick Start:</h3>
-                <ol className="text-sm space-y-2 list-decimal list-inside text-muted-foreground">
-                  <li><strong>Download & Extract:</strong> Use the download button above to get the universal ZIP file</li>
-                  <li><strong>Activate License:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* license activate {productKey}</code> with your license key above</li>
-                  <li><strong>Start Local Memory:</strong> Run <code className="bg-background px-1 rounded">./local-memory-* start</code> (auto-installs dependencies)</li>
-                  <li><strong>Ready!</strong> Your AI memory system is now running at <a href="http://localhost:3001/api/v1/health" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">localhost:3001</a></li>
-                </ol>
                 
-                <div className="mt-4 p-3 bg-blue-900/20 border border-blue-700/30 rounded-md">
-                  <p className="text-sm font-medium text-blue-300 mb-1">Quick Start (2 minutes):</p>
-                  <p className="text-xs text-blue-300">
-                    No Node.js required! Just download → install Ollama → run the binary. 
-                    Creates local-memories.db automatically with AI-powered search and retrieval.
-                  </p>
-                </div>
-                
-                <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-sm font-medium text-green-300 mb-1">Performance Mode (recommended feature):</p>
-                  <p className="text-xs text-green-300">
-                    Install Qdrant for lightning-fast vector search (&lt;10ms vs ~100ms). 
-                    <em>Local Memory</em> auto-detects and uses Qdrant when available, falls back to SQLite seamlessly.
-                  </p>
-                </div>
-                
-                <div className="mt-4 p-3 bg-green-900/20 border border-green-700/30 rounded-md">
-                  <p className="text-sm font-medium text-green-300 mb-1">Universal ZIP Benefits:</p>
-                  <p className="text-xs text-green-300 mb-2">
-                    One download for all platforms! Simplified experience with license keys.
-                  </p>
-                  <div className="text-xs text-green-200 space-y-1">
-                    <p><strong>✅ No platform guessing:</strong> Contains all binaries - choose after download</p>
-                    <p><strong>✅ Future-proof:</strong> Includes both Intel and Apple Silicon Mac binaries</p>
-                    <p><strong>✅ macOS security:</strong> Right-click binary → "Open" or run: <code className="bg-green-800/30 px-1 rounded text-green-100">xattr -rd com.apple.quarantine local-memory-*</code></p>
-                  </div>
-                </div>
+                <PostPurchaseAgentSetup productKey={productKey} />
               </div>
 
               <div className="text-center mt-6">
                 <Badge variant="secondary" className="mb-2">Need More Help?</Badge>
                 <p className="text-sm text-muted-foreground">
-                  For advanced setup, AI agent prompts, and detailed guides: <Link to="/docs" className="text-blue-600 hover:underline font-medium">Visit Documentation</Link>
+                  For advanced setup, AI agent prompts, and detailed guides: <Link to="/docs" target="_blank" className="text-blue-600 hover:underline font-medium">Visit Documentation</Link>
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Join our community: <a href="https://discord.gg/5mJMDKbY" className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer">Discord Server</a>
