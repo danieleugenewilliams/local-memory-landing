@@ -299,6 +299,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/usr/local/bin/local-memory"</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -313,7 +314,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"servers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/usr/local/bin/local-memory",</div>
-                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": []</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -328,7 +329,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"servers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/usr/local/bin/local-memory",</div>
-                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": []</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -343,6 +344,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/usr/local/bin/local-memory"</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
