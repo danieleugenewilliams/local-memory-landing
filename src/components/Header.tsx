@@ -1,27 +1,68 @@
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const location = useLocation();
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleNavClick = (path: string) => {
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Device detection utility
+  const isTabletOrMobile = useCallback(() => {
+    return window.innerWidth < 1024; // lg breakpoint
+  }, []);
+
+  const handleNavClick = useCallback((path: string) => {
     if (location.pathname === path) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsScrolling(true);
+      
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      
+      // Use optimized scroll behavior based on device
+      if (isTabletOrMobile()) {
+        // Faster scroll for tablets/mobile to reduce interaction conflicts
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 300);
+      } else {
+        // Standard smooth scroll for desktop
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 600);
+      }
     }
-  };
+  }, [location.pathname, isTabletOrMobile]);
 
-  const handleMobileNavClick = (path: string) => {
+  const handleMobileNavClick = useCallback((path: string) => {
     setIsMobileMenuOpen(false);
     if (location.pathname === path) {
+      setIsScrolling(true);
+      
+      // Clear existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      
+      // Mobile menu uses instant scroll to avoid conflicts
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 300);
     }
-  };
+  }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-[60] w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 will-change-transform pointer-events-auto">
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-sm flex items-center justify-center">
@@ -45,7 +86,7 @@ const Header = () => {
           </div>
         </Link>
         
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className={`hidden md:flex items-center space-x-6 transition-opacity duration-200 ${isScrolling ? 'pointer-events-none opacity-90' : 'pointer-events-auto opacity-100'}`}>
           <Link 
             to="/" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"

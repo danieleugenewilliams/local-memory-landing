@@ -64,6 +64,10 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: auto; /* Override smooth scrolling for immediate positioning */
+  }
+
   body {
     @apply bg-background text-foreground;
   }

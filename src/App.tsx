@@ -12,8 +12,14 @@ import Docs from "./pages/Docs";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AutoScrollToTop from "./components/AutoScrollToTop";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
+
+// Disable browser scroll restoration globally
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
