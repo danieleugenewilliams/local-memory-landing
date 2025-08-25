@@ -85,14 +85,15 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             
             <div className="p-8 text-center">
               <div className="text-3xl mb-2">🎯</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Early Access Special</h3>
-              <div className="flex items-center justify-center gap-2 mb-6">
-                <span className="text-4xl font-bold text-foreground">$29</span>
+              <h3 className="text-xl font-bold text-foreground mb-2">Launch Special</h3>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="text-4xl font-bold text-foreground">$59</span>
                 <div className="text-left">
-                  <div className="text-sm text-muted-foreground line-through">normally $49</div>
+                  <div className="text-sm text-muted-foreground line-through">normally $99</div>
                   <div className="text-sm text-memory-blue font-medium">40% OFF</div>
                 </div>
               </div>
+              <div className="flex items-center justify-center gap-2 mb-6 text-memory-green">Use code LMLAUNCH40 at checkout</div>
               
               <div className="grid grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center gap-2">
