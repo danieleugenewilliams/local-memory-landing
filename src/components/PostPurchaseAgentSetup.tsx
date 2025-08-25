@@ -6,10 +6,13 @@ import { Copy, Bot, Terminal, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 interface PostPurchaseAgentSetupProps {
-  productKey: string;
+  productKey?: string;
 }
 
 const PostPurchaseAgentSetup = ({ productKey }: PostPurchaseAgentSetupProps) => {
+  // Use placeholder license key when none provided (e.g., on Docs page)
+  const displayKey = productKey || 'LM-XXXX-XXXX-XXXX-XXXX-XXXX';
+  const isPlaceholder = !productKey;
   const [copiedPrompt, setCopiedPrompt] = useState<string | null>(null);
   const [openPrompts, setOpenPrompts] = useState<{[key: string]: boolean}>({});
 
@@ -30,7 +33,7 @@ const PostPurchaseAgentSetup = ({ productKey }: PostPurchaseAgentSetupProps) => 
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: chmod +x ~/Downloads/local-memory* && xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-2. Activate license: local-memory license activate ${productKey}
+2. Activate license: local-memory license activate ${displayKey}
 3. Install Ollama from https://ollama.ai/download/mac, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
 5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
@@ -53,7 +56,7 @@ STEP 1 - INSTALL BINARY:
 1. Find the local-memory binary in ~/Downloads (exact filename will be "local-memory-macos" or similar)
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Move it to /usr/local/bin/local-memory: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate license: /usr/local/bin/local-memory license activate ${productKey}
+4. Activate license: /usr/local/bin/local-memory license activate ${displayKey}
 5. Verify it works: /usr/local/bin/local-memory --version
 
 INSTALL RECOMMENDED FEATURES:
@@ -147,7 +150,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" (create directory first)
 2. Add "C:\\Program Files\\LocalMemory" to system PATH
-3. Activate license: local-memory.exe license activate ${productKey}
+3. Activate license: local-memory.exe license activate ${displayKey}
 4. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
 5. Start everything: local-memory.exe start (auto-detects and configures everything)
 6. Add to Claude Code: claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
@@ -171,7 +174,7 @@ STEP 1 - INSTALL BINARY:
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
 4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH environment variable
-5. Activate license: local-memory.exe license activate ${productKey}
+5. Activate license: local-memory.exe license activate ${displayKey}
 6. Verify: open new cmd/PowerShell and run: local-memory.exe --version
 
 INSTALL RECOMMENDED FEATURES:
@@ -264,7 +267,7 @@ Use my existing downloaded binary from C:\\Downloads - don't download a new one.
 
 QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary: chmod +x ~/Downloads/local-memory* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-2. Activate license: local-memory license activate ${productKey}
+2. Activate license: local-memory license activate ${displayKey}
 3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
 5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
@@ -287,7 +290,7 @@ STEP 1 - INSTALL BINARY:
 1. Find the local-memory binary in ~/Downloads (likely named "local-memory-linux")
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Install to system: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate license: /usr/local/bin/local-memory license activate ${productKey}
+4. Activate license: /usr/local/bin/local-memory license activate ${displayKey}
 5. Verify installation: /usr/local/bin/local-memory --version
 
 INSTALL RECOMMENDED FEATURES:
@@ -384,7 +387,7 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 1. Install binary (choose your platform):
    - macOS/Linux: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
    - Windows: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" and add to PATH
-2. Activate license: local-memory license activate ${productKey}
+2. Activate license: local-memory license activate ${displayKey}
 3. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
 5. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
@@ -450,6 +453,11 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
               <li>Copy the prompt applicable to your operating system.</li>
               <li>Paste it into your AI agent (Claude, OpenCode, etc.).</li>
+              {isPlaceholder && (
+                <li className="text-amber-600 bg-muted-50/50 p-2 rounded border border-amber-200">
+                  <strong>⚠️ Important:</strong> Replace the placeholder license key <code className="bg-muted-100 px-1 rounded text-amber-800">LM-XXXX-XXXX-XXXX-XXXX-XXXX</code> with your actual license key after purchase.
+                </li>
+              )}
               <li>Your agent will handle the complete installation and configuration.</li>
               <li>The agent creates proper directories, sets permissions, and installs Ollama and Qdrant (if needed).</li>
               <li>MCP integration is configured with exact paths and commands.</li>
