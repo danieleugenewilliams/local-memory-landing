@@ -1,24 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Download, CheckCircle, Copy, Check, Car } from "lucide-react";
+import { Download, CheckCircle, Copy, Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import CryptoJS from "crypto-js";
+import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
 
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
-  const [downloadUrl, setDownloadUrl] = useState<string>('');
   const [productKey, setProductKey] = useState<string>('');
   const [isVerifying, setIsVerifying] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform>('unknown');
+  const [downloadUrls, setDownloadUrls] = useState<Record<Platform, string>>({} as Record<Platform, string>);
+  const [showAlternatives, setShowAlternatives] = useState(false);
 
-  // Generate secure download URL for universal ZIP using time-based hashing
-  const generateSecureDownloadUrl = (paymentTimestamp: number) => {
+  // Generate secure download URL for platform-specific files using time-based hashing
+  const generateSecureDownloadUrl = (paymentTimestamp: number, platform: Platform = 'unknown') => {
     const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
     
     // Convert timestamp to seconds if it's in milliseconds
@@ -27,8 +30,9 @@ const SuccessPage = () => {
     // Calculate 12-hour time window (matches backend logic)
     const timeWindow = Math.floor(timestampInSeconds / 43200);
     
-    // Generate hash for universal ZIP using golang license key algorithm (matches license key generation)
-    const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:universal`;
+    // Generate hash for platform-specific files
+    const platformPath = platform === 'unknown' ? 'universal' : 'platform';
+    const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:${platformPath}`;
     const rawHash = CryptoJS.SHA256(data).toString().toUpperCase();
     
     // Apply character filtering and replacement (matches golang app algorithm)
@@ -39,20 +43,35 @@ const SuccessPage = () => {
     
     const hash = cleanHash.slice(0, 16);
     
+    // Get platform info to determine filename
+    const platformInfo = getPlatformInfo(platform);
+    const filename = platformInfo.filename;
+    
     // Debug logging
-    console.log(`Debug universal ZIP:`, {
+    console.log(`Debug ${platform} download:`, {
+      platform,
       paymentTimestamp,
       timestampInSeconds,
       timeWindow,
       data,
-      hash
+      hash,
+      filename
     });
     
-    // Universal ZIP filename
-    const universalZipName = 'local-memory-universal.zip';
-    
     // Production: route through main domain to CloudFront
-    return `https://localmemory.co/downloads/${timeWindow}/${hash}/universal/${universalZipName}`;
+    return `https://localmemory.co/downloads/${timeWindow}/${hash}/${platformPath}/${filename}`;
+  };
+
+  // Generate download URLs for all platforms
+  const generateAllDownloadUrls = (paymentTimestamp: number): Record<Platform, string> => {
+    const urls: Record<Platform, string> = {} as Record<Platform, string>;
+    const platforms: Platform[] = ['macos-arm', 'macos-intel', 'windows', 'linux', 'unknown'];
+    
+    for (const platform of platforms) {
+      urls[platform] = generateSecureDownloadUrl(paymentTimestamp, platform);
+    }
+    
+    return urls;
   };
 
   // Client-side license key format validation
@@ -179,6 +198,10 @@ const SuccessPage = () => {
   };
 
   useEffect(() => {
+    // Detect user's platform on component mount
+    const detectedPlatform = detectUserPlatform();
+    setSelectedPlatform(detectedPlatform);
+
     const verifyPaymentFlow = () => {
       const sessionId = searchParams.get('session_id');
       
@@ -221,8 +244,8 @@ const SuccessPage = () => {
           return;
         }
         
-        // Payment flow is valid - generate secure download URL and product key
-        const secureUrl = generateSecureDownloadUrl(paymentTimestamp);
+        // Payment flow is valid - generate secure download URLs for all platforms and product key
+        const allDownloadUrls = generateAllDownloadUrls(paymentTimestamp);
         const generatedKey = generateProductKey(sessionId);
         
         // Validate the generated key before using it
@@ -241,7 +264,7 @@ const SuccessPage = () => {
         }
         
         setIsVerified(true);
-        setDownloadUrl(secureUrl);
+        setDownloadUrls(allDownloadUrls);
         setProductKey(generatedKey);
         
         // Clear payment tokens to prevent reuse
@@ -281,9 +304,9 @@ const SuccessPage = () => {
           // Verify download time window (48 hours from original payment)
           if (currentTime - unlocked.paymentTimestamp < 48 * 60 * 60 * 1000) {
             setIsVerified(true);
-            // Regenerate secure URL with original payment timestamp
-            const secureUrl = generateSecureDownloadUrl(unlocked.paymentTimestamp);
-            setDownloadUrl(secureUrl);
+            // Regenerate secure URLs with original payment timestamp
+            const allUrls = unlocked.downloadUrls || generateAllDownloadUrls(unlocked.paymentTimestamp);
+            setDownloadUrls(allUrls);
             // Restore product key if available, or regenerate if missing
             if (unlocked.productKey) {
               // Validate the stored key
@@ -318,14 +341,17 @@ const SuccessPage = () => {
     verifyPaymentFlow();
   }, [searchParams]);
 
-  const handleDownload = async () => {
+  const handleDownload = async (platform: Platform = selectedPlatform) => {
+    const downloadUrl = downloadUrls[platform];
+    
     if (!downloadUrl) {
       alert('Download link not available. Please refresh the page and try again.');
       return;
     }
     
     try {
-      console.log('Starting universal ZIP download:', downloadUrl);
+      const platformInfo = getPlatformInfo(platform);
+      console.log(`Starting ${platform} download:`, downloadUrl);
       
       // Use CloudFront URL directly for actual downloads
       // CloudFront origin path is '/downloads' so we need to remove the /downloads prefix to avoid double pathing
@@ -334,7 +360,7 @@ const SuccessPage = () => {
       // Create a temporary link element to trigger download
       const downloadLink = document.createElement('a');
       downloadLink.href = cloudFrontUrl;
-      downloadLink.download = 'local-memory-universal.zip';
+      downloadLink.download = platformInfo.filename;
       downloadLink.target = '_blank';
       
       // Append to body, click, and remove
@@ -342,7 +368,7 @@ const SuccessPage = () => {
       downloadLink.click();
       document.body.removeChild(downloadLink);
       
-      console.log('Universal ZIP download initiated');
+      console.log(`${platform} download initiated`);
       
     } catch (error) {
       console.error('Download failed:', error);
@@ -416,25 +442,113 @@ const SuccessPage = () => {
 
           <Card className="border-2 border-green-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-lg flex items-center justify-center">
-
+              <CardTitle className="text-lg flex items-center justify-center gap-2">
+                <Download className="w-5 h-5" />
+                Download Local Memory
               </CardTitle>
+              <CardDescription>
+                Ready to download for your platform
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center space-y-4">
-                <div className="w-full p-6 border-2 border-none rounded-lg bg-muted-50">
-                  <div className="text-center mt-2 space-y-3">
-                    <Button 
-                      onClick={handleDownload}
-                      className="gap-2 bg-green-600 hover:bg-green-700"
-                      size="lg"
+              <div className="space-y-6">
+                {/* Main Download Section - Detected Platform */}
+                <div className="text-center">
+                  {(() => {
+                    const detectedInfo = getPlatformInfo(selectedPlatform);
+                    return (
+                      <div className="p-6 border-2 border-green-200 rounded-lg bg-muted-50">
+                        <div className="flex items-center justify-center gap-3 mb-4">
+                          <span className="text-3xl">{detectedInfo.icon}</span>
+                          <div className="text-left">
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-lg font-semibold text-foreground">
+                                {detectedInfo.label}
+                              </h3>
+                              {detectedInfo.isRecommended && (
+                                <Badge variant="secondary" className="bg-blue-100 text-blue-700 text-xs">
+                                  Detected
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {detectedInfo.description}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          onClick={() => handleDownload(selectedPlatform)}
+                          className="gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+                          size="lg"
+                        >
+                          <Download className="w-5 h-5" />
+                          Download for {detectedInfo.label}
+                        </Button>
+                        
+                        <div className="text-sm text-green-700 mt-3">
+                          ~{selectedPlatform === 'unknown' ? '51MB' : '13MB'} • Optimized for your system • Fast & secure
+                        </div>
+                        
+                        {/* Warning for Universal Package when selected */}
+                        {selectedPlatform === 'unknown' && (
+                          <div className="text-left text-xs text-orange-600 mt-3 p-2 bg-orange-50 rounded border border-orange-200">
+                            ⚠️ Note: Universal package may cause browser warnings due to multiple executables
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                {/* Alternative Options Dropdown */}
+                <div className="border-t pt-4">
+                  <div className="text-center">
+                    <Button
+                      variant="ghost"
+                      onClick={() => setShowAlternatives(!showAlternatives)}
+                      className="gap-2 text-muted-foreground hover:text-foreground"
                     >
-                      <Download className="w-5 h-5" />
-                      Download <em>Local Memory</em>
+                      Need a different platform?
+                      <ChevronDown className={`w-4 h-4 transition-transform ${showAlternatives ? 'rotate-180' : ''}`} />
                     </Button>
-                    <div className="text-xs text-green-600 mt-2">
-                      One ZIP file • All supported platforms • Includes installation guide
-                    </div>
+                    
+                    {showAlternatives && (
+                      <div className="mt-4 space-y-2 p-4 border border-gray-200 rounded-lg bg-muted-50">
+                        {getAllPlatforms()
+                          .filter(p => p.platform !== selectedPlatform)
+                          .map((platformInfo) => (
+                            <div key={platformInfo.platform} className="space-y-2">
+                              <div
+                                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-muted hover:border-gray-300 cursor-pointer transition-all"
+                                onClick={() => handleDownload(platformInfo.platform)}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <span className="text-xl">{platformInfo.icon}</span>
+                                  <div className="text-left">
+                                    <div className="font-medium text-foreground">
+                                      {platformInfo.label}
+                                    </div>
+                                    <div className="text-sm text-muted-foreground">
+                                      {platformInfo.description}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-sm font-medium text-green-600">
+                                    ~{platformInfo.platform === 'unknown' ? '51MB' : '13MB'}
+                                  </div>
+                                  <Button variant="outline" size="sm" className="mt-1">
+                                    <Download className="w-3 h-3 mr-1" />
+                                    Download
+                                  </Button>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
