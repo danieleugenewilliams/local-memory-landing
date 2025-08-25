@@ -24,7 +24,7 @@ const Index = () => {
             
             // Custom smooth scroll with longer duration
             const startScrollTop = window.pageYOffset;
-            const scrollDistance = targetScrollTop - startScrollTop;
+            const scrollDistance = targetScrollTop - startScrollTop - 20;
             const duration = 1500; // 1.5 seconds for slower, smoother scroll
             const startTime = performance.now();
             
