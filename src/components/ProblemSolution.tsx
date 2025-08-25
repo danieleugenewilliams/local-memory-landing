@@ -7,7 +7,7 @@ const ProblemSolution = () => {
             AI Agents Are Smart...But They Have A Lousy Memory
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Stop losing context. Start building on yesterday's progress.
+            Stop losing context. Continue building on your progress with memory-enabled AI.
           </p>
         </div>
 
