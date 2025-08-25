@@ -4,7 +4,7 @@ const ProblemSolution = () => {
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 leading-tight">
-            AI Agents Are Smart...But They Have a Lousy Memory
+            AI Agents Are Smart...But They Have A Lousy Memory
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Stop losing context. Start building on yesterday's progress.
