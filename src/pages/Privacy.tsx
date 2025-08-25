@@ -108,7 +108,7 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  If you have any questions about this Privacy Policy or our privacy practices, please contact us through our <a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a>.
+                  If you have any questions about this Privacy Policy or our privacy practices, please contact us through our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a>.
                 </p>
               </CardContent>
             </Card>

@@ -641,7 +641,7 @@ const SuccessPage = () => {
                   For advanced setup, AI agent prompts, and detailed guides: <Link to="/docs" target="_blank" className="text-blue-600 hover:underline font-medium">Visit Documentation</Link>
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Join our community: <a href="https://discord.gg/5mJMDKbY" className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer">Discord Server</a>
+                  Join our community: <a href="https://discord.gg/rMmn8xP3fZ" className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer">Discord Server</a>
                 </p>
               </div>
             </CardContent>

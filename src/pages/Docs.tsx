@@ -689,7 +689,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     <h5 className="font-semibold mb-3">Getting Help</h5>
                     <ul className="space-y-2 text-sm list-disc pl-5">
                       <li><strong><a href="#documentation" className="text-memory-blue hover:underline">Documentation</a>:</strong> This page covers most use cases</li>
-                      <li><a href="https://discord.gg/pjVX4BWu" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>: Live support and discussion</li>
+                      <li><a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>: Live support and discussion</li>
                       <li><strong>Bug Reports:</strong> Share bug reports in Discord #bug-reports</li>
                       <li><strong>Feature Requests:</strong> Share ideas in Discord #feature-requests</li>
                     </ul>

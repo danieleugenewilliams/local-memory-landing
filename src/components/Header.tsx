@@ -109,7 +109,7 @@ const Header = () => {
             Docs
           </Link>
           <a 
-            href="https://discord.gg/pjVX4BWu" 
+            href="https://discord.gg/rMmn8xP3fZ" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             target="_blank"
             rel="noopener noreferrer"
@@ -162,7 +162,7 @@ const Header = () => {
               Docs
             </Link>
             <a 
-              href="https://discord.gg/pjVX4BWu" 
+              href="https://discord.gg/rMmn8xP3fZ" 
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               target="_blank"
               rel="noopener noreferrer"
