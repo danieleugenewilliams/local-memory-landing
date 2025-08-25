@@ -500,7 +500,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Globe className="w-5 h-5" />
-                  REST API (24 Endpoints)
+                  REST API (25 Endpoints)
                 </CardTitle>
                 <CardDescription>
                   <p className="mt-2"><em>Local Memory</em> has a universal HTTP interface for any platform.</p>

@@ -456,7 +456,7 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              Agent discovers cross-agent knowledge and suggests workflow enhancements based on other team members' previous implementations...
+                              Agent discovers cross-agent knowledge and suggests workflow enhancements based on your or other agents' previous implementations...
                             </pre>
                           </div>
                           

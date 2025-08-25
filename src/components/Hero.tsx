@@ -50,7 +50,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           
           {/* Trust badges */}
           <div className="mt-6 text-center text-sm text-muted-foreground animate-fade-in">
-            🔒 One-Time Secure Stripe Payment • ⚡ Instant Access • 🛡️ 100% Local & Private
+            🔒One-Time Secure Stripe Payment  • ⚡ Instant Access • 🛡️ 100% Local & Private
           </div>
 
           <div className="text-sm text-muted-foreground">

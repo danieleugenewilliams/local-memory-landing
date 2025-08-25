@@ -97,7 +97,7 @@ const ProblemSolution = () => {
               </div>
               
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
-                <span className="text-green-500 text-xl flex-shrink-0">🚀</span>
+                <span className="text-green-500 text-xl flex-shrink-0">🎯</span>
                 <div>
                   <div className="font-medium text-foreground">Jump straight to solving, not explaining</div>
                   <div className="text-sm text-muted-foreground">Skip the context-setting and dive into productive work immediately</div>
@@ -107,7 +107,7 @@ const ProblemSolution = () => {
               <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
                 <div>
-                  <div className="font-medium text-foreground">Seamless context across ALL your agents</div>
+                  <div className="font-medium text-foreground">Seamless context across ALL of your agents</div>
                   <div className="text-sm text-muted-foreground">Claude, OpenCode, etc. - same memory available anywhere</div>
                 </div>
               </div>

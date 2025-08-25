@@ -68,7 +68,7 @@ This keeps your payment configuration secure and maintainable!`);
 
           <div className="bg-card rounded-2xl border-2 border-memory-blue/50 relative overflow-hidden mb-6">
             <div className="p-8 text-center">
-              <div className="text-3xl mb-2">🎯</div>
+              <div className="text-3xl mb-2">🚀</div>
               <h3 className="text-xl font-bold text-foreground mb-2">Launch Special</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="text-4xl font-bold text-foreground">$59</span>
@@ -82,27 +82,27 @@ This keeps your payment configuration secure and maintainable!`);
               <div className="grid grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Complete memory system</span>
+                  <span>Complete Memory System</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>One-Time Secure Stripe Payment</span>
+                  <span>Worth $100-$300 Daily</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Unlimited usage forever</span>
+                  <span>Unlimited Usage Forever</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>$2K-6K Monthly Value</span>
+                  <span>$2K-$6K Monthly Value</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>26 MCP tools included</span>
+                  <span>26 MCP Tools Included</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>2,500%+ monthly ROI</span>
+                  <span>Pays for Itself in 2 Days</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
@@ -110,11 +110,11 @@ This keeps your payment configuration secure and maintainable!`);
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Worth $100-300 daily</span>
+                  <span>Save 2+ Hours Daily</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Instant Access</span>
+                  <span>2,500%+ Monthly ROI</span>
                 </div>
               </div>
               

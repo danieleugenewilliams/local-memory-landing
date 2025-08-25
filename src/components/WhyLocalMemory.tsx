@@ -66,7 +66,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
   };
 
   return (
-    <section id="benchmarks" className="py-24 bg-muted/30">
+    <section id="benchmarks" className="py-16 bg-muted/30">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
@@ -84,7 +84,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             {/* Popular badge */}
             
             <div className="p-8 text-center">
-              <div className="text-3xl mb-2">🎯</div>
+              <div className="text-3xl mb-2">🚀</div>
               <h3 className="text-xl font-bold text-foreground mb-2">Launch Special</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="text-4xl font-bold text-foreground">$59</span>
@@ -98,27 +98,27 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               <div className="grid grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Complete memory system</span>
+                  <span>Complete Memory System</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>One-Time Secure Stripe Payment</span>
+                  <span>Worth $100-$300 Daily</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Unlimited usage forever</span>
+                  <span>Unlimited Usage Forever</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>$2K-6K Monthly Value</span>
+                  <span>$2K-$6K Monthly Value</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>26 MCP tools included</span>
+                  <span>26 MCP Tools Included</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>2,500%+ monthly ROI</span>
+                  <span>Pays for Itself in 2 Days</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
@@ -126,22 +126,23 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Worth $100-300 daily</span>
+                  <span>Save 2+ Hours Daily</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <span className="text-green-500">✓</span>
-                  <span>Instant Access</span>
+                  <span>2,500%+ Monthly ROI</span>
                 </div>
               </div>
               
               <Link to="/payment" className="flex justify-center">
                 <Button variant="hero" className="w-full sm:w-auto" size="lg">
-                  Upgrade Your Coding Agent's Memory Now
+                  Get Instant Access
                 </Button>
               </Link>
-              
+              <div className="mt-2 text-sm text-muted-foreground">🔒 One-Time Secure Stripe Payment</div>
+
               <div className="mt-2 text-sm text-muted-foreground">
-                <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
+                <em>The only AI memory system with native MCP integration <b>and</b> universal REST API.</em>
               </div>
 
             </div>
@@ -153,7 +154,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
         <div className="animate-fade-in">
 
             {/* Real User Testimonial - Prominent */}
-            <div className="max-w-4xl mx-auto mb-16">
+            <div className="max-w-4xl mx-auto mb-12">
               <div className="bg-gradient-to-r from-memory-blue/10 to-memory-purple/10 border border-memory-blue/20 rounded-2xl p-8 lg:p-12">
                 <div className="text-center">
                   <div className="text-4xl mb-6">💬</div>
@@ -168,45 +169,10 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               </div>
             </div>
 
-            {/* Platform Grid */}
-            <div className="grid sm:grid-cols-3 gap-6 lg:gap-8 mb-12 max-w-4xl mx-auto">
-              <div className="bg-gradient-to-br from-memory-blue/10 to-memory-blue/5 border border-memory-blue/20 rounded-2xl p-6 text-center">
-                <div className="text-3xl mb-4">🖥️</div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Claude Desktop</h3>
-                <p className="text-sm text-muted-foreground mb-4">Native MCP Integration</p>
-                <p className="text-xs text-muted-foreground"><em>26 tools appear directly</em></p>
-              </div>
-              
-              <div className="bg-gradient-to-br from-memory-green/10 to-memory-green/5 border border-memory-green/20 rounded-2xl p-6 text-center">
-                <div className="text-3xl mb-4">💻</div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Claude Code</h3>
-                <p className="text-sm text-muted-foreground mb-4">MCP + REST API</p>
-                <p className="text-xs text-muted-foreground"><em>Terminal & web integration</em></p>
-              </div>
-              
-              <div className="bg-gradient-to-br from-memory-purple/10 to-memory-purple/5 border border-memory-purple/20 rounded-2xl p-6 text-center">
-                <div className="text-3xl mb-4">🌐</div>
-                <h3 className="text-lg font-bold text-foreground mb-2">Any AI Platform</h3>
-                <p className="text-sm text-muted-foreground mb-4">Universal REST API</p>
-                <p className="text-xs text-muted-foreground"><em>OpenCode, custom agent, etc.</em></p>
-              </div>
-            </div>
-
-            {/* Unique Message */}
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground italic max-w-xl mx-auto">
-                The only AI memory system with native MCP integration <b>and</b> universal REST API. Future-proof your AI workflow today!
-              </p>
-            </div>
 
             {/* Final CTA on Landing Page */}
 
             <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
-              <Link to="/payment">
-                <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                  Upgrade Your Coding Agent's Memory Now
-                </Button>
-              </Link>
               <a href="/features">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   Want to learn more? →

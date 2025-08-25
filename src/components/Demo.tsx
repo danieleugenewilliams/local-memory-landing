@@ -37,27 +37,27 @@ const Demo = () => {
       title: "Development Task",
       description: "Developer describes new API endpoint requirement",
       action: "user_input",
-      command: `user prompt`,
+      command: `User Prompt`,
       params: {
-        prompt: "I need to implement a user preferences API endpoint that allows users to update their notification settings, privacy preferences, and display options. It should follow our existing API patterns and team conventions."
+        prompt: "I need to implement a user preferences API endpoint that allows users to update their notification settings, privacy preferences, and display options. It should follow our existing API patterns and conventions."
       },
       response: "I'll help you implement this API endpoint. Let me search for relevant context from your previous work..."
     },
     {
       title: "Search API Patterns", 
-      description: "Agent searches for team's API architecture and conventions",
+      description: "Agent searches for API architecture and conventions",
       action: "mcp__local-memory-go__search_memories",
-      command: `search`,
+      command: `Search`,
       params: {
-        query: "API architecture patterns team conventions authentication",
+        query: "API architecture patterns project conventions authentication",
         limit: 10
       },
       response: `Found 4 memories:
 
 1. API Authentication: All endpoints use JWT middleware with role-based access. Standard pattern: authenticate -> authorize -> validate -> process. Use existing authMiddleware from /middleware/auth.js (Score: 0.92)
-   Tags: api-architecture, authentication, middleware, team-conventions
+   Tags: api-architecture, authentication, middleware, project-conventions
 
-2. RESTful API Conventions: Team uses /api/v1/{resource}/{id}/{sub-resource} pattern. All responses follow {success: boolean, data: any, error?: string} format. Use HTTP status codes consistently. (Score: 0.89)
+2. RESTful API Conventions: This project uses /api/v1/{resource}/{id}/{sub-resource} pattern. All responses follow {success: boolean, data: any, error?: string} format. Use HTTP status codes consistently. (Score: 0.89)
    Tags: api-architecture, rest, conventions, response-format
 
 3. Database Schema Patterns: User-related settings stored in separate tables. user_preferences table with JSON columns for flexibility. Always use transactions for multi-table updates. (Score: 0.85)
@@ -70,7 +70,7 @@ const Demo = () => {
       title: "Search Requirements",
       description: "Agent finds business requirements and feature specifications",
       action: "mcp__local-memory-go__search_memories",
-      command: `search`,
+      command: `Search`,
       params: {
         query: "user preferences notification settings requirements privacy",
         limit: 8
@@ -90,12 +90,12 @@ const Demo = () => {
       title: "Generate Implementation",
       description: "Agent creates implementation plan using stored context",
       action: "mcp__local-memory-go__ask_question",
-      command: `ask`,
+      command: `Ask`,
       params: {
         question: "Based on our API patterns and user preferences requirements, how should I implement this endpoint?",
         context_limit: 7
       },
-      response: `**Answer:** Based on your team's patterns and requirements, here's the implementation approach:
+      response: `**Answer:** Based on your project's patterns and requirements, here's the implementation approach:
 
 **Endpoint Structure:**
 \`PUT /api/v1/users/:userId/preferences\` following your RESTful conventions
@@ -115,7 +115,7 @@ const Demo = () => {
 - Validation: schemas/userPreferencesSchema.js
 - Database: user_preferences table updates with JSON column handling
 
-**Based on 7 memories:**
+**Based on 7 memories (condensed to 4):**
 1. API Authentication: JWT middleware with role-based access...
 2. RESTful API Conventions: /api/v1/{resource}/{id}/{sub-resource} pattern...
 3. User Preferences Feature Requirements: notification toggles, privacy settings...
@@ -225,7 +225,7 @@ const Demo = () => {
             See <em>Local Memory</em> in Action
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Watch how this coding agent uses persistent memory to implement a complex API endpoint using team patterns and business requirements.
+            Watch how this coding agent uses persistent memory to implement a complex API endpoint using project patterns and business requirements.
           </p>
         </div>
 
@@ -293,9 +293,9 @@ const Demo = () => {
                 >
                   {/* Welcome message - always visible */}
                   <div className="text-slate-400 mb-4">
-                    <span className="text-blue-400">❯</span> # Working on a large e-commerce web app. Local Memory has context from previous sessions.
+                    <span className="text-blue-400">❯</span> # You are working on a large e-commerce web app. Local Memory has context from previous sessions.
                     <br />
-                    <span className="text-slate-500"># Click "Run user prompt" to start implementing a new API endpoint...</span>
+                    <span className="text-slate-500"># Click "Run User Prompt" to start implementing a new API endpoint...</span>
                   </div>
                   
                   {/* Command History */}
@@ -351,7 +351,7 @@ const Demo = () => {
             {/* Key Benefits */}
             <div className="flex flex-col md:col-span-2 lg:col-span-1">
               <div className="bg-card rounded-2xl p-6 border border-border flex-1">
-                <h3 className="text-lg font-bold text-foreground mb-6">Why <em>Local Memory</em>?</h3>
+                <h3 className="text-lg text-center font-bold text-foreground mb-6">Why <em>Local Memory</em>?</h3>
                 
                 <div className="space-y-6">
                   <div className="text-center">
@@ -359,14 +359,14 @@ const Demo = () => {
                       <span className="text-xl">🕑</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Save 2+ Hours Daily</h4>
-                    <p className="text-sm text-muted-foreground">Skip searching docs and codebases. Get relevant team patterns instantly. Worth $100-300 daily.</p>
+                    <p className="text-sm text-muted-foreground">Skip searching docs and codebases. Get relevant project patterns instantly, worth $100-$300 daily.</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-memory-blue/20 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <span className="text-xl">🏦</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Pays for Itself in 2 Days</h4>
-                    <p className="text-sm text-muted-foreground">Smart context selection maximizes expensive AI usage. 2,500%+ monthly ROI on time savings.</p>
+                    <p className="text-sm text-muted-foreground">Smart context selection maximizes expensive AI usage. Gain up to 2,500%+ monthly ROI on time savings.</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
