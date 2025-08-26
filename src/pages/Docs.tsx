@@ -612,28 +612,33 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     <tbody className="text-sm">
                       <tr className="border-b border-border">
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">Command not found</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Ensure binary is in PATH or use relative path</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Ensure binary is in PATH or use relative path</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; ./local-memory</code></td>
                       </tr>
                       <tr className="border-b border-border">
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">Ollama not detected</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Install Ollama from official website</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Install Ollama from official website</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Visit <a href="https://ollama.ai" className="text-memory-blue hover:underline" target="_blank">ollama.ai</a></code></td>
                       </tr>
                       <tr className="border-b border-border">
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">macOS security warning</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Right-click binary → "Open" or remove quarantine</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Right-click binary → "Open" or remove quarantine</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; xattr -rd com.apple.quarantine /path/to/local-memory</code></td>
                       </tr>
                       <tr className="border-b border-border">
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">MCP tools not appearing</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Restart Claude Desktop after adding MCP server</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Restart Claude Desktop after adding MCP server</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Restart application</code></td>
                       </tr>
                       <tr className="border-b border-border">
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">Memory not persisting</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Check database path and permissions</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Check database path and permissions</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; local-memory status</code></td>
+                      </tr>
+                      <tr className="border-b border-border">
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Browser download warning</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Browser may display warning about downloads of zip files containing multiple executables</td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Dismiss the warning or download your platform-specific file</code></td>
                       </tr>
                     </tbody>
                   </table>

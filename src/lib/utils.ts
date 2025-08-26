@@ -120,10 +120,10 @@ export function getPlatformInfo(platform: Platform): PlatformInfo {
     },
     'unknown': {
       platform: 'unknown',
-      label: 'Universal Package',
+      label: 'Universal Package (all platforms included)',
       filename: 'local-memory-universal.zip',
-      icon: '📦',
-      description: 'All platforms included. May cause browser security warnings due to multiple executables in the zip.',
+      icon: '',
+      description: 'Please note: A browser security warning may display strictly due to multiple executables in the zip file.',
       isRecommended: detectedPlatform === 'unknown'
     }
   }

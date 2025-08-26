@@ -484,7 +484,7 @@ const SuccessPage = () => {
                         </Button>
                         
                         <div className="text-sm text-green-700 mt-3">
-                          ~{selectedPlatform === 'unknown' ? '51MB' : '13MB'} • Optimized for your system • Fast & secure
+                          ~{selectedPlatform === 'unknown' ? '52MB' : '13MB'} • Optimized for Your System
                         </div>
                         
                         {/* Warning for Universal Package when selected */}
@@ -517,8 +517,7 @@ const SuccessPage = () => {
                           .map((platformInfo) => (
                             <div key={platformInfo.platform} className="space-y-2">
                               <div
-                                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-muted hover:border-gray-300 cursor-pointer transition-all"
-                                onClick={() => handleDownload(platformInfo.platform)}
+                                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-muted hover:border-gray-300 transition-all"
                               >
                                 <div className="flex items-center gap-3">
                                   <span className="text-xl">{platformInfo.icon}</span>
@@ -533,9 +532,9 @@ const SuccessPage = () => {
                                 </div>
                                 <div className="text-right">
                                   <div className="text-sm font-medium text-green-600">
-                                    ~{platformInfo.platform === 'unknown' ? '51MB' : '13MB'}
+                                    ~{platformInfo.platform === 'unknown' ? '52MB' : '13MB'}
                                   </div>
-                                  <Button variant="outline" size="sm" className="mt-1">
+                                  <Button onClick={() => handleDownload(platformInfo.platform)} variant="outline" size="sm" className="mt-1">
                                     <Download className="w-3 h-3 mr-1" />
                                     Download
                                   </Button>
