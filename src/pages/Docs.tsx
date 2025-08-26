@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import ScrollToTop from "@/components/ScrollToTop";
+import { handleStripePayment } from "@/lib/payment";
 
 const DocsPage = () => {
 
@@ -78,11 +79,9 @@ const DocsPage = () => {
                   <h4 className="font-semibold text-lg mb-2">Step 1: Confirm Purchase and Download</h4>
                   <p className="text-muted-foreground mb-3">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
                   <div className="bg-muted p-3 rounded-md">
-                    <a href={import.meta.env.VITE_STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-                      <Button variant="hero" size="lg" className="gap-2">
-                        Purchase <em>Local Memory</em>
-                      </Button>
-                    </a>
+                    <Button onClick={handleStripePayment} variant="hero" size="lg" className="gap-2">
+                      Purchase <em>Local Memory</em>
+                    </Button>
                   </div>
                 </div>
 
@@ -96,7 +95,7 @@ const DocsPage = () => {
                     </code>
                     <div className="mt-2 p-2 bg-amber-900/20 border border-amber-700/30 rounded text-xs">
                       <p className="text-amber-300 font-medium mb-1">macOS users:</p>
-                      <p className="text-amber-200">Before running the above command, first run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
+                      <p className="text-amber-200">Before running the above command, first run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">&gt; xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
                     </div>
                     <p className="mt-2 text-xs text-muted-foreground mb-2">
                       <em>Auto-detects Ollama, Qdrant, and configures everything automatically</em>
@@ -186,7 +185,6 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               <Card className="mb-8">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Download className="w-5 h-5" />
                     Installation Guide
                   </CardTitle>
                 </CardHeader>
@@ -194,8 +192,14 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                   
                   {/* Step 1 */}
                   <div className="border-l-4 border-blue-500 pl-4">
-                    <h4 className="font-semibold text-lg mb-2">Step 1: Download <em>Local Memory</em></h4>
-                    <p className="text-muted-foreground mb-3">Copy and paste your OS-specific binary into your preferred location:</p>
+                    <h4 className="font-semibold text-lg mb-2">Step 1: Purchase and Download <em>Local Memory</em></h4>
+                    <p className="text-muted-foreground mb-3">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
+                    <div className="bg-muted p-3 rounded-md">
+                      <Button onClick={handleStripePayment} variant="hero" size="lg" className="gap-2">
+                        Purchase <em>Local Memory</em>
+                      </Button>
+                    </div>
+                    <p className="text-muted-foreground mb-3">After downloading, copy and paste your OS-specific binary into your preferred location:</p>
                     <div className="bg-muted p-3 rounded-md">
                       <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
@@ -205,14 +209,13 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                       <code className="text-sm bg-background px-2 py-1 rounded">
                         &gt; mv local-memory.exe
                       </code>
-                      <p className="mt-2 text-sm text-muted-foreground">&nbsp; Move to C:\path\to\your\preferred\location, then add to PATH variable.</p>
-
-                      <details className="mt-2 bg-amber-900/20 border border-amber-700/30 rounded p-2">
-                        <summary className="cursor-pointer text-xs font-medium text-amber-300">
-                          macOS Security Notice
-                        </summary>
-                        <p className="text-amber-200 text-xs mt-2">Before installation, run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">sudo xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
-                      </details>
+                      <div className="mt-2 p-2 bg-amber-900/20 border border-amber-700/30 rounded text-xs">
+                        <p className="text-amber-300 font-medium mb-1">macOS users:</p>
+                        <p className="text-amber-200">Before running the above command, first run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">&gt; xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
+                      </div>
+                      <p className="mt-2 text-xs text-muted-foreground mb-2">
+                        <em>&nbsp; Move to /path/to/your/preferred/location, then add to PATH variable.</em>
+                      </p>
                     </div>
                   </div>
 
@@ -233,26 +236,6 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                       <code className="text-sm bg-background px-2 py-1 rounded">
                         &gt; ollama pull nomic-embed-text
                       </code>
-
-                      <details className="mt-4 bg-blue-50/5 border border-blue-500/20 rounded p-2">
-                        <summary className="cursor-pointer text-xs font-medium text-blue-400">
-                          Recommended: Qdrant (10x faster search)
-                        </summary>
-                        <div className="mt-2 space-y-1">
-                          <code className="text-xs bg-background px-2 py-1 rounded block">
-                            &gt; curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-                          </code>
-                          <code className="text-xs bg-background px-2 py-1 rounded block">
-                            &gt; tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/
-                          </code>
-                          <code className="text-xs bg-background px-2 py-1 rounded block">
-                            &gt; cd ~/.local-memory && ./qdrant &
-                          </code>
-                          <p className="text-xs text-muted-foreground mt-4">
-                            See Pro Tip below for more details.
-                          </p>
-                        </div>
-                      </details>
                     </div>
 
                     <div className="mt-4 bg-muted/20 p-4 rounded border border-memory-blue/30">
@@ -263,6 +246,18 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                         <div>• <strong>Auto-Detection:</strong> Local Memory automatically detects and uses Qdrant when available</div>
                         <div>• <strong>Graceful Fallback:</strong> Falls back to SQLite if Qdrant is unavailable</div>
                         <div>• <strong>Zero Config:</strong> Works out-of-the-box with default Qdrant settings</div>
+                        <div>• Run these commands to download, configure, and start Qdrant:</div>
+                      </div>
+                      <div className="mt-2 space-y-1 ml-4">
+                        <code className="text-xs bg-background px-2 py-1 rounded block">
+                          &gt; curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                        </code>
+                        <code className="text-xs bg-background px-2 py-1 rounded block">
+                          &gt; tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/
+                        </code>
+                        <code className="text-xs bg-background px-2 py-1 rounded block">
+                          &gt; cd ~/.local-memory && ./qdrant &
+                        </code>
                       </div>
                       <p className="text-xs text-muted-foreground mt-2 italic">
                         For power users: Qdrant enables advanced vector operations and scales to millions of memories with consistent performance.
@@ -279,7 +274,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     <div className="bg-muted-950/20 p-3 rounded border border-muted-700/30 mb-4">
                       <h5 className="text-muted-300 font-medium mb-2">Claude Code:</h5>
                       <code className="text-sm bg-background px-2 py-1 rounded block">&gt; claude mcp add local-memory -- /usr/local/bin/local-memory</code>
-                      <p className="text-xs text-muted-foreground mt-2">Automatically detects and configures Claude Code</p>
+                      <p className="text-xs text-muted-foreground mt-2"><em>Automatically detects and configures Claude Code</em></p>
                     </div>
 
                     {/* MCP Integration */}
@@ -400,7 +395,6 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Bot className="w-5 h-5" />
                   MCP Protocol (26 Tools)
                 </CardTitle>
                 <CardDescription><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors.</CardDescription>
@@ -495,11 +489,10 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             <Card className="mb-6">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Globe className="w-5 h-5" />
                   REST API (25 Endpoints)
                 </CardTitle>
                 <CardDescription>
-                  <p className="mt-2"><em>Local Memory</em> has a universal HTTP interface for any platform.</p>
+                  <p className="mt-2"><em>Local Memory</em> has a universal REST API interface for any platform.</p>
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -618,57 +611,33 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </thead>
                     <tbody className="text-sm">
                       <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">Command not found</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Command not found</td>
                         <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Ensure binary is in PATH or use relative path</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">./local-memory</code></td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; ./local-memory</code></td>
                       </tr>
                       <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">Port already in use</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Stop existing process (auto-detects available port)</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">local-memory stop</code></td>
-                      </tr>
-                      <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">Ollama not detected</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Ollama not detected</td>
                         <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Install Ollama from official website</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">Visit <a href="https://ollama.ai" className="text-memory-blue hover:underline">Ollama.ai</a></code></td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Visit <a href="https://ollama.ai" className="text-memory-blue hover:underline" target="_blank">ollama.ai</a></code></td>
                       </tr>
                       <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">macOS security warning</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">macOS security warning</td>
                         <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Right-click binary → "Open" or remove quarantine</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">sudo xattr -rd com.apple.quarantine /path/to/local-memory</code></td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; xattr -rd com.apple.quarantine /path/to/local-memory</code></td>
                       </tr>
                       <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">Claude tools not appearing</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">MCP tools not appearing</td>
                         <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Restart Claude Desktop after adding MCP server</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">Restart application</code></td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Restart application</code></td>
                       </tr>
                       <tr className="border-b border-border">
-                        <td className="py-2 px-3 font-medium border-r border-border">Memory not persisting</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Memory not persisting</td>
                         <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Check database path and permissions</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">local-memory status</code></td>
-                      </tr>
-                      <tr className="border-b border-border bg-blue-950/10">
-                        <td className="py-2 px-3 font-medium border-r border-border">Upgrading from old setup</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Existing database and config work with new commands</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">local-memory start</code></td>
-                      </tr>
-                      <tr className="border-b border-border bg-green-950/10">
-                        <td className="py-2 px-3 font-medium border-r border-border">Manual configuration needed</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Auto-generated config.yaml in ~/.local-memory/</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">No action required</code></td>
-                      </tr>
-                      <tr className="border-b border-border bg-green-950/10">
-                        <td className="py-2 px-3 font-medium border-r border-border">Complex environment setup</td>
-                        <td className="py-2 px-3 text-muted-foreground border-r border-border indent-2">Auto-detects Ollama, Qdrant, creates SQLite DB</td>
-                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs font-mono">Auto-configured in ~/.local-memory/</code></td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; local-memory status</code></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-
-                <p className="text-xs text-muted-foreground mt-4">
-                  <strong>Note:</strong> <em>Local Memory</em> makes configuration maintenance simple. All configuration is automatically managed in ~/.local-memory/ directory, where you can customize your <em>Local Memory</em> setup (if needed).
-                </p>
 
               </CardContent>
             </Card>
@@ -676,18 +645,17 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             {/* Community */}
             <Card id="community" className="mb-8 scroll-target">
               <CardHeader>
-                <CardTitle>Community & Support</CardTitle>
+                <CardTitle>Support & Community</CardTitle>
                 <CardDescription>Get help and connect with other users.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-1 gap-6">
                   <div>
-                    <h5 className="font-semibold mb-3">Getting Help</h5>
                     <ul className="space-y-2 text-sm list-disc pl-5">
-                      <li><strong><a href="#documentation" className="text-memory-blue hover:underline">Documentation</a>:</strong> This page covers most use cases</li>
-                      <li><a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>: Live support and discussion</li>
-                      <li><strong>Bug Reports:</strong> Share bug reports in Discord #bug-reports</li>
-                      <li><strong>Feature Requests:</strong> Share ideas in Discord #feature-requests</li>
+                      <li><strong><a href="#documentation" className="text-memory-blue hover:underline">Documentation</a></strong>: This page covers most use cases</li>
+                      <li><strong><a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a></strong>: Live support and discussion</li>
+                      <li><strong>Bug Reports:</strong> Share bug reports on Discord #bug-reports</li>
+                      <li><strong>Feature Requests:</strong> Share ideas on Discord #feature-requests</li>
                     </ul>
                   </div>
                 </div>
@@ -699,8 +667,8 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Need to purchase <em>Local Memory</em>?</p>
             <Link to="/payment">
-              <Button variant="hero" size="lg" className="gap-2">
-                Get <em>Local Memory</em>
+              <Button onClick={handleStripePayment} variant="hero" size="lg" className="gap-2">
+                Purchase <em>Local Memory</em>
               </Button>
             </Link>
           </div>

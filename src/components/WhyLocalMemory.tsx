@@ -3,6 +3,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ChevronDown, Copy, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { handleStripePayment } from "@/lib/payment";
 
 const WhyLocalMemory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -134,11 +135,11 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
               </div>
               
-              <a href={import.meta.env.VITE_STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer" className="flex justify-center">
-                <Button variant="hero" className="w-full sm:w-auto" size="lg">
+              <div className="flex justify-center">
+                <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
                   Get Instant Access
                 </Button>
-              </a>
+              </div>
               <div className="mt-2 text-sm text-muted-foreground">🔒 One-Time Secure Stripe Payment</div>
 
               <div className="mt-2 text-sm text-muted-foreground">

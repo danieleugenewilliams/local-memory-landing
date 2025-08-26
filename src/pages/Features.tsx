@@ -11,6 +11,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { Handle } from "vaul";
 import { Head } from "react-day-picker";
 import { DatabaseSync } from "node:sqlite";
+import { handleStripePayment } from "@/lib/payment";
 
 const FeaturesPage = () => {
   const [openExamples, setOpenExamples] = useState<{[key: string]: boolean}>({});
@@ -612,7 +613,7 @@ const FeaturesPage = () => {
             <p className="text-muted-foreground mb-4">Ready to give your AI permanent memory?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/payment">
-                <Button variant="hero" size="lg" className="gap-2">
+                <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
                   Purchase <em>Local Memory</em>
                 </Button>
               </Link>
