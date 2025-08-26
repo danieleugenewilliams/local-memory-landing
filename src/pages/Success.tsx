@@ -442,22 +442,19 @@ const SuccessPage = () => {
 
           <Card className="border-2 border-green-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-lg flex items-center justify-center gap-2">
-                <Download className="w-5 h-5" />
-                Download Local Memory
+              <CardTitle className="text-xl flex items-center justify-center gap-2">
+                <em>Local Memory</em> is ready for download to your detected platform
               </CardTitle>
-              <CardDescription>
-                Ready to download for your platform
-              </CardDescription>
+              <CardDescription></CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="-mt-6">
               <div className="space-y-6">
                 {/* Main Download Section - Detected Platform */}
                 <div className="text-center">
                   {(() => {
                     const detectedInfo = getPlatformInfo(selectedPlatform);
                     return (
-                      <div className="p-6 border-2 border-green-200 rounded-lg bg-muted-50">
+                      <div className="p-4 border-1 border-muted-200 rounded-lg bg-muted-50 -mb-4">
                         <div className="flex items-center justify-center gap-3 mb-4">
                           <span className="text-3xl">{detectedInfo.icon}</span>
                           <div className="text-left">
@@ -471,7 +468,7 @@ const SuccessPage = () => {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-muted-foreground text-center">
                               {detectedInfo.description}
                             </p>
                           </div>
@@ -502,7 +499,7 @@ const SuccessPage = () => {
                 </div>
 
                 {/* Alternative Options Dropdown */}
-                <div className="border-t pt-4">
+                <div className="border-t border-green-200 pt-4">
                   <div className="text-center">
                     <Button
                       variant="ghost"

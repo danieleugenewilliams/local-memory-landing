@@ -612,11 +612,11 @@ const FeaturesPage = () => {
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Ready to give your AI permanent memory?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/payment">
+
                 <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
                   Purchase <em>Local Memory</em>
                 </Button>
-              </Link>
+
               <Link to="/docs">
                 <Button variant="outline" size="lg" className="gap-2">
                   View Documentation

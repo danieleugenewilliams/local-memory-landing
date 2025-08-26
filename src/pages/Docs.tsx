@@ -666,11 +666,9 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
           {/* CTA */}
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Need to purchase <em>Local Memory</em>?</p>
-            <Link to="/payment">
-              <Button onClick={handleStripePayment} variant="hero" size="lg" className="gap-2">
-                Purchase <em>Local Memory</em>
-              </Button>
-            </Link>
+            <Button onClick={handleStripePayment} variant="hero" size="lg" className="gap-2">
+              Purchase <em>Local Memory</em>
+            </Button>
           </div>
         </div>
       </div>
