@@ -25,7 +25,7 @@ const DocsPage = () => {
           {/* Quick Navigation */}
           <Card className="mb-8 border-memory-blue/30">
             <CardHeader>
-              <CardTitle className="text-xl">Quick Navigation</CardTitle>
+              <CardTitle className="text-xl">Shortcuts</CardTitle>
               <CardDescription>Jump to the section you need.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -33,7 +33,7 @@ const DocsPage = () => {
                 <div className="space-y-2">
                   <h4 className="font-semibold">Getting Started</h4>
                   <div className="space-y-1 text-sm">
-                    <a href="#quick-start" className="block text-memory-blue hover:underline">• Quick Start (2 minutes)</a>
+                    <a href="#quick-start" className="block text-memory-blue hover:underline">• Quick Start</a>
                     <a href="#agent-setup" className="block text-memory-blue hover:underline">• Agent Setup Prompts</a>
                     <a href="#manual-setup" className="block text-memory-blue hover:underline">• Advanced Setup</a>
                   </div>
@@ -41,10 +41,6 @@ const DocsPage = () => {
                 <div className="space-y-2">
                   <h4 className="font-semibold">Usage</h4>
                   <div className="space-y-1 text-sm">
-                    <a href="#coding-agents" className="block text-memory-blue hover:underline">• Coding Agents</a>
-                    <a href="#claude-desktop" className="block text-memory-blue hover:underline">• Claude Desktop</a>
-                    <a href="#rest-api" className="block text-memory-blue hover:underline">• REST API</a>
-                    <a href="#cli-commands" className="block text-memory-blue hover:underline">• CLI Commands</a>
                     <a href="#api-reference" className="block text-memory-blue hover:underline">• API Documentation</a>
                   </div>
                 </div>
@@ -69,7 +65,7 @@ const DocsPage = () => {
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Plug className="w-8 h-8 text-memory-green" />
                   <h3 className="text-2xl font-bold text-foreground">Quick Start</h3>
-                  <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">2 minutes to install</span>
+                  <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">2 Minutes to Install</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                   Download, start, and connect to any AI agent with zero-config setup.
@@ -82,11 +78,11 @@ const DocsPage = () => {
                   <h4 className="font-semibold text-lg mb-2">Step 1: Confirm Purchase</h4>
                   <p className="text-muted-foreground mb-3">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
                   <div className="bg-muted p-3 rounded-md">
-                    <Link to="/payment" target="_blank">
+                    <a href={import.meta.env.VITE_STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                       <Button variant="hero" size="lg" className="gap-2">
                         Purchase <em>Local Memory</em>
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </div>
 

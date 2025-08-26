@@ -62,7 +62,7 @@ This keeps your payment configuration secure and maintainable!`);
               Get <em>Local Memory</em>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Transform your AI with persistent memory that never forgets.
+              Context amnesia is killing your productivity—it's time to fix that.
             </p>
           </div>
 
@@ -125,7 +125,7 @@ This keeps your payment configuration secure and maintainable!`);
                   className="w-full sm:w-auto" 
                   size="lg"
                 >
-                  Get Instant Access
+                  Upgrade Your Coding Agents Memory Now
                 </Button>
               </div>
               

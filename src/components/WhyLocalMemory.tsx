@@ -73,7 +73,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
             Shared Memories, Every Agent
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Context amnesia is killing your productivity—it's time to fix that.
+            Transform your AI agents with persistent memory that never forgets.
           </p>
         </div>
 
@@ -134,11 +134,11 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
               </div>
               
-              <Link to="/payment" className="flex justify-center">
+              <a href={import.meta.env.VITE_STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer" className="flex justify-center">
                 <Button variant="hero" className="w-full sm:w-auto" size="lg">
                   Get Instant Access
                 </Button>
-              </Link>
+              </a>
               <div className="mt-2 text-sm text-muted-foreground">🔒 One-Time Secure Stripe Payment</div>
 
               <div className="mt-2 text-sm text-muted-foreground">

@@ -294,7 +294,7 @@ const FeaturesPage = () => {
               </CardDescription>
             </CardHeader>
               <CardContent>
-                <div className="mb-10">
+                <div className="mb-2">
 
                   {/* Agent Collaboration Scenarios */}
                   <div className="mb-8">              
@@ -361,7 +361,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: Agent evolves from basic problem-solver to performance optimization expert</h5>
-                                <p className="text-xs text-muted-foreground">6 MCP tools worked behind the scenes to store, connect, and apply insights across months of collaboration</p>
+                                <p className="text-xs text-muted-foreground">4 MCP tools worked behind the scenes to store, connect, and apply insights across months of collaboration.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -421,7 +421,7 @@ const FeaturesPage = () => {
                                 <h5 className="font-semibold mb-2 text-memory-purple">Advanced Pattern Analysis</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "Focus on the PII vulnerabilities from the last 6 months and show me any patterns with our user authentication flows"
+                                    <strong>You:</strong> "Focus on the PII vulnerabilities from the last 6 months and show me any patterns with our user authentication flows."
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
                                     <strong>Agent:</strong> "Critical pattern discovered! 3 recent PII exposures (Jan-June 2025) all connect to authentication flow weaknesses: session tokens containing user emails, password reset flows logging personal data, and OAuth callbacks exposing profile information in error responses. I'm mapping relationships between these incidents - they share a common vulnerability pattern around user data serialization in authentication contexts." <br/><em>MCP: <code>search_by_date_range</code> + <code>discover_relationships</code> + <code>map_memory_graph</code> - <strong>Temporal filtering with relationship mapping</strong></em>
@@ -430,7 +430,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: AI discovers critical security patterns across time and domains</h5>
-                                <p className="text-xs text-muted-foreground">7 MCP search tools collaborate to reveal hidden vulnerability connections and provide actionable insights</p>
+                                <p className="text-xs text-muted-foreground">7 MCP search tools were leveraged to reveal hidden vulnerability connections and provide actionable insights.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -461,7 +461,7 @@ const FeaturesPage = () => {
                           
                           <div className="bg-muted p-3 rounded-md border border-border mb-3">
                             <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                              Agent discovers cross-agent knowledge and suggests workflow enhancements based on your or other agents' previous implementations...
+                              Agent discovers cross-agent knowledge and suggests workflow enhancements based on other agents' previous implementations...
                             </pre>
                           </div>
                           
@@ -474,7 +474,7 @@ const FeaturesPage = () => {
                                     <strong>You:</strong> "I found a critical security flaw in our S3 secure download implementation. We need to completely redesign our approach to ensure downloads are properly secured, and implement automation so that new builds trigger secure uploads to S3 with fresh download links."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
-                                    <strong>Agent:</strong> "This is a significant infrastructure challenge. Let me search our knowledge base for related CI/CD automation work and security implementations. I'll also check for any existing S3 upload strategies or GitHub Actions workflows from our team's previous projects." <br/><em>MCP: <code>search_memories</code> + <code>search_by_tags</code> - <strong>Searches across all team knowledge</strong></em>
+                                    <strong>Agent:</strong> "This is a significant infrastructure challenge. Let me search our knowledge base for related CI/CD automation work and security implementations. I'll also check for any existing S3 upload strategies or GitHub Actions workflows from previous projects." <br/><em>MCP: <code>search_memories</code> + <code>search_by_tags</code> - <strong>Searches across all domain knowledge</strong></em>
                                   </div>
                                 </div>
                               </div>
@@ -482,7 +482,7 @@ const FeaturesPage = () => {
                                 <h5 className="font-semibold mb-2 text-memory-green">Cross-Agent Discovery</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-green-950/20 p-2 rounded border border-green-700/30">
-                                    <strong>Agent:</strong> "Excellent discovery! I found memories from the **golang agent** who already implemented a comprehensive GitHub Actions workflow with S3 integration. They built a 3-phase system: **Enhanced GitHub Actions → Cross-Repository Automation → Production Reliability**. The workflow includes ZIP packaging, AWS OIDC authentication, time-windowed uploads, and cross-repo dispatch notifications. This solves exactly the automation challenge you're facing!" <br/><em>MCP: <code>get_related_memories</code> + <code>discover_relationships</code> - <strong>Finds cross-agent implementations</strong></em>
+                                    <strong>Agent:</strong> "Excellent discovery! I found memories from the **GoLang agent** who already implemented a comprehensive GitHub Actions workflow with S3 integration. They built a 3-phase system: **Enhanced GitHub Actions → Cross-Repository Automation → Production Reliability**. The workflow includes ZIP packaging, AWS OIDC authentication, time-windowed uploads, and cross-repo dispatch notifications. This solves exactly the automation challenge you're facing!" <br/><em>MCP: <code>get_related_memories</code> + <code>discover_relationships</code> - <strong>Finds cross-agent implementations</strong></em>
                                   </div>
                                 </div>
                               </div>
@@ -493,13 +493,13 @@ const FeaturesPage = () => {
                                     <strong>You:</strong> "Can we enhance their workflow to automatically notify our webapp when new binaries are available?"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30">
-                                    <strong>Agent:</strong> "Perfect enhancement! Based on the golang agent's implementation, I recommend adding a **repository dispatch trigger** to their existing workflow. When golang builds complete and upload to S3, it dispatches to the webapp repository, triggering our `.github/workflows/update-binaries.yml` to generate fresh secure download URLs. This creates a seamless automation pipeline: **golang build → S3 upload → webapp notification → secure link generation → customer access**." <br/><em>MCP: <code>map_memory_graph</code> + <code>analyze_memories</code> - <strong>Connects implementations across agents</strong></em>
+                                    <strong>Agent:</strong> "Perfect enhancement! Based on the GoLang agent's implementation, I recommend adding a **repository dispatch trigger** to their existing workflow. When GoLang builds complete and upload to S3, it dispatches to the webapp repository, triggering our `.github/workflows/update-binaries.yml` to generate fresh secure download URLs. This creates a seamless automation pipeline: **GoLang build → S3 upload → webapp notification → secure link generation → customer access**." <br/><em>MCP: <code>map_memory_graph</code> + <code>analyze_memories</code> - <strong>Connects implementations across agents</strong></em>
                                   </div>
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: Cross-agent knowledge connection enables complete automation redesign</h5>
-                                <p className="text-xs text-muted-foreground">6 MCP relationship tools reveal how golang agent's existing work solves webapp's security and automation challenges</p>
+                                <p className="text-xs text-muted-foreground">6 MCP relationship tools reveal how **GoLang agent's** existing work solves webapp's security and automation challenges.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -540,7 +540,7 @@ const FeaturesPage = () => {
                                 <h5 className="font-semibold mb-2 text-memory-blue">Learning Assessment Request</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="bg-background p-2 rounded">
-                                    <strong>You:</strong> "I built this prototype in TypeScript, but after using it and getting user feedback, I decided to refactor the entire platform in GoLang. Through this process, I've learned about modern memory management, vector databases, semantic search, MCP solution architecture, and AI integration. Help me understand what knowledge I've gained and where I still have gaps."
+                                    <strong>You:</strong> "I built this prototype in TypeScript; but after using it and getting user feedback, I decided to refactor the entire platform in GoLang. Through this process, I've learned about modern memory management, vector databases, semantic search, MCP solution architecture, and AI integration. Help me understand what knowledge I've gained and where I still have gaps."
                                   </div>
                                   <div className="bg-blue-950/20 p-2 rounded border border-blue-700/30">
                                     <strong>Agent:</strong> "Fascinating journey! Let me analyze your learning progression from the TypeScript prototype through the GoLang refactor..." <br/><em>MCP: <code>detect_knowledge_gaps</code> + <code>track_learning_progression</code> - <strong>Analyzes months of development memories</strong></em>
@@ -567,7 +567,8 @@ const FeaturesPage = () => {
                                 </div>
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
-                                <h5 className="font-semibold mb-2 text-memory-orange">Expert Assessment: You've progressed from TypeScript developer to GoLang systems architect with production AI integration expertise - 4 months of measurable growth tracked across 200+ development memories</h5>
+                                <h5 className="font-semibold mb-2 text-memory-orange">Result: Expert Assessment - You've progressed from TypeScript developer to GoLang systems architect with production AI integration expertise.</h5>
+                                <p className="text-xs text-muted-foreground">5 MCP analysis tools worked together to track and categorize your learning journey over 4 months.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
