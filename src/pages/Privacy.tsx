@@ -14,7 +14,7 @@ const Privacy = () => {
               Privacy Policy
             </h1>
             <p className="text-xl text-muted-foreground">
-              Your privacy matters to us. Here's how we handle your information.
+              We believe in transparency and keeping things straightforward. Here's our clear approach to your privacy.
             </p>
           </div>
 
@@ -27,10 +27,15 @@ const Privacy = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  <em>Local Memory</em> is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you visit our website and use our services.
+                  <em>Local Memory</em> takes a privacy-first approach. This policy explains our transparent practices for handling your information when you visit our website and use our software.
                 </p>
+                <div className="bg-muted border border-green-200 rounded-lg p-4">
+                  <p className="text-green-800 font-medium">
+                    🛡️ <strong>Privacy Promise:</strong> We don't collect, store, or track your personal information on our website. Your data stays private and secure.
+                  </p>
+                </div>
                 <p className="text-muted-foreground">
-                  <strong>Key Point:</strong> We do not collect, store, or process personal information on our website. All payments are processed securely through Stripe, and our community operates on Discord.
+                  We only use two external services: Stripe for secure payments and Discord for our optional community. That's it – no hidden tracking or data collection.
                 </p>
               </CardContent>
             </Card>
@@ -38,19 +43,19 @@ const Privacy = () => {
             {/* Information We Collect */}
             <Card>
               <CardHeader>
-                <CardTitle>Information We Collect</CardTitle>
+                <CardTitle>What Information We Collect (Spoiler: Almost Nothing)</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Website Usage</h4>
+                  <h4 className="font-semibold mb-2 text-green-700">✅ Website Browsing</h4>
                   <p className="text-muted-foreground">
-                    We do not collect personal information directly on our website. We do not use cookies, analytics, or tracking technologies that identify individual users.
+                    Zero personal information collected on our website. No cookies, no analytics, no user tracking. We believe in keeping your browsing private.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">Payment Information</h4>
+                  <h4 className="font-semibold mb-2 text-blue-700">💳 Payment Processing</h4>
                   <p className="text-muted-foreground">
-                    All payment processing is handled securely by Stripe. We do not store or have access to your payment card details. Please refer to <a href="https://stripe.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a> for information about how your payment data is handled.
+                    We never see your payment details. All payment processing is handled entirely by Stripe (details in the "External Services" section below).
                   </p>
                 </div>
               </CardContent>
@@ -59,19 +64,19 @@ const Privacy = () => {
             {/* Third-Party Services */}
             <Card>
               <CardHeader>
-                <CardTitle>Third-Party Services</CardTitle>
+                <CardTitle>External Services</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Stripe</h4>
+                  <h4 className="font-semibold mb-2">💰 Stripe (For Secure Payments)</h4>
                   <p className="text-muted-foreground">
-                    We use Stripe for secure payment processing. When you make a purchase, you are redirected to Stripe's secure checkout system. Stripe's privacy practices are governed by their own Privacy Policy.
+                    When you buy Local Memory, you're redirected to Stripe's checkout – the same payment system used and trusted by millions of companies. Stripe handles all payment security, so we never have access to your payment information. Their security is bank-grade and industry-leading. Please refer to <a href="https://stripe.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a> for information about how your payment data is handled.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">Discord</h4>
+                  <h4 className="font-semibold mb-2">💬 Discord (For Community & Support)</h4>
                   <p className="text-muted-foreground">
-                    Our community discussions take place on Discord. If you choose to join our Discord server, Discord's privacy practices apply. Please refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> for more information.
+                    Our community and support happen on Discord, where developers help each other and share tips. If you join our Discord server, you're subject to Discord's own privacy practices. Please refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> to learn more. Joining is optional – the software works great without it!
                   </p>
                 </div>
               </CardContent>
@@ -84,7 +89,10 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Since we do not collect personal information on our website, there is minimal data security risk. Our website is served over HTTPS to ensure secure communication. For payment security, we rely on Stripe's industry-leading security infrastructure.
+                  Here's our security philosophy: the best way to protect your data is not to collect it in the first place. Since we don't gather personal information on our website, there's minimal security risk.
+                </p>
+                <p className="text-muted-foreground mt-3">
+                  Our website uses HTTPS encryption for secure communication, and for payments, we rely on Stripe's bank-level security infrastructure. Your Local Memory software runs entirely on your computer – your data never leaves your machine.
                 </p>
               </CardContent>
             </Card>
@@ -92,11 +100,11 @@ const Privacy = () => {
             {/* Changes to This Policy */}
             <Card>
               <CardHeader>
-                <CardTitle>Changes to This Policy</CardTitle>
+                <CardTitle>Policy Updates</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last updated" date. We encourage you to review this Privacy Policy periodically for any changes.
+                  If we ever need to update this privacy policy, we'll post changes right here with a new "Last updated" date. Since we keep things straightforward, updates will likely be rare and minor. We recommend checking back occasionally to stay informed.
                 </p>
               </CardContent>
             </Card>
@@ -104,11 +112,11 @@ const Privacy = () => {
             {/* Contact */}
             <Card>
               <CardHeader>
-                <CardTitle>Contact Us</CardTitle>
+                <CardTitle>Questions?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  If you have any questions about this Privacy Policy or our privacy practices, please contact us through our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a>.
+                  Have questions about this privacy policy or how we handle your information? Join our friendly <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where you can ask questions and get help from both our team and other developers.
                 </p>
               </CardContent>
             </Card>

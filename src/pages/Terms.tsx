@@ -14,7 +14,7 @@ const Terms = () => {
               Terms and Conditions
             </h1>
             <p className="text-xl text-muted-foreground">
-              Please read these terms carefully before using <em>Local Memory</em>.
+              Here are the straightforward terms for using <em>Local Memory</em>. We've kept the legal language simple and clear.
             </p>
           </div>
 
@@ -27,7 +27,7 @@ const Terms = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  By purchasing, downloading, or using <em>Local Memory</em> software, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our software.
+                  By purchasing, downloading, or using <em>Local Memory</em> software, you agree to these Terms and Conditions. If you don't agree with these terms, you are not permitted to use our software.
                 </p>
               </CardContent>
             </Card>
@@ -41,17 +41,17 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">License Grant</h4>
                   <p className="text-muted-foreground">
-                    Subject to these terms, we grant you a personal, non-transferable, non-exclusive license to use <em>Local Memory</em> for your personal, business, or hobbyist purposes.
+                    Subject to these terms, we grant you a singular, non-transferable, non-exclusive license to use <em>Local Memory</em> for your individual, business, or hobbyist purposes.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">License Restrictions</h4>
+                  <h4 className="font-semibold mb-2">What You Can't Do</h4>
                   <ul className="text-muted-foreground space-y-2 list-disc pl-5">
-                    <li>You may <strong>not</strong> share, distribute, or redistribute <em>Local Memory</em> software or license keys</li>
-                    <li>You may <strong>not</strong> reverse engineer, decompile, or disassemble the software</li>
-                    <li>You may <strong>not</strong> create derivative works based on the software</li>
-                    <li>You may <strong>not</strong> rent, lease, or sublicense the software to others</li>
-                    <li>Each license is for single-user use only</li>
+                    <li>Share, distribute, or give away <em>Local Memory</em> software or license keys to others</li>
+                    <li>Reverse engineer, decompile, or take apart the software</li>
+                    <li>Create modified versions or derivative works based on the software</li>
+                    <li>Rent, lease, or resell the software</li>
+                    <li>Each license is for one person only</li>
                   </ul>
                 </div>
               </CardContent>
@@ -60,11 +60,11 @@ const Terms = () => {
             {/* Acceptable Use */}
             <Card>
               <CardHeader>
-                <CardTitle>Acceptable Use</CardTitle>
+                <CardTitle>How You Can Use Local Memory</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  You agree to use <em>Local Memory</em> only for legitimate purposes, including but not limited to:
+                  You're free to use <em>Local Memory</em> for legitimate purposes, including:
                 </p>
                 <ul className="text-muted-foreground space-y-1 list-disc pl-5">
                   <li>Personal productivity and organization</li>
@@ -73,13 +73,13 @@ const Terms = () => {
                   <li>Hobbyist and creative projects</li>
                 </ul>
                 <div className="mt-4">
-                  <h4 className="font-semibold mb-2">Prohibited Uses</h4>
-                  <p className="text-muted-foreground">You may <strong>not</strong> use the software for:</p>
+                  <h4 className="font-semibold mb-2">What's Not Allowed</h4>
+                  <p className="text-muted-foreground">Please don't use the software for:</p>
                   <ul className="text-muted-foreground space-y-1 list-disc pl-5 mt-2">
-                    <li>Any illegal activities or purposes</li>
-                    <li>Violating any applicable laws or regulations</li>
-                    <li>Harming or attempting to harm individuals or organizations</li>
-                    <li>Creating, storing, or processing malicious content</li>
+                    <li>Illegal activities or purposes</li>
+                    <li>Violating laws or regulations</li>
+                    <li>Harming individuals or organizations</li>
+                    <li>Creating or processing malicious content</li>
                   </ul>
                 </div>
               </CardContent>
@@ -103,25 +103,25 @@ const Terms = () => {
             {/* Disclaimers */}
             <Card>
               <CardHeader>
-                <CardTitle>Disclaimers and Limitations</CardTitle>
+                <CardTitle>Important Disclaimers</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">Software "As Is"</h4>
+                  <h4 className="font-semibold mb-2">Software Provided "As Is"</h4>
                   <p className="text-muted-foreground">
-                    <em>Local Memory</em> is provided "as is" without warranties of any kind, either express or implied. We do not warrant that the software will be error-free or uninterrupted.
+                    <em>Local Memory</em> is provided "as is" – while we work hard to make it reliable, we can't guarantee it will be completely error-free or always work perfectly. Software is complex!
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold mb-2">Limitation of Liability</h4>
                   <p className="text-muted-foreground">
-                    In no event shall <em>Local Memory</em>, its creators, owners, or investors be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with your use of the software.
+                    <em>Local Memory</em>, its creators, and investors won't be liable for indirect damages that might arise from using the software. This is standard legal protection that lets us keep building great tools.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">Data Backup Responsibility</h4>
+                  <h4 className="font-semibold mb-2">Back Up Your Data</h4>
                   <p className="text-muted-foreground">
-                    You are responsible for backing up your data. We are not responsible for any data loss that may occur while using <em>Local Memory</em>.
+                    Please back up your important data regularly. While <em>Local Memory</em> is designed to be safe and reliable, it's always smart to have backups of anything important.
                   </p>
                 </div>
               </CardContent>
@@ -130,11 +130,11 @@ const Terms = () => {
             {/* Termination */}
             <Card>
               <CardHeader>
-                <CardTitle>Termination</CardTitle>
+                <CardTitle>When This License Ends</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  This license is effective until terminated. We may terminate your license immediately if you breach any of these terms. Upon termination, you must cease all use of <em>Local Memory</em> and delete all copies of the software.
+                  This license lasts until terminated. If you break these terms, we may end your license immediately. If that happens, you'll need to stop using <em>Local Memory</em> and delete all copies of the software.
                 </p>
               </CardContent>
             </Card>
@@ -163,14 +163,14 @@ const Terms = () => {
             {/* Governing Law */}
             <Card>
               <CardHeader>
-                <CardTitle>Governing Law and Disputes</CardTitle>
+                <CardTitle>Legal Details</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  These terms are governed by applicable law. Any disputes arising under these terms will be resolved through appropriate legal channels.
+                  These terms are governed by applicable law. If there's ever a dispute, we'll work to resolve it through appropriate legal channels.
                 </p>
                 <p className="text-muted-foreground">
-                  If any provision of these terms is found to be unenforceable, the remaining provisions will continue in full force and effect.
+                  If any part of these terms can't be enforced legally, the rest of the terms still apply.
                 </p>
               </CardContent>
             </Card>
@@ -178,11 +178,11 @@ const Terms = () => {
             {/* Contact */}
             <Card>
               <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
+                <CardTitle>Questions About These Terms?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  If you have questions about these Terms and Conditions, please contact us through our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a>.
+                  Have questions about these terms or need clarification? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team and fellow developers can help answer your questions. It's a friendly place to get support and discuss Local Memory!
                 </p>
               </CardContent>
             </Card>

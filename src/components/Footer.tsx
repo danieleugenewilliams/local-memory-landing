@@ -12,6 +12,7 @@ const Footer = () => {
             >
               Privacy Policy
             </Link>
+            • 
             <Link 
               to="/terms" 
               className="text-memory-blue hover:underline hover:text-memory-blue/80 transition-colors"
