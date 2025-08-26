@@ -75,7 +75,7 @@ const DocsPage = () => {
               <div className="max-w-4xl mx-auto space-y-6">
                 {/* Step 1: Confirm Purchase */}
                 <div className="border-l-4 border-memory-blue pl-4">
-                  <h4 className="font-semibold text-lg mb-2">Step 1: Confirm Purchase</h4>
+                  <h4 className="font-semibold text-lg mb-2">Step 1: Confirm Purchase and Download</h4>
                   <p className="text-muted-foreground mb-3">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <a href={import.meta.env.VITE_STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
@@ -107,18 +107,18 @@ const DocsPage = () => {
                 {/* Step 3: Connect */}
                 <div className="border-l-4 border-memory-purple pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 3: Connect Your AI Agent</h4>
-                  <p className="text-muted-foreground mb-3">Choose your preferred integration method.</p>
+                  <p className="text-muted-foreground mb-3">Run the command below to configure <em>Local Memory</em> in Claude Code, or have your agent connect to the REST API.</p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-muted p-3 rounded-md">
                       <h5 className="font-semibold text-sm mb-2">Claude Code:</h5>
                       <code className="text-xs bg-background px-2 py-1 rounded block">
-                        claude mcp add local-memory /path/to/local-memory
+                        &gt; claude mcp add local-memory /path/to/local-memory
                       </code>
                     </div>
                     <div className="bg-muted p-3 rounded-md">
                       <h5 className="font-semibold text-sm mb-2">REST API:</h5>
                       <code className="text-xs bg-background px-2 py-1 rounded block">
-                        curl http://localhost:3002/api/v1/health
+                        &gt; curl http://localhost:3002/api/v1/health
                       </code>
                     </div>
                   </div>
@@ -127,10 +127,10 @@ const DocsPage = () => {
                 {/* Step 4: Success */}
                 <div className="border-l-4 border-memory-orange pl-4">
                   <h4 className="font-semibold text-lg mb-2">Step 4: You're Done!</h4>
-                  <p className="text-muted-foreground mb-3">All your AI agents now have access to shared, persistent memory.</p>
+                  <p className="text-muted-foreground mb-3">Your AI agent now has access to shared, persistent memory.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the <a href="#api-reference" className="text-memory-blue hover:underline">26 memory tools</a>.
+                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 26 available <a href="#api-reference" className="text-memory-blue hover:underline">memory tools</a>.
                     </p>
                   </div>
                 </div>
@@ -199,11 +199,11 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     <div className="bg-muted p-3 rounded-md">
                       <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
-                        chmod +x local-memory && mv local-memory /path/to/your/preferred/location
+                        &gt; chmod +x local-memory && mv local-memory /path/to/your/preferred/location
                       </code>
                       <p className="text-sm mt-3 mb-2"><strong>Windows:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
-                        mv local-memory.exe
+                        &gt; mv local-memory.exe
                       </code>
                       <p className="mt-2 text-sm text-muted-foreground">&nbsp; Move to C:\path\to\your\preferred\location, then add to PATH variable.</p>
 
@@ -224,14 +224,14 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     <div className="bg-muted p-3 rounded-md">
                       <p className="text-sm mb-2"><strong>macOS/Linux:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
-                        curl -fsSL https://ollama.ai/install.sh | sh
+                        &gt; curl -fsSL https://ollama.ai/install.sh | sh
                       </code>
                       <p className="text-sm mt-3 mb-2"><strong>Windows:</strong></p>
                       <p className="text-sm text-muted-foreground mb-3">Download from <a href="https://ollama.ai" className="text-blue-500 hover:underline" target="_blank">ollama.ai</a></p>
 
                       <p className="text-sm mb-2"><strong>Pull required model:</strong></p>
                       <code className="text-sm bg-background px-2 py-1 rounded">
-                        ollama pull nomic-embed-text
+                        &gt; ollama pull nomic-embed-text
                       </code>
 
                       <details className="mt-4 bg-blue-50/5 border border-blue-500/20 rounded p-2">
@@ -240,13 +240,13 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                         </summary>
                         <div className="mt-2 space-y-1">
                           <code className="text-xs bg-background px-2 py-1 rounded block">
-                            curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
+                            &gt; curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
                           </code>
                           <code className="text-xs bg-background px-2 py-1 rounded block">
-                            tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/
+                            &gt; tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/
                           </code>
                           <code className="text-xs bg-background px-2 py-1 rounded block">
-                            cd ~/.local-memory && ./qdrant &
+                            &gt; cd ~/.local-memory && ./qdrant &
                           </code>
                           <p className="text-xs text-muted-foreground mt-4">
                             See Pro Tip below for more details.
@@ -278,7 +278,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     {/* Primary: Claude Code */}
                     <div className="bg-muted-950/20 p-3 rounded border border-muted-700/30 mb-4">
                       <h5 className="text-muted-300 font-medium mb-2">Claude Code:</h5>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">claude mcp add local-memory -- /usr/local/bin/local-memory</code>
+                      <code className="text-sm bg-background px-2 py-1 rounded block">&gt; claude mcp add local-memory -- /usr/local/bin/local-memory</code>
                       <p className="text-xs text-muted-foreground mt-2">Automatically detects and configures Claude Code</p>
                     </div>
 

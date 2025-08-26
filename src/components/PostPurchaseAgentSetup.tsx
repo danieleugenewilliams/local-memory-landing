@@ -461,7 +461,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               <li>Your agent will handle the complete installation and configuration.</li>
               <li>The agent creates proper directories, sets permissions, and installs Ollama and Qdrant (if needed).</li>
               <li>MCP integration is configured with exact paths and commands.</li>
-              <li>The installation is tested and verified to be working properly and tests the installation</li>
+              <li>The installation is tested, verified, and confirmed to be working properly.</li>
             </ol>
           </div>
 
@@ -491,11 +491,13 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
                 </div>
               </div>
               
-              <div className="bg-muted p-3 rounded-md border border-border mb-3">
-                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                  {macosPrompt.substring(0, 300)}...
-                </pre>
-              </div>
+              {!openPrompts['macos'] && (
+                <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                  <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                    {macosPrompt.substring(0, 300)}...
+                  </pre>
+                </div>
+              )}
               
               <CollapsibleContent>
                 <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
@@ -537,11 +539,13 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
                 </div>
               </div>
               
-              <div className="bg-muted p-3 rounded-md border border-border mb-3">
-                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                  {windowsPrompt.substring(0, 300)}...
-                </pre>
-              </div>
+              {!openPrompts['windows'] && (
+                <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                  <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                    {windowsPrompt.substring(0, 300)}...
+                  </pre>
+                </div>
+              )}
               
               <CollapsibleContent>
                 <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
@@ -583,11 +587,13 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
                 </div>
               </div>
               
-              <div className="bg-muted p-3 rounded-md border border-border mb-3">
-                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                  {linuxPrompt.substring(0, 300)}...
-                </pre>
-              </div>
+              {!openPrompts['linux'] && (
+                <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                  <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                    {linuxPrompt.substring(0, 300)}...
+                  </pre>
+                </div>
+              )}
               
               <CollapsibleContent>
                 <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
@@ -608,7 +614,6 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
             <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Terminal className="w-5 h-5 text-memory-green" />
                   <h4 className="font-semibold">REST API Setup (Universal)</h4>
                 </div>
                 <div className="flex items-center gap-2">
@@ -630,11 +635,13 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
                 </div>
               </div>
               
-              <div className="bg-muted p-3 rounded-md border border-border mb-3">
-                <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
-                  {restApiPrompt.substring(0, 300)}...
-                </pre>
-              </div>
+              {!openPrompts['api'] && (
+                <div className="bg-muted p-3 rounded-md border border-border mb-3">
+                  <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
+                    {restApiPrompt.substring(0, 300)}...
+                  </pre>
+                </div>
+              )}
               
               <CollapsibleContent>
                 <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
