@@ -652,7 +652,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
               </CollapsibleContent>
               
               <p className="text-xs text-muted-foreground mt-2">
-                <em>For OpenCode, ChatGPT, custom agents - works with any platform via HTTP</em>
+                <em>For OpenCode, ChatGPT, custom agents — works with any platform via HTTP</em>
               </p>
             </div>
           </Collapsible>

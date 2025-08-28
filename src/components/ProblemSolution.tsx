@@ -108,7 +108,7 @@ const ProblemSolution = () => {
                 <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
                 <div>
                   <div className="font-medium text-foreground">Seamless context across ALL of your agents</div>
-                  <div className="text-sm text-muted-foreground">Claude, OpenCode, etc. - same memory available anywhere</div>
+                  <div className="text-sm text-muted-foreground">Claude, OpenCode, etc. — same memory available anywhere</div>
                 </div>
               </div>
             </div>

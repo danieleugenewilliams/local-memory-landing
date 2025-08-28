@@ -129,9 +129,9 @@ const FeaturesPage = () => {
                   </h4>
                   <div className="bg-muted p-4 rounded-lg">
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>Claude Code</strong> - Setup with 'claude mcp'</li>
-                      <li>• <strong>Claude Desktop</strong> - Setup with config file</li>
-                      <li>• <strong>Future MCP Agents</strong> - Automatic compatibility</li>
+                      <li>• <strong>Claude Code</strong> — Setup with 'claude mcp'</li>
+                      <li>• <strong>Claude Desktop</strong> — Setup with config file</li>
+                      <li>• <strong>Future MCP Agents</strong> — Automatic compatibility</li>
                     </ul>
                     <p className="text-xs text-muted-foreground mt-3 italic">
                       <em>All AI agents store, retrieve, and analyze shared contextual memories effortlessly.</em>
@@ -145,9 +145,9 @@ const FeaturesPage = () => {
                   </h4>
                   <div className="bg-muted p-4 rounded-lg">
                     <ul className="space-y-2 text-sm">
-                      <li>• <strong>OpenCode</strong> - Uses REST & JSON-RPC</li>
-                      <li>• <strong>GPT & Others</strong> - Connects via REST</li>
-                      <li>• <strong>Your Custom Setup</strong> - Uses REST or JSON-RPC</li>
+                      <li>• <strong>OpenCode</strong> — Uses REST & JSON-RPC</li>
+                      <li>• <strong>GPT & Others</strong> — Connects via REST</li>
+                      <li>• <strong>Your Custom Setup</strong> — Uses REST or JSON-RPC</li>
                     </ul>
                     <p className="text-xs text-muted-foreground mt-3 italic">
                        <em>Connect once, and give all AI agents instant access to shared memories and context.</em>

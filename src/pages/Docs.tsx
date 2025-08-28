@@ -640,6 +640,11 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                         <td className="py-2 px-3 text-muted-foreground border-r border-border">Browser may display warning about downloads of zip files containing multiple executables</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Dismiss the warning or download your platform-specific file</code></td>
                       </tr>
+                      <tr className="border-b border-border">
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Can't get past 'local-memory start'</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border"><em>Local Memory</em> requires you to agree to Terms & Conditions when 'local-memory start' is run for the first time</td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Agree to the terms by entering 'Y' to continue and start <em>Local Memory</em></code></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
