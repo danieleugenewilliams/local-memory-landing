@@ -20,55 +20,29 @@ const SuccessPage = () => {
   const [downloadUrls, setDownloadUrls] = useState<Record<Platform, string>>({} as Record<Platform, string>);
   const [showAlternatives, setShowAlternatives] = useState(false);
 
-  // Generate secure download URL for platform-specific files using time-based hashing
-  const generateSecureDownloadUrl = (paymentTimestamp: number, platform: Platform = 'unknown') => {
-    const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
-    
-    // Convert timestamp to seconds if it's in milliseconds
-    const timestampInSeconds = paymentTimestamp > 1000000000000 ? Math.floor(paymentTimestamp / 1000) : paymentTimestamp;
-    
-    // Calculate 12-hour time window (matches backend logic)
-    const timeWindow = Math.floor(timestampInSeconds / 43200);
-    
-    // Generate hash for platform-specific files
-    const platformPath = platform === 'unknown' ? 'universal' : 'platform';
-    const data = `${DOWNLOAD_SECRET}:download-access:${timeWindow}:${platformPath}`;
-    const rawHash = CryptoJS.SHA256(data).toString().toUpperCase();
-    
-    // Apply character filtering and replacement (matches golang app algorithm)
-    const cleanHash = rawHash.replace(/[01OI578]/g, (match) => {
-      const replacements = { '0': 'A', '1': 'B', 'O': 'C', 'I': 'D', '5': 'E', '7': 'F', '8': 'G' };
-      return replacements[match] || match;
-    });
-    
-    const hash = cleanHash.slice(0, 16);
-    
-    // Get platform info to determine filename
+  // Generate GitHub releases download URL for platform-specific files
+  const getGitHubDownloadUrl = (platform: Platform = 'unknown'): string => {
+    const baseUrl = 'https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download/';
     const platformInfo = getPlatformInfo(platform);
     const filename = platformInfo.filename;
     
     // Debug logging
-    console.log(`Debug ${platform} download:`, {
+    console.log(`GitHub download URL for ${platform}:`, {
       platform,
-      paymentTimestamp,
-      timestampInSeconds,
-      timeWindow,
-      data,
-      hash,
-      filename
+      filename,
+      url: `${baseUrl}${filename}`
     });
     
-    // Production: route through main domain to CloudFront
-    return `https://localmemory.co/downloads/${timeWindow}/${hash}/${platformPath}/${filename}`;
+    return `${baseUrl}${filename}`;
   };
 
-  // Generate download URLs for all platforms
-  const generateAllDownloadUrls = (paymentTimestamp: number): Record<Platform, string> => {
+  // Generate GitHub download URLs for all platforms
+  const generateAllDownloadUrls = (): Record<Platform, string> => {
     const urls: Record<Platform, string> = {} as Record<Platform, string>;
     const platforms: Platform[] = ['macos-arm', 'macos-intel', 'windows', 'linux', 'unknown'];
     
     for (const platform of platforms) {
-      urls[platform] = generateSecureDownloadUrl(paymentTimestamp, platform);
+      urls[platform] = getGitHubDownloadUrl(platform);
     }
     
     return urls;
@@ -244,8 +218,8 @@ const SuccessPage = () => {
           return;
         }
         
-        // Payment flow is valid - generate secure download URLs for all platforms and product key
-        const allDownloadUrls = generateAllDownloadUrls(paymentTimestamp);
+        // Payment flow is valid - generate GitHub download URLs for all platforms and product key
+        const allDownloadUrls = generateAllDownloadUrls();
         const generatedKey = generateProductKey(sessionId);
         
         // Validate the generated key before using it
@@ -304,8 +278,8 @@ const SuccessPage = () => {
           // Verify download time window (48 hours from original payment)
           if (currentTime - unlocked.paymentTimestamp < 48 * 60 * 60 * 1000) {
             setIsVerified(true);
-            // Regenerate secure URLs with original payment timestamp
-            const allUrls = unlocked.downloadUrls || generateAllDownloadUrls(unlocked.paymentTimestamp);
+            // Regenerate GitHub download URLs
+            const allUrls = unlocked.downloadUrls || generateAllDownloadUrls();
             setDownloadUrls(allUrls);
             // Restore product key if available, or regenerate if missing
             if (unlocked.productKey) {
@@ -353,13 +327,12 @@ const SuccessPage = () => {
       const platformInfo = getPlatformInfo(platform);
       console.log(`Starting ${platform} download:`, downloadUrl);
       
-      // Use CloudFront URL directly for actual downloads
-      // CloudFront origin path is '/downloads' so we need to remove the /downloads prefix to avoid double pathing
-      const cloudFrontUrl = downloadUrl.replace('https://localmemory.co/downloads/', 'https://d3g3vv5lpyh0pb.cloudfront.net/');
+      // Use GitHub releases URL directly for downloads
+      // No CloudFront manipulation needed - GitHub provides reliable CDN
       
       // Create a temporary link element to trigger download
       const downloadLink = document.createElement('a');
-      downloadLink.href = cloudFrontUrl;
+      downloadLink.href = downloadUrl;
       downloadLink.download = platformInfo.filename;
       downloadLink.target = '_blank';
       
@@ -368,7 +341,7 @@ const SuccessPage = () => {
       downloadLink.click();
       document.body.removeChild(downloadLink);
       
-      console.log(`${platform} download initiated`);
+      console.log(`${platform} download initiated from GitHub releases`);
       
     } catch (error) {
       console.error('Download failed:', error);
@@ -484,7 +457,7 @@ const SuccessPage = () => {
                         </Button>
                         
                         <div className="text-sm text-green-700 mt-3">
-                          ~{selectedPlatform === 'unknown' ? '52MB' : '13MB'} • Optimized for Your System
+                          ~{selectedPlatform === 'unknown' ? '22MB' : '13MB'} • Optimized for Your System
                         </div>
                         
                         {/* Warning for Universal Package when selected */}
@@ -532,7 +505,7 @@ const SuccessPage = () => {
                                 </div>
                                 <div className="text-right">
                                   <div className="text-sm font-medium text-green-600">
-                                    ~{platformInfo.platform === 'unknown' ? '52MB' : '13MB'}
+                                    ~{platformInfo.platform === 'unknown' ? '22MB' : '13MB'}
                                   </div>
                                   <Button onClick={() => handleDownload(platformInfo.platform)} variant="outline" size="sm" className="mt-1">
                                     <Download className="w-3 h-3 mr-1" />
@@ -558,7 +531,7 @@ const SuccessPage = () => {
                 🔑 Your Product License Key
               </CardTitle>
               <CardDescription>
-                Save this key - you'll need it to activate Local Memory
+                Save this key - you'll need it to activate <em>Local Memory</em>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -617,8 +590,9 @@ const SuccessPage = () => {
               )}
               
               <div className="text-sm text-muted-foreground space-y-2">
-                <p>• Keep this key safe - it's unique to your purchase</p>
-                <p>• You'll use this key when setting up Local Memory</p>
+                <p>• Keep this key safe as it is unique to your purchase</p>
+                <p>• You will use this key when setting up <em>Local Memory</em></p>
+                <p>• Activate by running this command: /path/to/local-memory license activate {productKey}</p>
               </div>
             </CardContent>
           </Card>
@@ -632,12 +606,10 @@ const SuccessPage = () => {
               </div>
 
               <div className="text-center mt-6">
-                <Badge variant="secondary" className="mb-2">Need More Help?</Badge>
-                <p className="text-sm text-muted-foreground">
-                  For advanced setup, AI agent prompts, and detailed guides: <Link to="/docs" target="_blank" className="text-blue-600 hover:underline font-medium">Visit Documentation</Link>
-                </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Join our community: <a href="https://discord.gg/rMmn8xP3fZ" className="text-blue-600 hover:underline font-medium" target="_blank" rel="noopener noreferrer">Discord Server</a>
+                <Badge variant="secondary" className="mb-2">Need Help?</Badge>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord</a> community for 
+                  support and discussion, or check out our comprehensive <a href="/docs" className="text-memory-blue hover:underline">documentation</a> for detailed setup instructions.
                 </p>
               </div>
             </CardContent>

@@ -14,7 +14,7 @@ const ProblemSolution = () => {
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto lg:items-stretch">
           {/* Before - Problem */}
           <div className="space-y-6 flex flex-col">
-            <div className="text-center mb-8">
+            <div className="text-center -mb-2">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-2xl font-medium mb-4">
                 BEFORE <em>Local Memory</em>
               </div>
@@ -65,7 +65,7 @@ const ProblemSolution = () => {
 
           {/* After - Solution */}
           <div className="space-y-6 flex flex-col">
-            <div className="text-center mb-8">
+            <div className="text-center -mb-2">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 text-green-400 rounded-full text-2xl font-medium mb-4">
                 AFTER <em>Local Memory</em>
               </div>

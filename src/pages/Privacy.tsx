@@ -14,7 +14,7 @@ const Privacy = () => {
               Privacy Policy
             </h1>
             <p className="text-xl text-muted-foreground">
-              We believe in transparency and keeping things straightforward. Here's our clear approach to your privacy.
+              We believe in transparency and keeping things simple. Here's our clear approach to your privacy.
             </p>
           </div>
 
@@ -23,19 +23,18 @@ const Privacy = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Overview</CardTitle>
-                <CardDescription>Last updated: August 22, 2025</CardDescription>
+                <CardDescription>Last updated: August 27, 2025</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
                   <em>Local Memory</em> takes a privacy-first approach. This policy explains our transparent practices for handling your information when you visit our website and use our software.
                 </p>
-                <div className="bg-muted border border-green-200 rounded-lg p-4">
-                  <p className="text-green-800 font-medium">
-                    🛡️ <strong>Privacy Promise:</strong> We don't collect, store, or track your personal information on our website. Your data stays private and secure.
-                  </p>
-                </div>
+                <p className="text-muted-800 italic pl-4">
+                  🛡️ Privacy Promise: We do not collect, store, or track your personal information on our website. Your data stays private and secure, because YOUR AI memory data resides on YOUR machine.
+                </p>
+
                 <p className="text-muted-foreground">
-                  We only use two external services: Stripe for secure payments and Discord for our optional community. That's it – no hidden tracking or data collection.
+                  We only use two third-party services: Stripe for secure payments and Discord for our optional community. That's it — no hidden tracking or data collection.
                 </p>
               </CardContent>
             </Card>
@@ -43,19 +42,19 @@ const Privacy = () => {
             {/* Information We Collect */}
             <Card>
               <CardHeader>
-                <CardTitle>What Information We Collect (Spoiler: Almost Nothing)</CardTitle>
+                <CardTitle>What Information We Collect (Spoiler: Practically Nothing)</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2 text-green-700">✅ Website Browsing</h4>
+                  <h4 className="ont-semibold mb-2">Website Browsing</h4>
                   <p className="text-muted-foreground">
-                    Zero personal information collected on our website. No cookies, no analytics, no user tracking. We believe in keeping your browsing private.
+                    Zero personal information is collected — only minimally necessary data is used to optimize the experience in your browser.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2 text-blue-700">💳 Payment Processing</h4>
+                  <h4 className="ont-semibold mb-2">Payment Processing</h4>
                   <p className="text-muted-foreground">
-                    We never see your payment details. All payment processing is handled entirely by Stripe (details in the "External Services" section below).
+                    We never see your payment details. All payment processing is handled entirely by Stripe (see details in the "Third-Party Services" section below).
                   </p>
                 </div>
               </CardContent>
@@ -64,19 +63,19 @@ const Privacy = () => {
             {/* Third-Party Services */}
             <Card>
               <CardHeader>
-                <CardTitle>External Services</CardTitle>
+                <CardTitle>Third-Party Services</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold mb-2">💰 Stripe (For Secure Payments)</h4>
+                  <h4 className="font-semibold mb-2">Stripe (For Secure Payments)</h4>
                   <p className="text-muted-foreground">
-                    When you buy Local Memory, you're redirected to Stripe's checkout – the same payment system used and trusted by millions of companies. Stripe handles all payment security, so we never have access to your payment information. Their security is bank-grade and industry-leading. Please refer to <a href="https://stripe.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a> for information about how your payment data is handled.
+                    When you buy <em>Local Memory</em>, you are redirected to Stripe's checkout — the same payment system used and trusted by millions of companies. Stripe handles all payment security, so we never have access to your payment information. You may refer to <a href="https://stripe.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a> for information about how your payment data is handled.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">💬 Discord (For Community & Support)</h4>
+                  <h4 className="font-semibold mb-2">Discord (For Support & Community)</h4>
                   <p className="text-muted-foreground">
-                    Our community and support happen on Discord, where developers help each other and share tips. If you join our Discord server, you're subject to Discord's own privacy practices. Please refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> to learn more. Joining is optional – the software works great without it!
+                    Online discussions and collaboration related to <em>Local Memory</em> happen on Discord, where developers and likeminded individuals help each other and share tips. By joining our Discord server, you are subject to Discord's own privacy practices. You may refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> to learn more. Joining is optional — the software still works great without it!
                   </p>
                 </div>
               </CardContent>
@@ -89,10 +88,10 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Here's our security philosophy: the best way to protect your data is not to collect it in the first place. Since we don't gather personal information on our website, there's minimal security risk.
+                  Here is our security philosophy: The best way to protect your data is not to collect it in the first place. Since we don't gather personal information on our website, there's virtually no security risk through <em>Local Memory</em>.
                 </p>
                 <p className="text-muted-foreground mt-3">
-                  Our website uses HTTPS encryption for secure communication, and for payments, we rely on Stripe's bank-level security infrastructure. Your Local Memory software runs entirely on your computer – your data never leaves your machine.
+                  Our website uses HTTPS encryption for secure communication, and we confidently rely on Stripe for payments, we rely on Stripe's bank-level security infrastructure. Your <em>Local Memory</em> software runs entirely on your computer. Your data never leaves your machine.
                 </p>
               </CardContent>
             </Card>
@@ -104,7 +103,7 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  If we ever need to update this privacy policy, we'll post changes right here with a new "Last updated" date. Since we keep things straightforward, updates will likely be rare and minor. We recommend checking back occasionally to stay informed.
+                  If we ever need to update this privacy policy, we'll post changes right here with a new "Last updated" date. Since we keep things straightforward, policy updates will likely be rare and minor.
                 </p>
               </CardContent>
             </Card>
@@ -116,7 +115,7 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Have questions about this privacy policy or how we handle your information? Join our friendly <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where you can ask questions and get help from both our team and other developers.
+                  Need clarification on this Privacy Policy? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>!
                 </p>
               </CardContent>
             </Card>
