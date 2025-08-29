@@ -29,71 +29,186 @@ const PostPurchaseAgentSetup = ({ productKey }: PostPurchaseAgentSetupProps) => 
     setTimeout(() => setCopiedPrompt(null), 2000);
   };
 
-  const macosPrompt = `I just purchased and downloaded local-memory to ~/Downloads. Please help me install and configure it completely:
+  const macosPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on macOS:
 
-QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary: chmod +x ~/Downloads/local-memory* && xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-2. Activate license: local-memory license activate ${displayKey}
-3. Install Ollama from https://ollama.ai/download/mac, then: ollama pull nomic-embed-text
-4. Start everything: local-memory start (auto-detects and configures everything)
-5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
-6. For Claude Desktop, add to ~/.claude_desktop_config.json:
-{
-  "mcpServers": {
-    "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
-    }
-  }
-}
-7. Restart Claude Desktop and verify memory tools appear
+STEP 0 - LICENSE VERIFICATION:
+If you don't have a valid license key, visit https://localmemory.co/purchase first.
 
-DETAILED SETUP (if you prefer manual control):
+STEP 1 - CHECK EXISTING INSTALLATION:
+Let's first check what's already installed:
 
-STEP 1 - INSTALL BINARY:
-1. Find the local-memory binary in ~/Downloads (exact filename will be "local-memory-macos" or similar)
-2. Make it executable: chmod +x ~/Downloads/local-memory*
-3. Move it to /usr/local/bin/local-memory: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate license: /usr/local/bin/local-memory license activate ${displayKey}
-5. Verify it works: /usr/local/bin/local-memory --version
+# Check if local-memory is already installed
+if command -v local-memory &> /dev/null; then
+  echo "Local Memory found in PATH"
+  local-memory --version
+  local-memory license status
+elif [ -f "/usr/local/bin/local-memory" ]; then
+  echo "Local Memory found at /usr/local/bin/local-memory"
+  /usr/local/bin/local-memory --version
+  /usr/local/bin/local-memory license status
+else
+  echo "Local Memory not installed - proceeding with fresh installation"
+fi
 
-INSTALL RECOMMENDED FEATURES:
-STEP 2 - INSTALL OLLAMA:
-1. Download and install Ollama from https://ollama.ai/download/mac
-2. After installation, pull the required model: ollama pull nomic-embed-text
-3. Pull chat model: ollama pull qwen2.5:7b
-4. Verify Ollama is running: ollama list
+# Check Ollama status
+if command -v ollama &> /dev/null; then
+  echo "Ollama is installed:"
+  ollama --version
+  echo "Installed models:"
+  ollama list
+else
+  echo "Ollama not installed"
+fi
 
-STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
-For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Create local-memory directory: mkdir -p ~/.local-memory
-2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz
-3. Extract: tar -xzf qdrant.tar.gz
-4. Make executable and move: chmod +x qdrant && mv qdrant ~/.local-memory/
-5. Start Qdrant: cd ~/.local-memory && ./qdrant &
-6. Verify: curl http://localhost:6333/healthz (should return OK)
-7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
+# Check Qdrant status
+if [ -f "$HOME/.local-memory/qdrant" ]; then
+  echo "Qdrant found:"
+  ~/.local-memory/qdrant --version 2>/dev/null || echo "Qdrant binary exists but may need update"
+else
+  echo "Qdrant not installed"
+fi
 
-STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
-Run this exact command to add local-memory as an MCP server:
+INSTALLATION OPTIONS:
+
+OPTION 1 - NPM INSTALLATION (RECOMMENDED):
+1. Install via npm: npm install -g local-memory-mcp
+2. Verify installation: local-memory --version
+3. Activate license: local-memory license activate ${displayKey} --accept-terms
+
+OPTION 2 - UPDATE EXISTING INSTALLATION:
+If local-memory is already installed but outdated:
+1. Update via npm: npm update -g local-memory-mcp
+   OR use explicit update: cd ~/.npm-global/lib/node_modules/local-memory-mcp && npm run update
+2. Verify update: local-memory --version
+3. Check license status: local-memory license status
+4. Reactivate if needed: local-memory license activate ${displayKey} --accept-terms
+
+OPTION 3 - MANUAL BINARY INSTALLATION (ADVANCED):
+1. Download latest from this page or: curl -L https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download/local-memory-macos-arm -o /tmp/local-memory-macos-arm
+2. Make executable: chmod +x /tmp/local-memory-macos-arm
+3. Remove quarantine: xattr -rd com.apple.quarantine /tmp/local-memory-macos-arm
+4. Install: sudo mv /tmp/local-memory-macos-arm /usr/local/bin/local-memory
+5. Activate license: /usr/local/bin/local-memory license activate ${displayKey} --accept-terms
+
+STEP 2 - INSTALL/UPDATE OLLAMA:
+if ! command -v ollama &> /dev/null; then
+  echo "Installing Ollama..."
+  # Download and install Ollama from https://ollama.ai/download/mac
+else
+  echo "Ollama already installed. Checking for updates..."
+  # Check https://ollama.ai for latest version
+fi
+
+# Install required models if not present
+if ! ollama list | grep -q "nomic-embed-text"; then
+  echo "Installing embedding model..."
+  ollama pull nomic-embed-text
+fi
+
+if ! ollama list | grep -q "qwen2.5:7b"; then
+  echo "Installing chat model..."
+  ollama pull qwen2.5:7b
+fi
+
+STEP 3 - INSTALL/UPDATE QDRANT (RECOMMENDED):
+# Check if local-memory directory exists (it should after local-memory installation)
+if [ ! -d "$HOME/.local-memory" ]; then
+  echo "Warning: ~/.local-memory directory not found. Local Memory may not be properly installed."
+  echo "Creating directory for Qdrant installation..."
+  mkdir -p ~/.local-memory
+else
+  echo "Using existing ~/.local-memory directory"
+fi
+
+if [ ! -f "$HOME/.local-memory/qdrant" ]; then
+  echo "Installing Qdrant for high-performance search..."
+  
+  # Detect architecture and download correct version
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "arm64" ]; then
+    QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-aarch64-apple-darwin.tar.gz"
+    echo "Detected Apple Silicon (ARM64) - downloading native binary"
+  else
+    QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz"
+    echo "Detected Intel Mac (x86_64) - downloading Intel binary"
+  fi
+  
+  curl -L "$QDRANT_URL" -o ~/.local-memory/qdrant.tar.gz
+  cd ~/.local-memory
+  tar -xzf qdrant.tar.gz
+  chmod +x qdrant
+  rm qdrant.tar.gz
+  
+  echo "✅ Qdrant installed at ~/.local-memory/qdrant"
+else
+  echo "Qdrant already installed. Checking for updates..."
+  CURRENT_VERSION=$(~/.local-memory/qdrant --version 2>/dev/null | grep -o 'qdrant [0-9.]*' | cut -d' ' -f2 || echo "unknown")
+  LATEST_VERSION=$(curl -s https://api.github.com/repos/qdrant/qdrant/releases/latest | grep -o '"tag_name": "v[0-9.]*"' | cut -d'"' -f4 | sed 's/v//' || echo "unknown")
+  
+  if [ "$CURRENT_VERSION" != "unknown" ] && [ "$LATEST_VERSION" != "unknown" ] && [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+    echo "Updating Qdrant from $CURRENT_VERSION to $LATEST_VERSION..."
+    # Backup existing qdrant if needed
+    mv ~/.local-memory/qdrant ~/.local-memory/qdrant.backup
+    
+    # Download updated version
+    ARCH=$(uname -m)
+    if [ "$ARCH" = "arm64" ]; then
+      QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-aarch64-apple-darwin.tar.gz"
+    else
+      QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz"
+    fi
+    
+    curl -L "$QDRANT_URL" -o ~/.local-memory/qdrant.tar.gz
+    cd ~/.local-memory
+    tar -xzf qdrant.tar.gz
+    chmod +x qdrant
+    rm qdrant.tar.gz ~/.local-memory/qdrant.backup
+    
+    echo "✅ Qdrant updated to version $LATEST_VERSION"
+  else
+    echo "✅ Qdrant is up to date ($CURRENT_VERSION)"
+  fi
+fi
+
+STEP 4 - START SERVICES:
+1. Start local-memory daemon: local-memory start
+2. Start Qdrant (optional, for better performance): 
+   cd ~/.local-memory && ./qdrant &
+3. Verify Qdrant: curl http://localhost:6333/healthz
+
+STEP 5 - CONFIGURE MCP INTEGRATION:
+Based on your installation method:
+
+For npm installation:
+claude mcp add local-memory -- local-memory
+
+For manual binary:
 claude mcp add local-memory -- /usr/local/bin/local-memory
 
-STEP 4 - CONFIGURE MCP FOR AI EDITORS:
+STEP 6 - CLAUDE DESKTOP CONFIGURATION:
+Edit ~/.claude_desktop_config.json (create if needed):
 
-CLAUDE DESKTOP:
-Edit ~/.claude_desktop_config.json (create if it doesn't exist):
+For npm installation:
+{
+  "mcpServers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": ["--mcp"]
+    }
+  }
+}
+
+For manual binary:
 {
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     }
   }
 }
+
+STEP 7 - OTHER EDITOR CONFIGURATIONS:
 
 GITHUB COPILOT (VS CODE):
 Create .vscode/mcp.json in your project root:
@@ -101,9 +216,7 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     }
   }
 }
@@ -114,9 +227,7 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     }
   }
 }
@@ -127,38 +238,44 @@ Add to Windsurf Settings > MCP Configuration:
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"]
     }
   }
 }
 
-STEP 5 - VERIFY INSTALLATION:
-1. Create memory directory: mkdir -p ~/.local-memory
-2. Test Claude Code MCP: claude mcp list (should show local-memory server)
-3. For Claude Desktop: restart the app and check for memory tools
-4. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
-5. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
+STEP 8 - VERIFICATION:
+1. Check local-memory status: local-memory license status
+2. Test Claude Code MCP: claude mcp list
+3. Verify Qdrant: curl http://localhost:6333/healthz
+4. Test Ollama models: ollama list
+5. Restart Claude Desktop and verify memory tools appear
 6. Test basic functionality by storing a test memory
-7. If using Qdrant: Check performance with search queries
+7. If using Qdrant: Check search performance improvements
 
-Use my existing downloaded binary - don't try to download a new one. Follow these exact commands and file paths.`;
+TROUBLESHOOTING:
+- License not activated: Use --accept-terms flag
+- NPM installation issues (rare): cd ~/.npm-global/lib/node_modules/local-memory-mcp && npm run update
+- NPM binary missing: cd ~/.npm-global/lib/node_modules/local-memory-mcp && node scripts/install.js
+- Qdrant architecture issues: Script auto-detects ARM64 vs Intel
+- Permission errors: Use sudo for /usr/local/bin operations
+- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Update failures: Try fresh installation as fallback
 
-  const windowsPrompt = `I downloaded local-memory to C:\\Downloads after purchasing. Please help me install and configure it completely:
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. Manual fixes are rarely needed.`;
 
-QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" (create directory first)
-2. Add "C:\\Program Files\\LocalMemory" to system PATH
-3. Activate license: local-memory.exe license activate ${displayKey}
-4. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
-5. Start everything: local-memory.exe start (auto-detects and configures everything)
-6. Add to Claude Code: claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
-7. For Claude Desktop, add to %USERPROFILE%\\.claude_desktop_config.json:
+  const windowsPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on Windows:
+
+QUICK START (RECOMMENDED - NPM METHOD):
+1. Install via npm: npm install -g local-memory-mcp
+2. Activate license: local-memory license activate ${displayKey}
+3. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
+4. Start everything: local-memory start (auto-detects and configures everything)
+5. Add to Claude Code: claude mcp add local-memory -- local-memory
+6. For Claude Desktop, add to %USERPROFILE%\\.claude_desktop_config.json:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
+      "command": "local-memory",
       "args": [
         "--mcp"
       ]
@@ -167,13 +284,19 @@ QUICK START (RECOMMENDED - ZERO CONFIG):
 }
 7. Restart Claude Desktop and verify memory tools appear
 
-DETAILED SETUP (if you prefer manual control):
+ALTERNATIVE SETUP (if npm is not available):
 
-STEP 1 - INSTALL BINARY:
-1. Find local-memory.exe in C:\\Downloads
+METHOD 1 - STILL RECOMMENDED - NPM:
+1. Install Node.js from https://nodejs.org if not already installed
+2. Install via npm: npm install -g local-memory-mcp
+3. Activate license: local-memory license activate ${displayKey}
+4. Continue with steps 4-8 above
+
+METHOD 2 - MANUAL BINARY (from this page):
+1. Use the binary you just downloaded from this success page
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
-4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH environment variable
+4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH environment variable (npm method doesn't need this)
 5. Activate license: local-memory.exe license activate ${displayKey}
 6. Verify: open new cmd/PowerShell and run: local-memory.exe --version
 
@@ -195,13 +318,28 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 6. Qdrant storage will be created in %USERPROFILE%\\.local-memory\\qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE (if using):
-Run this exact command in terminal:
+For npm installation:
+claude mcp add local-memory -- local-memory
+
+For manual binary installation:
 claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
 
 STEP 4 - CONFIGURE MCP FOR AI EDITORS:
 
 CLAUDE DESKTOP:
-Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
+For npm installation, edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
+{
+  "mcpServers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": [
+        "--mcp"
+      ]
+    }
+  }
+}
+
+For manual binary installation:
 {
   "mcpServers": {
     "local-memory": {
@@ -214,7 +352,19 @@ Edit %USERPROFILE%\\.claude_desktop_config.json (create if it doesn't exist):
 }
 
 GITHUB COPILOT (VS CODE):
-Create .vscode/mcp.json in your project root:
+For npm installation, create .vscode/mcp.json in your project root:
+{
+  "servers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": [
+        "--mcp"
+      ]
+    }
+  }
+}
+
+For manual binary:
 {
   "servers": {
     "local-memory": {
@@ -227,7 +377,19 @@ Create .vscode/mcp.json in your project root:
 }
 
 CURSOR EDITOR:
-Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
+For npm installation, add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
+{
+  "servers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": [
+        "--mcp"
+      ]
+    }
+  }
+}
+
+For manual binary:
 {
   "servers": {
     "local-memory": {
@@ -240,7 +402,19 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
 }
 
 WINDSURF EDITOR:
-Add to Windsurf Settings > MCP Configuration:
+For npm installation, add to Windsurf Settings > MCP Configuration:
+{
+  "mcpServers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": [
+        "--mcp"
+      ]
+    }
+  }
+}
+
+For manual binary:
 {
   "mcpServers": {
     "local-memory": {
@@ -255,39 +429,46 @@ Add to Windsurf Settings > MCP Configuration:
 STEP 5 - VERIFY INSTALLATION:
 1. Create memory directory: mkdir "%USERPROFILE%\\.local-memory"
 2. Test Claude Code MCP: claude mcp list
-3. For Claude Desktop: restart app and check for memory tools
-4. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
-5. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
-6. Test by storing a memory to verify everything works
-7. If using Qdrant: Test search performance improvements
+3. Test installation: local-memory --version
+4. For Claude Desktop: restart app and check for memory tools
+5. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
+6. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
+7. Test by storing a memory to verify everything works
+8. If using Qdrant: Test search performance improvements
 
-Use my existing downloaded binary from C:\\Downloads - don't download a new one. Follow these exact paths and commands.`;
+The npm method is recommended as it eliminates PATH configuration complexity. Use the binary from this page only if npm is unavailable.`;
 
-  const linuxPrompt = `I purchased and downloaded local-memory to ~/Downloads. Please help me install and configure it completely:
+  const linuxPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on Linux:
 
-QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary: chmod +x ~/Downloads/local-memory* && mv ~/Downloads/local-memory* /usr/local/bin/local-memory
+QUICK START (RECOMMENDED - NPM METHOD):
+1. Install via npm: npm install -g local-memory-mcp
 2. Activate license: local-memory license activate ${displayKey}
 3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
-5. Add to Claude Code: claude mcp add local-memory -- /usr/local/bin/local-memory
+5. Add to Claude Code: claude mcp add local-memory -- local-memory
 6. For Claude Desktop, add to ~/.claude_desktop_config.json:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
+      "command": "local-memory",
       "args": [
         "--mcp"
       ]
     }
   }
 }
-6. Restart Claude Desktop and verify memory tools appear
+7. Restart Claude Desktop and verify memory tools appear
 
-DETAILED SETUP (if you prefer manual control):
+ALTERNATIVE SETUP (if npm is not available):
 
-STEP 1 - INSTALL BINARY:
-1. Find the local-memory binary in ~/Downloads (likely named "local-memory-linux")
+METHOD 1 - STILL RECOMMENDED - NPM:
+1. Install Node.js from https://nodejs.org if not already installed
+2. Install via npm: npm install -g local-memory-mcp
+3. Activate license: local-memory license activate ${displayKey}
+4. Continue with steps 4-8 above
+
+METHOD 2 - MANUAL BINARY (from this page):
+1. Use the binary you just downloaded from this success page
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Install to system: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
 4. Activate license: /usr/local/bin/local-memory license activate ${displayKey}
@@ -312,13 +493,28 @@ For 10x faster search (~10ms vs SQLite's ~100ms):
 7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
-Run this exact command:
+For npm installation:
+claude mcp add local-memory -- local-memory
+
+For manual binary installation:
 claude mcp add local-memory -- /usr/local/bin/local-memory
 
 STEP 4 - CONFIGURE MCP FOR AI EDITORS:
 
 CLAUDE DESKTOP:
-Edit ~/.claude_desktop_config.json (create if it doesn't exist):
+For npm installation, edit ~/.claude_desktop_config.json (create if it doesn't exist):
+{
+  "mcpServers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": [
+        "--mcp"
+      ]
+    }
+  }
+}
+
+For manual binary installation:
 {
   "mcpServers": {
     "local-memory": {
@@ -373,35 +569,42 @@ STEP 5 - VERIFY INSTALLATION:
 1. Create memory directory: mkdir -p ~/.local-memory
 2. Set permissions: chmod 755 ~/.local-memory
 3. Test Claude Code MCP: claude mcp list (should show local-memory)
-4. For Claude Desktop: restart app and verify memory tools appear
-5. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
-6. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
-7. Test functionality by storing and retrieving a memory
-8. If using Qdrant: Verify search performance improvements
+4. Test installation: local-memory --version
+5. For Claude Desktop: restart app and verify memory tools appear
+6. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
+7. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
+8. Test functionality by storing and retrieving a memory
+9. If using Qdrant: Verify search performance improvements
 
-Use my existing downloaded binary from ~/Downloads - don't try to download a new one. Follow these exact commands and file paths.`;
+The npm method is recommended as it eliminates sudo requirements and PATH complexity. Use the binary from this page only if npm is unavailable.`;
 
-  const restApiPrompt = `I have local-memory downloaded and want to run it as a REST API server instead of MCP integration (useful for editors without MCP support or custom integrations):
+  const restApiPrompt = `I have purchased a license key for local-memory and want to run it as a REST API server instead of MCP integration (useful for editors without MCP support or custom integrations):
 
-QUICK START (RECOMMENDED - ZERO CONFIG):
-1. Install binary (choose your platform):
-   - macOS/Linux: chmod +x ~/Downloads/local-memory* && sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-   - Windows: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe" and add to PATH
+QUICK START (RECOMMENDED - NPM METHOD):
+1. Install via npm: npm install -g local-memory-mcp
 2. Activate license: local-memory license activate ${displayKey}
 3. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
 5. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
 
-DETAILED SETUP (if you prefer manual control):
+ALTERNATIVE SETUP (if npm is not available):
 
-STEP 1 - INSTALL BINARY (choose your platform):
+METHOD 1 - STILL RECOMMENDED - NPM:
+1. Install Node.js from https://nodejs.org if not already installed
+2. Install via npm: npm install -g local-memory-mcp
+3. Activate license: local-memory license activate ${displayKey}
+4. Continue with steps 4-6 above
+
+METHOD 2 - MANUAL BINARY (from this page):
+Use the binary you just downloaded from this success page:
+
 macOS/Linux: 
 - chmod +x ~/Downloads/local-memory*
 - sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
 
 Windows:
 - move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
-- Add to PATH
+- Add to PATH (npm method doesn't need this)
 
 INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
@@ -440,7 +643,7 @@ PERFORMANCE COMPARISON:
 - SQLite mode: ~100ms search response time
 - Qdrant mode: ~10ms search response time (10x faster)
 
-Use my downloaded binary - don't download a new one. This gives you 26 REST endpoints for any AI platform with recommended high-performance Qdrant backend.`;
+The npm method is recommended for simplified installation. This gives you 26 REST endpoints for any AI platform with optional high-performance Qdrant backend.`;
 
   return (
     <div className="mt-8">
@@ -451,6 +654,7 @@ Use my downloaded binary - don't download a new one. This gives you 26 REST endp
           <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
             <h4 className="font-semibold text-memory-blue mb-2">How It Works:</h4>
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
+              <li>Confirm you have a valid license key (if not, visit <a href="https://localmemory.co/payment" target="_blank" className="text-blue-500 hover:underline">localmemory.co/payment</a>)</li>
               <li>Copy the prompt applicable to your operating system.</li>
               <li>Paste it into your AI agent (Claude, OpenCode, etc.).</li>
               {isPlaceholder && (
