@@ -490,38 +490,59 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
   const linuxPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on Linux:
 
-QUICK START (RECOMMENDED - NPM METHOD):
+STEP 0 - LICENSE VERIFICATION:
+If you don't have a valid license key, visit https://localmemory.co/purchase first.
+
+STEP 1 - CHECK EXISTING INSTALLATION:
+Let's first check what's already installed:
+
+# Check if local-memory is already installed
+if command -v local-memory &> /dev/null; then
+  echo "Local Memory found in PATH"
+  local-memory --version
+  local-memory license status
+else
+  echo "Local Memory not installed - proceeding with fresh installation"
+fi
+
+# Check Ollama status
+if command -v ollama &> /dev/null; then
+  echo "Ollama is installed:"
+  ollama --version
+  echo "Installed models:"
+  ollama list
+else
+  echo "Ollama not installed"
+fi
+
+# Check Qdrant status
+if [ -f "$HOME/.local-memory/qdrant" ]; then
+  echo "Qdrant found:"
+  ~/.local-memory/qdrant --version 2>/dev/null || echo "Qdrant binary exists but may need update"
+else
+  echo "Qdrant not installed"
+fi
+
+INSTALLATION OPTIONS:
+
+OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
-2. Activate license: local-memory license activate ${displayKey} --accept-terms
-3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
-4. Start everything: local-memory start (auto-detects and configures everything)
-5. Add to Claude Code: claude mcp add local-memory -- local-memory
-6. For Claude Desktop, add to ~/.claude_desktop_config.json:
-{
-  "mcpServers": {
-    "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
-    }
-  }
-}
-7. Restart Claude Desktop and verify memory tools appear
+2. Verify installation: local-memory --version
+3. Activate license: local-memory license activate ${displayKey} --accept-terms
 
-ALTERNATIVE SETUP (if npm is not available):
+OPTION 2 - UPDATE EXISTING INSTALLATION:
+If local-memory is already installed but outdated:
+1. Update via npm: npm update -g local-memory-mcp
+   OR use explicit update: cd ~/.npm-global/lib/node_modules/local-memory-mcp && npm run update
+2. Verify update: local-memory --version
+3. Check license status: local-memory license status
+4. Reactivate if needed: local-memory license activate ${displayKey} --accept-terms
 
-METHOD 1 - STILL RECOMMENDED - NPM:
-1. Install Node.js from https://nodejs.org if not already installed
-2. Install via npm: npm install -g local-memory-mcp
-3. Activate license: local-memory license activate ${displayKey}
-4. Continue with steps 4-8 above
-
-METHOD 2 - MANUAL BINARY (from this page):
+OPTION 3 - MANUAL BINARY INSTALLATION (ADVANCED):
 1. Use the binary you just downloaded from this success page
 2. Make it executable: chmod +x ~/Downloads/local-memory*
 3. Install to system: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate license: /usr/local/bin/local-memory license activate ${displayKey}
+4. Activate license: /usr/local/bin/local-memory license activate ${displayKey} --accept-terms
 5. Verify installation: /usr/local/bin/local-memory --version
 
 INSTALL RECOMMENDED FEATURES:
@@ -534,13 +555,46 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Create local-memory directory: mkdir -p ~/.local-memory
-2. Download Qdrant: curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz -o qdrant.tar.gz
-3. Extract: tar -xzf qdrant.tar.gz
-4. Make executable and move: chmod +x qdrant && mv qdrant ~/.local-memory/
-5. Start Qdrant: cd ~/.local-memory && ./qdrant &
-6. Verify: curl http://localhost:6333/healthz (should return OK)
-7. Qdrant storage will be created in ~/.local-memory/qdrant-storage
+
+# Check if local-memory directory exists (it should after local-memory installation)
+if [ ! -d "$HOME/.local-memory" ]; then
+  echo "Warning: ~/.local-memory directory not found. Local Memory may not be properly installed."
+  echo "Creating directory for Qdrant installation..."
+  mkdir -p ~/.local-memory
+else
+  echo "Using existing ~/.local-memory directory"
+fi
+
+if [ ! -f "$HOME/.local-memory/qdrant" ]; then
+  echo "Installing Qdrant for high-performance search..."
+  
+  # Detect architecture and download correct version
+  ARCH=$(uname -m)
+  if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+    QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-aarch64-unknown-linux-gnu.tar.gz"
+    echo "Detected ARM64 Linux - downloading ARM64 binary"
+  else
+    QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-unknown-linux-gnu.tar.gz"
+    echo "Detected x86_64 Linux - downloading x86_64 binary"
+  fi
+  
+  curl -L "$QDRANT_URL" -o ~/.local-memory/qdrant.tar.gz
+  cd ~/.local-memory
+  tar -xzf qdrant.tar.gz
+  chmod +x qdrant
+  rm qdrant.tar.gz
+  
+  echo "✅ Qdrant installed at ~/.local-memory/qdrant"
+else
+  echo "Qdrant already installed. Checking for updates..."
+  CURRENT_VERSION=$(~/.local-memory/qdrant --version 2>/dev/null | grep -o 'qdrant [0-9.]*' | cut -d' ' -f2 || echo "unknown")
+  echo "✅ Qdrant is installed ($CURRENT_VERSION). Check GitHub releases for updates if needed."
+fi
+
+# Start Qdrant
+cd ~/.local-memory && ./qdrant &
+# Verify: curl http://localhost:6333/healthz (should return OK)
+# Qdrant storage will be created in ~/.local-memory/qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 For npm installation:
@@ -616,36 +670,79 @@ Add to Windsurf Settings > MCP Configuration:
 }
 
 STEP 5 - VERIFY INSTALLATION:
-1. Create memory directory: mkdir -p ~/.local-memory
-2. Set permissions: chmod 755 ~/.local-memory
+1. Test installation: local-memory --version
+2. Check license status: local-memory license status
 3. Test Claude Code MCP: claude mcp list (should show local-memory)
-4. Test installation: local-memory --version
-5. For Claude Desktop: restart app and verify memory tools appear
-6. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
-7. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
-8. Test functionality by storing and retrieving a memory
-9. If using Qdrant: Verify search performance improvements
+4. For Claude Desktop: restart app and verify memory tools appear
+5. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
+6. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
+7. Test functionality by storing and retrieving a memory
+8. If using Qdrant: curl http://localhost:6333/healthz should return OK
 
-The npm method is recommended as it eliminates sudo requirements and PATH complexity. Use the binary from this page only if npm is unavailable.`;
+TROUBLESHOOTING:
+- License not activated: Use --accept-terms flag in activation command
+- NPM installation issues (rare): cd ~/.npm-global/lib/node_modules/local-memory-mcp && npm run update
+- NPM binary missing: cd ~/.npm-global/lib/node_modules/local-memory-mcp && node scripts/install.js
+- Permission errors: For manual installation, use sudo for /usr/local/bin operations
+- PATH issues: npm installation automatically handles PATH; manual installation may need PATH updates
+- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Service management: Use systemctl --user start/stop/status ollama for Ollama service control
+- Architecture issues: Script auto-detects ARM64 vs x86_64 for Qdrant downloads
+- Update failures: Try fresh installation as fallback
+
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. Manual fixes are rarely needed.`;
 
   const restApiPrompt = `I have purchased a license key for local-memory and want to run it as a REST API server instead of MCP integration (useful for editors without MCP support or custom integrations):
 
-QUICK START (RECOMMENDED - NPM METHOD):
+STEP 0 - LICENSE VERIFICATION:
+If you don't have a valid license key, visit https://localmemory.co/purchase first.
+
+STEP 1 - CHECK EXISTING INSTALLATION:
+Let's first check what's already installed:
+
+# Check if local-memory is already installed (cross-platform)
+if command -v local-memory &> /dev/null || where local-memory > nul 2>&1; then
+  echo "Local Memory found in PATH"
+  local-memory --version
+  local-memory license status
+else
+  echo "Local Memory not installed - proceeding with fresh installation"
+fi
+
+# Check Ollama status (cross-platform)
+if command -v ollama &> /dev/null || where ollama > nul 2>&1; then
+  echo "Ollama is installed:"
+  ollama --version
+  echo "Installed models:"
+  ollama list
+else
+  echo "Ollama not installed"
+fi
+
+# Check Qdrant status (cross-platform)
+if [ -f "$HOME/.local-memory/qdrant" ] || [ -f "%USERPROFILE%\\.local-memory\\qdrant.exe" ]; then
+  echo "Qdrant found - REST API will use high-performance search"
+else
+  echo "Qdrant not installed - REST API will use SQLite (still fast)"
+fi
+
+INSTALLATION OPTIONS:
+
+OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
-2. Activate license: local-memory license activate ${displayKey} --accept-terms
-3. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
-4. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
-5. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
+2. Verify installation: local-memory --version
+3. Activate license: local-memory license activate ${displayKey} --accept-terms
 
-ALTERNATIVE SETUP (if npm is not available):
+OPTION 2 - UPDATE EXISTING INSTALLATION:
+If local-memory is already installed but outdated:
+1. Update via npm: npm update -g local-memory-mcp
+   OR use explicit update: cd ~/.npm-global/lib/node_modules/local-memory-mcp && npm run update (Linux/macOS)
+   OR use explicit update: cd %APPDATA%\\npm\\node_modules\\local-memory-mcp && npm run update (Windows)
+2. Verify update: local-memory --version
+3. Check license status: local-memory license status
+4. Reactivate if needed: local-memory license activate ${displayKey} --accept-terms
 
-METHOD 1 - STILL RECOMMENDED - NPM:
-1. Install Node.js from https://nodejs.org if not already installed
-2. Install via npm: npm install -g local-memory-mcp
-3. Activate license: local-memory license activate ${displayKey}
-4. Continue with steps 4-6 above
-
-METHOD 2 - MANUAL BINARY (from this page):
+OPTION 3 - MANUAL BINARY INSTALLATION (ADVANCED):
 Use the binary you just downloaded from this success page:
 
 macOS/Linux: 
@@ -681,19 +778,77 @@ STEP 4 - VERIFY API:
 Test the health endpoint: curl http://localhost:3002/api/v1/health
 Should return: {"status":"ok"}
 
-STEP 5 - API ENDPOINTS:
+STEP 5 - COMPLETE REST API REFERENCE:
 Base URL: http://localhost:3002/api/v1/
-Key endpoints:
-- POST /memories - Store new memory
-- GET /memories/search?q=query - Search memories
-- GET /memories - List all memories
-- GET /health - Health check
+
+ALL 25 REST API ENDPOINTS (organized by category):
+
+CORE MEMORY OPERATIONS (4 endpoints):
+- POST /memories - Store new memory with content, tags, importance
+- PUT /memories/{id} - Update existing memory
+- GET /memories/{id} - Get specific memory by ID
+- DELETE /memories/{id} - Delete memory by ID
+
+SEARCH & DISCOVERY (3 endpoints):
+- GET /memories/search - Search memories with query, filters, limits
+- GET /memories/{id}/related - Find related memories
+- GET /memories - List all memories with pagination
+
+AI-POWERED ANALYSIS (2 endpoints):
+- POST /ask - Ask natural language questions about stored memories
+- POST /analyze - Analyze memory patterns and generate insights
+
+TEMPORAL ANALYSIS (3 endpoints):
+- GET /memories/temporal-patterns - Analyze learning progression over time
+- POST /track-learning - Track learning progression for specific concepts
+- POST /detect-gaps - Identify knowledge gaps in stored memories
+
+RELATIONSHIP MANAGEMENT (4 endpoints):
+- POST /relationships - Create relationships between memories
+- GET /relationships/discover - Discover automatic relationships
+- GET /relationships/map - Generate relationship graph maps
+- GET /memories/{id}/relationships - Get relationships for specific memory
+
+CATEGORIZATION (4 endpoints):
+- POST /categories - Create new memory categories
+- GET /categories - List all available categories  
+- POST /memories/{id}/categorize - Auto-categorize memory with AI
+- GET /categories/{id}/stats - Get statistics for category
+
+STATISTICS & ANALYTICS (2 endpoints):
+- GET /sessions/stats - Get current session statistics
+- GET /domains/stats - Get domain-specific statistics
+
+SYSTEM MANAGEMENT (3 endpoints):
+- GET /health - Health check and system status
+- GET /sessions - List all available sessions
+- POST /domains - Create new knowledge domains
+
+API DISCOVERY:
+- GET /api/v1/ - Returns list of all available endpoints with descriptions
 
 PERFORMANCE COMPARISON:
-- SQLite mode: ~100ms search response time
-- Qdrant mode: ~10ms search response time (10x faster)
+- SQLite mode: ~100ms search response time (still very fast)
+- Qdrant mode: ~10ms search response time (10x faster for large datasets)
 
-The npm method is recommended for simplified installation. This gives you 26 REST endpoints for any AI platform with optional high-performance Qdrant backend.`;
+AUTHENTICATION: All endpoints use session-based authentication via license activation.
+
+INTEGRATION EXAMPLES:
+- cURL: curl -X POST http://localhost:3002/api/v1/memories -H "Content-Type: application/json" -d '{"content":"My insight","tags":["ai","memory"]}'
+- Python: requests.post("http://localhost:3002/api/v1/memories", json={"content":"My insight"})
+- JavaScript: fetch("http://localhost:3002/api/v1/memories", {method:"POST", body:JSON.stringify(data)})
+
+TROUBLESHOOTING:
+- License not activated: Use --accept-terms flag in activation command  
+- NPM installation issues (rare): Use npm run update in package directory
+- Port conflicts: local-memory auto-selects available ports 3002-3005
+- API connectivity: Check local-memory start output for actual port
+- Cross-platform paths: npm handles PATH automatically; manual installs need PATH setup
+- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Service status: Use local-memory status to check running services
+- Update failures: Try fresh installation as fallback
+
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. The REST API provides 26 endpoints covering all MCP functionality plus additional REST-specific features.`;
 
   return (
     <div className="mt-8">
