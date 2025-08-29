@@ -329,6 +329,17 @@ const Demo = () => {
                     </div>
                   )}
                   
+                  {/* Step guidance - show after each completed step */}
+                  {!isTyping && currentStep < demoSteps.length && commandHistory.length > 0 && (
+                    <div className="text-slate-400 mb-2">
+                      <span className="text-slate-500">
+                        {currentStep === 1 && "# Click \"Run Search\" to find API patterns and conventions..."}
+                        {currentStep === 2 && "# Click \"Run Search\" again to find business requirements..."}
+                        {currentStep === 3 && "# Click \"Run Ask\" to generate the implementation plan..."}
+                      </span>
+                    </div>
+                  )}
+                  
                   {/* Waiting for input prompt */}
                   {!isTyping && currentStep < demoSteps.length && commandHistory.length > 0 && (
                     <div className="text-slate-400">
