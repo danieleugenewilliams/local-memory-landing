@@ -93,10 +93,6 @@ const DocsPage = () => {
                     <code className="text-sm bg-background px-2 py-1 rounded block mb-2">
                       &gt; local-memory start
                     </code>
-                    <div className="mt-2 p-2 bg-amber-900/20 border border-amber-700/30 rounded text-xs">
-                      <p className="text-amber-300 font-medium mb-1">macOS users:</p>
-                      <p className="text-amber-200">Before running the above command, first run: <code className="bg-amber-800/30 px-1 rounded text-amber-100">&gt; xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
-                    </div>
                     <p className="mt-2 text-xs text-muted-foreground mb-2">
                       <em>Auto-detects Ollama, Qdrant, and configures everything automatically</em>
                     </p>
@@ -111,7 +107,7 @@ const DocsPage = () => {
                     <div className="bg-muted p-3 rounded-md">
                       <h5 className="font-semibold text-sm mb-2">Claude Code:</h5>
                       <code className="text-xs bg-background px-2 py-1 rounded block">
-                        &gt; claude mcp add local-memory /path/to/local-memory
+                        &gt; claude mcp add local-memory /path/to/local-memory --mcp
                       </code>
                     </div>
                     <div className="bg-muted p-3 rounded-md">
@@ -273,7 +269,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     {/* Primary: Claude Code */}
                     <div className="bg-muted-950/20 p-3 rounded border border-muted-700/30 mb-4">
                       <h5 className="text-muted-300 font-medium mb-2">Claude Code:</h5>
-                      <code className="text-sm bg-background px-2 py-1 rounded block">&gt; claude mcp add local-memory -- /usr/local/bin/local-memory</code>
+                      <code className="text-sm bg-background px-2 py-1 rounded block">&gt; claude mcp add local-memory -- /usr/local/bin/local-memory --mcp</code>
                       <p className="text-xs text-muted-foreground mt-2"><em>Automatically detects and configures Claude Code</em></p>
                     </div>
 
