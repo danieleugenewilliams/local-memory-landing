@@ -26,7 +26,7 @@ const Terms = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Agreement to Terms</CardTitle>
-                <CardDescription>Last updated: August 27, 2025</CardDescription>
+                <CardDescription>Last updated: August 29, 2025</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
@@ -55,6 +55,102 @@ const Terms = () => {
                     <li>Create modified versions or derivative works based on the software</li>
                     <li>Rent, lease, or resell the software</li>
                   </ul>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Payment & Billing */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Payment & Billing</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Payment Processing</h4>
+                  <p className="text-muted-foreground">
+                    All payments are securely processed through Stripe, our trusted payment partner. We accept major credit cards and other payment methods supported by Stripe.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">One-Time Purchase</h4>
+                  <p className="text-muted-foreground">
+                    <em>Local Memory</em> is sold as a one-time purchase with lifetime usage rights. No subscriptions, no recurring fees, no surprises. You pay once, you own it forever.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">Pricing</h4>
+                  <p className="text-muted-foreground">
+                    Prices are listed in USD and may change at any time. However, once you've purchased <em>Local Memory</em>, your license remains valid regardless of future price changes.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">Taxes</h4>
+                  <p className="text-muted-foreground">
+                    You are responsible for any applicable taxes, duties, or fees based on your location and local tax laws.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Refunds & Returns */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Refunds & Returns</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">30-Day Refund Policy</h4>
+                  <p className="text-muted-foreground">
+                    If <em>Local Memory</em> isn't working for you within 30 days of purchase, we'll refund your money. No hoops to jump through, no lengthy explanations required.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">How to Request a Refund</h4>
+                  <p className="text-muted-foreground">
+                    Contact us through our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> with your purchase details. Refunds are typically processed within 5-10 business days back to your original payment method.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">Refund Conditions</h4>
+                  <p className="text-muted-foreground">
+                    Refunds are available for 30 days from your purchase date. After that period, all sales are final. This gives you plenty of time to evaluate whether <em>Local Memory</em> works for your needs.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Software Delivery */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Software Delivery</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Installation Methods</h4>
+                  <p className="text-muted-foreground">
+                    <strong>Recommended:</strong> Install via npm with <code className="bg-muted px-1 rounded">npm install -g local-memory-mcp</code>
+                  </p>
+                  <p className="text-muted-foreground">
+                    <strong>Alternative:</strong> Download platform-specific binaries directly after purchase for manual installation.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">License Key Delivery</h4>
+                  <p className="text-muted-foreground">
+                    Your license key will be displayed on the success page immediately after purchase. <strong>You have 30 minutes to copy and store your license key.</strong> After this window, the key will no longer be accessible.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">License Activation</h4>
+                  <p className="text-muted-foreground">
+                    Activate your license immediately after installation using <code className="bg-muted px-1 rounded">local-memory license activate [YOUR-LICENSE-KEY]</code>. Store your license key securely as you'll need it for installations on different machines.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">We Shouldn't Have to Say This, But...</h4>
+                  <p className="text-muted-foreground">
+                    Copy your license key immediately after purchase. We cannot regenerate lost license keys, and the 30-minute window is firm. Set a reminder, take a screenshot, save it to your password manager—whatever works for you.
+                  </p>
                 </div>
               </CardContent>
             </Card>
