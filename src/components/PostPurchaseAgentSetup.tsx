@@ -265,24 +265,45 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
   const windowsPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on Windows:
 
-QUICK START (RECOMMENDED - NPM METHOD):
+STEP 0 - LICENSE VERIFICATION:
+If you don't have a valid license key, visit https://localmemory.co/purchase first.
+
+STEP 1 - CHECK EXISTING INSTALLATION:
+Let's first check what's already installed:
+
+# Check if local-memory is already installed
+local-memory --version 2>nul && (
+  echo Local Memory found in PATH
+  local-memory --version
+  local-memory license status
+) || (
+  echo Local Memory not installed - proceeding with fresh installation
+)
+
+# Check Ollama status
+ollama --version 2>nul && (
+  echo Ollama is installed:
+  ollama --version
+  echo Installed models:
+  ollama list
+) || (
+  echo Ollama not installed
+)
+
+# Check Qdrant status
+if exist "%USERPROFILE%\\.local-memory\\qdrant.exe" (
+  echo Qdrant found:
+  "%USERPROFILE%\\.local-memory\\qdrant.exe" --version 2>nul || echo Qdrant binary exists but may need update
+) else (
+  echo Qdrant not installed
+)
+
+INSTALLATION OPTIONS:
+
+OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
-2. Activate license: local-memory license activate ${displayKey}
-3. Install Ollama from https://ollama.ai/download/windows, then: ollama pull nomic-embed-text
-4. Start everything: local-memory start (auto-detects and configures everything)
-5. Add to Claude Code: claude mcp add local-memory -- local-memory
-6. For Claude Desktop, add to %USERPROFILE%\\.claude_desktop_config.json:
-{
-  "mcpServers": {
-    "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
-    }
-  }
-}
-7. Restart Claude Desktop and verify memory tools appear
+2. Verify installation: local-memory --version
+3. Activate license: local-memory license activate ${displayKey} --accept-terms
 
 ALTERNATIVE SETUP (if npm is not available):
 
@@ -297,7 +318,7 @@ METHOD 2 - MANUAL BINARY (from this page):
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
 4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH environment variable (npm method doesn't need this)
-5. Activate license: local-memory.exe license activate ${displayKey}
+5. Activate license: "C:\\Program Files\\LocalMemory\\local-memory.exe" license activate ${displayKey} --accept-terms
 6. Verify: open new cmd/PowerShell and run: local-memory.exe --version
 
 INSTALL RECOMMENDED FEATURES:
@@ -310,12 +331,31 @@ STEP 2 - INSTALL OLLAMA:
 
 STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
 For 10x faster search (~10ms vs SQLite's ~100ms):
-1. Create local-memory directory: mkdir "%USERPROFILE%\\.local-memory"
-2. Download Qdrant for Windows from: https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip
-3. Extract to %USERPROFILE%\\.local-memory\\
-4. Start Qdrant: cd "%USERPROFILE%\\.local-memory" && qdrant.exe
-5. Verify: curl http://localhost:6333/healthz (should return OK)
-6. Qdrant storage will be created in %USERPROFILE%\\.local-memory\\qdrant-storage
+
+# Check if local-memory directory exists (it should after local-memory installation)
+if not exist "%USERPROFILE%\\.local-memory" (
+  echo Warning: %USERPROFILE%\\.local-memory directory not found. Local Memory may not be properly installed.
+  echo Creating directory for Qdrant installation...
+  mkdir "%USERPROFILE%\\.local-memory"
+) else (
+  echo Using existing %USERPROFILE%\\.local-memory directory
+)
+
+if not exist "%USERPROFILE%\\.local-memory\\qdrant.exe" (
+  echo Installing Qdrant for high-performance search...
+  curl -L "https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-pc-windows-msvc.zip" -o "%USERPROFILE%\\.local-memory\\qdrant.zip"
+  cd "%USERPROFILE%\\.local-memory"
+  tar -xzf qdrant.zip
+  del qdrant.zip
+  echo ✅ Qdrant installed at %USERPROFILE%\\.local-memory\\qdrant.exe
+) else (
+  echo Qdrant already installed. You can update manually if needed from GitHub releases.
+)
+
+# Start Qdrant
+cd "%USERPROFILE%\\.local-memory" && qdrant.exe
+# Verify: curl http://localhost:6333/healthz (should return OK)
+# Qdrant storage will be created in %USERPROFILE%\\.local-memory\\qdrant-storage
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE (if using):
 For npm installation:
@@ -427,22 +467,32 @@ For manual binary:
 }
 
 STEP 5 - VERIFY INSTALLATION:
-1. Create memory directory: mkdir "%USERPROFILE%\\.local-memory"
-2. Test Claude Code MCP: claude mcp list
-3. Test installation: local-memory --version
+1. Test installation: local-memory --version
+2. Check license status: local-memory license status
+3. Test Claude Code MCP: claude mcp list
 4. For Claude Desktop: restart app and check for memory tools
 5. For VS Code: Restart VS Code, open Command Palette, check "MCP: List Servers"
 6. For Cursor/Windsurf: Restart editor and verify MCP server appears in settings
 7. Test by storing a memory to verify everything works
-8. If using Qdrant: Test search performance improvements
+8. If using Qdrant: curl http://localhost:6333/healthz should return OK
 
-The npm method is recommended as it eliminates PATH configuration complexity. Use the binary from this page only if npm is unavailable.`;
+TROUBLESHOOTING:
+- License not activated: Use --accept-terms flag in activation command
+- NPM installation issues (rare): cd %APPDATA%\\npm\\node_modules\\local-memory-mcp && npm run update
+- NPM binary missing: cd %APPDATA%\\npm\\node_modules\\local-memory-mcp && node scripts\\install.js
+- PATH issues: npm installation automatically handles PATH; manual installation requires adding "C:\\Program Files\\LocalMemory" to system PATH
+- Permission errors: Run Command Prompt as Administrator for manual installations
+- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Qdrant connection issues: Check Windows Firewall settings for port 6333
+- Update failures: Try fresh installation as fallback
+
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. Manual fixes are rarely needed.`;
 
   const linuxPrompt = `I have purchased a license key for local-memory. Please help me install and configure it completely on Linux:
 
 QUICK START (RECOMMENDED - NPM METHOD):
 1. Install via npm: npm install -g local-memory-mcp
-2. Activate license: local-memory license activate ${displayKey}
+2. Activate license: local-memory license activate ${displayKey} --accept-terms
 3. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh, then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects and configures everything)
 5. Add to Claude Code: claude mcp add local-memory -- local-memory
@@ -582,7 +632,7 @@ The npm method is recommended as it eliminates sudo requirements and PATH comple
 
 QUICK START (RECOMMENDED - NPM METHOD):
 1. Install via npm: npm install -g local-memory-mcp
-2. Activate license: local-memory license activate ${displayKey}
+2. Activate license: local-memory license activate ${displayKey} --accept-terms
 3. Install Ollama (download from https://ollama.ai), then: ollama pull nomic-embed-text
 4. Start everything: local-memory start (auto-detects everything, starts REST API on port 3002)
 5. Verify: curl http://localhost:3002/api/v1/health (should return {"status":"ok"})
