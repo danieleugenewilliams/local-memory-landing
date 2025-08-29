@@ -641,6 +641,16 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                         <td className="py-2 px-3 text-muted-foreground border-r border-border"><em>Local Memory</em> requires you to agree to Terms & Conditions when 'local-memory start' is run for the first time</td>
                         <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Agree to the terms by entering 'Y' to continue and start <em>Local Memory</em></code></td>
                       </tr>
+                      <tr className="border-b border-border">
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Success page timeout/lost license key</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Download window expires after 30 minutes. If you have not copied your license key immediately after payment, contact <em>Local Memory</em> for support.</td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">Check <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord #support</a> and message admin to request help.</code></td>
+                      </tr>
+                      <tr className="border-b border-border">
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Success page timeout/lost downloads</td>
+                        <td className="py-2 px-3 text-muted-foreground border-r border-border">Download window expires after 30 minutes. If you Chave not copied your software immediately after payment, run the npm install command.</td>
+                        <td className="py-2 px-3 pl-4 -indent-4"><code className="bg-background px-2 py-1 rounded text-xs text-muted-foreground">&gt; npm install -g local-memory-mcp</code></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
