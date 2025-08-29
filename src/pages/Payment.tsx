@@ -46,27 +46,27 @@ const PaymentPage = () => {
                   <span className="text-green-500">✓</span>
                   <span>Unlimited Usage Forever</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-5">
                   <span className="text-green-500">✓</span>
                   <span>$2K-$6K Monthly Value</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-1">
                   <span className="text-green-500">✓</span>
                   <span>26 MCP Tools Included</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-2">
                   <span className="text-green-500">✓</span>
                   <span>Pays for Itself in 2 Days</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-9">
                   <span className="text-green-500">✓</span>
                   <span>100% Local & Private</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-6">
                   <span className="text-green-500">✓</span>
                   <span>Save 2+ Hours Daily</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 -ml-4">
                   <span className="text-green-500">✓</span>
                   <span>2,500%+ Monthly ROI</span>
                 </div>
