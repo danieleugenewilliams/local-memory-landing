@@ -1,73 +1,30 @@
-# Welcome to your Lovable project
+# Local Memory
+**The most advanced AI memory system available**
 
-## Project info
+Transform your AI interactions with persistent, searchable memory that grows smarter over time. Local Memory provides vector search, semantic analysis, and intelligent categorization while keeping all your data completely private and local.
 
-**URL**: https://lovable.dev/projects/0e559ec5-ec02-4e55-bc74-611dc400f1d8
+## ✨ Experience the Difference
 
-## How can I edit this code?
+- **🧠 Photographic Memory**: Your AI never forgets important conversations, decisions, or insights
+- **🔍 Intelligent Search**: Find information by meaning, not just keywords
+- **🔒 100% Private**: Your data never leaves your machine
+- **⚡ Lightning Fast**: Up to 50x faster than cloud-based alternatives
+- **🎯 Zero Configuration**: Works perfectly out of the box
 
-There are several ways of editing your application.
+## 🚀 Get Started Today
 
-**Use Lovable**
+Choose your installation method:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0e559ec5-ec02-4e55-bc74-611dc400f1d8) and start prompting.
+- **🌐 Web Download**: [localmemory.co](https://localmemory.co)
+- **📦 NPM Package**: `npm install -g local-memory-mcp`
+- **💻 Binary Release**: [GitHub Releases](https://github.com/danieleugenewilliams/local-memory-releases)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 💬 Join the Community
 
-**Use your preferred IDE**
+- **Documentation**: [localmemory.co/docs](https://localmemory.co/docs)
+- **GitHub**: [Source Code](https://github.com/danieleugenewilliams/local-memory-golang)
+- **Support**: [Issues & Feature Requests](https://github.com/danieleugenewilliams/local-memory-golang/issues)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/0e559ec5-ec02-4e55-bc74-611dc400f1d8) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Start building persistent AI knowledge today. Your future self will thank you.**
