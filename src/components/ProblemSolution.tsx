@@ -21,7 +21,7 @@ const ProblemSolution = () => {
             </div>
             
             <div className="space-y-4 flex-1">
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 min-h-20 sm:h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">🔄</span>
                 <div>
                   <div className="font-medium text-foreground">"What was that auth flow again?"</div>
@@ -29,7 +29,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 min-h-20 sm:h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">😒</span>
                 <div>
                   <div className="font-medium text-foreground">"I literally just explained this error pattern!"</div>
@@ -37,7 +37,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 min-h-20 sm:h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">⌛️</span>
                 <div>
                   <div className="font-medium text-foreground">Context-switching hell with every new session or '/clear'</div>
@@ -45,7 +45,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 min-h-20 sm:h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">📝</span>
                 <div>
                   <div className="font-medium text-foreground">Copy/pasting the same explanations</div>
@@ -53,7 +53,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-red-500/60 min-h-20 sm:h-20">
                 <span className="text-red-500 text-xl flex-shrink-0">😤</span>
                 <div>
                   <div className="font-medium text-foreground">Starting over with each agent switch</div>
@@ -72,7 +72,7 @@ const ProblemSolution = () => {
             </div>
             
             <div className="space-y-4 flex-1">
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 min-h-20 sm:h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">✨</span>
                 <div>
                   <div className="font-medium text-foreground">"Remember that refactor we discussed yesterday?"</div>
@@ -80,7 +80,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 min-h-20 sm:h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🧠</span>
                 <div>
                   <div className="font-medium text-foreground">Every code review comment saved forever</div>
@@ -88,7 +88,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 min-h-20 sm:h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🤓</span>
                 <div>
                   <div className="font-medium text-foreground">Progressive understanding of your architecture</div>
@@ -96,7 +96,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 min-h-20 sm:h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🎯</span>
                 <div>
                   <div className="font-medium text-foreground">Jump straight to solving, not explaining</div>
@@ -104,7 +104,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 h-20">
+              <div className="flex items-start gap-3 p-4 bg-card rounded-lg border-2 border-green-500/60 min-h-20 sm:h-20">
                 <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
                 <div>
                   <div className="font-medium text-foreground">Seamless context across ALL of your agents</div>
