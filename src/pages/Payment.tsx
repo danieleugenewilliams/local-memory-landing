@@ -10,7 +10,7 @@ const PaymentPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <Header />
       <div className="py-12">
-        <div className="container max-w-4xl mx-auto px-6">
+        <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-4">
               Get <em>Local Memory</em>
@@ -33,42 +33,42 @@ const PaymentPage = () => {
               </div>
               <div className="flex items-center justify-center gap-2 mb-6 text-memory-green">Use code LMLAUNCH40 at checkout</div>
               
-              <div className="grid grid-cols-3 gap-4 mb-6 text-sm px-4">
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-green-500">✓</span>
-                  <span>Complete Memory System</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm px-4">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">Complete Memory System</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-green-500">✓</span>
-                  <span>Worth $100-$300 Daily</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">Worth $100-$300 Daily</span>
                 </div>
-                <div className="flex items-center justify-center gap-2">
-                  <span className="text-green-500">✓</span>
-                  <span>Unlimited Usage Forever</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-16">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">Unlimited Usage Forever</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-5">
-                  <span className="text-green-500">✓</span>
-                  <span>$2K-$6K Monthly Value</span>
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">$2K-$6K Monthly Value</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-1">
-                  <span className="text-green-500">✓</span>
-                  <span>26 MCP Tools Included</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">26 MCP Tools Included</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-2">
-                  <span className="text-green-500">✓</span>
-                  <span>Pays for Itself in 2 Days</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-16">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">Pays for Itself in 2 Days</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-9">
-                  <span className="text-green-500">✓</span>
-                  <span>100% Local & Private</span>
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">100% Local & Private</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-6">
-                  <span className="text-green-500">✓</span>
-                  <span>Save 2+ Hours Daily</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">Save 2+ Hours Daily</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 -ml-4">
-                  <span className="text-green-500">✓</span>
-                  <span>2,500%+ Monthly ROI</span>
+                <div className="flex items-center justify-center md:justify-start gap-2 ml-16">
+                  <span className="text-green-500 hidden md:inline">✓</span>
+                  <span className="text-center md:text-left">2,500%+ Monthly ROI</span>
                 </div>
               </div>
               

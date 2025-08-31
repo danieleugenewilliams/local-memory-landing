@@ -212,7 +212,7 @@ const Demo = () => {
   };
 
   return (
-    <section id="demo" className="relative overflow-hidden bg-background py-24">
+    <section id="demo" className="relative overflow-hidden bg-background py-12">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-memory-blue/10 via-background to-memory-purple/10" />
       

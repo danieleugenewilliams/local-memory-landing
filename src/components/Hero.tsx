@@ -11,7 +11,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black_40%,transparent_100%)]" />
       
-      <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 py-32 lg:py-40">
+      <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 py-16 lg:py-16">
         <div className="mx-auto max-w-4xl text-center">
           {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
