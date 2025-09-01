@@ -856,15 +856,15 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
         
         <CardContent className="space-y-6">
 
-          <div className="bg-memory-blue/10 border border-memory-blue/20 p-4 rounded-lg">
-            <h4 className="font-semibold text-memory-blue mb-2">How It Works:</h4>
+          <div className="bg-memory-purple/10 border border-memory-purple/20 p-4 rounded-lg">
+            <h4 className="font-semibold text-memory-purple mb-2">How It Works:</h4>
             <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
               <li>Confirm you have a valid license key (if not, visit <a href="https://localmemory.co/payment" target="_blank" className="text-blue-500 hover:underline">localmemory.co/payment</a>)</li>
               <li>Copy the prompt applicable to your operating system.</li>
               <li>Paste it into your AI agent (Claude, OpenCode, etc.).</li>
               {isPlaceholder && (
-                <li className="text-amber-600 bg-muted-50/50 p-2 rounded border border-amber-200">
-                  <strong>⚠️ Important:</strong> Replace the placeholder license key <code className="bg-muted-100 px-1 rounded text-amber-800">LM-XXXX-XXXX-XXXX-XXXX-XXXX</code> with your actual license key after purchase.
+                <li className="text-yellow-600 bg-muted-50/50 p-2 rounded border border-yellow-200">
+                  <strong>⚠️ Important:</strong> Replace the placeholder license key <code className="bg-muted-100 px-1 rounded text-yellow-800">LM-XXXX-XXXX-XXXX-XXXX-XXXX</code> with your provided license key after purchase.
                 </li>
               )}
               <li>Your agent will handle the complete installation and configuration.</li>
@@ -876,7 +876,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
           {/* macOS Prompt */}
           <Collapsible open={openPrompts['macos']} onOpenChange={() => togglePrompt('macos')}>
-            <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card">
+            <div className="border-2 border-memory-pink/30 rounded-lg p-4 bg-card w-full max-w-full overflow-hidden">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <h4 className="font-semibold">macOS Installation Prompt</h4>
@@ -886,7 +886,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                     size="sm"
                     variant="outline"
                     onClick={() => copyToClipboard(macosPrompt, 'macos')}
-                    className="gap-2"
+                    className="gap-2 border-memory-pink/30"
                   >
                     <Copy className="w-4 h-4" />
                     {copiedPrompt === 'macos' ? 'Copied!' : 'Copy'}
@@ -894,7 +894,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                   <CollapsibleTrigger asChild>
                     <Button size="sm" variant="ghost" className="gap-1">
                       <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['macos'] ? 'rotate-180' : ''}`} />
-                      {openPrompts['macos'] ? 'Hide' : 'Show'} Full Prompt
+                      <span className="hidden sm:inline">{openPrompts['macos'] ? 'Hide' : 'Show'} Full Prompt</span>
+                      <span className="sm:hidden">{openPrompts['macos'] ? 'Hide' : 'Show'}</span>
                     </Button>
                   </CollapsibleTrigger>
                 </div>
@@ -909,8 +910,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
               )}
               
               <CollapsibleContent>
-                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto w-full max-w-full overflow-hidden">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono w-full break-words overflow-wrap-anywhere">
                     {macosPrompt}
                   </pre>
                 </div>
@@ -924,7 +925,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
           {/* Windows Prompt */}
           <Collapsible open={openPrompts['windows']} onOpenChange={() => togglePrompt('windows')}>
-            <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card">
+            <div className="border-2 border-memory-blue/30 rounded-lg p-4 bg-card w-full max-w-full overflow-hidden">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <h4 className="font-semibold">Windows Installation Prompt</h4>
@@ -942,7 +943,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                   <CollapsibleTrigger asChild>
                     <Button size="sm" variant="ghost" className="gap-1">
                       <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['windows'] ? 'rotate-180' : ''}`} />
-                      {openPrompts['windows'] ? 'Hide' : 'Show'} Full Prompt
+                      <span className="hidden sm:inline">{openPrompts['windows'] ? 'Hide' : 'Show'} Full Prompt</span>
+                      <span className="sm:hidden">{openPrompts['windows'] ? 'Hide' : 'Show'}</span>
                     </Button>
                   </CollapsibleTrigger>
                 </div>
@@ -957,8 +959,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
               )}
               
               <CollapsibleContent>
-                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto w-full max-w-full overflow-hidden">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono w-full break-words overflow-wrap-anywhere">
                     {windowsPrompt}
                   </pre>
                 </div>
@@ -972,7 +974,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
           {/* Linux Prompt */}
           <Collapsible open={openPrompts['linux']} onOpenChange={() => togglePrompt('linux')}>
-            <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card">
+            <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card w-full max-w-full overflow-hidden">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <h4 className="font-semibold">Linux Installation Prompt</h4>
@@ -982,7 +984,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                     size="sm"
                     variant="outline"
                     onClick={() => copyToClipboard(linuxPrompt, 'linux')}
-                    className="gap-2"
+                    className="gap-2 border-memory-green/30"
                   >
                     <Copy className="w-4 h-4" />
                     {copiedPrompt === 'linux' ? 'Copied!' : 'Copy'}
@@ -990,7 +992,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                   <CollapsibleTrigger asChild>
                     <Button size="sm" variant="ghost" className="gap-1">
                       <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['linux'] ? 'rotate-180' : ''}`} />
-                      {openPrompts['linux'] ? 'Hide' : 'Show'} Full Prompt
+                      <span className="hidden sm:inline">{openPrompts['linux'] ? 'Hide' : 'Show'} Full Prompt</span>
+                      <span className="sm:hidden">{openPrompts['linux'] ? 'Hide' : 'Show'}</span>
                     </Button>
                   </CollapsibleTrigger>
                 </div>
@@ -1005,8 +1008,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
               )}
               
               <CollapsibleContent>
-                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto w-full max-w-full overflow-hidden">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono w-full break-words overflow-wrap-anywhere">
                     {linuxPrompt}
                   </pre>
                 </div>
@@ -1020,7 +1023,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
           {/* REST API Prompt */}
           <Collapsible open={openPrompts['api']} onOpenChange={() => togglePrompt('api')}>
-            <div className="border-2 border-memory-green/30 rounded-lg p-4 bg-card">
+            <div className="border-2 border-memory-orange/30 rounded-lg p-4 bg-card w-full max-w-full overflow-hidden">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <h4 className="font-semibold">REST API Setup (Universal)</h4>
@@ -1030,7 +1033,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                     size="sm"
                     variant="outline"
                     onClick={() => copyToClipboard(restApiPrompt, 'api')}
-                    className="gap-2"
+                    className="gap-2 border-memory-orange/30"
                   >
                     <Copy className="w-4 h-4" />
                     {copiedPrompt === 'api' ? 'Copied!' : 'Copy'}
@@ -1038,7 +1041,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
                   <CollapsibleTrigger asChild>
                     <Button size="sm" variant="ghost" className="gap-1">
                       <ChevronDown className={`w-4 h-4 transition-transform ${openPrompts['api'] ? 'rotate-180' : ''}`} />
-                      {openPrompts['api'] ? 'Hide' : 'Show'} Full Prompt
+                      <span className="hidden sm:inline">{openPrompts['api'] ? 'Hide' : 'Show'} Full Prompt</span>
+                      <span className="sm:hidden">{openPrompts['api'] ? 'Hide' : 'Show'}</span>
                     </Button>
                   </CollapsibleTrigger>
                 </div>
@@ -1053,8 +1057,8 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
               )}
               
               <CollapsibleContent>
-                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono">
+                <div className="bg-background border rounded-lg p-4 max-h-96 overflow-y-auto w-full max-w-full overflow-hidden">
+                  <pre className="text-xs text-foreground whitespace-pre-wrap font-mono w-full break-words overflow-wrap-anywhere">
                     {restApiPrompt}
                   </pre>
                 </div>

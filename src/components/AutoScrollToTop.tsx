@@ -25,6 +25,25 @@ const AutoScrollToTop = () => {
     });
   };
 
+  // Scroll to hash anchor with multiple attempts
+  const scrollToHash = (hash: string) => {
+    const elementId = hash.replace('#', '');
+    const element = document.getElementById(elementId);
+    
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // If element not found immediately, try again after a delay
+      const timeout = setTimeout(() => {
+        const delayedElement = document.getElementById(elementId);
+        if (delayedElement) {
+          delayedElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      scrollTimeoutRefs.current.push(timeout);
+    }
+  };
+
   useEffect(() => {
     // Clear any existing timeouts and RAF
     scrollTimeoutRefs.current.forEach(timeout => clearTimeout(timeout));
@@ -41,6 +60,19 @@ const AutoScrollToTop = () => {
     
     // Skip auto-scroll for Index page to preserve its custom behavior
     if (location.pathname === "/") {
+      prevPathname.current = location.pathname;
+      return;
+    }
+
+    // Check if there's a hash fragment in the URL
+    if (location.hash) {
+      // Scroll to the hash anchor after a brief delay to ensure the page has rendered
+      const timeout = setTimeout(() => {
+        scrollToHash(location.hash);
+      }, 100);
+      scrollTimeoutRefs.current.push(timeout);
+      
+      // Update previous pathname for next navigation
       prevPathname.current = location.pathname;
       return;
     }

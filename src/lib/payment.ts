@@ -44,8 +44,8 @@ This keeps your payment configuration secure and maintainable!`);
   sessionStorage.setItem('payment_timestamp', paymentTimestamp.toString());
   sessionStorage.setItem('payment_token_backup', token);
   
-  // Redirect to Stripe Payment Link
+  // Open Stripe Payment Link in new tab
   // Note: The success URL should be configured in Stripe Dashboard as:
   // ${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}
-  window.location.href = paymentLinkUrl;
+  window.open(paymentLinkUrl, '_blank');
 };
