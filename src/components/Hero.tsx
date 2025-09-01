@@ -22,9 +22,9 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           </h1>
           
           {/* Subheading with Intelligence Engineering focus */}
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-6xl mx-auto mb-8 animate-fade-in leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-6xl mx-auto mb-8 animate-fade-in leading-relaxed">
             <span>Context amnesia costs you more than time...it costs you the opportunity to build cumulative AI intelligence.</span>
-            <span className="block">Every new session, every '/clear', every agent switch, knowledge is lost. AI is brilliant but has a memory like a sieve.</span>
+            <span className="block">Every new session, every '/clear', or every agent switch, knowledge is lost. AI is brilliant but has a memory like a sieve.</span>
           </p>
 
           {/* Intelligence Engineering Positioning */}
@@ -32,7 +32,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
             <p className="text-base sm:text-lg text-muted-foreground font-medium">
               <span>With <em>Local Memory</em>, every explanation becomes permanent through context engineering.</span>
               <span className="block">Your debugging wisdom compounds and your architectural decisions persist.</span>
-              <span>Build intelligence once, leverage it forever across every agent. Your context will always travel with you.</span>
+              <span>Build intelligence once and leverage it forever across every agent. Your context will always travel with you.</span>
             </p>
           </div>
           
@@ -45,7 +45,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
             </Link>
             <a href="#demo">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Watch <em>Local Memory</em> Compound →
+                See It In Action →
               </Button>
             </a>
           </div>

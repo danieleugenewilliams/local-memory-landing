@@ -169,7 +169,7 @@ const Demo = () => {
     // Special handling for user prompts - show as plain text
     const fullCommand = command === "user prompt" 
       ? `${(params as UserPromptParams).prompt}`
-      : `${command}(${JSON.stringify(params, null, 2)})`;
+      : `${command}(${JSON.stringify(params, null, window.innerWidth < 768 ? 0 : 2)})`;
     
     // Type out the command character by character (much faster)
     for (let i = 0; i <= fullCommand.length; i++) {
@@ -212,9 +212,9 @@ const Demo = () => {
   };
 
   return (
-    <section id="demo" className="bg-background py-8 lg:py-12">
+    <section id="demo" className="scroll-target bg-background py-8 lg:py-12">
       
-      <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8">
+      <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 mb-4">
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
             See <em>Local Memory</em> in Action
@@ -224,10 +224,10 @@ const Demo = () => {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-full md:max-w-6xl lg:max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_2fr_1fr] gap-6 lg:items-stretch">
             {/* Demo Controls */}
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <div className="bg-card rounded-2xl p-6 border border-border flex-1">
                 <h3 className="text-lg font-bold text-foreground mb-4">Interactive Demo</h3>
                 
@@ -269,9 +269,9 @@ const Demo = () => {
             </div>
 
             {/* Demo Output */}
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               {/* Code CLI Terminal */}
-              <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg flex-1">
+              <div className="bg-slate-900 rounded-2xl p-4 border border-slate-700 shadow-lg flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -283,8 +283,12 @@ const Demo = () => {
                 
                 <div 
                   ref={cliScrollRef}
-                  className="font-mono text-sm text-green-400 overflow-y-auto"
-                  style={{ height: '556px' }}
+                  className="font-mono text-sm text-green-400 overflow-y-auto overflow-hidden w-full min-w-0 max-w-full break-all whitespace-pre-wrap"
+                  style={{ 
+                    height: '556px',
+                    wordBreak: 'break-all',
+                    overflowWrap: 'anywhere'
+                  }}
                 >
                   {/* Welcome message - always visible */}
                   <div className="text-slate-400 mb-4">
@@ -296,44 +300,60 @@ const Demo = () => {
                   {/* Command History */}
                   {commandHistory.map((entry, index) => (
                     <div key={index} id={`step-${index}`} className="mb-4">
-                      <div className="text-blue-400">
+                      <div className="text-blue-400 w-full min-w-0">
                         <span className="text-blue-400">❯</span> {entry.command === "user prompt" 
-                          ? <span className="text-white"> {`${(entry.params as UserPromptParams).prompt}`}</span>
-                          : <span>
+                          ? <span className="text-white break-all"> {`${(entry.params as UserPromptParams).prompt}`}</span>
+                          : <span className="break-all w-full min-w-0">
                               {entry.command}(
-                              {JSON.stringify(entry.params, null, 2).split('\n').map((line, i) => (
-                                <div key={i} className={i === 0 ? "inline" : "ml-4 text-cyan-300"}>{line}</div>
-                              ))}
+                              {window.innerWidth < 768 
+                                ? <span className="break-all">{JSON.stringify(entry.params)}</span>
+                                : JSON.stringify(entry.params, null, 2).split('\n').map((line, i) => (
+                                  <div key={i} className={i === 0 ? "inline break-all" : "ml-4 text-cyan-300 break-all"}>{line}</div>
+                                ))
+                              }
                             </span>
                         }
                       </div>
                       <div className="text-gray-200 mt-2 ml-2 whitespace-pre-line">
                         {entry.response}
                       </div>
+                      
+                      {/* Guidance text after each completed step */}
+                      {index === 0 && (
+                        <div className="text-slate-400 mt-2">
+                          <span className="text-slate-500"># Click "Run Search" to find API patterns and conventions...</span>
+                        </div>
+                      )}
+                      {index === 1 && (
+                        <div className="text-slate-400 mt-2">
+                          <span className="text-slate-500"># Click "Run Search" again to find business requirements...</span>
+                        </div>
+                      )}
+                      {index === 2 && (
+                        <div className="text-slate-400 mt-2">
+                          <span className="text-slate-500"># Click "Run Ask" to generate the implementation plan...</span>
+                        </div>
+                      )}
                     </div>
                   ))}
                   
                   {/* Current Command Being Typed */}
                   {isTyping && currentCommand && (
-                    <div className="text-blue-400">
+                    <div className="text-blue-400 w-full min-w-0">
                       <span className="text-blue-400">❯</span> {currentCommand.startsWith('>') 
-                        ? <span className="text-white">{currentCommand}</span>
-                        : currentCommand.split('\n').map((line, i) => (
-                          <div key={i} className={i === 0 ? "inline" : "ml-4 text-cyan-300"}>{line}</div>
-                        ))}<span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>▊</span>
+                        ? <span className="text-white break-all w-full min-w-0">{currentCommand}</span>
+                        : <span className="break-all w-full min-w-0">
+                            {window.innerWidth < 768 
+                              ? <span className="break-all">{currentCommand}</span>
+                              : currentCommand.split('\n').map((line, i) => (
+                                <div key={i} className={i === 0 ? "inline break-all" : "ml-4 text-cyan-300 break-all"}>{line}</div>
+                              ))
+                            }
+                          </span>
+                      }<span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>▊</span>
                     </div>
                   )}
                   
-                  {/* Step guidance - show after each completed step */}
-                  {!isTyping && currentStep < demoSteps.length && commandHistory.length > 0 && (
-                    <div className="text-slate-400 mb-2">
-                      <span className="text-slate-500">
-                        {currentStep === 1 && "# Click \"Run Search\" to find API patterns and conventions..."}
-                        {currentStep === 2 && "# Click \"Run Search\" again to find business requirements..."}
-                        {currentStep === 3 && "# Click \"Run Ask\" to generate the implementation plan..."}
-                      </span>
-                    </div>
-                  )}
                   
                   {/* Waiting for input prompt */}
                   {!isTyping && currentStep < demoSteps.length && commandHistory.length > 0 && (
@@ -355,7 +375,7 @@ const Demo = () => {
             </div>
 
             {/* Key Benefits */}
-            <div className="flex flex-col md:col-span-2 lg:col-span-1">
+            <div className="flex flex-col md:col-span-2 lg:col-span-1 min-w-0">
               <div className="bg-card rounded-2xl p-6 border border-border flex-1">
                 <h3 className="text-lg text-center font-bold text-foreground mb-6">Why <em>Local Memory</em>?</h3>
                 
@@ -368,7 +388,7 @@ const Demo = () => {
                     <p className="text-sm text-muted-foreground">Skip searching docs and codebases. Get relevant project patterns instantly, worth $100-$300 daily.</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-memory-blue/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <div className="w-12 h-12 bg-memory-orange/20 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <span className="text-xl">🏦</span>
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Pays for Itself in 2 Days</h4>
@@ -378,7 +398,7 @@ const Demo = () => {
                     <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <span className="text-xl">📈</span>
                     </div>
-                    <h4 className="font-semibold text-foreground mb-2">$8K-10K Monthly Value</h4>
+                    <h4 className="font-semibold text-foreground mb-2">$8K-$10K Monthly Value</h4>
                     <p className="text-sm text-muted-foreground">Build on past learnings. Cumulative knowledge eliminates repeated context gathering.</p>
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import { Award, Medal, Trophy, Zap } from "lucide-react";
 
 const Performance = () => {
   return (
-    <Card className="mb-0 bg-transparent border-slate-600">
+    <Card className="mb-0 bg-transparent border-none">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Trophy className="w-6 h-6 text-memory-blue" />
@@ -21,8 +21,8 @@ const Performance = () => {
             <thead className="bg-slate-800">
               <tr className="border-b-2 border-slate-600">
                 <th className="text-left p-4 font-semibold text-white border-r border-slate-600">Metric</th>
-                <th className="text-left p-4 font-semibold text-white border-r border-slate-600">Before</th>
-                <th className="text-left p-4 font-semibold text-white border-r border-slate-600">After</th>
+                <th className="text-left p-4 font-semibold text-white border-r border-slate-600">Before <em>Local Memory</em></th>
+                <th className="text-left p-4 font-semibold text-white border-r border-slate-600">After <em>Local Memory</em></th>
                 <th className="text-left p-4 font-semibold text-white">Improvement</th>
               </tr>
             </thead>
@@ -32,7 +32,7 @@ const Performance = () => {
                 <td className="p-4 text-left text-red-400 border-r border-slate-600">50-100ms</td>
                 <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">11-15ms</td>
                 <td className="p-4 text-left">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
                     5-8x FASTER
                   </span>
                 </td>
@@ -42,7 +42,7 @@ const Performance = () => {
                 <td className="p-4 text-left text-red-400 border-r border-slate-600">200MB+</td>
                 <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">16MB</td>
                 <td className="p-4 text-left">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
                     12x LIGHTER
                   </span>
                 </td>
@@ -52,7 +52,7 @@ const Performance = () => {
                 <td className="p-4 text-left text-red-400 border-r border-slate-600">Node.js, Typescript</td>
                 <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">Zero</td>
                 <td className="p-4 text-left">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-sm font-bold">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
                     ACTUALLY ZERO
                   </span>
                 </td>
@@ -130,29 +130,29 @@ const Performance = () => {
           <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>Qdrant vector database integration</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>Optimized embeddings with nomic-embed-text</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>Single binary deployment</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>SQLite fallback for compatibility</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>Rust-based performance optimizations</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-memory-green">✓</span>
+                <span className="text-memory-yellow">✓</span>
                 <span>Intelligent caching strategies</span>
               </div>
             </div>

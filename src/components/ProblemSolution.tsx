@@ -1,6 +1,6 @@
 const ProblemSolution = () => {
   return (
-    <section className="py-8 lg:py-16 bg-slate-900">
+    <section className="py-8 lg:py-16 bg-slate-900 pb-8">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
@@ -57,7 +57,7 @@ const ProblemSolution = () => {
                 <span className="text-red-500 text-xl flex-shrink-0">😤</span>
                 <div>
                   <div className="font-medium text-white">Starting over with each agent switch</div>
-                  <div className="text-sm text-gray-300">Claude → OpenCode → Qwen → back to square one</div>
+                  <div className="text-sm text-gray-300">Claude, GPT, Qwen, Grok, etc. → back to square one</div>
                 </div>
               </div>
             </div>
@@ -80,7 +80,7 @@ const ProblemSolution = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
+              <div className="flex items-start gap-3 p-4 pt-6 md:pt-3 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
                 <span className="text-green-500 text-xl flex-shrink-0">🧠</span>
                 <div>
                   <div className="font-medium text-white">Your expertise becomes an intelligence asset</div>

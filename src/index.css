@@ -50,6 +50,8 @@ All colors MUST be HSL.
     --memory-blue: 217 91% 60%;
     --memory-green: 142 86% 58%;
     --memory-orange: 25 95% 53%;
+    --memory-pink: 320 85% 65%;
+    --memory-yellow: 48 95% 65%;
     
     /* Code syntax highlighting */
     --code-bg: 220 20% 6%;

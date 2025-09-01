@@ -56,6 +56,8 @@ export default {
 				'memory-blue': 'hsl(var(--memory-blue))',
 				'memory-green': 'hsl(var(--memory-green))',
 				'memory-orange': 'hsl(var(--memory-orange))',
+				'memory-pink': 'hsl(var(--memory-pink))',
+				'memory-yellow': 'hsl(var(--memory-yellow))',
 				'code-bg': 'hsl(var(--code-bg))',
 				'code-keyword': 'hsl(var(--code-keyword))',
 				'code-string': 'hsl(var(--code-string))',
