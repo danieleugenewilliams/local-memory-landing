@@ -479,7 +479,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
                   <div className="space-y-4">
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Memory Operations (4)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-purple">Memory Operations (4)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>store_memory</div>
                         <div>update_memory</div>
@@ -489,7 +489,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-orange">Search Operations (3)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-purple">Search Operations (3)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>search_memories</div>
                         <div>search_by_tags</div>
@@ -498,7 +498,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-purple">AI Analysis (3)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-pink">AI Analysis (3)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>ask_question</div>
                         <div>analyze_memories</div>
@@ -509,7 +509,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                   
                   <div className="space-y-4">
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Temporal Analysis (3)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-pink">Temporal Analysis (3)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>analyze_temporal_patterns</div>
                         <div>track_learning_progression</div>
@@ -518,7 +518,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-orange">Relationships (4)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Relationships (4)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>get_related_memories</div>
                         <div>discover_relationships</div>
@@ -528,7 +528,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-purple">Categorization (4)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Categorization (4)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>categorize_memory</div>
                         <div>create_category</div>
@@ -540,7 +540,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                   
                   <div className="space-y-4">
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-green">Statistics (2)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Statistics (2)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>get_session_stats</div>
                         <div>get_domain_stats</div>
@@ -548,7 +548,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-orange">Management (3)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-blue">Management (3)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>list_sessions</div>
                         <div>create_domain</div>
@@ -576,7 +576,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-green">Core Memory (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-purple">Memory Operations (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /memories</div>
                         <div>PUT /memories/:id</div>
@@ -586,7 +586,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-orange">Search (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-purple">Search Operations (3)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>GET /memories/search</div>
                         <div>POST /search/tags</div>
@@ -595,7 +595,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-purple">AI Operations (2)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-pink">AI Analysis (2)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /ask</div>
                         <div>POST /analyze</div>
@@ -605,7 +605,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                   
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-green">Temporal Analysis (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-pink">Temporal Analysis (3)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /temporal/patterns</div>
                         <div>POST /temporal/progression</div>
@@ -614,7 +614,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-orange">Relationships (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-blue">Relationships (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>GET /memories/:id/related</div>
                         <div>POST /relationships/discover</div>
@@ -624,7 +624,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-purple">Categorization (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-blue">Categorization (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /categories</div>
                         <div>POST /memories/:id/categorize</div>
@@ -636,7 +636,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                   
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-green">Statistics (2)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-blue">Statistics (2)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>GET /memories/stats</div>
                         <div>GET /domains/:domain/stats</div>
@@ -644,7 +644,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-orange">Management (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-blue">Management (3)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /domains</div>
                         <div>GET /sessions</div>
@@ -669,7 +669,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Help & Community</h2>
 
             {/* Troubleshooting */}
-            <Card id="troubleshooting" className="mb-8 scroll-target border border-memory-pink">
+            <Card id="troubleshooting" className="mb-8 scroll-target border border-memory-green">
               <CardHeader>
                 <CardTitle>Troubleshooting</CardTitle>
                 <CardDescription>Here are some common concerns and remedies.</CardDescription>
@@ -770,7 +770,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
       <section className="py-8 lg:pt-14 lg:pb-0 bg-slate-900">
         <div className="container max-w-4xl mx-auto px-6">
           {/* Community */}
-          <Card id="community" className="mb-0 scroll-target bg-slate-800/50 border-blue-600">
+          <Card id="community" className="mb-0 scroll-target bg-slate-800/50 border-orange-600">
             <CardHeader>
               <CardTitle className="text-white">Support & Community</CardTitle>
               <CardDescription className="text-gray-300">Get help and connect with other users.</CardDescription>
