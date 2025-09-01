@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProblemSolution from "@/components/ProblemSolution";
+// import ContextEngineering from "@/components/ContextEngineering";
+import DataSovereignty from "@/components/DataSovereignty";
 import Demo from "@/components/Demo";
 import WhyLocalMemory from "@/components/WhyLocalMemory";
 import Footer from "@/components/Footer";
@@ -79,7 +81,9 @@ const Index = () => {
       <Header />
       <Hero ref={heroRef} />
       <ProblemSolution />
+      {/* <ContextEngineering /> */}
       <Demo />
+      <DataSovereignty />
       <WhyLocalMemory />
       <Footer />
       <ScrollToTop />

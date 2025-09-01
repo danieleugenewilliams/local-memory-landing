@@ -852,7 +852,7 @@ NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts 
 
   return (
     <div className="mt-8">
-      <Card className="border-0 border-memory-blue/0 bg-card">
+      <Card className="border-0 border-memory-blue/0 bg-card bg-slate-900">
         
         <CardContent className="space-y-6">
 

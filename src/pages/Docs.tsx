@@ -11,9 +11,11 @@ import { handleStripePayment } from "@/lib/payment";
 const DocsPage = () => {
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="py-12">
+      
+      {/* Section 1: Header - Light Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4 scroll-target" id="documentation">
@@ -22,17 +24,22 @@ const DocsPage = () => {
             <p className="text-xl text-muted-foreground">
               Here's the complete installation and user guide for <em>Local Memory</em>.</p>
           </div>
+        </div>
+      </section>
 
+      {/* Section 2: Quick Navigation - Dark Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
+        <div className="container max-w-4xl mx-auto px-6">
           {/* Quick Navigation */}
-          <Card className="mb-8 border-memory-blue/30">
+          <Card className="mb-0 bg-slate-800/50 border-slate-600">
             <CardHeader>
-              <CardTitle className="text-xl">Shortcuts</CardTitle>
-              <CardDescription>Jump to the section you need.</CardDescription>
+              <CardTitle className="text-xl text-white">Shortcuts</CardTitle>
+              <CardDescription className="text-gray-300">Jump to the section you need.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <h4 className="font-semibold">Getting Started</h4>
+                  <h4 className="font-semibold text-white">Getting Started</h4>
                   <div className="space-y-1 text-sm">
                     <a href="#quick-start" className="block text-memory-blue hover:underline">• Quick Start</a>
                     <a href="#agent-setup" className="block text-memory-blue hover:underline">• Agent Setup Prompts</a>
@@ -40,13 +47,13 @@ const DocsPage = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold">Usage</h4>
+                  <h4 className="font-semibold text-white">Usage</h4>
                   <div className="space-y-1 text-sm">
                     <a href="#api-reference" className="block text-memory-blue hover:underline">• API Documentation</a>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold">Resources</h4>
+                  <h4 className="font-semibold text-white">Resources</h4>
                   <div className="space-y-1 text-sm">
                     <a href="#troubleshooting" className="block text-memory-blue hover:underline">• Troubleshooting</a>
                     <a href="#community" className="block text-memory-blue hover:underline">• Community</a>
@@ -55,7 +62,12 @@ const DocsPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
+      {/* Section 3: Install & Setup - Light Background */}
+      <section className="py-8 lg:py-12 bg-background">
+        <div className="container max-w-4xl mx-auto px-6">
           {/* Install & Setup */}
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Easy Install & Setup</h2>
@@ -147,22 +159,34 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               </div>
             </div>
 
-            {/* Agent Setup Prompts */}
-            <div id="agent-setup" className="mb-12 scroll-target">
-              <div className="text-center mb-8">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <Bot className="w-8 h-8 text-memory-blue" />
-                  <h3 className="text-2xl font-bold text-foreground">Agent Setup Prompts</h3>
-                  <span className="bg-memory-blue/20 text-memory-blue px-3 py-1 rounded-full text-sm font-medium">Alternative Method</span>
-                </div>
-                <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  Prefer having your AI agent handle the setup? After downloading <em>Local Memory</em>, copy our detailed prompts 
-                  and let your AI assistant handle the complete installation and configuration.
-                </p>
-              </div>
+          </div>
+        </div>
+      </section>
 
-              <PostPurchaseAgentSetup />
+      {/* Section 4: Agent Setup Prompts - Dark Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
+        <div className="container max-w-4xl mx-auto px-6">
+          <div id="agent-setup" className="mb-0 scroll-target">
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Bot className="w-8 h-8 text-memory-blue" />
+                <h3 className="text-2xl font-bold text-white">Agent Setup Prompts</h3>
+                <span className="bg-memory-blue/20 text-memory-blue px-3 py-1 rounded-full text-sm font-medium">Alternative Method</span>
+              </div>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                Prefer having your AI agent handle the setup? After downloading <em>Local Memory</em>, copy our detailed prompts 
+                and let your AI assistant handle the complete installation and configuration.
+              </p>
             </div>
+
+            <PostPurchaseAgentSetup />
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Advanced Setup - Light Background */}
+      <section className="py-8 lg:py-12 bg-background">
+        <div className="container max-w-4xl mx-auto px-6">
 
             {/* Advanced Setup */}
             <div id="manual-setup" className="mb-12 scroll-target">
@@ -380,20 +404,23 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                 </CardContent>
               </Card>
             </div>
-          </div>
+        </div>
+      </section>
 
-          {/* API Reference */}
-          <div id="api-reference" className="mb-12 scroll-target">
-            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">API Documentation</h2>
+      {/* Section 6: API Reference - Dark Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
+        <div className="container max-w-4xl mx-auto px-6">
+          <div id="api-reference" className="mb-0 scroll-target">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">API Documentation</h2>
 
             {/* MCP Protocol */}
             <div id="mcp-reference" className="scroll-target" />
-            <Card className="mb-6">
+            <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   MCP Protocol (26 Tools)
                 </CardTitle>
-                <CardDescription><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors.</CardDescription>
+                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
@@ -482,12 +509,12 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             </Card>
 
             {/* REST API */}
-            <Card className="mb-6">
+            <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-white">
                   REST API (25 Endpoints)
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-gray-300">
                   <p className="mt-2"><em>Local Memory</em> has a universal REST API interface for any platform.</p>
                 </CardDescription>
               </CardHeader>
@@ -579,8 +606,12 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             </Card>
 
           </div>
+        </div>
+      </section>
 
-          {/* Help & Community */}
+      {/* Section 7: Troubleshooting - Light Background */}
+      <section className="py-8 lg:py-12 bg-background">
+        <div className="container max-w-4xl mx-auto px-6">
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Help & Community</h2>
 
@@ -658,26 +689,38 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               </CardContent>
             </Card>
 
-            {/* Community */}
-            <Card id="community" className="mb-8 scroll-target">
-              <CardHeader>
-                <CardTitle>Support & Community</CardTitle>
-                <CardDescription>Get help and connect with other users.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-1 gap-6">
-                  <div>
-                    <ul className="space-y-2 text-sm list-disc pl-5">
-                      <li><strong><a href="#documentation" className="text-memory-blue hover:underline">Documentation</a></strong>: This page covers most use cases</li>
-                      <li><strong><a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a></strong>: Live support and discussion</li>
-                      <li><strong>Bug Reports:</strong> Share bug reports on Discord #bug-reports</li>
-                      <li><strong>Feature Requests:</strong> Share ideas on Discord #feature-requests</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
+        </div>
+      </section>
+
+      {/* Section 8: Community - Dark Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
+        <div className="container max-w-4xl mx-auto px-6">
+          {/* Community */}
+          <Card id="community" className="mb-0 scroll-target bg-slate-800/50 border-slate-600">
+            <CardHeader>
+              <CardTitle className="text-white">Support & Community</CardTitle>
+              <CardDescription className="text-gray-300">Get help and connect with other users.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-1 gap-6">
+                <div>
+                  <ul className="space-y-2 text-sm list-disc pl-5 text-gray-300">
+                    <li><strong><a href="#documentation" className="text-memory-blue hover:underline">Documentation</a></strong>: This page covers most use cases</li>
+                    <li><strong><a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a></strong>: Live support and discussion</li>
+                    <li><strong className="text-white">Bug Reports:</strong> Share bug reports on Discord #bug-reports</li>
+                    <li><strong className="text-white">Feature Requests:</strong> Share ideas on Discord #feature-requests</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Section 9: Final CTA - Light Background */}
+      <section className="py-8 lg:py-12 bg-slate-900">
+        <div className="container max-w-4xl mx-auto px-6">
           
           {/* CTA */}
           <div className="text-center">
@@ -687,7 +730,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             </Button>
           </div>
         </div>
-      </div>
+      </section>
       <Footer />
       <ScrollToTop />
     </div>

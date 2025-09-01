@@ -23,21 +23,30 @@ const FeaturesPage = () => {
     }));
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="py-12">
+      
+      {/* Hero Section */}
+      <section className="bg-background py-8 lg:py-12">
         <div className="container max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-foreground mb-4">
               <em>Local Memory</em> Features
             </h1>
             <p className="text-xl text-muted-foreground">
-              It's the only memory system that works natively with both MCP-enabled AI agents and traditional agent platforms.
+              Every explanation, correction, and domain insight becomes part of your AI's <strong>permanent intelligence</strong>. 
+              You're building a knowledge system that amplifies your unique expertise.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Key Elements Section */}
+      <section className="bg-background py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
 
           {/* Key Elements */}
-          <Card className="mb-8">
+          <Card className="mb-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Key className="w-5 h-5 text-memory-blue" />
@@ -111,15 +120,19 @@ const FeaturesPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
-          {/* AI Platform Compatibility */}
-          <Card className="mb-8">
+      {/* AI Platform Compatibility Section */}
+      <section className="bg-slate-900 py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
+          <Card className="mb-0 bg-transparent border-slate-600">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Globe className="w-6 h-6 text-blue-500" />
-                <CardTitle className="text-xl">Universal AI Memory Platform</CardTitle>
+                <CardTitle className="text-xl text-white">Universal AI Memory Platform</CardTitle>
               </div>
-              <CardDescription><em>Local Memory</em> is designed for both modern MCP-enabled agents and traditional AI platforms.</CardDescription>
+              <CardDescription className="text-gray-300"><em>Local Memory</em> is designed for both modern MCP-enabled agents and traditional AI platforms.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid gap-6 md:grid-cols-2">
@@ -156,17 +169,21 @@ const FeaturesPage = () => {
                 </div>
               </div>
               
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold mb-2">How Is This Transformational for Agentic Workflows?</h4>
-                <p className="text-sm text-muted-foreground">
+              <div className="bg-slate-800 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2 text-white">How Is This Transformational for Agentic Workflows?</h4>
+                <p className="text-sm text-gray-300">
                   Think of it like this: Most memory tools are like USB drives that only work with one computer at a time, at that moment. <em>Local Memory</em> is like cloud storage that works with all of your agents, except it stays private on your machine.
                 </p>
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
-          {/* Quick Start */}
-          <Card className="mb-8 border-memory-muted/30">
+      {/* Quick Start Section */}
+      <section className="bg-background py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
+          <Card className="mb-0 border-memory-muted/30">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Settings className="w-6 h-6 text-memory-blue" />
@@ -214,12 +231,20 @@ const FeaturesPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
-          {/* Performance Benchmarks */}
+      {/* Performance Benchmarks Section */}
+      <section className="bg-slate-900 py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
           <Performance />
+        </div>
+      </section>
 
-          {/* Technical Architecture */}
-          <Card className="mb-8">
+      {/* Technical Architecture Section */}
+      <section className="bg-background py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
+          <Card className="mb-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Wrench className="w-5 h-5 text-memory-blue" />
@@ -282,15 +307,19 @@ const FeaturesPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
-          {/* Using Local Memory */}
-          <Card className="mb-8">
+      {/* Agent Collaboration Scenarios Section */}
+      <section className="bg-slate-900 py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
+          <Card className="mb-0 bg-transparent border-slate-600">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <Workflow className="w-5 h-5 text-memory-blue" />
                 Agent Collaboration Scenarios
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-gray-300">
                 Below are real agent conversations showing how <em>Local Memory</em> transforms AI from stateless helpers into learning and evolving collaborators. Click to see full interactions.
               </CardDescription>
             </CardHeader>
@@ -586,9 +615,13 @@ const FeaturesPage = () => {
                 </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
-          {/* Support */}
-          <Card className="mb-8">
+      {/* Support Section */}
+      <section className="bg-background py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
+          <Card className="mb-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-memory-blue" />
@@ -607,10 +640,14 @@ const FeaturesPage = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
           
-          {/* CTA */}
+      {/* CTA Section */}
+      <section className="bg-slate-900 py-8 lg:py-12">
+        <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center">
-            <p className="text-muted-foreground mb-4">Ready to give your AI permanent memory?</p>
+            <p className="text-gray-300 mb-4">Ready to give your AI permanent memory?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
                 <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
@@ -625,7 +662,7 @@ const FeaturesPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
       <Footer />
       <ScrollToTop />
     </div>

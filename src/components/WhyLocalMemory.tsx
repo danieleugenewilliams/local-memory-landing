@@ -67,13 +67,13 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
   };
 
   return (
-    <section id="benchmarks" className="py-10 pb-2 bg-muted/30">
+    <section id="benchmarks" className="py-10 pb-2 bg-background">
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">
             Shared Memories, Every Agent
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
             Transform your AI agents with persistent memory that never forgets.
           </p>
         </div>
@@ -81,16 +81,16 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
         {/* Streamlined Pricing */}
         <div className="max-w-4xl mx-auto mb-12">
           {/* Early Access Special - Main Focus */}
-          <div className="bg-card rounded-2xl border-2 border-memory-blue/50 relative overflow-hidden mb-6">
+          <div className="bg-slate-800 rounded-2xl border-2 border-memory-blue/50 relative overflow-hidden mb-6">
             {/* Popular badge */}
             
             <div className="p-8 text-center">
               <div className="text-3xl mb-2">🚀</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Launch Special</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Context Engineers Save Thousands</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-4xl font-bold text-foreground">$59</span>
+                <span className="text-4xl font-bold text-white">$59</span>
                 <div className="text-left">
-                  <div className="text-sm text-muted-foreground line-through">normally $99</div>
+                  <div className="text-sm text-gray-400 line-through">normally $99</div>
                   <div className="text-sm text-memory-blue font-medium">40% OFF</div>
                 </div>
               </div>
@@ -99,7 +99,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">Complete Memory System</span>
+                  <span className="text-center md:text-left">Complete Context Engineering System</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
@@ -111,7 +111,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">$2K-$6K Monthly Value</span>
+                  <span className="text-center md:text-left">Your Expertise → AI's Permanent Memory</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
@@ -140,9 +140,9 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                   Get Instant Access
                 </Button>
               </div>
-              <div className="mt-2 text-sm text-muted-foreground">🔒 One-Time Secure Stripe Payment</div>
+              <div className="mt-2 text-sm text-gray-300">🔒 One-Time Secure Stripe Payment</div>
 
-              <div className="mt-2 text-sm text-muted-foreground">
+              <div className="mt-2 text-sm text-gray-300">
                 <em>The only AI memory system with native MCP integration <b>and</b> universal REST API.</em>
               </div>
 
@@ -156,14 +156,14 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
 
             {/* Real User Testimonial - Prominent */}
             <div className="max-w-4xl mx-auto mb-12">
-              <div className="bg-gradient-to-r from-memory-blue/10 to-memory-purple/10 border border-memory-blue/20 rounded-2xl p-8 lg:p-12">
+              <div className="bg-gradient-to-r from-memory-blue/20 to-memory-purple/20 border border-memory-blue/30 rounded-2xl p-8 lg:p-12">
                 <div className="text-center">
                   <div className="text-4xl mb-6">💬</div>
-                  <blockquote className="text-xl sm:text-2xl text-foreground mb-6 italic leading-relaxed">
-                    "I just wanted to share that the <em>local memory</em> MCP has really helped boost my productivity with [my project]. Thanks so much again for sharing!"
+                  <blockquote className="text-xl sm:text-2xl text-white mb-6 italic leading-relaxed">
+                    "Local memory MCP has really helped boost my productivity. I'm no longer just vibe coding...I'm engineering real solutions. Every day the coding agents gets smarter about MY specific project context."
                   </blockquote>
-                  <cite className="text-sm text-muted-foreground font-medium">
-                    — Early Access Developer
+                  <cite className="text-sm text-gray-300 font-medium">
+                    — Early Access User/Context Engineer
                   </cite>
                   
                 </div>

@@ -12,24 +12,27 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black_40%,transparent_100%)]" />
       
       <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8 py-8 lg:py-16">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-6xl text-center">
           {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
-            <p><em>Local Memory</em> :</p>
+            <p><em>Local Memory</em>:</p>
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
-              The AI System That Cures Context Amnesia
+              Cure Context Amnesia. <br /> Engineer AI Intelligence.
             </span>
           </h1>
           
-          {/* Subheading with performance focus + pain points */}
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            Every new session, every '/clear', every agent switch, knowledge is lost. AI is brilliant but has a memory like a sieve.
+          {/* Subheading with Intelligence Engineering focus */}
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-6xl mx-auto mb-8 animate-fade-in leading-relaxed">
+            <span>Context amnesia costs you more than time...it costs you the opportunity to build cumulative AI intelligence.</span>
+            <span className="block">Every new session, every '/clear', every agent switch, knowledge is lost. AI is brilliant but has a memory like a sieve.</span>
           </p>
-          
-          {/* Key Benefits (single line) */}
+
+          {/* Intelligence Engineering Positioning */}
           <div className="text-center mb-10 animate-fade-in">
-            <p className="text-base sm:text-lg text-muted-foreground font-medium space-x-6">
-              <p>Give your AI permanent memory across ALL coding agents with <em>Local Memory</em>. Your context travels with you.</p>
+            <p className="text-base sm:text-lg text-muted-foreground font-medium">
+              <span>With <em>Local Memory</em>, every explanation becomes permanent through context engineering.</span>
+              <span className="block">Your debugging wisdom compounds and your architectural decisions persist.</span>
+              <span>Build intelligence once, leverage it forever across every agent. Your context will always travel with you.</span>
             </p>
           </div>
           
@@ -42,7 +45,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
             </Link>
             <a href="#demo">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                See It In Action →
+                Watch <em>Local Memory</em> Compound →
               </Button>
             </a>
           </div>
@@ -53,7 +56,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
             🔒One-Time Secure Stripe Payment  • ⚡ Instant Access • 🛡️ 100% Local & Private
           </div>
 
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-muted-foreground animate-fade-in">
             <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
           </div>
 

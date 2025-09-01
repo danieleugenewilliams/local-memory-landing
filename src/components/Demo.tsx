@@ -212,12 +212,7 @@ const Demo = () => {
   };
 
   return (
-    <section id="demo" className="relative overflow-hidden bg-background py-8 lg:py-12">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-memory-blue/10 via-background to-memory-purple/10" />
-      
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.02)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black_40%,transparent_100%)]" />
+    <section id="demo" className="bg-background py-8 lg:py-12">
       
       <div className="container relative max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
@@ -383,7 +378,7 @@ const Demo = () => {
                     <div className="w-12 h-12 bg-memory-purple/20 rounded-xl flex items-center justify-center mx-auto mb-3">
                       <span className="text-xl">📈</span>
                     </div>
-                    <h4 className="font-semibold text-foreground mb-2">$2K-6K Monthly Value</h4>
+                    <h4 className="font-semibold text-foreground mb-2">$8K-10K Monthly Value</h4>
                     <p className="text-sm text-muted-foreground">Build on past learnings. Cumulative knowledge eliminates repeated context gathering.</p>
                   </div>
                 </div>

@@ -13,17 +13,17 @@ const PaymentPage = () => {
         <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-4">
-              Get <em>Local Memory</em>
+              Become a Context Engineer
             </h1>
             <p className="text-lg text-muted-foreground">
-              Context amnesia is killing your productivity—it's time to fix that.
+              Transform your expertise into permanent AI intelligence with Local Memory.
             </p>
           </div>
 
           <div className="bg-card rounded-2xl border-2 border-memory-blue/50 relative overflow-hidden mb-6">
             <div className="p-8 text-center">
               <div className="text-3xl mb-2">🚀</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Launch Special</h3>
+              <h3 className="text-xl font-bold text-foreground mb-2">Context Engineers Save Thousands</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="text-4xl font-bold text-foreground">$59</span>
                 <div className="text-left">
@@ -36,7 +36,7 @@ const PaymentPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">Complete Memory System</span>
+                  <span className="text-center md:text-left">Complete Context Engineering System</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
@@ -48,7 +48,7 @@ const PaymentPage = () => {
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">$2K-$6K Monthly Value</span>
+                  <span className="text-center md:text-left">Your Expertise → AI's Permanent Memory</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
@@ -79,7 +79,7 @@ const PaymentPage = () => {
                   className="w-full sm:w-auto" 
                   size="lg"
                 >
-                  Upgrade Your Coding Agents Memory Now
+                  Become a Context Engineer Now
                 </Button>
               </div>
               
