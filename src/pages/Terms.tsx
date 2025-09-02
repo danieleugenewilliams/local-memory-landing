@@ -23,20 +23,20 @@ const Terms = () => {
 
           <div className="space-y-8">
             {/* Agreement */}
-            <Card>
+            <Card className="border border-memory-blue">
               <CardHeader>
                 <CardTitle>Agreement to Terms</CardTitle>
-                <CardDescription>Last updated: August 29, 2025</CardDescription>
+                <CardDescription>Last updated: September 1, 2025</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  By purchasing, downloading, or using <em>Local Memory</em> software, you agree to these Terms and Conditions. If you decline to agree with these terms, you will not be permitted to use our software.
+                  By purchasing, downloading, or using <em>Local Memory</em> software, you agree to these Terms & Conditions. If you decline to agree with these terms, you will not be permitted to use our software.
                 </p>
               </CardContent>
             </Card>
 
             {/* Software License */}
-            <Card>
+            <Card className="border border-memory-green">
               <CardHeader>
                 <CardTitle>Software License</CardTitle>
               </CardHeader>
@@ -60,9 +60,9 @@ const Terms = () => {
             </Card>
 
             {/* Payment & Billing */}
-            <Card>
+            <Card className="border border-memory-orange">
               <CardHeader>
-                <CardTitle>Payment & Billing</CardTitle>
+                <CardTitle>Payment and Billing</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -80,7 +80,7 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Pricing</h4>
                   <p className="text-muted-foreground">
-                    Prices are listed in USD and may change at any time. However, once you've purchased <em>Local Memory</em>, your license remains valid regardless of future price changes.
+                    Prices, which are listed in USD, may change at any time. However, once you've purchased <em>Local Memory</em>, your license remains valid regardless of future pricing updates.
                   </p>
                 </div>
                 <div>
@@ -92,35 +92,8 @@ const Terms = () => {
               </CardContent>
             </Card>
 
-            {/* Refunds & Returns */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Refunds & Returns</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-semibold mb-2">30-Day Refund Policy</h4>
-                  <p className="text-muted-foreground">
-                    If <em>Local Memory</em> isn't working for you within 30 days of purchase, we'll refund your money. No hoops to jump through, no lengthy explanations required.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">How to Request a Refund</h4>
-                  <p className="text-muted-foreground">
-                    Contact us through our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> with your purchase details. Refunds are typically processed within 5-10 business days back to your original payment method.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Refund Conditions</h4>
-                  <p className="text-muted-foreground">
-                    Refunds are available for 30 days from your purchase date. After that period, all sales are final. This gives you plenty of time to evaluate whether <em>Local Memory</em> works for your needs.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Software Delivery */}
-            <Card>
+            <Card className="border border-memory-purple">
               <CardHeader>
                 <CardTitle>Software Delivery</CardTitle>
               </CardHeader>
@@ -128,35 +101,35 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Installation Methods</h4>
                   <p className="text-muted-foreground">
-                    <strong>Recommended:</strong> Install via npm with <code className="bg-muted px-1 rounded">npm install -g local-memory-mcp</code>
-                  </p>
-                  <p className="text-muted-foreground">
-                    <strong>Alternative:</strong> Download platform-specific binaries directly after purchase for manual installation.
+                    <ul className="list-disc pl-5 space-y-2">
+                      <li>Recommended: Install via npm with <code className="bg-muted px-1 rounded">'npm install -g local-memory-mcp'</code></li>
+                      <li>Alternative: Download platform-specific binaries directly after purchase for manual installation</li>
+                    </ul>
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">License Key Delivery</h4>
+                  <h4 className="font-semibold mb-2">License Key</h4>
                   <p className="text-muted-foreground">
-                    Your license key will be displayed on the success page immediately after purchase. <strong>You have 30 minutes to copy and store your license key.</strong> After this window, the key will no longer be accessible.
+                    Your license key will be displayed on the success page immediately after purchase. <strong>You have 30 minutes to copy and store your license key.</strong> After this window, the key will no longer be accessible. If you forget to copy your license key, submit a #support request in our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-semibold mb-2">License Activation</h4>
                   <p className="text-muted-foreground">
-                    Activate your license immediately after installation using <code className="bg-muted px-1 rounded">local-memory license activate [YOUR-LICENSE-KEY]</code>. Store your license key securely as you'll need it for installations on different machines.
+                    Activate your license immediately after installation using <code className="bg-muted px-1 rounded">'local-memory license activate [YOUR-LICENSE-KEY]'</code>.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-2">We Shouldn't Have to Say This, But...</h4>
-                  <p className="text-muted-foreground">
-                    Copy your license key immediately after purchase. We cannot regenerate lost license keys, and the 30-minute window is firm. Set a reminder, take a screenshot, save it to your password manager—whatever works for you.
+                  <h4 className="font-semibold mb-2"></h4>
+                  <p className="text-muted-foreground italic">
+                    Note: To reiterate, copy your license key immediately after purchase. The 30-minute window is firm, and we cannot regenerate lost license keys.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Acceptable Use */}
-            <Card>
+            <Card className="border border-memory-pink">
               <CardHeader>
                 <CardTitle>User Responsibilities</CardTitle>
               </CardHeader>
@@ -188,7 +161,7 @@ const Terms = () => {
             </Card>
 
             {/* Intellectual Property */}
-            <Card>
+            <Card className="border border-memory-yellow">
               <CardHeader>
                 <CardTitle>Intellectual Property Rights</CardTitle>
               </CardHeader>
@@ -203,7 +176,7 @@ const Terms = () => {
             </Card>
 
             {/* Disclaimers */}
-            <Card>
+            <Card className="border border-memory-blue">
               <CardHeader>
                 <CardTitle>Important Disclaimers</CardTitle>
               </CardHeader>
@@ -212,6 +185,12 @@ const Terms = () => {
                   <h4 className="font-semibold mb-2">Software Provided "As-Is"</h4>
                   <p className="text-muted-foreground">
                     <em>Local Memory</em> is provided "as-is". While we are dedicated to the ongoing evolution and innovation of our platform, please note that we cannot promise it will always be entirely error-free or function flawlessly. We recognize that software complexity is a reality, but our commitment to continuous improvement ensures that we are always working to enhance your experience.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-2">Refund Policy</h4>
+                  <p className="text-muted-foreground">
+                    All sales are final. We have worked to ensure that <em>Local Memory</em> meets your needs. If you require additional assistance based on your particular set up, you can find support and guidance in our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
                   </p>
                 </div>
                 <div>
@@ -230,7 +209,7 @@ const Terms = () => {
             </Card>
 
             {/* Termination */}
-            <Card>
+            <Card className="border border-memory-green">
               <CardHeader>
                 <CardTitle>License Termination</CardTitle>
               </CardHeader>
@@ -242,7 +221,7 @@ const Terms = () => {
             </Card>
 
             {/* Updates and Changes */}
-            <Card>
+            <Card className="border border-memory-orange">
               <CardHeader>
                 <CardTitle>Updates and Changes</CardTitle>
               </CardHeader>
@@ -256,14 +235,14 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Changes to Terms</h4>
                   <p className="text-muted-foreground">
-                    We reserve the right to modify these Terms & Conditions at any time. Any changes will be posted on this page with an updated "Last updated" date. Continued use of the software after any changes constitutes acceptance of the new terms.
+                    We reserve the right to modify these Terms & Conditions at any time. Any changes will be posted on this page with a new "Last updated" date. Continued use of the software after any changes constitutes acceptance of the new terms.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Governing Law */}
-            <Card>
+            <Card className="border border-memory-purple">
               <CardHeader>
                 <CardTitle>Legal Details</CardTitle>
               </CardHeader>
@@ -278,13 +257,13 @@ const Terms = () => {
             </Card>
 
             {/* Contact */}
-            <Card>
+            <Card className="border border-memory-pink">
               <CardHeader>
                 <CardTitle>Questions</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Need clarification on these Terms and Conditions? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>!
+                  Need clarification on these Terms & Conditions? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
                 </p>
               </CardContent>
             </Card>

@@ -20,10 +20,10 @@ const Privacy = () => {
 
           <div className="space-y-8">
             {/* Overview */}
-            <Card>
+            <Card className="border border-memory-blue">
               <CardHeader>
                 <CardTitle>Overview</CardTitle>
-                <CardDescription>Last updated: August 27, 2025</CardDescription>
+                <CardDescription>Last updated: September 1, 2025</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
@@ -34,13 +34,13 @@ const Privacy = () => {
                 </p>
 
                 <p className="text-muted-foreground">
-                  We only use two third-party services: Stripe for secure payments and Discord for our optional community. That's it — no hidden tracking or data collection.
+                  We only use two third-party services: Stripe for secure payments and Discord for our community, which is optional. That's it — no hidden tracking or data collection.
                 </p>
               </CardContent>
             </Card>
 
             {/* Information We Collect */}
-            <Card>
+            <Card className="border border-memory-green">
               <CardHeader>
                 <CardTitle>What Information We Collect (Spoiler: Practically Nothing)</CardTitle>
               </CardHeader>
@@ -61,7 +61,7 @@ const Privacy = () => {
             </Card>
 
             {/* Third-Party Services */}
-            <Card>
+            <Card className="border border-memory-orange">
               <CardHeader>
                 <CardTitle>Third-Party Services</CardTitle>
               </CardHeader>
@@ -75,14 +75,14 @@ const Privacy = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Discord (For Support & Community)</h4>
                   <p className="text-muted-foreground">
-                    Online discussions and collaboration related to <em>Local Memory</em> happen on Discord, where developers and likeminded individuals help each other and share tips. By joining our Discord server, you are subject to Discord's own privacy practices. You may refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> to learn more. Joining is optional — the software still works great without it!
+                    Online discussions and collaboration related to <em>Local Memory</em> happen on Discord, where developers and likeminded individuals help each other and share tips. By joining our Discord server, you are subject to Discord's own privacy practices. You may refer to <a href="https://discord.com/privacy" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord's Privacy Policy</a> to learn more. Joining is optional — the software still works great without it.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Data Security */}
-            <Card>
+            <Card className="border border-memory-purple">
               <CardHeader>
                 <CardTitle>Data Security</CardTitle>
               </CardHeader>
@@ -91,31 +91,31 @@ const Privacy = () => {
                   Here is our security philosophy: The best way to protect your data is not to collect it in the first place. Since we don't gather personal information on our website, there's virtually no security risk through <em>Local Memory</em>.
                 </p>
                 <p className="text-muted-foreground mt-3">
-                  Our website uses HTTPS encryption for secure communication, and we confidently rely on Stripe for payments, we rely on Stripe's bank-level security infrastructure. Your <em>Local Memory</em> software runs entirely on your computer. Your data never leaves your machine.
+                  Our website utilizes HTTPS encryption for secure communication and employs Stripe for payments, taking advantage of their secure payment infrastructure. Your <em>Local Memory</em> software runs entirely on your computer. Your data never leaves your machine.
                 </p>
               </CardContent>
             </Card>
 
             {/* Changes to This Policy */}
-            <Card>
+            <Card className="border border-memory-pink">
               <CardHeader>
                 <CardTitle>Policy Updates</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  If we ever need to update this privacy policy, we'll post changes right here with a new "Last updated" date. Since we keep things straightforward, policy updates will likely be rare and minor.
+                  If we ever need to update this Privacy Policy, we'll post changes right here with a new "Last updated" date.
                 </p>
               </CardContent>
             </Card>
 
             {/* Contact */}
-            <Card>
+            <Card className="border border-memory-yellow">
               <CardHeader>
                 <CardTitle>Questions?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Need clarification on this Privacy Policy? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>!
+                  Need clarification on this Privacy Policy? Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
                 </p>
               </CardContent>
             </Card>

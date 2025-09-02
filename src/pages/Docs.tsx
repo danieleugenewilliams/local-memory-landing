@@ -518,7 +518,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h6 className="font-semibold mb-2 text-memory-blue">Relationships (4)</h6>
+                      <h6 className="font-semibold mb-2 text-memory-yellow">Relationships (4)</h6>
                       <div className="space-y-1 font-mono text-xs">
                         <div>get_related_memories</div>
                         <div>discover_relationships</div>
@@ -614,7 +614,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-blue">Relationships (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-yellow">Relationships (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>GET /memories/:id/related</div>
                         <div>POST /relationships/discover</div>
