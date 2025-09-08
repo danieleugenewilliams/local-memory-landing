@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import CryptoJS from "crypto-js";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
+import { trackPurchase, trackDownloadInitiated, trackLicenseKeyGenerated } from "@/lib/analytics";
 
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
@@ -241,6 +242,10 @@ const SuccessPage = () => {
         setDownloadUrls(allDownloadUrls);
         setProductKey(generatedKey);
         
+        // Track successful purchase and license key generation in GA4
+        trackPurchase(sessionId);
+        trackLicenseKeyGenerated(sessionId);
+        
         // Clear payment tokens to prevent reuse
         localStorage.removeItem('payment_token');
         sessionStorage.removeItem('payment_initiated');
@@ -329,6 +334,10 @@ const SuccessPage = () => {
       
       // Use GitHub releases URL directly for downloads
       // No CloudFront manipulation needed - GitHub provides reliable CDN
+      
+      // Track download initiation in GA4
+      const sessionId = searchParams.get('session_id') || 'unknown';
+      trackDownloadInitiated(platform, downloadUrl, sessionId);
       
       // Create a temporary link element to trigger download
       const downloadLink = document.createElement('a');

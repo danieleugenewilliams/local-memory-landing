@@ -2,6 +2,8 @@
  * Shared payment utilities for handling Stripe payment flow
  */
 
+import { trackBeginCheckout } from './analytics';
+
 export const generatePaymentToken = (): string => {
   // Generate a random token for payment verification
   return Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -43,6 +45,9 @@ This keeps your payment configuration secure and maintainable!`);
   sessionStorage.setItem('payment_initiated', 'true');
   sessionStorage.setItem('payment_timestamp', paymentTimestamp.toString());
   sessionStorage.setItem('payment_token_backup', token);
+  
+  // Track checkout initiation in GA4
+  trackBeginCheckout('stripe_payment_link');
   
   // Open Stripe Payment Link in new tab
   // Note: The success URL should be configured in Stripe Dashboard as:

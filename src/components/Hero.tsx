@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { forwardRef } from "react";
+import { trackCTAClick } from "@/lib/analytics";
 
 const Hero = forwardRef<HTMLElement>((props, ref) => {
   return (
@@ -39,12 +40,22 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           {/* Primary CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
             <Link to="/payment">
-              <Button variant="hero" size="lg" className="w-full sm:w-auto">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="w-full sm:w-auto"
+                onClick={() => trackCTAClick('hero', 'Upgrade Your Coding Agent\'s Memory Now', '/payment')}
+              >
                 Upgrade Your Coding Agent's Memory Now
               </Button>
             </Link>
             <a href="#demo">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="w-full sm:w-auto"
+                onClick={() => trackCTAClick('hero', 'See It In Action', '#demo')}
+              >
                 See It In Action →
               </Button>
             </a>

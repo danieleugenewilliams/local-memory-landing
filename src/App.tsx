@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import Features from "./pages/Features";
 import NotFound from "./pages/NotFound";
@@ -13,6 +13,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import { useEffect } from "react";
+import { detectAndTrackFunnelStage } from "./lib/analytics";
 
 const queryClient = new QueryClient();
 
@@ -21,12 +22,25 @@ if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }
 
+// Analytics tracking wrapper component
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Track page view and funnel stage on route changes
+    detectAndTrackFunnelStage();
+  }, [location]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <AnalyticsTracker />
         <AutoScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />

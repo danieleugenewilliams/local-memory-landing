@@ -4,6 +4,7 @@ import { ChevronDown, Copy, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { handleStripePayment } from "@/lib/payment";
+import { trackCTAClick } from "@/lib/analytics";
 
 const WhyLocalMemory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,7 +137,15 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               </div>
               
               <div className="flex justify-center">
-                <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
+                <Button 
+                  onClick={() => {
+                    trackCTAClick('pricing', 'Get Instant Access', '/payment');
+                    handleStripePayment();
+                  }} 
+                  variant="hero" 
+                  className="w-full sm:w-auto" 
+                  size="lg"
+                >
                   Get Instant Access
                 </Button>
               </div>
@@ -175,7 +184,12 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
 
             <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-fade-in">
               <a href="/features">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="w-full sm:w-auto"
+                  onClick={() => trackCTAClick('footer', 'Want to learn more?', '/features')}
+                >
                   Want to learn more? →
                 </Button>
               </a>
