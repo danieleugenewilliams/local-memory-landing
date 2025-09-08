@@ -83,6 +83,17 @@ export const trackPageView = (pageName?: string, customParameters: Record<string
 };
 
 /**
+ * Track when user views the product (for funnel step 2)
+ */
+export const trackViewItem = () => {
+  trackEvent('view_item', {
+    currency: LOCAL_MEMORY_PRODUCT.currency,
+    value: LOCAL_MEMORY_PRODUCT.price,
+    items: [LOCAL_MEMORY_PRODUCT]
+  });
+};
+
+/**
  * Track CTA button clicks throughout the funnel
  */
 export const trackCTAClick = (

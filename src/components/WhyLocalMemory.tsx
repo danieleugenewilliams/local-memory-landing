@@ -2,13 +2,35 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, Copy, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { handleStripePayment } from "@/lib/payment";
-import { trackCTAClick } from "@/lib/analytics";
+import { trackCTAClick, trackViewItem } from "@/lib/analytics";
 
 const WhyLocalMemory = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  // Track view_item when pricing section comes into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            trackViewItem();
+            observer.disconnect(); // Only track once per session
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const pricingSection = document.getElementById('benchmarks');
+    if (pricingSection) {
+      observer.observe(pricingSection);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const macosPrompt = `I just purchased and downloaded local-memory to ~/Downloads. Please help me install and configure it completely:
 

@@ -190,10 +190,28 @@ const SuccessPage = () => {
       const paymentInitiated = sessionStorage.getItem('payment_initiated');
       const storedTokenData = localStorage.getItem('payment_token');
       
+      // Allow bypass for testing scenarios (dev mode or test session IDs)
+      const isTestingScenario = import.meta.env.DEV && (
+        sessionId.startsWith('cs_test_') || 
+        sessionId === 'cs_test_demo123' ||
+        window.location.hostname === 'localhost'
+      );
+      
       if (!paymentInitiated || !storedTokenData) {
-        console.error('Payment not initiated from this browser session');
-        setIsVerifying(false);
-        return;
+        if (isTestingScenario) {
+          console.warn('⚠️ Bypassing payment verification for testing scenario');
+          // Set up minimal test data to continue flow
+          sessionStorage.setItem('payment_initiated', Date.now().toString());
+          localStorage.setItem('payment_token', JSON.stringify({
+            timestamp: Date.now(),
+            sessionId: sessionId,
+            testing: true
+          }));
+        } else {
+          console.error('Payment not initiated from this browser session');
+          setIsVerifying(false);
+          return;
+        }
       }
 
       try {
