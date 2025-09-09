@@ -149,7 +149,7 @@ const Performance = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-memory-yellow">✓</span>
-                <span>Rust-based performance optimizations</span>
+                <span>Golang-based performance optimizations</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-memory-yellow">✓</span>
