@@ -46,12 +46,37 @@ declare global {
 }
 
 /**
+ * Centralized function to determine if analytics should be tracked
+ * Filters out test transactions and development scenarios
+ */
+const shouldTrackAnalytics = (sessionId?: string): boolean => {
+  // Skip tracking in development mode unless explicitly enabled
+  if (import.meta.env.DEV && !import.meta.env.VITE_ENABLE_DEV_ANALYTICS) {
+    return false;
+  }
+  
+  // Filter out Stripe test transactions
+  if (sessionId && sessionId.startsWith('cs_test_')) {
+    console.log('📊 Skipping analytics for test transaction:', sessionId.slice(0, 12) + '...');
+    return false;
+  }
+  
+  return true;
+};
+
+/**
  * Track custom events with enhanced ecommerce data
  */
 export const trackEvent = (
   eventName: LocalMemoryEvent,
   parameters: Record<string, unknown> = {}
 ) => {
+  // Check if we should track analytics (filters test data and dev mode)
+  const sessionId = parameters.session_id as string;
+  if (!shouldTrackAnalytics(sessionId)) {
+    return;
+  }
+
   if (typeof window !== 'undefined' && window.gtag) {
     // Add timestamp and session info to all events
     const eventData = {
@@ -84,6 +109,7 @@ export const trackPageView = (pageName?: string, customParameters: Record<string
 
 /**
  * Track when user views the product (for funnel step 2)
+ * Using view_item for GA4 Enhanced Ecommerce compatibility
  */
 export const trackViewItem = () => {
   trackEvent('view_item', {
@@ -325,12 +351,12 @@ export const detectAndTrackFunnelStage = () => {
       break;
     case '/payment':
       funnelStage = 'consideration';
-      trackAddToCart();
+      // trackAddToCart() is now handled in Payment page useEffect
       break;
     case '/success':
       if (searchParams.get('session_id')) {
         funnelStage = 'conversion';
-        trackPurchase(searchParams.get('session_id')!);
+        // trackPurchase() is handled in Success page component
       }
       break;
     case '/docs':
