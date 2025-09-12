@@ -44,7 +44,7 @@ INSTALL RECOMMENDED FEATURES:
 STEP 2 - INSTALL OLLAMA:
 1. Download and install Ollama from https://ollama.ai/download/mac
 2. After installation, pull the required model: ollama pull nomic-embed-text
-3. Pull chat model: ollama pull qwen2.5:7b
+3. Pull chat model: ollama pull qwen2.5:3b
 4. Verify Ollama is running: ollama list
 
 STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):

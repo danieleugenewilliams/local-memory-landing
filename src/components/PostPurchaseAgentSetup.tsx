@@ -105,9 +105,9 @@ if ! ollama list | grep -q "nomic-embed-text"; then
   ollama pull nomic-embed-text
 fi
 
-if ! ollama list | grep -q "qwen2.5:7b"; then
+if ! ollama list | grep -q "qwen2.5:3b"; then
   echo "Installing chat model..."
-  ollama pull qwen2.5:7b
+  ollama pull qwen2.5:3b
 fi
 
 STEP 3 - INSTALL/UPDATE QDRANT (RECOMMENDED):
@@ -326,7 +326,7 @@ STEP 2 - INSTALL OLLAMA:
 1. Download Ollama from https://ollama.ai/download/windows
 2. Install the downloaded .exe file
 3. Open new terminal and pull required model: ollama pull nomic-embed-text
-4. Pull chat model: ollama pull qwen2.5:7b
+4. Pull chat model: ollama pull qwen2.5:3b
 5. Verify: ollama list
 
 STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
@@ -550,7 +550,7 @@ STEP 2 - INSTALL OLLAMA:
 1. Install Ollama: curl -fsSL https://ollama.ai/install.sh | sh
 2. Start Ollama service (if not auto-started): systemctl --user start ollama
 3. Pull required model: ollama pull nomic-embed-text
-4. Pull chat model: ollama pull qwen2.5:7b
+4. Pull chat model: ollama pull qwen2.5:3b
 5. Verify: ollama list
 
 STEP 2.5 - INSTALL QDRANT (RECOMMENDED - HIGH PERFORMANCE):
