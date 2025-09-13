@@ -565,7 +565,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  REST API (25 Endpoints)
+                  REST API (26 Endpoints)
                 </CardTitle>
                 <CardDescription className="text-gray-300 mt-2">
                   <em>Local Memory</em> has a universal REST API interface for any platform.
@@ -595,10 +595,11 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-pink">AI Analysis (2)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-pink">AI Analysis (3)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /ask</div>
                         <div>POST /analyze</div>
+                         <div>POST /summarize</div>
                       </div>
                     </div>
                   </div>
