@@ -53,7 +53,7 @@ const DocsPage = () => {
       resolution: "Download window expires after 30 minutes. If you had not copied your license key immediately after payment, contact Local Memory for support.",
       command: "Check Discord #support and message admin to request help.",
       isLink: true,
-      linkUrl: "https://discord.com/channels/894742967728885760/894742967728885764",
+      linkUrl: "https://discord.com/channels/894742967728885760/1406058052485906483",
       linkText: "Discord #support"
     },
     {
@@ -781,7 +781,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                 <div>
                   <ul className="space-y-2 text-sm list-disc pl-5 text-gray-300">
                     <li><strong>Documentation</strong>: This page covers most use cases</li>
-                    <li><strong><a href="https://discord.com/channels/894742967728885760/894742967728885764" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a></strong>: Live support and discussion</li>
+                    <li><strong><a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a></strong>: Live support and discussion</li>
                     <li><strong className="text-white">Bug Reports:</strong> Share bug reports on Discord #bug-reports</li>
                     <li><strong className="text-white">Feature Requests:</strong> Share ideas on Discord #feature-requests</li>
                   </ul>

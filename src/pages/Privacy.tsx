@@ -115,7 +115,7 @@ const Privacy = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Need clarification on this Privacy Policy? Join our <a href="https://discord.com/channels/894742967728885760/894742967728885764" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
+                  Need clarification on this Privacy Policy? Join our <a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
                 </p>
               </CardContent>
             </Card>

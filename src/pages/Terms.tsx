@@ -110,7 +110,7 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">License Key</h4>
                   <p className="text-muted-foreground">
-                    Your license key will be displayed on the success page immediately after purchase. <strong>You have 30 minutes to copy and store your license key.</strong> After this window, the key will no longer be accessible. If you forget to copy your license key, submit a #support request in our <a href="https://discord.com/channels/894742967728885760/894742967728885764" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
+                    Your license key will be displayed on the success page immediately after purchase. <strong>You have 30 minutes to copy and store your license key.</strong> After this window, the key will no longer be accessible. If you forget to copy your license key, submit a #support request in our <a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
                   </p>
                 </div>
                 <div>
@@ -190,7 +190,7 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Refund Policy</h4>
                   <p className="text-muted-foreground">
-                    All sales are final. We have worked to ensure that <em>Local Memory</em> meets your needs. If you require additional assistance based on your particular set up, you can find support and guidance in our <a href="https://discord.com/channels/894742967728885760/894742967728885764" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
+                    All sales are final. We have worked to ensure that <em>Local Memory</em> meets your needs. If you require additional assistance based on your particular set up, you can find support and guidance in our <a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
                   </p>
                 </div>
                 <div>
@@ -263,7 +263,7 @@ const Terms = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Need clarification on these Terms & Conditions? Join our <a href="https://discord.com/channels/894742967728885760/894742967728885764" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
+                  Need clarification on these Terms & Conditions? Join our <a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> where our team, developers, and other users can help answer your questions. It's a collaborative place to discuss and get support for <em>Local Memory</em>.
                 </p>
               </CardContent>
             </Card>

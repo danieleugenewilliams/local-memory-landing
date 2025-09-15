@@ -109,7 +109,7 @@ const Header = () => {
             Docs
           </Link>
           <a 
-            href="https://discord.com/channels/894742967728885760/894742967728885764" 
+            href="https://discord.com/channels/894742967728885760/1406058052485906483" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             target="_blank"
             rel="noopener noreferrer"
@@ -162,7 +162,7 @@ const Header = () => {
               Docs
             </Link>
             <a 
-              href="https://discord.com/channels/894742967728885760/894742967728885764" 
+              href="https://discord.com/channels/894742967728885760/1406058052485906483" 
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               target="_blank"
               rel="noopener noreferrer"
