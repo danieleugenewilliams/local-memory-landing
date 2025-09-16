@@ -637,7 +637,7 @@ const FeaturesPage = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Need Help?</h4>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Join our <a href="https://discord.com/channels/894742967728885760/1406058052485906483" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> for
+                    Join our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a> for
                     support and discussion, or check out our comprehensive <a href="/docs" className="text-memory-blue hover:underline">documentation</a> for detailed setup instructions.
                   </p>
                 </div>
