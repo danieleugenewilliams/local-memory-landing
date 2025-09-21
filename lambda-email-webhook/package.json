@@ -1,0 +1,17 @@
+{
+  "name": "stripe-email-webhook",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to handle Stripe webhooks and send confirmation emails",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "zip -r function.zip . && aws lambda update-function-code --function-name stripe-email-webhook --zip-file fileb://function.zip"
+  },
+  "dependencies": {
+    "resend": "^4.0.0",
+    "crypto": "^1.0.1"
+  },
+  "keywords": ["stripe", "webhook", "email", "lambda"],
+  "author": "",
+  "license": "ISC"
+}

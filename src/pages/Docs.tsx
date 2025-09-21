@@ -134,7 +134,7 @@ const DocsPage = () => {
                   <span className="bg-memory-green/20 text-memory-green px-3 py-1 rounded-full text-sm font-medium">2 Minutes to Install</span>
                 </div>
                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                  Download, start, and connect to any AI agent with zero-config setup.
+                  Download, start, and connect to any AI agent with simple-config setup.
                 </p>
               </div>
 
@@ -190,7 +190,7 @@ const DocsPage = () => {
                   <p className="text-muted-foreground mb-3">Your AI agent now has access to shared, persistent memory.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 14 available <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
+                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 11 available <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
                     </p>
                   </div>
                 </div>
@@ -224,7 +224,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
               <div className="flex items-center justify-center gap-3 mb-4">
                 <Bot className="w-8 h-8 text-memory-orange" />
                 <h3 className="text-2xl font-bold text-white">Agent Setup Prompts</h3>
-                <span className="bg-memory-orange/20 text-memory-orange px-3 py-1 rounded-full text-sm font-medium">Alternative Method</span>
+                <span className="bg-memory-orange/20 text-memory-orange px-3 py-1 rounded-full text-sm font-medium">Recommended Method</span>
               </div>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto">
                 Prefer having your AI agent handle the setup? After downloading <em>Local Memory</em>, copy our detailed prompts 
@@ -471,15 +471,15 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
             <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  MCP Protocol (14 Tools)
+                  MCP Protocol (11 Tools)
                 </CardTitle>
-                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. <strong className="text-memory-green">v1.0.9:</strong> Consolidated from 26 → 14 tools (50% reduction) for improved agent experience.</CardDescription>
+                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. <strong className="text-memory-green">v1.1.0:</strong> Consolidated from 26 → 11 tools (60% reduction) for improved agent experience.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {/* Primary Consolidated Tools */}
+                  {/* Consolidated/Management Tools */}
                   <div>
-                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Primary Consolidated Tools (3)</h6>
+                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Consolidated/Management Tools (7)</h6>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
                       <div className="bg-slate-700/30 p-3 rounded-md">
                         <h6 className="font-semibold mb-2 text-memory-purple">search</h6>
@@ -510,44 +510,61 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                           <div>• Memory graph mapping</div>
                         </div>
                       </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-blue">stats</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Session statistics</div>
+                          <div>• Domain statistics</div>
+                          <div>• Category statistics</div>
+                          <div>• Response optimization</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-green">categories</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Create categories</div>
+                          <div>• List categories</div>
+                          <div>• AI categorization</div>
+                          <div>• Category statistics</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-orange">domains</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Create domains</div>
+                          <div>• List domains</div>
+                          <div>• Domain statistics</div>
+                          <div>• Knowledge organization</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-pink">sessions</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• List sessions</div>
+                          <div>• Session statistics</div>
+                          <div>• Cross-session access</div>
+                          <div>• Session management</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Supporting Tools */}
+                  {/* Memory CRUD Tools */}
                   <div>
-                    <h6 className="font-semibold mb-3 text-white text-lg">Supporting Tools (11)</h6>
-                    <div className="grid md:grid-cols-3 gap-6 text-sm">
+                    <h6 className="font-semibold mb-3 text-white text-lg">Memory CRUD Tools (4)</h6>
+                    <div className="grid md:grid-cols-1 gap-6 text-sm max-w-md">
                       <div className="space-y-4">
                         <div>
-                          <h6 className="font-semibold mb-2 text-memory-purple">Memory Operations (4)</h6>
+                          <h6 className="font-semibold mb-2 text-memory-purple">Core Memory Operations</h6>
                           <div className="space-y-1 font-mono text-xs">
                             <div>store_memory</div>
                             <div>update_memory</div>
                             <div>delete_memory</div>
                             <div>get_memory_by_id</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <h6 className="font-semibold mb-2 text-memory-blue">Categorization (4)</h6>
-                          <div className="space-y-1 font-mono text-xs">
-                            <div>categorize_memory</div>
-                            <div>create_category</div>
-                            <div>list_categories</div>
-                            <div>get_category_stats</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-4">
-                        <div>
-                          <h6 className="font-semibold mb-2 text-memory-blue">Management (3)</h6>
-                          <div className="space-y-1 font-mono text-xs">
-                            <div>create_domain</div>
-                            <div>list_sessions</div>
-                            <div>get_session_stats</div>
                           </div>
                         </div>
                       </div>
@@ -557,9 +574,9 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
 
                 {/* Consolidation Benefits */}
                 <div className="mt-6 bg-memory-green/10 border border-memory-green/30 rounded-lg p-4">
-                  <h6 className="font-semibold mb-2 text-memory-green">v1.0.9 Consolidation Benefits</h6>
+                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.0 Consolidation Benefits</h6>
                   <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• <strong>50% Tool Reduction:</strong> Simplified from 26 → 14 tools for reduced cognitive overhead</li>
+                    <li>• <strong>60% Tool Reduction:</strong> Simplified from 26 → 11 tools for reduced cognitive overhead</li>
                     <li>• <strong>Intelligent Routing:</strong> Unified tools handle multiple operation types internally</li>
                     <li>• <strong>Response Optimization:</strong> 60-95% token reduction with format controls</li>
                     <li>• <strong>Anthropic-Aligned:</strong> 9.2/10 rating following official agent tool design guidance</li>

@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export type Platform = 'macos-arm' | 'macos-intel' | 'windows' | 'linux' | 'unknown'
+export type Platform = 'macos-arm' | 'macos-intel' | 'windows' | 'linux'
 
 export interface PlatformInfo {
   platform: Platform
@@ -79,7 +79,7 @@ export function detectUserPlatform(): Platform {
     console.warn('Platform detection error:', error)
   }
 
-  return 'unknown'
+  return 'macos-arm' // Default fallback to most common modern platform
 }
 
 export function getPlatformInfo(platform: Platform): PlatformInfo {
@@ -118,14 +118,6 @@ export function getPlatformInfo(platform: Platform): PlatformInfo {
       description: 'Ubuntu, Debian, CentOS, etc.',
       isRecommended: detectedPlatform === 'linux'
     },
-    'unknown': {
-      platform: 'unknown',
-      label: 'Universal Package (all platforms included)',
-      filename: 'local-memory-universal.zip',
-      icon: '',
-      description: 'Please note: A browser security warning may display strictly due to multiple executables in the zip file.',
-      isRecommended: detectedPlatform === 'unknown'
-    }
   }
 
   return platformConfigs[platform]
@@ -136,7 +128,6 @@ export function getAllPlatforms(): PlatformInfo[] {
     getPlatformInfo('macos-arm'),
     getPlatformInfo('macos-intel'),
     getPlatformInfo('windows'),
-    getPlatformInfo('linux'),
-    getPlatformInfo('unknown')
+    getPlatformInfo('linux')
   ]
 }

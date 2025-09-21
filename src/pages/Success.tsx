@@ -17,12 +17,12 @@ const SuccessPage = () => {
   const [isVerifying, setIsVerifying] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform>('unknown');
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform>('macos-arm');
   const [downloadUrls, setDownloadUrls] = useState<Record<Platform, string>>({} as Record<Platform, string>);
   const [showAlternatives, setShowAlternatives] = useState(false);
 
   // Generate GitHub releases download URL for platform-specific files
-  const getGitHubDownloadUrl = (platform: Platform = 'unknown'): string => {
+  const getGitHubDownloadUrl = (platform: Platform = 'macos-arm'): string => {
     const baseUrl = 'https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download/';
     const platformInfo = getPlatformInfo(platform);
     const filename = platformInfo.filename;
@@ -40,12 +40,12 @@ const SuccessPage = () => {
   // Generate GitHub download URLs for all platforms
   const generateAllDownloadUrls = (): Record<Platform, string> => {
     const urls: Record<Platform, string> = {} as Record<Platform, string>;
-    const platforms: Platform[] = ['macos-arm', 'macos-intel', 'windows', 'linux', 'unknown'];
-    
+    const platforms: Platform[] = ['macos-arm', 'macos-intel', 'windows', 'linux'];
+
     for (const platform of platforms) {
       urls[platform] = getGitHubDownloadUrl(platform);
     }
-    
+
     return urls;
   };
 
@@ -111,6 +111,17 @@ const SuccessPage = () => {
       
       // Step 1: Create base hash from session + secret (controllable parameters only)
       const baseInput = `${sessionId}-${DOWNLOAD_SECRET}`;
+
+      // DEBUG: Log inputs for troubleshooting license key mismatch
+      console.log('🔍 Frontend License Key Generation Debug:', {
+        sessionId: sessionId,
+        downloadSecretLength: DOWNLOAD_SECRET.length,
+        downloadSecretFirst10: DOWNLOAD_SECRET.substring(0, 10),
+        downloadSecretLast10: DOWNLOAD_SECRET.substring(DOWNLOAD_SECRET.length - 10),
+        baseInput: baseInput.substring(0, 50) + '...',
+        timestamp: new Date().toISOString()
+      });
+
       const baseHash = CryptoJS.SHA256(baseInput).toString();
       
       // Step 2: Create verification components from base hash (4 chars each for 5 segments)
@@ -435,9 +446,24 @@ const SuccessPage = () => {
             <h1 className="text-3xl font-bold text-foreground mb-4">
               Payment Successful!
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground mb-4">
               Thank you for purchasing <em>Local Memory</em>!
             </p>
+
+            {/* Email confirmation notice */}
+            <div className="bg-muted-50 border border-blue-200 rounded-lg p-4 mx-auto max-w-md">
+              <div className="flex items-center justify-center gap-2 text-white-700 mb-2">
+                <span className="text-xl">📧</span>
+                <span className="font-semibold">Check Your Email!</span>
+              </div>
+              <p className="text-sm text-white-600">
+                We've sent your license key and download links to your email address.
+                <br />
+                <span className="text-xs text-pink-500">
+                  (Don't see it? Check your spam folder)
+                </span>
+              </p>
+            </div>
           </div>
 
           <Card className="border-2 border-green-200">
@@ -484,15 +510,8 @@ const SuccessPage = () => {
                         </Button>
                         
                         <div className="text-sm text-green-700 mt-3">
-                          ~{selectedPlatform === 'unknown' ? '22MB' : '13MB'} • Optimized for Your System
+                          ~13MB • Optimized for Your System
                         </div>
-                        
-                        {/* Warning for Universal Package when selected */}
-                        {selectedPlatform === 'unknown' && (
-                          <div className="text-left text-xs text-orange-600 mt-3 p-2 bg-orange-50 rounded border border-orange-200">
-                            ⚠️ Note: Universal package may cause browser warnings due to multiple executables
-                          </div>
-                        )}
                       </div>
                     );
                   })()}
@@ -532,7 +551,7 @@ const SuccessPage = () => {
                                 </div>
                                 <div className="text-right">
                                   <div className="text-sm font-medium text-green-600">
-                                    ~{platformInfo.platform === 'unknown' ? '22MB' : '13MB'}
+                                    ~13MB
                                   </div>
                                   <Button onClick={() => handleDownload(platformInfo.platform)} variant="outline" size="sm" className="mt-1">
                                     <Download className="w-3 h-3 mr-1" />
