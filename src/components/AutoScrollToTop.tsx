@@ -117,7 +117,7 @@ const AutoScrollToTop = () => {
         rafRef.current = null;
       }
     };
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   return null;
 };

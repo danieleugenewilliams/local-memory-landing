@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download, CheckCircle, Copy, Check, ChevronDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useSearchParams, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -38,7 +38,7 @@ const SuccessPage = () => {
   };
 
   // Generate GitHub download URLs for all platforms
-  const generateAllDownloadUrls = (): Record<Platform, string> => {
+  const generateAllDownloadUrls = useCallback((): Record<Platform, string> => {
     const urls: Record<Platform, string> = {} as Record<Platform, string>;
     const platforms: Platform[] = ['macos-arm', 'macos-intel', 'windows', 'linux'];
 
@@ -47,7 +47,7 @@ const SuccessPage = () => {
     }
 
     return urls;
-  };
+  }, []);
 
   // Client-side license key format validation
   const validateLicenseKeyFormat = (key: string): { valid: boolean; errors: string[] } => {
@@ -92,7 +92,7 @@ const SuccessPage = () => {
   };
 
   // Generate timestamp-less cryptographically secure product key
-  const generateProductKey = (sessionId: string): string => {
+  const generateProductKey = useCallback((sessionId: string): string => {
     try {
       const DOWNLOAD_SECRET = import.meta.env.VITE_DOWNLOAD_SECRET;
       
@@ -181,7 +181,7 @@ const SuccessPage = () => {
       // Return a fallback error key that will be rejected
       return 'LM-ERROR-ERROR-ERROR-ERROR-ERROR';
     }
-  };
+  }, []);
 
   useEffect(() => {
     // Detect user's platform on component mount
@@ -347,7 +347,7 @@ const SuccessPage = () => {
     }
 
     verifyPaymentFlow();
-  }, [searchParams]);
+  }, [searchParams, generateAllDownloadUrls, generateProductKey]);
 
   const handleDownload = async (platform: Platform = selectedPlatform) => {
     const downloadUrl = downloadUrls[platform];
