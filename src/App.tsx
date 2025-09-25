@@ -11,6 +11,8 @@ import Success from "./pages/Success";
 import Docs from "./pages/Docs";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Prompts from "./pages/Prompts";
+import Architecture from "./pages/Architecture";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import { useEffect } from "react";
 import { detectAndTrackFunnelStage } from "./lib/analytics";
@@ -48,6 +50,8 @@ const App = () => (
           <Route path="/payment" element={<Payment />} />
           <Route path="/success" element={<Success />} />
           <Route path="/docs" element={<Docs />} />
+          <Route path="/prompts" element={<Prompts />} />
+          <Route path="/architecture" element={<Architecture />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

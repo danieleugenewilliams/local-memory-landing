@@ -101,14 +101,28 @@ const Header = () => {
           >
             Features
           </Link>
-          <Link 
-            to="/docs" 
+          <Link
+            to="/docs"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             onClick={() => handleNavClick('/docs')}
           >
             Docs
           </Link>
-          <a 
+          <Link
+            to="/architecture"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => handleNavClick('/architecture')}
+          >
+            Architecture
+          </Link>
+          <Link
+            to="/prompts"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => handleNavClick('/prompts')}
+          >
+            Prompts
+          </Link>
+          <a
             href="https://discord.gg/rMmn8xP3fZ" 
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             target="_blank"
@@ -154,14 +168,28 @@ const Header = () => {
             >
               Features
             </Link>
-            <Link 
-              to="/docs" 
+            <Link
+              to="/docs"
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => handleMobileNavClick('/docs')}
             >
               Docs
             </Link>
-            <a 
+            <Link
+              to="/architecture"
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => handleMobileNavClick('/architecture')}
+            >
+              Architecture
+            </Link>
+            <Link
+              to="/prompts"
+              className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => handleMobileNavClick('/prompts')}
+            >
+              Prompts
+            </Link>
+            <a
               href="https://discord.gg/rMmn8xP3fZ" 
               className="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               target="_blank"
