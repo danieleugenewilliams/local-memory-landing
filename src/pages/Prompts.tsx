@@ -21,7 +21,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
 
   const standardPrompt = `## Local Memory Integration
 
-Use Local Memory to maintain persistent knowledge across sessions. This is your external brain for storing and retrieving project context, decisions, and learnings.
+Proactively use Local Memory to maintain persistent knowledge across sessions. This is your external brain for storing and retrieving project context, decisions, and learnings.
 
 ### Core Operations
 - **Store insights**: Use \`store_memory\` for important information, decisions, and learnings
