@@ -34,15 +34,11 @@ const PaymentPage = () => {
               
               <div className="p-4 sm:p-6 lg:p-8 text-center">
                 <div className="text-3xl mb-2">🚀</div>
-                <h3 className="text-xl font-bold text-white mb-2">Launch Special</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Personal License</h3>
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className="text-4xl font-bold text-white">$59</span>
-                  <div className="text-left">
-                    <div className="text-sm text-gray-400 line-through">normally $99</div>
-                    <div className="text-sm text-memory-blue font-medium">40% OFF</div>
-                  </div>
+                  <span className="text-4xl font-bold text-white">$49</span>
                 </div>
-                <div className="flex items-center justify-center gap-2 mb-6 text-memory-green">Use code LMLAUNCH40 at checkout</div>
+                <div className="flex items-center justify-center gap-2 mb-6 text-memory-green"> </div>
                 
                 {/* Mobile-optimized features list */}
                 <div className="mb-6 text-sm">

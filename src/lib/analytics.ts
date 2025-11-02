@@ -33,7 +33,7 @@ export const LOCAL_MEMORY_PRODUCT: EcommerceItem = {
   item_id: 'local-memory-v1',
   item_name: 'Local Memory - AI Agent Memory System',
   category: 'AI Tools',
-  price: 59, // Current launch price
+  price: 49, // Current launch price
   currency: 'USD',
   quantity: 1
 };
