@@ -52,7 +52,7 @@ const ArchitecturePage = () => {
                 System Architecture Overview
               </CardTitle>
               <CardDescription>
-                5-layer architecture with 11 MCP tools and complete local processing
+                5-layer architecture with 8 MCP tools and complete local processing
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -71,7 +71,7 @@ const ArchitecturePage = () => {
                     <div className="text-sm text-muted-foreground">Architecture Layers</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-memory-green mb-1">11</div>
+                    <div className="text-2xl font-bold text-memory-green mb-1">8</div>
                     <div className="text-sm text-muted-foreground">MCP Tools</div>
                   </div>
                   <div className="text-center">
@@ -143,7 +143,7 @@ const ArchitecturePage = () => {
                           <p className="text-sm text-muted-foreground">Single binary with intelligent mode detection (MCP/CLI/API), JSON-RPC over stdio, HTTP server on localhost:3002</p>
                         </div>
                         <div className="border-l-4 border-memory-purple pl-4">
-                          <h4 className="font-semibold">MCP Tools Layer (11 Total)</h4>
+                          <h4 className="font-semibold">MCP Tools Layer (8 Total)</h4>
                           <p className="text-sm text-muted-foreground">4 Core Memory Operations + 7 Unified Tools for search, analysis, relationships, stats, categories, domains, sessions</p>
                         </div>
                         <div className="border-l-4 border-memory-green pl-4">
