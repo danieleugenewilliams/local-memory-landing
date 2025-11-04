@@ -19,7 +19,7 @@
     ],
     "key_features": [
       "Context Engineering - transform expertise into AI intelligence",
-      "26+ MCP (Model Context Protocol) native tools",
+      "8 MCP (Model Context Protocol) native tools",
       "Cures context amnesia across all AI agents",
       "100% local storage - no cloud training exposure",
       "Cross-agent memory persistence",
@@ -78,7 +78,7 @@
     "documentation": {
       "setup_guide": "https://localmemory.co/docs",
       "context_engineering": "Guide to building AI intelligence assets",
-      "api_reference": "26 MCP tools + REST API documentation",
+      "api_reference": "8 MCP tools + REST API documentation",
       "integration_examples": "Claude, OpenCode, Gemini setup guides"
     },
     "competitive_advantages": [

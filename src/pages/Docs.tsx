@@ -479,7 +479,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                 <div className="space-y-6">
                   {/* Consolidated/Management Tools */}
                   <div>
-                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Consolidated/Management Tools (7)</h6>
+                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Consolidated/Management Tools (8)</h6>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
                       <div className="bg-slate-700/30 p-3 rounded-md">
                         <h6 className="font-semibold mb-2 text-memory-purple">search</h6>
@@ -550,35 +550,29 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                           <div>• Session management</div>
                         </div>
                       </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-purple">memory</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Store memory</div>
+                          <div>• Update memory</div>
+                          <div>• Delete memory</div>
+                          <div>• Get memory by ID</div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
 
-                  {/* Memory CRUD Tools */}
-                  <div>
-                    <h6 className="font-semibold mb-3 text-white text-lg">Memory CRUD Tools (4)</h6>
-                    <div className="grid md:grid-cols-1 gap-6 text-sm max-w-md">
-                      <div className="space-y-4">
-                        <div>
-                          <h6 className="font-semibold mb-2 text-memory-purple">Core Memory Operations</h6>
-                          <div className="space-y-1 font-mono text-xs">
-                            <div>store_memory</div>
-                            <div>update_memory</div>
-                            <div>delete_memory</div>
-                            <div>get_memory_by_id</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Consolidation Benefits */}
                 <div className="mt-6 bg-memory-green/10 border border-memory-green/30 rounded-lg p-4">
-                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.0 Consolidation Benefits</h6>
+                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.1 Consolidation Benefits</h6>
                   <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• <strong>60% Tool Reduction:</strong> Simplified from 26 → 11 tools for reduced cognitive overhead</li>
+                    <li>• <strong>70% Tool Reduction:</strong> Simplified from 26 → 8 tools for reduced cognitive overhead</li>
                     <li>• <strong>Intelligent Routing:</strong> Unified tools handle multiple operation types internally</li>
-                    <li>• <strong>Response Optimization:</strong> 60-95% token reduction with format controls</li>
+                    <li>• <strong>Response Optimization:</strong> 95% token reduction with format controls and intelligent routing</li>
                     <li>• <strong>Anthropic-Aligned:</strong> 9.2/10 rating following official agent tool design guidance</li>
                   </ul>
                 </div>

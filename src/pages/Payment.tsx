@@ -58,7 +58,7 @@ const PaymentPage = () => {
                     </div>
                     <div className="flex items-center justify-center gap-2 text-center">
                       <span className="text-green-500">✓</span>
-                      <span>26 MCP Tools Included</span>
+                      <span>8 MCP Tools Included</span>
                     </div>
                     <div className="flex items-center justify-center gap-2 text-center">
                       <span className="text-green-500">✓</span>
@@ -90,7 +90,7 @@ const PaymentPage = () => {
                     </div>
                     <div className="flex items-center justify-start gap-2 lg:ml-10">
                       <span className="text-green-500">✓</span>
-                      <span>26 MCP Tools Included</span>
+                      <span>8 MCP Tools Included</span>
                     </div>
                     <div className="flex items-center justify-start gap-2 lg:ml-16">
                       <span className="text-green-500">✓</span>

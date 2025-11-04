@@ -60,14 +60,14 @@ const FeaturesPage = () => {
                     <span className="text-memory-white mt-1 text-lg">•</span>
                     <div>
                       <h4 className="font-semibold">Native MCP Integration</h4>
-                        <p className="text-sm text-muted-foreground">26 tools for Claude Desktop & Code</p>
+                        <p className="text-sm text-muted-foreground">8 tools for Claude Desktop & Code</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-memory-white mt-1 text-lg">•</span>
                     <div>
                       <h4 className="font-semibold">Universal REST API</h4>
-                        <p className="text-sm text-muted-foreground">25 endpoints for any platform</p>
+                        <p className="text-sm text-muted-foreground">26 endpoints for any platform</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">

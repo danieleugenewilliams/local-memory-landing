@@ -10,7 +10,7 @@
 
 ### Key Benefits (3-column layout)
 ```
-⚡ 11ms Response Times          🔧 26+ Native MCP Tools         🌐 Universal Compatibility
+⚡ 11ms Response Times          🔧 8 Native MCP Tools         🌐 Universal Compatibility
 Production-grade performance   Appear directly in Claude       Works with any AI platform
 5-8x faster than alternatives  Desktop & Code                  MCP + REST API support
 ```
@@ -118,7 +118,7 @@ local-memory start
 # 2 minutes to full AI memory
 ✅ Database created automatically
 ✅ Vector search optimized  
-✅ 26+ MCP tools ready
+✅ 8 MCP tools ready
 ✅ REST API listening on :3002
 ```
 
@@ -142,7 +142,7 @@ local-memory start
 $29 (normally $49)
 ━━━━━━━━━━━━━━━━━━━
 ✓ Complete local-memory system
-✓ All 26+ MCP tools included
+✓ All 8 MCP tools included
 ✓ Unlimited usage forever
 ✓ Priority email support
 ✓ Future updates included
@@ -233,7 +233,7 @@ $29 (normally $49)
 - **Storage**: SQLite database with optional Qdrant vector support
 - **Search**: Vector similarity + full-text + semantic AI search
 - **Performance**: Sub-20ms response times, ±1ms consistency
-- **Integration**: 26+ MCP tools, 20+ REST endpoints
+- **Integration**: 8 MCP tools, 26 REST endpoints
 
 ### Architecture Benefits
 - **No Dependencies**: Single binary, no runtime requirements

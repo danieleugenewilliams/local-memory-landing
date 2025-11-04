@@ -134,7 +134,7 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 lg:ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">26 MCP Tools Included</span>
+                  <span className="text-center md:text-left">8 MCP Tools Included</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 lg:ml-16">
                   <span className="text-green-500 hidden md:inline">✓</span>

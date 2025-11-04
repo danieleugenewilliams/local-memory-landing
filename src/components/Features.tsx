@@ -139,7 +139,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>26 MCP tools for complete control</span>
+                <span>8 MCP tools for complete control</span>
               </li>
             </ul>
           </div>
