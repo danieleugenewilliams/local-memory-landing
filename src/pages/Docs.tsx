@@ -172,7 +172,7 @@ const DocsPage = () => {
                     <div className="bg-muted p-3 rounded-md">
                       <h5 className="font-semibold text-sm mb-2">Claude Code:</h5>
                       <code className="text-xs bg-background px-2 py-1 rounded block w-full max-w-full break-words overflow-wrap-anywhere">
-                        &gt; claude mcp add local-memory /path/to/local-memory --mcp
+                        &gt; claude mcp add --transport stdio local-memory -- local-memory --mcp
                       </code>
                     </div>
                     <div className="bg-muted p-3 rounded-md">
@@ -346,7 +346,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                     {/* Primary: Claude Code */}
                     <div className="bg-muted-950/20 p-3 rounded border border-muted-700/30 mb-4">
                       <h5 className="text-muted-300 font-medium mb-2">Claude Code:</h5>
-                      <code className="text-sm bg-background px-2 py-1 rounded block w-full max-w-full break-words overflow-wrap-anywhere">&gt; claude mcp add local-memory -- /usr/local/bin/local-memory --mcp</code>
+                      <code className="text-sm bg-background px-2 py-1 rounded block w-full max-w-full break-words overflow-wrap-anywhere">&gt; claude mcp add --transport stdio local-memory -- local-memory --mcp</code>
                       <p className="text-xs text-muted-foreground mt-2"><em>Automatically detects and configures Claude Code</em></p>
                     </div>
 
@@ -363,6 +363,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory",</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -377,6 +378,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"servers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory",</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -391,6 +393,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"servers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory",</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -405,6 +408,7 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory"</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>

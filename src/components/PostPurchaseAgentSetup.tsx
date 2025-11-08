@@ -180,10 +180,10 @@ STEP 5 - CONFIGURE MCP INTEGRATION:
 Based on your installation method:
 
 For npm installation:
-claude mcp add local-memory -- local-memory
+claude mcp add --transport stdio local-memory -- local-memory --mcp
 
 For manual binary:
-claude mcp add local-memory -- /usr/local/bin/local-memory
+claude mcp add local-memory -- /path/to/local-memory
 
 STEP 6 - CLAUDE DESKTOP CONFIGURATION:
 Edit ~/.claude_desktop_config.json (create if needed):
@@ -193,7 +193,9 @@ For npm installation:
   "mcpServers": {
     "local-memory": {
       "command": "local-memory",
-      "args": ["--mcp"]
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -203,7 +205,9 @@ For manual binary:
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--mcp"]
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -216,7 +220,9 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--mcp"]
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -227,7 +233,9 @@ Add to Cursor Settings > MCP Servers (or create .cursor/mcp.json):
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--mcp"]
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -238,7 +246,9 @@ Add to Windsurf Settings > MCP Configuration:
   "mcpServers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": ["--mcp"]
+      "args": [
+        "--mcp"
+      ]
     }
   }
 }
@@ -359,7 +369,7 @@ cd "%USERPROFILE%\\.local-memory" && qdrant.exe
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE (if using):
 For npm installation:
-claude mcp add local-memory -- local-memory
+claude mcp add --transport stdio local-memory -- local-memory.exe --mcp
 
 For manual binary installation:
 claude mcp add local-memory -- "C:\\Program Files\\LocalMemory\\local-memory.exe"
@@ -598,10 +608,10 @@ cd ~/.local-memory && ./qdrant &
 
 STEP 3 - CONFIGURE MCP FOR CLAUDE CODE:
 For npm installation:
-claude mcp add local-memory -- local-memory
+claude mcp add --transport stdio local-memory -- local-memory --mcp
 
 For manual binary installation:
-claude mcp add local-memory -- /usr/local/bin/local-memory
+claude mcp add local-memory -- /path/to/local-memory
 
 STEP 4 - CONFIGURE MCP FOR AI EDITORS:
 
