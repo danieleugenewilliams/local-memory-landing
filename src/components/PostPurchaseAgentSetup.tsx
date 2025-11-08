@@ -192,10 +192,9 @@ For npm installation:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/Users/{username}/.npm-global/bin/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -204,10 +203,9 @@ For manual binary:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/path/to/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -219,10 +217,7 @@ Create .vscode/mcp.json in your project root:
 {
   "servers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/usr/local/bin/local-memory"
     }
   }
 }
@@ -381,10 +376,9 @@ For npm installation, edit %USERPROFILE%\\.claude_desktop_config.json (create if
 {
   "mcpServers": {
     "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/Users/{username}/.npm-global/bin/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -394,9 +388,8 @@ For manual binary installation:
   "mcpServers": {
     "local-memory": {
       "command": "C:\\\\Program Files\\\\LocalMemory\\\\local-memory.exe",
-      "args": [
-        "--mcp"
-      ]
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -406,10 +399,7 @@ For npm installation, create .vscode/mcp.json in your project root:
 {
   "servers": {
     "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "local-memory"
     }
   }
 }
@@ -620,10 +610,9 @@ For npm installation, edit ~/.claude_desktop_config.json (create if it doesn't e
 {
   "mcpServers": {
     "local-memory": {
-      "command": "local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/Users/{username}/.npm-global/bin/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -632,10 +621,9 @@ For manual binary installation:
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/path/to/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
@@ -646,9 +634,6 @@ Create .vscode/mcp.json in your project root:
   "servers": {
     "local-memory": {
       "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
     }
   }
 }

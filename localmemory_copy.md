@@ -67,7 +67,7 @@ Native MCP Integration     MCP + REST API Support     Universal REST API
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
+      "command": "/path/to/local-memory",
       "args": []
     }
   }

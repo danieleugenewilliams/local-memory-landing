@@ -17,7 +17,11 @@ const PromptsPage = () => {
 
   const basicPrompt = `## Local Memory
 
-Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.`;
+Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.
+
+If you are unable to connect directly to the local-memory MCP server, try using jsonrpc directly to the binary (./bin/local-memory --mcp).
+
+If you cannot connect to neither the MCP server nor via jsonrpc, try the REST API at http://localhost:3002.`;
 
   const standardPrompt = `## Local Memory Integration
 

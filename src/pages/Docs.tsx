@@ -176,9 +176,9 @@ const DocsPage = () => {
                       </code>
                     </div>
                     <div className="bg-muted p-3 rounded-md">
-                      <h5 className="font-semibold text-sm mb-2">REST API:</h5>
+                      <h5 className="font-semibold text-sm mb-2">Codex:</h5>
                       <code className="text-xs bg-background px-2 py-1 rounded block w-full max-w-full break-words overflow-wrap-anywhere">
-                        &gt; curl http://localhost:3002/api/v1/health
+                        &gt; codex mcp add local-memory -- local-memory --mcp
                       </code>
                     </div>
                   </div>
@@ -202,7 +202,11 @@ const DocsPage = () => {
                     <pre className="text-xs text-muted-foreground whitespace-pre-wrap w-full max-w-full break-words overflow-wrap-anywhere">
 {`## Local Memory
 
-Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.`}
+Proactively use local-memory MCP to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.
+
+If you are unable to connect directly to the local-memory MCP server, try using jsonrpc directly to the binary (./bin/local-memory --mcp).
+
+If you cannot connect to neither the MCP server nor via jsonrpc, try the REST API at http://localhost:3002.`}
                     </pre>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2 italic">
@@ -362,8 +366,9 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&#123;</div>
                             <div>&nbsp;&nbsp;"mcpServers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
-                            <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory",</div>
+                            <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "/Users/[username]/.npm-global/bin/local-memory",</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"transport": "stdio"</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
@@ -378,7 +383,6 @@ Proactively use local-memory MCP to store, retrieve, update, and analyze memorie
                             <div>&nbsp;&nbsp;"servers": &#123;</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;"local-memory": &#123;</div>
                             <div className="break-words overflow-wrap-anywhere">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "local-memory",</div>
-                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["--mcp"]</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&#125;</div>
                             <div>&nbsp;&nbsp;&#125;</div>
                             <div>&#125;</div>
