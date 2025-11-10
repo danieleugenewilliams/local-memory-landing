@@ -66,10 +66,9 @@ Edit ~/.claude_desktop_config.json (create if it doesn't exist):
 {
   "mcpServers": {
     "local-memory": {
-      "command": "/usr/local/bin/local-memory",
-      "args": [
-        "--mcp"
-      ]
+      "command": "/Users/{username}/.npm-global/bin/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
     }
   }
 }
