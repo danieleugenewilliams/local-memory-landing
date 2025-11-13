@@ -67,7 +67,7 @@ const FeaturesPage = () => {
                     <span className="text-memory-white mt-1 text-lg">•</span>
                     <div>
                       <h4 className="font-semibold">Universal REST API</h4>
-                        <p className="text-sm text-muted-foreground">26 endpoints for any platform</p>
+                        <p className="text-sm text-muted-foreground">27 endpoints for any platform</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -392,7 +392,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: Agent evolves from basic problem-solver to performance optimization expert</h5>
-                                <p className="text-xs text-muted-foreground">4 MCP tools worked behind the scenes to store, connect, and apply insights across months of collaboration.</p>
+                                <p className="text-xs text-muted-foreground">Multiple unified MCP tools worked behind the scenes to store, connect, and apply insights across months of collaboration.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -462,7 +462,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: AI discovers critical security patterns across time and domains</h5>
-                                <p className="text-xs text-muted-foreground">7 MCP search tools were leveraged to reveal hidden vulnerability connections and provide actionable insights.</p>
+                                <p className="text-xs text-muted-foreground">Unified MCP search and analysis tools revealed hidden vulnerability connections and provided actionable insights.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -532,7 +532,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: Cross-agent knowledge connection enables complete automation redesign</h5>
-                                <p className="text-xs text-muted-foreground">6 MCP relationship tools reveal how **GoLang agent's** existing work solves webapp's security and automation challenges.</p>
+                                <p className="text-xs text-muted-foreground">Unified MCP relationship and analysis tools reveal how **GoLang agent's** existing work solves webapp's security and automation challenges.</p>
                               </div>
                             </div>
                           </CollapsibleContent>
@@ -602,7 +602,7 @@ const FeaturesPage = () => {
                               </div>
                               <div className="bg-muted p-4 rounded-lg">
                                 <h5 className="font-semibold mb-2 text-memory-orange">Result: Expert Assessment - You've progressed from TypeScript developer to GoLang systems architect with production AI integration expertise.</h5>
-                                <p className="text-xs text-muted-foreground">5 MCP analysis tools worked together to track and categorize your learning journey over 4 months.</p>
+                                <p className="text-xs text-muted-foreground">Unified MCP analysis and temporal tracking tools worked together to track and categorize your learning journey over 4 months.</p>
                               </div>
                             </div>
                           </CollapsibleContent>

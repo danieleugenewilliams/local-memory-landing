@@ -776,7 +776,7 @@ Should return: {"status":"ok"}
 STEP 5 - COMPLETE REST API REFERENCE:
 Base URL: http://localhost:3002/api/v1/
 
-ALL 25 REST API ENDPOINTS (organized by category):
+ALL 27 REST API ENDPOINTS (organized by category):
 
 CORE MEMORY OPERATIONS (4 endpoints):
 - POST /memories - Store new memory with content, tags, importance
@@ -843,7 +843,7 @@ TROUBLESHOOTING:
 - Service status: Use local-memory status to check running services
 - Update failures: Try fresh installation as fallback
 
-NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. The REST API provides 26 endpoints covering all MCP functionality plus additional REST-specific features.`;
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. The REST API provides 27 endpoints covering all MCP functionality plus additional REST-specific features.`;
 
   return (
     <div className="mt-8">

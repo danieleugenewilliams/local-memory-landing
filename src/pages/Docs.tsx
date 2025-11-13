@@ -14,7 +14,7 @@ const DocsPage = () => {
     {
       challenge: "Command not found",
       resolution: "Ensure binary is in PATH or use relative path",
-      command: "> ./local-memory"
+      command: "> local-memory"
     },
     {
       challenge: "Ollama not detected",
@@ -190,7 +190,7 @@ const DocsPage = () => {
                   <p className="text-muted-foreground mb-3">Your AI agent now has access to shared, persistent memory.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 11 available <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
+                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 8 unified <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
                     </p>
                   </div>
                 </div>
@@ -475,9 +475,9 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
             <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  MCP Protocol (11 Tools)
+                  MCP Protocol (8 Unified Tools)
                 </CardTitle>
-                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. <strong className="text-memory-green">v1.1.0:</strong> Consolidated from 26 → 11 tools (60% reduction) for improved agent experience.</CardDescription>
+                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. <strong className="text-memory-green">v1.1.6:</strong> Consolidated to 8 unified tools with advanced capabilities for improved agent experience.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -572,9 +572,9 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
 
                 {/* Consolidation Benefits */}
                 <div className="mt-6 bg-memory-green/10 border border-memory-green/30 rounded-lg p-4">
-                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.1 Consolidation Benefits</h6>
+                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.6 Consolidation Benefits</h6>
                   <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• <strong>70% Tool Reduction:</strong> Simplified from 26 → 8 tools for reduced cognitive overhead</li>
+                    <li>• <strong>Unified Architecture:</strong> 8 unified tools with advanced capabilities for optimal agent experience</li>
                     <li>• <strong>Intelligent Routing:</strong> Unified tools handle multiple operation types internally</li>
                     <li>• <strong>Response Optimization:</strong> 95% token reduction with format controls and intelligent routing</li>
                     <li>• <strong>Anthropic-Aligned:</strong> 9.2/10 rating following official agent tool design guidance</li>
@@ -588,10 +588,10 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
             <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  REST API (26 Endpoints)
+                  REST API (27 Endpoints)
                 </CardTitle>
                 <CardDescription className="text-gray-300 mt-2">
-                  <em>Local Memory</em> has a universal REST API interface for any platform. <strong className="text-memory-blue">Note:</strong> REST API maintains individual endpoints for backward compatibility while MCP tools use consolidated architecture.
+                  <em>Local Memory</em> has a universal REST API interface for any platform. <strong className="text-memory-blue">Note:</strong> REST API maintains individual endpoints for backward compatibility while the 8 unified MCP tools provide consolidated architecture.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -599,48 +599,50 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
                 <div className="grid md:grid-cols-3 gap-6 text-sm">
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-purple">Memory Operations (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-purple">Memory Operations (9)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /memories</div>
+                        <div>GET /memories</div>
+                        <div>GET /memories/search</div>
+                        <div>POST /memories/search</div>
+                        <div>POST /memories/search/intelligent</div>
+                        <div>GET /memories/:id</div>
                         <div>PUT /memories/:id</div>
                         <div>DELETE /memories/:id</div>
-                        <div>GET /memories/:id</div>
+                        <div>GET /memories/:id/related</div>
                       </div>
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-purple">Search Operations (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-purple">Advanced Search (2)</h5>
                       <div className="space-y-1 font-mono text-xs">
-                        <div>GET /memories/search</div>
                         <div>POST /search/tags</div>
                         <div>POST /search/date-range</div>
                       </div>
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-pink">AI Analysis (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-pink">AI Analysis (1)</h5>
                       <div className="space-y-1 font-mono text-xs">
-                        <div>POST /ask</div>
                         <div>POST /analyze</div>
-                         <div>POST /summarize</div>
                       </div>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-pink">Temporal Analysis (3)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-pink">Temporal Analysis (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
                         <div>POST /temporal/patterns</div>
                         <div>POST /temporal/progression</div>
                         <div>POST /temporal/gaps</div>
+                        <div>POST /temporal/timeline</div>
                       </div>
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-yellow">Relationships (4)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-yellow">Relationships (3)</h5>
                       <div className="space-y-1 font-mono text-xs">
-                        <div>GET /memories/:id/related</div>
                         <div>POST /relationships/discover</div>
                         <div>POST /relationships</div>
                         <div>GET /memories/:id/graph</div>
@@ -660,20 +662,16 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
                   
                   <div className="space-y-4">
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-blue">Statistics (2)</h5>
+                      <h5 className="font-semibold mb-2 text-memory-blue">System Management (4)</h5>
                       <div className="space-y-1 font-mono text-xs">
-                        <div>GET /memories/stats</div>
-                        <div>GET /domains/:domain/stats</div>
+                        <div>GET /health</div>
+                        <div>GET /sessions</div>
+                        <div>GET /stats</div>
+                        <div>POST /domains</div>
                       </div>
                     </div>
                     
                     <div>
-                      <h5 className="font-semibold mb-2 text-memory-blue">Management (3)</h5>
-                      <div className="space-y-1 font-mono text-xs">
-                        <div>POST /domains</div>
-                        <div>GET /sessions</div>
-                        <div>GET /health</div>
-                      </div>
                     </div>
                   </div>
                 </div>

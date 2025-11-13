@@ -1,14 +1,53 @@
+# Sitemap location
+Sitemap: https://localmemory.co/sitemap.xml
+
+# Major search engines
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
+# Social media crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
+# AI crawlers (optimized for AI search)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Google-Extended
+Allow: /
+Crawl-delay: 2
+
+User-agent: Amazonbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Bytespider
+Allow: /
+Crawl-delay: 3
+
+# Default for all other crawlers
 User-agent: *
 Allow: /
+Crawl-delay: 5
+
+# Disallow sensitive areas (if any)
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$

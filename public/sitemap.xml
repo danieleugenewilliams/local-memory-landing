@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://localmemory.co/</loc>
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Payment Page -->
   <url>
     <loc>https://localmemory.co/payment</loc>
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Features Page -->
   <url>
     <loc>https://localmemory.co/features</loc>
-    <lastmod>2025-09-12</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -31,15 +31,31 @@
   <!-- Documentation Page -->
   <url>
     <loc>https://localmemory.co/docs</loc>
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Architecture Page -->
+  <url>
+    <loc>https://localmemory.co/architecture</loc>
+    <lastmod>2025-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Prompts Page -->
+  <url>
+    <loc>https://localmemory.co/prompts</loc>
+    <lastmod>2025-11-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Terms of Service -->
   <url>
     <loc>https://localmemory.co/terms</loc>
-    <lastmod>2025-09-12</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -47,7 +63,7 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://localmemory.co/privacy</loc>
-    <lastmod>2025-09-12</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
@@ -55,7 +71,7 @@
   <!-- AI Dataset for LLM Crawlers -->
   <url>
     <loc>https://localmemory.co/ai-dataset.json</loc>
-    <lastmod>2025-08-17</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -63,7 +79,7 @@
   <!-- LLM.txt for AI Search Optimization -->
   <url>
     <loc>https://localmemory.co/llm.txt</loc>
-    <lastmod>2025-09-12</lastmod>
+    <lastmod>2025-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

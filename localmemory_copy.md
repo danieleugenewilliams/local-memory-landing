@@ -233,7 +233,7 @@ $29 (normally $49)
 - **Storage**: SQLite database with optional Qdrant vector support
 - **Search**: Vector similarity + full-text + semantic AI search
 - **Performance**: Sub-20ms response times, ±1ms consistency
-- **Integration**: 8 MCP tools, 26 REST endpoints
+- **Integration**: 8 MCP tools, 27 REST endpoints
 
 ### Architecture Benefits
 - **No Dependencies**: Single binary, no runtime requirements

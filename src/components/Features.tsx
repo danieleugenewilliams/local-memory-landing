@@ -46,7 +46,7 @@ const Features = () => {
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4">Lightning Fast Search</h3>
             <p className="text-muted-foreground mb-4">
-              Advanced vector search with multiple backend options for instant memory retrieval
+              Advanced vector search with multiple backend options and intelligent optimization for instant memory retrieval
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
@@ -56,6 +56,10 @@ const Features = () => {
               <li className="flex items-start gap-2">
                 <span className="text-memory-green mt-1">•</span>
                 <span>Semantic similarity matching</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-memory-green mt-1">•</span>
+                <span>Token optimization (up to 97.5% response reduction)</span>
               </li>
             </ul>
           </div>
@@ -67,16 +71,20 @@ const Features = () => {
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4">AI-Powered Intelligence</h3>
             <p className="text-muted-foreground mb-4">
-              Smart categorization, relationship discovery, and contextual answers using Ollama
+              Smart categorization, relationship discovery, and contextual answers with session-aware intelligence
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>Automatic memory categorization</span>
+                <span>Automatic memory categorization with Ollama</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
                 <span>Intelligent question answering</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-memory-purple mt-1">•</span>
+                <span>Cross-session memory access and filtering</span>
               </li>
             </ul>
           </div>
@@ -88,7 +96,7 @@ const Features = () => {
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4">Temporal Analysis</h3>
             <p className="text-muted-foreground mb-4">
-              Track learning progression, detect knowledge gaps, and analyze patterns over time
+              Track learning progression, detect knowledge gaps, and analyze patterns over time with advanced analytics
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
@@ -98,6 +106,10 @@ const Features = () => {
               <li className="flex items-start gap-2">
                 <span className="text-memory-blue mt-1">•</span>
                 <span>Knowledge gap detection</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-memory-blue mt-1">•</span>
+                <span>Relationship discovery and graph mapping</span>
               </li>
             </ul>
           </div>
@@ -139,7 +151,11 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>8 MCP tools for complete control</span>
+                <span>8 unified MCP tools for complete control</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-memory-purple mt-1">•</span>
+                <span>20+ REST API endpoints for integration</span>
               </li>
             </ul>
           </div>
