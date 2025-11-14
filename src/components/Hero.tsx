@@ -18,7 +18,7 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
             <span className="block"><em>Local Memory</em>:</span>
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
-              End AI Context Amnesia <br /> That's Killing Your Productivity
+              Cure Context Amnesia. <br /> Engineer AI Intelligence.
             </span>
           </h1>
           
