@@ -8,9 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Performance from "@/components/Performance";
 import ScrollToTop from "@/components/ScrollToTop";
-import { Handle } from "vaul";
-import { Head } from "react-day-picker";
-import { DatabaseSync } from "node:sqlite";
+import StructuredData from "@/components/StructuredData";
 import { handleStripePayment } from "@/lib/payment";
 
 const FeaturesPage = () => {
@@ -24,6 +22,24 @@ const FeaturesPage = () => {
   };
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData
+        type="article"
+        title="Local Memory Features - Transform AI Context Amnesia into Permanent Intelligence"
+        description="Comprehensive features overview: 8 unified MCP tools, 97.5% token optimization, 10-57ms response times, cross-agent compatibility, and 100% local operation for AI memory systems."
+        url="https://localmemory.co/features"
+        features={[
+          "8 unified MCP tools with operation-type architecture",
+          "97.5% token optimization for efficient responses",
+          "10-57ms lightning-fast search response times",
+          "Universal AI platform compatibility (Claude Desktop, Code, OpenCode)",
+          "Vector search with Qdrant and SQLite dual backend",
+          "AI-powered semantic search and categorization",
+          "Cross-session knowledge persistence",
+          "Temporal analysis and learning progression tracking",
+          "100% local and private operation",
+          "Enterprise-grade security and performance"
+        ]}
+      />
       <Header />
       
       {/* Hero Section */}
@@ -651,11 +667,11 @@ const FeaturesPage = () => {
       <section className="bg-slate-900 py-8 lg:pt-10 lg:pb-12">
         <div className="container max-w-4xl mx-auto px-6">
           <div className="text-center">
-            <p className="text-gray-300 mb-4">Ready to give your AI permanent memory?</p>
+            <p className="text-gray-300 mb-4">Ready to keep your context under your control?</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
                 <Button onClick={handleStripePayment} variant="hero" className="w-full sm:w-auto" size="lg">
-                  Purchase <em>Local Memory</em>
+                  Secure Your Context Now
                 </Button>
 
               <Link to="/docs">

@@ -93,10 +93,10 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">
-            Shared Memories, Every Agent
+            Keep Your Competitive Advantage Local
           </h2>
           <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
-            Transform your AI agents with persistent memory that never forgets.
+            Your context stays under your control. No training data leakage. Universal agent compatibility.
           </p>
         </div>
 
@@ -117,15 +117,15 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm px-4">
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">Context Engineering System</span>
+                  <span className="text-center md:text-left">100% Local Data Sovereignty</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 lg:ml-10">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">Worth $100-$300 Daily</span>
+                  <span className="text-center md:text-left">Universal Agent Compatibility</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 lg:ml-16">
                   <span className="text-green-500 hidden md:inline">✓</span>
-                  <span className="text-center md:text-left">Unlimited Usage Forever</span>
+                  <span className="text-center md:text-left">Never Trains AI Models</span>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-2">
                   <span className="text-green-500 hidden md:inline">✓</span>
@@ -156,14 +156,14 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
               <div className="flex justify-center">
                 <Button 
                   onClick={() => {
-                    trackCTAClick('pricing', 'Get Instant Access', '/payment');
+                    trackCTAClick('pricing', 'Secure Your Context Now', '/payment');
                     handleStripePayment();
-                  }} 
-                  variant="hero" 
-                  className="w-full sm:w-auto" 
+                  }}
+                  variant="hero"
+                  className="w-full sm:w-auto"
                   size="lg"
                 >
-                  Get Instant Access
+                  Secure Your Context Now
                 </Button>
               </div>
               <div className="mt-2 text-sm text-gray-300">🔒 One-Time Secure Stripe Payment</div>
@@ -186,10 +186,10 @@ Use my existing downloaded binary - don't try to download a new one. Follow thes
                 <div className="text-center">
                   <div className="text-4xl mb-6">💬</div>
                   <blockquote className="text-xl sm:text-2xl text-white mb-6 italic leading-relaxed">
-                    "I just wanted to share that the local memory MCP has really helped boost my productivity with [my project]. Thanks so much again for sharing!"
+                    "I love that this tool just works, and when the tools are prompted well... it gets amazing results minus the hallucinations."
                   </blockquote>
                   <cite className="text-sm text-gray-300 font-medium">
-                    — Early Access User/Software Engineer
+                    — Senior Software Engineer
                   </cite>
                   
                 </div>

@@ -4,10 +4,10 @@ const ProblemSolution = () => {
       <div className="container max-w-screen-2xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
-            AI Agents Are Smart...But They Have A Lousy Memory
+            Your Context Is Trapped in Silos While Training AI Competitors
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            <em>Local Memory</em> amplifies context engineering to create a seamless bridge between human expertise and AI knowledge.
+            Every AI agent starts from zero. Your proprietary workflows become training data. Projects drown in stale markdown files.
           </p>
         </div>
 
@@ -24,40 +24,40 @@ const ProblemSolution = () => {
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
                 <span className="text-red-500 text-xl flex-shrink-0">🔄</span>
                 <div>
-                  <div className="font-medium text-white">"What was that auth flow again?"</div>
-                  <div className="text-sm text-gray-300">Reexplaining architecture and reteaching patterns every session</div>
+                  <div className="font-medium text-white">"Claude knows our auth flow, but GPT doesn't"</div>
+                  <div className="text-sm text-gray-300">Context trapped in agent silos - starting from scratch with every switch</div>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
-                <span className="text-red-500 text-xl flex-shrink-0">😒</span>
+                <span className="text-red-500 text-xl flex-shrink-0">🧠</span>
                 <div>
-                  <div className="font-medium text-white">"I literally just explained this error pattern!"</div>
-                  <div className="text-sm text-gray-300">Repeating the same debugging steps</div>
+                  <div className="font-medium text-white">Your workflows are training competitor AI models</div>
+                  <div className="text-sm text-gray-300">Proprietary architectural decisions become free training data</div>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
                 <span className="text-red-500 text-xl flex-shrink-0">⌛️</span>
                 <div>
-                  <div className="font-medium text-white">Context-switching hell with every new session or '/clear'</div>
-                  <div className="text-sm text-gray-300">Lost productivity from constant re-onboarding</div>
+                  <div className="font-medium text-white">Every '/clear' erases hours of architectural decisions</div>
+                  <div className="text-sm text-gray-300">Session amnesia wastes 2+ hours daily rebuilding context</div>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
                 <span className="text-red-500 text-xl flex-shrink-0">📋</span>
                 <div>
-                  <div className="font-medium text-white">Human clipboards for AI agents</div>
-                  <div className="text-sm text-gray-300">Having to maintain dozens of context docs that get stale</div>
+                  <div className="font-medium text-white">Projects drowning in stale context markdown files</div>
+                  <div className="text-sm text-gray-300">Manual copy-paste workflows between agents that go out of date</div>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
-                <span className="text-red-500 text-xl flex-shrink-0">😤</span>
+                <span className="text-red-500 text-xl flex-shrink-0">💸</span>
                 <div>
-                  <div className="font-medium text-white">Starting over with each agent switch</div>
-                  <div className="text-sm text-gray-300">Claude, GPT, Qwen, Grok, etc. → back to square one</div>
+                  <div className="font-medium text-white">Agent switching costs pile up daily</div>
+                  <div className="text-sm text-gray-300">Claude → GPT → Gemini = constantly rebuilding the same context</div>
                 </div>
               </div>
             </div>
@@ -72,27 +72,35 @@ const ProblemSolution = () => {
             </div>
             
             <div className="space-y-4 flex-1">
-              <div className="flex items-start gap-3 p-4 pt-3 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
-                <span className="text-green-500 text-xl flex-shrink-0">✨</span>
+              <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
+                <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
                 <div>
-                  <div className="font-medium text-white">"Remember that refactor pattern we established?"</div>
-                  <div className="text-sm text-gray-300">Your decisions become institutional knowledge with instant context recall across all sessions</div>
+                  <div className="font-medium text-white">Universal agent memory across Claude, GPT, Gemini, Qwen</div>
+                  <div className="text-sm text-gray-300">Context persists and transfers seamlessly between any AI agent</div>
                 </div>
               </div>
               
-              <div className="flex items-start gap-3 p-4 pt-6 md:pt-3 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
-                <span className="text-green-500 text-xl flex-shrink-0">🧠</span>
+              <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-red-500/60 min-h-24 sm:h-24">
+                <span className="text-green-500 text-xl flex-shrink-0">🛡️</span>
                 <div>
-                  <div className="font-medium text-white">Your expertise becomes an intelligence asset</div>
-                  <div className="text-sm text-gray-300">Context engineering transforms experience into permanent AI capability</div>
+                  <div className="font-medium text-white">100% local data sovereignty - never trains AI models</div>
+                  <div className="text-sm text-gray-300">Your competitive advantage stays yours, not shared with competitors</div>
                 </div>
               </div>
               
               <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
-                <span className="text-green-500 text-xl flex-shrink-0">🤓</span>
+                <span className="text-green-500 text-xl flex-shrink-0">⚡</span>
                 <div>
-                  <div className="font-medium text-white">Progressive understanding of YOUR patterns</div>
-                  <div className="text-sm text-gray-300">AI learns your unique approaches and architectural preferences</div>
+                  <div className="font-medium text-white">Context survives '/clear', restarts, and agent switches</div>
+                  <div className="text-sm text-gray-300">Session persistence eliminates daily context reconstruction waste</div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
+                <span className="text-green-500 text-xl flex-shrink-0">🗂️</span>
+                <div>
+                  <div className="font-medium text-white">Replace markdown chaos with smart, searchable memory</div>
+                  <div className="text-sm text-gray-300">No more stale context docs - dynamic, always-current knowledge</div>
                 </div>
               </div>
               
@@ -100,15 +108,7 @@ const ProblemSolution = () => {
                 <span className="text-green-500 text-xl flex-shrink-0">🎯</span>
                 <div>
                   <div className="font-medium text-white">Jump straight to solving, not explaining</div>
-                  <div className="text-sm text-gray-300">Skip the context-setting and dive into productive work immediately</div>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-3 p-4 pt-6 bg-slate-800 rounded-lg border-2 border-green-500/60 min-h-24 sm:h-24">
-                <span className="text-green-500 text-xl flex-shrink-0">🔗</span>
-                <div>
-                  <div className="font-medium text-white">Seamless context across ALL of your agents</div>
-                  <div className="text-sm text-gray-300">Claude, OpenCode, etc. — same memory available anywhere</div>
+                  <div className="text-sm text-gray-300">End context reconstruction costs - start productive work immediately</div>
                 </div>
               </div>
             </div>

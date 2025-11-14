@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import ScrollToTop from "@/components/ScrollToTop";
+import StructuredData from "@/components/StructuredData";
 import { handleStripePayment } from "@/lib/payment";
 
 const DocsPage = () => {
@@ -65,6 +66,12 @@ const DocsPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData
+        type="article"
+        title="Local Memory Documentation - Complete Setup and Installation Guide"
+        description="Comprehensive documentation for Local Memory: installation, MCP setup, REST API reference, troubleshooting, and agent configuration for persistent AI intelligence."
+        url="https://localmemory.co/docs"
+      />
       <Header />
       
       {/* Section 1: Header - Light Background */}

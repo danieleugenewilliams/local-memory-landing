@@ -16,24 +16,24 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
         <div className="mx-auto max-w-6xl text-center">
           {/* Main headline - Blend technical credibility with emotional appeal */}
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-6 animate-fade-in leading-tight">
-            <p><em>Local Memory</em>:</p>
+            <span className="block"><em>Local Memory</em>:</span>
             <span className="bg-gradient-to-r from-memory-blue to-memory-purple bg-clip-text text-transparent">
-              Cure Context Amnesia. <br /> Engineer AI Intelligence.
+              End AI Context Amnesia <br /> That's Killing Your Productivity
             </span>
           </h1>
           
-          {/* Subheading with Intelligence Engineering focus */}
+          {/* Data sovereignty and agent switching focus */}
           <p className="text-base sm:text-lg text-muted-foreground max-w-6xl mx-auto mb-8 animate-fade-in leading-relaxed">
-            <span>Context amnesia costs you more than time...it costs you the opportunity to build cumulative AI intelligence.</span>
-            <span className="block">Every new session, every '/clear', or every agent switch, knowledge is lost. AI is brilliant but has a memory like a sieve.</span>
+            <span>Persistent Memory for Claude, Codex, Gemini, OpenCode, and Every AI Agent.</span>
+            <span className="block">Your Context, Your Control, Your Competitive Advantage.</span>
           </p>
 
-          {/* Intelligence Engineering Positioning */}
+          {/* Core problem positioning */}
           <div className="text-center mb-10 animate-fade-in">
             <p className="text-base sm:text-lg text-muted-foreground font-medium">
-              <span>With <em>Local Memory</em>, every explanation becomes permanent through context engineering.</span>
-              <span className="block">Your debugging wisdom compounds and your architectural decisions persist.</span>
-              <span>Build intelligence once and leverage it forever across every agent. Your context will always travel with you.</span>
+              <span>Stop explaining the same architecture decisions to every new AI conversation.</span>
+              <span className="block">End the frustration of agents that forget everything when you type '/clear'.</span>
+              <span className="block">With <em>Local Memory</em>, your AI agents finally remember and build on what they learned—across every platform.</span>
             </p>
           </div>
           
@@ -44,9 +44,9 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
                 variant="hero" 
                 size="lg" 
                 className="w-full sm:w-auto"
-                onClick={() => trackCTAClick('hero', 'Upgrade Your Coding Agent\'s Memory Now', '/payment')}
+                onClick={() => trackCTAClick('hero', 'Build Your AI Intelligence', '/payment')}
               >
-                Upgrade Your Coding Agent's Memory Now
+                Build Your AI Intelligence
               </Button>
             </Link>
             <a href="#demo">
@@ -64,11 +64,11 @@ const Hero = forwardRef<HTMLElement>((props, ref) => {
           
           {/* Trust badges */}
           <div className="mt-6 text-center text-sm text-muted-foreground animate-fade-in">
-            🔒One-Time Secure Stripe Payment  • ⚡ Instant Access • 🛡️ 100% Local & Private
+            🔒One-Time Secure Payment  • 🛡️ 100% Local & Private • 🚫 Never Trains AI Models
           </div>
 
           <div className="text-sm text-muted-foreground animate-fade-in">
-            <em>Two-minute setup. Zero dependencies. Yes, actually zero. Not 'zero*' with 47 footnotes.</em>
+            <em>Two-minute setup. Your data never leaves your machine. Your competitive advantage stays yours.</em>
           </div>
 
         </div>
