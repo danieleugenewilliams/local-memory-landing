@@ -4,16 +4,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
-import Features from "./pages/Features";
+import IndexNew from "./pages/IndexNew";
+import FeaturesNew from "./pages/FeaturesNew";
 import NotFound from "./pages/NotFound";
-import Payment from "./pages/Payment";
+import PaymentNew from "./pages/PaymentNew";
 import Success from "./pages/Success";
-import Docs from "./pages/Docs";
+import DocsNew from "./pages/DocsNew";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Prompts from "./pages/Prompts";
-import Architecture from "./pages/Architecture";
+import ArchitectureNew from "./pages/ArchitectureNew";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import { useEffect } from "react";
 import { detectAndTrackFunnelStage } from "./lib/analytics";
@@ -47,13 +47,13 @@ const App = () => (
           <AnalyticsTracker />
           <AutoScrollToTop />
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/features" element={<Features />} />
-            <Route path="/payment" element={<Payment />} />
+            <Route path="/" element={<IndexNew />} />
+            <Route path="/features" element={<FeaturesNew />} />
+            <Route path="/payment" element={<PaymentNew />} />
             <Route path="/success" element={<Success />} />
-            <Route path="/docs" element={<Docs />} />
+            <Route path="/docs" element={<DocsNew />} />
             <Route path="/prompts" element={<Prompts />} />
-            <Route path="/architecture" element={<Architecture />} />
+            <Route path="/architecture" element={<ArchitectureNew />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
