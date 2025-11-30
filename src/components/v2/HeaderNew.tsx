@@ -7,6 +7,7 @@ const HeaderNew = () => {
   const location = useLocation();
 
   const navItems = [
+    { label: "Home", href: "/" },
     { label: "Features", href: "/features" },
     { label: "Docs", href: "/docs" },
     { label: "Architecture", href: "/architecture" },
