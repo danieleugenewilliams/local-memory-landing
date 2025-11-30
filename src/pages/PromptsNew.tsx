@@ -20,7 +20,7 @@ const PromptsNew = () => {
   const prompts = {
     minimal: `## Local Memory
 
-Use local-memory MCP tools to store and retrieve context across sessions. Store architectural decisions, solutions, and learnings. Search semantically before answering to ensure consistency with past work.
+Use local-memory to store and retrieve context across sessions. Store architectural decisions, solutions, and learnings. Search semantically before answering to ensure consistency with past work.
 
 Fallback: REST API at http://localhost:3002/api/v1 if MCP unavailable.`,
 
@@ -48,6 +48,15 @@ Persistent knowledge system for maintaining context across sessions.
     comprehensive: `## Local Memory
 
 Persistent knowledge system. Use proactively to build expertise across sessions.
+
+To start local-memory, use local-memory start
+This will start the daemon and REST API on port 3002.
+
+Proactively use local-memory to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.
+
+If you are unable to connect directly to the local-memory MCP server, try using jsonrpc directly to the binary (local-memory --mcp).
+
+If you cannot connect to neither the MCP server nor via jsonrpc, try the REST API at http://localhost:3002/api/v1.
 
 ### Storage Strategy
 Store when encountering:
@@ -509,6 +518,22 @@ Try different keywords or check ID/tag.
                   Generate structured questions to gather requirements, constraints, and success criteria.
                 </p>
               </div>
+              <div className="p-5">
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                  </div>
+                  <div className="terminal-body max-h-64 overflow-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                      {commands.gather}
+                    </pre>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* /reframe */}
@@ -530,6 +555,22 @@ Try different keywords or check ID/tag.
                 <p className="text-sm text-muted-foreground">
                   Synthesize and confirm understanding before proceeding with execution.
                 </p>
+              </div>
+              <div className="p-5">
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                  </div>
+                  <div className="terminal-body max-h-64 overflow-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                      {commands.reframe}
+                    </pre>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -553,6 +594,22 @@ Try different keywords or check ID/tag.
                   Activate truth-first mode with evidence requirements and confidence scoring.
                 </p>
               </div>
+              <div className="p-5">
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                  </div>
+                  <div className="terminal-body max-h-64 overflow-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                      {commands.truth}
+                    </pre>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* /memorize */}
@@ -575,6 +632,22 @@ Try different keywords or check ID/tag.
                   Save conversation context to Local Memory with structured tagging and metadata.
                 </p>
               </div>
+              <div className="p-5">
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                  </div>
+                  <div className="terminal-body max-h-64 overflow-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                      {commands.memorize}
+                    </pre>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* /recall */}
@@ -596,6 +669,22 @@ Try different keywords or check ID/tag.
                 <p className="text-sm text-muted-foreground">
                   Restore context from Local Memory by ID, tag, or semantic search.
                 </p>
+              </div>
+              <div className="p-5">
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                  </div>
+                  <div className="terminal-body max-h-64 overflow-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                      {commands.recall}
+                    </pre>
+                  </div>
+                </div>
               </div>
             </div>
 

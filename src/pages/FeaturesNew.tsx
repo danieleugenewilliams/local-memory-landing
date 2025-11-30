@@ -10,18 +10,14 @@ const FeaturesNew = () => {
       <HeaderNew />
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 grid-pattern grid-fade" />
-        <div className="container-wide relative">
-          <div className="flex flex-col items-center justify-center py-20 text-center md:py-28">
-            <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              Complete memory for every AI workflow
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-              Store context. Search semantically. Build relationships. Analyze patterns. 
-              Access from any agent, any integration, any script.
-            </p>
-          </div>
+        <div className="container-wide relative py-16 text-center md:py-20">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Complete memory for every AI workflow</h1>
+          <p className="mt-4 text-lg text-muted-foreground">
+              <span>Store context. Search semantically. Build relationships. Analyze patterns.<br/></span>
+              <span>Access from any agent, any integration, any script.</span>
+          </p>
         </div>
       </section>
 
