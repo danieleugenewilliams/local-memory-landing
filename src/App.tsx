@@ -15,6 +15,7 @@ import TermsNew from "./pages/TermsNew";
 import PromptsNew from "./pages/PromptsNew";
 import ArchitectureNew from "./pages/ArchitectureNew";
 import AutoScrollToTop from "./components/AutoScrollToTop";
+import DynamicPageTitle from "./components/DynamicPageTitle";
 import { useEffect } from "react";
 import { detectAndTrackFunnelStage } from "./lib/analytics";
 
@@ -45,6 +46,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AnalyticsTracker />
+          <DynamicPageTitle />
           <AutoScrollToTop />
           <Routes>
             <Route path="/" element={<IndexNew />} />
