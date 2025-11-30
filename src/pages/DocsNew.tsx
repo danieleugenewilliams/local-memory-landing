@@ -59,7 +59,7 @@ const DocsNew = () => {
             <span className="text-border">·</span>
             <a href="#agent-setup" className="text-muted-foreground hover:text-foreground">Agent Setup</a>
             <span className="text-border">·</span>
-            <a href="#advanced-setup" className="text-muted-foreground hover:text-foreground">Advanced Setup</a>
+            <a href="#manual-setup" className="text-muted-foreground hover:text-foreground">Advanced Setup</a>
             <span className="text-border">·</span>
             <a href="#troubleshooting" className="text-muted-foreground hover:text-foreground">Troubleshooting</a>
           </div>
@@ -440,7 +440,7 @@ const DocsNew = () => {
       </section>
 
       {/* Advanced Setup */}
-      <section id="advanced-setup" className="scroll-target section-sm border-b border-border bg-card/30">
+      <section id="manual-setup" className="scroll-target section-sm border-b border-border bg-card/30">
         <div className="container-wide">
           <div className="mb-8 text-left">
             <div className="mb-4 flex items-left justify-left gap-3">
