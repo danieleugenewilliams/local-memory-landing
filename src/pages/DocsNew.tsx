@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Copy, ChevronDown } from "lucide-react";
+import { Copy, ChevronDown, Bot, Settings } from "lucide-react";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 import { trackCTAClick } from "@/lib/analytics";
+import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 
 const DocsNew = () => {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
@@ -55,6 +56,10 @@ const DocsNew = () => {
             <a href="#rest-api" className="text-muted-foreground hover:text-foreground">REST API</a>
             <span className="text-border">·</span>
             <a href="#cli" className="text-muted-foreground hover:text-foreground">CLI</a>
+            <span className="text-border">·</span>
+            <a href="#agent-setup" className="text-muted-foreground hover:text-foreground">Agent Setup</a>
+            <span className="text-border">·</span>
+            <a href="#advanced-setup" className="text-muted-foreground hover:text-foreground">Advanced Setup</a>
             <span className="text-border">·</span>
             <a href="#troubleshooting" className="text-muted-foreground hover:text-foreground">Troubleshooting</a>
           </div>
@@ -412,6 +417,277 @@ const DocsNew = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Agent Setup */}
+      <section id="agent-setup" className="scroll-target section-sm border-b border-border bg-card/30">
+        <div className="container-wide">
+          <div className="mb-8 text-left">
+            <div className="mb-4 flex items-left justify-left gap-3">
+              <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Agent Setup Prompts</h2>
+              <span className="rounded-full bg-orange-500/20 px-3 py-2 text-sm font-medium text-orange-500">Recommended Method</span>
+            </div>
+            <p className="max-w-3xl text-lg justify-left text-gray-300">
+              Prefer having your AI agent handle the setup? After downloading <em>Local Memory</em>, copy our detailed prompts
+              and let your AI assistant handle the complete installation and configuration.
+            </p>
+          </div>
+
+          <PostPurchaseAgentSetup />
+        </div>
+      </section>
+
+      {/* Advanced Setup */}
+      <section id="advanced-setup" className="scroll-target section-sm border-b border-border bg-card/30">
+        <div className="container-wide">
+          <div className="mb-8 text-left">
+            <div className="mb-4 flex items-left justify-left gap-3">
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Advanced Setup</h2>
+              <span className="rounded-full bg-purple-500/20 px-3 py-2 text-sm font-medium text-purple-500">Custom Configurations</span>
+            </div>
+            <p className="max-w-3xl text-lg text-muted-foreground">
+              This is for developers who need custom configurations or for those who want to understand the underlying setup process.
+            </p>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="mb-4 text-lg font-semibold">Installation Guide</h3>
+          </div>
+          <div className="space-y-6">
+
+              {/* Step 1 */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">1</span>
+                  <h3 className="text-lg font-semibold">Purchase and Download <em>Local Memory</em></h3>
+                </div>
+                <p className="mb-3 text-muted-foreground">If you haven't already, get <em>Local Memory</em> below, and download to your machine.</p>
+                <div className="mb-3 rounded-lg bg-muted p-3">
+                  <Link
+                    to="/payment"
+                    className="btn-primary inline-flex gap-2"
+                    onClick={() => trackCTAClick("docs", "Purchase Local Memory", "/payment")}
+                  >
+                    Purchase <em>Local Memory</em>
+                  </Link>
+                </div>
+                <p className="mb-3 text-muted-foreground">After downloading, copy and paste your OS-specific binary into your preferred location:</p>
+                <div className="rounded-lg bg-muted p-3">
+                  <p className="mb-2 text-sm"><strong>macOS/Linux:</strong></p>
+                  <div className="terminal">
+                    <div className="terminal-body py-2">
+                      <pre className="text-sm text-[hsl(var(--terminal-green))]">&gt; chmod +x local-memory && mv local-memory /path/to/your/preferred/location</pre>
+                    </div>
+                  </div>
+                  <p className="mb-2 mt-3 text-sm"><strong>Windows:</strong></p>
+                  <div className="terminal">
+                    <div className="terminal-body py-2">
+                      <pre className="text-sm text-[hsl(var(--terminal-green))]">&gt; mv local-memory.exe</pre>
+                    </div>
+                  </div>
+                  <div className="mt-2 rounded border border-yellow-700/30 p-2">
+                    <p className="mb-1 font-medium text-yellow-500">macOS users:</p>
+                    <p className="text-yellow-500">Before running the above command, first run: <code className="rounded bg-yellow-800/30 px-1 text-yellow-500">&gt; xattr -rd com.apple.quarantine ~/Downloads/local-memory-macos-*</code></p>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    <em>&nbsp; Move to /path/to/your/preferred/location, then add to PATH variable.</em>
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 - Dependencies */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">2</span>
+                  <h3 className="text-lg font-semibold">Install Recommended Features</h3>
+                </div>
+                <p className="mb-3 text-muted-foreground">Install Ollama.</p>
+
+                <div className="mb-4 rounded-lg bg-muted p-3">
+                  <p className="mb-2 text-sm"><strong>macOS/Linux:</strong></p>
+                  <div className="terminal">
+                    <div className="terminal-body py-2">
+                      <pre className="text-sm text-[hsl(var(--terminal-green))]">&gt; curl -fsSL https://ollama.ai/install.sh | sh</pre>
+                    </div>
+                  </div>
+                  <p className="mb-2 mt-3 text-sm"><strong>Windows:</strong></p>
+                  <p className="mb-3 text-sm text-muted-foreground">Download from <a href="https://ollama.ai" className="text-blue-500 hover:underline" target="_blank">ollama.ai</a></p>
+
+                  <p className="mb-2 text-sm"><strong>Pull required model:</strong></p>
+                  <div className="terminal">
+                    <div className="terminal-body py-2">
+                      <pre className="text-sm text-[hsl(var(--terminal-green))]">&gt; ollama pull nomic-embed-text</pre>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded border border-yellow-700/30 bg-muted/20 p-4">
+                  <h5 className="mb-3 font-semibold text-yellow-500">💡 <strong>Pro Tip:</strong> Use Qdrant for lightning-fast search performance</h5>
+                  <p className="mb-3 text-sm text-muted-foreground">Setting up Qdrant with <em>Local Memory</em> dramatically improves search speed from ~100ms to &lt;10ms. This is especially valuable for large memory databases and frequent semantic searches.</p>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <div>• <strong>Instant Results:</strong> Sub-10ms semantic search across thousands of memories</div>
+                    <div>• <strong>Auto-Detection:</strong> Local Memory automatically detects and uses Qdrant when available</div>
+                    <div>• <strong>Graceful Fallback:</strong> Falls back to SQLite if Qdrant is unavailable</div>
+                    <div>• <strong>Zero Config:</strong> Works out-of-the-box with default Qdrant settings</div>
+                    <div>• Run these commands to download, configure, and start Qdrant:</div>
+                  </div>
+                  <div className="ml-4 mt-2 space-y-1">
+                    <div className="terminal">
+                      <div className="terminal-body py-1">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; curl -L https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz -o qdrant.tar.gz</pre>
+                      </div>
+                    </div>
+                    <div className="terminal">
+                      <div className="terminal-body py-1">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; tar -xzf qdrant.tar.gz && chmod +x qdrant && mkdir -p ~/.local-memory && mv qdrant ~/.local-memory/</pre>
+                      </div>
+                    </div>
+                    <div className="terminal">
+                      <div className="terminal-body py-1">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; cd ~/.local-memory && ./qdrant &</pre>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-xs italic text-muted-foreground">
+                    For power users: Qdrant enables advanced vector operations and scales to millions of memories with consistent performance.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 - Integration */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">3</span>
+                  <h3 className="text-lg font-semibold">Connect to Your AI Editor</h3>
+                </div>
+                <p className="mb-3 text-muted-foreground">Add 'local-memory' to your preferred AI editor:</p>
+
+                {/* Primary: Claude Code */}
+                <div className="mb-4 rounded border border-muted-700/30 bg-muted-950/20 p-3">
+                  <h5 className="mb-2 font-medium text-muted-300">Claude Code:</h5>
+                  <div className="terminal">
+                    <div className="terminal-body py-2">
+                      <pre className="text-sm text-[hsl(var(--terminal-green))]">&gt; claude mcp add --transport stdio local-memory -- local-memory --mcp</pre>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground"><em>Automatically detects and configures Claude Code</em></p>
+                </div>
+
+                {/* MCP Integration */}
+                <div className="mb-4 rounded-lg bg-muted p-3">
+                  <p className="mb-3 font-medium text-muted-300">MCP Integration (Other Editors)</p>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <p className="text-sm font-medium">Claude Desktop:</p>
+                      <p className="mb-1 text-xs text-muted-foreground">~/.claude_desktop_config.json:</p>
+                      <div className="w-full max-w-full overflow-x-auto rounded bg-background p-2 font-mono text-xs">
+                        <pre>{`{
+  "mcpServers": {
+    "local-memory": {
+      "command": "/Users/[username]/.npm-global/bin/local-memory",
+      "args": ["--mcp"],
+      "transport": "stdio"
+    }
+  }
+}`}</pre>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium">VS Code (Copilot):</p>
+                      <p className="mb-1 text-xs text-muted-foreground">.vscode/mcp.json:</p>
+                      <div className="w-full max-w-full overflow-x-auto rounded bg-background p-2 font-mono text-xs">
+                        <pre>{`{
+  "servers": {
+    "local-memory": {
+      "command": "local-memory"
+    }
+  }
+}`}</pre>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium">Cursor:</p>
+                      <p className="mb-1 text-xs text-muted-foreground">.cursor/mcp.json:</p>
+                      <div className="w-full max-w-full overflow-x-auto rounded bg-background p-2 font-mono text-xs">
+                        <pre>{`{
+  "servers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": ["--mcp"]
+    }
+  }
+}`}</pre>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium">Windsurf:</p>
+                      <p className="mb-1 text-xs text-muted-foreground">Settings &gt; MCP Configuration:</p>
+                      <div className="w-full max-w-full overflow-x-auto rounded bg-background p-2 font-mono text-xs">
+                        <pre>{`{
+  "mcpServers": {
+    "local-memory": {
+      "command": "local-memory",
+      "args": ["--mcp"]
+    }
+  }
+}`}</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Alternative: REST API - Collapsible */}
+                <div className="mb-4 rounded-lg bg-muted p-3">
+                  <p className="mb-3 font-medium text-muted-300">
+                    REST API (non-MCP)
+                  </p>
+                  <div className="mt-3">
+                    <div className="terminal">
+                      <div className="terminal-body py-2">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; /path/to/local-memory start</pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Step 4 - Verify */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">4</span>
+                  <h3 className="text-lg font-semibold">Test Installation</h3>
+                </div>
+                <p className="mb-3 text-muted-foreground">Run these commands to verify installation and configuration of <em>Local Memory</em>:</p>
+
+                <div className="space-y-3 rounded-lg bg-muted p-3">
+                  <div>
+                    <p className="text-sm font-medium">MCP Integration:</p>
+                    <div className="terminal">
+                      <div className="terminal-body py-1">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; claude mcp list</pre>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Expectation: "local-memory: /path/to/local-memory - ✓ Connected"</p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium">REST API:</p>
+                    <div className="terminal">
+                      <div className="terminal-body py-1">
+                        <pre className="text-xs text-[hsl(var(--terminal-green))]">&gt; curl http://localhost:3002/api/v1/health</pre>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Expectation: {`{"success": true, "data": {"session": "your-coding-session", "status": "healthy", "timestamp": "2025-08-21T18:14:15Z"}, "message": "Server is healthy"}`}</p>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </section>
