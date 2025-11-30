@@ -19,7 +19,7 @@ const HeroNew = () => {
       } else {
         clearInterval(typeTimer);
         // Hide cursor after typing completes
-        setTimeout(() => setShowCursor(false), 1500);
+        // setTimeout(() => setShowCursor(false), 1500);
       }
     }, 120);
 

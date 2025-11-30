@@ -8,11 +8,11 @@ import IndexNew from "./pages/IndexNew";
 import FeaturesNew from "./pages/FeaturesNew";
 import NotFound from "./pages/NotFound";
 import PaymentNew from "./pages/PaymentNew";
-import Success from "./pages/Success";
+import SuccessNew from "./pages/SuccessNew";
 import DocsNew from "./pages/DocsNew";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Prompts from "./pages/Prompts";
+import PrivacyNew from "./pages/PrivacyNew";
+import TermsNew from "./pages/TermsNew";
+import PromptsNew from "./pages/PromptsNew";
 import ArchitectureNew from "./pages/ArchitectureNew";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import { useEffect } from "react";
@@ -50,12 +50,12 @@ const App = () => (
             <Route path="/" element={<IndexNew />} />
             <Route path="/features" element={<FeaturesNew />} />
             <Route path="/payment" element={<PaymentNew />} />
-            <Route path="/success" element={<Success />} />
+            <Route path="/success" element={<SuccessNew />} />
             <Route path="/docs" element={<DocsNew />} />
-            <Route path="/prompts" element={<Prompts />} />
+            <Route path="/prompts" element={<PromptsNew />} />
             <Route path="/architecture" element={<ArchitectureNew />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<PrivacyNew />} />
+            <Route path="/terms" element={<TermsNew />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

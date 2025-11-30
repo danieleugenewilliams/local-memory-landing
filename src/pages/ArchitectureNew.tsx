@@ -15,10 +15,10 @@ const ArchitectureNew = () => {
         <div className="container-wide relative">
           <div className="flex flex-col items-center justify-center py-20 text-center md:py-28">
             <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              Local-first architecture
+              Architecture
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-              Enterprise-grade security. Zero cloud dependency. Your data never leaves.
+              Private-first architecture for AI.  Your data stays local.
             </p>
           </div>
         </div>
