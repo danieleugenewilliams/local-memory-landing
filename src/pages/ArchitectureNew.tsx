@@ -53,15 +53,15 @@ const ArchitectureNew = () => {
               <div className="mt-1 text-sm text-muted-foreground">Architecture Layers</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center">
-              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-green))]">11</div>
+              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">11</div>
               <div className="mt-1 text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center">
-              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-purple))]">27</div>
+              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">27</div>
               <div className="mt-1 text-sm text-muted-foreground">REST Endpoints</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center">
-              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-orange))]">0</div>
+              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">0</div>
               <div className="mt-1 text-sm text-muted-foreground">External Data Transfers</div>
             </div>
           </div>
@@ -101,7 +101,7 @@ const ArchitectureNew = () => {
             {/* Entry Points */}
             <div className="rounded-xl border border-border bg-card p-6">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-orange))]/10 font-mono text-sm text-[hsl(var(--brand-orange))]">2</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">2</span>
                 <h3 className="font-semibold">Entry Points</h3>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -112,7 +112,7 @@ const ArchitectureNew = () => {
             {/* MCP Tools */}
             <div className="rounded-xl border border-border bg-card p-6">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-purple))]/10 font-mono text-sm text-[hsl(var(--brand-purple))]">3</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">3</span>
                 <h3 className="font-semibold">MCP Tools (11 Total)</h3>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ const ArchitectureNew = () => {
             {/* Services */}
             <div className="rounded-xl border border-border bg-card p-6">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-green))]/10 font-mono text-sm text-[hsl(var(--brand-green))]">4</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">4</span>
                 <h3 className="font-semibold">Services Layer</h3>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -134,7 +134,7 @@ const ArchitectureNew = () => {
             {/* Storage */}
             <div className="rounded-xl border border-border bg-card p-6">
               <div className="mb-3 flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-pink))]/10 font-mono text-sm text-[hsl(var(--brand-pink))]">5</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--brand-blue))]/10 font-mono text-sm text-[hsl(var(--brand-blue))]">5</span>
                 <h3 className="font-semibold">Storage Layer</h3>
               </div>
               <p className="text-sm text-muted-foreground">
@@ -405,7 +405,7 @@ const ArchitectureNew = () => {
 
             <div className="rounded-xl border border-border bg-card p-4">
               <h3 className="mb-2 font-semibold">Minimal Attack Surface</h3>
-              <p className="text-sm text-muted-foreground">47 Go dependencies. No external API keys. No cloud integrations.</p>
+              <p className="text-sm text-muted-foreground">Written entirely in Go. No external API keys. No cloud integrations.</p>
             </div>
 
             <div className="rounded-xl border border-border bg-card p-4">
@@ -428,7 +428,7 @@ const ArchitectureNew = () => {
               </div>
               <div>
                 <span className="font-medium">External Dependencies</span>
-                <p className="text-muted-foreground">47 pinned Go modules</p>
+                <p className="text-muted-foreground">Go modules</p>
               </div>
               <div>
                 <span className="font-medium">Data Transmission</span>
@@ -455,7 +455,7 @@ const ArchitectureNew = () => {
             <div className="rounded-xl border border-border bg-card p-6">
               <h3 className="mb-4 font-semibold">Supply Chain Security</h3>
               <div className="mb-4 rounded-lg border border-border bg-background p-4 text-center">
-                <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-purple))]">47</div>
+                <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">47</div>
                 <div className="text-sm text-muted-foreground">Go modules total</div>
               </div>
               <ul className="space-y-2 text-sm">

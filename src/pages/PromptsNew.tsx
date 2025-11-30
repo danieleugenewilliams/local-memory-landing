@@ -501,7 +501,7 @@ Try different keywords or check ID/tag.
             {/* /gather */}
             <div className="rounded-xl border border-border bg-background">
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">/gather</code>
+                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/gather</code>
                 <button
                   onClick={() => copyToClipboard(commands.gather, "gather")}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
@@ -539,7 +539,7 @@ Try different keywords or check ID/tag.
             {/* /reframe */}
             <div className="rounded-xl border border-border bg-background">
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-green))]">/reframe</code>
+                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/reframe</code>
                 <button
                   onClick={() => copyToClipboard(commands.reframe, "reframe")}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
@@ -577,7 +577,7 @@ Try different keywords or check ID/tag.
             {/* /truth */}
             <div className="rounded-xl border border-border bg-background">
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--terminal-amber))]">/truth</code>
+                <code className="text-sm font-medium text-[hsl(var(--terminal-white))]">/truth</code>
                 <button
                   onClick={() => copyToClipboard(commands.truth, "truth")}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
@@ -615,7 +615,7 @@ Try different keywords or check ID/tag.
             {/* /memorize */}
             <div className="rounded-xl border border-border bg-background">
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-purple))]">/memorize</code>
+                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/memorize</code>
                 <button
                   onClick={() => copyToClipboard(commands.memorize, "memorize")}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
@@ -653,7 +653,7 @@ Try different keywords or check ID/tag.
             {/* /recall */}
             <div className="rounded-xl border border-border bg-background">
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-pink))]">/recall</code>
+                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/recall</code>
                 <button
                   onClick={() => copyToClipboard(commands.recall, "recall")}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
@@ -725,19 +725,19 @@ Try different keywords or check ID/tag.
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--brand-green))]">.cursorrules</code>
+              <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">.cursorrules</code>
               <p className="mt-2 text-sm text-muted-foreground">
                 Cursor AI configuration
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--terminal-amber))]">AGENTS.md</code>
+              <code className="text-sm font-medium text-[hsl(var(--terminal-blue))]">AGENTS.md</code>
               <p className="mt-2 text-sm text-muted-foreground">
                 Multi-agent orchestration
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--brand-purple))]">System Prompt</code>
+              <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">System Prompt</code>
               <p className="mt-2 text-sm text-muted-foreground">
                 Any agent configuration
               </p>
