@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Book, ArrowRight, ExternalLink } from 'lucide-react';
 import NavigationSidebar from './NavigationSidebar';
 import MobileNavigation from './MobileNavigation';
+import BreadcrumbNavigation from './BreadcrumbNavigation';
 import MarkdownRenderer from './MarkdownRenderer';
 import { documentationConfig, navigationItems } from '@/content/documentation';
 import { trackCTAClick } from '@/lib/analytics';
@@ -69,6 +70,13 @@ const DocumentationHub: React.FC<DocumentationHubProps> = ({ className = "" }) =
 
   return (
     <div className={`documentation-hub ${className}`}>
+      {/* Breadcrumb Navigation */}
+      <BreadcrumbNavigation
+        navigation={navigationItems}
+        currentSection={currentSection}
+        onNavigate={setCurrentSection}
+      />
+
       {/* Mobile Navigation */}
       <MobileNavigation
         navigation={navigationItems}
@@ -77,7 +85,7 @@ const DocumentationHub: React.FC<DocumentationHubProps> = ({ className = "" }) =
       />
 
       {/* Search Bar */}
-      <div className="container-wide mb-8">
+      <div className="container-wide mb-8 mt-4">
         <div className="relative max-w-2xl mx-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -299,8 +307,8 @@ local-memory start</pre>
               <div className="space-y-6">
                 <div className="rounded-xl border border-border bg-card p-6">
                   <h3 className="text-lg font-semibold mb-4">Common Issues</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                  <div className="table-responsive">
+                    <table className="w-full text-sm table-mobile-stack">
                       <thead>
                         <tr className="border-b border-border">
                           <th className="pb-3 pr-4 text-left font-medium">Issue</th>
@@ -310,24 +318,24 @@ local-memory start</pre>
                       </thead>
                       <tbody>
                         <tr className="border-b border-border">
-                          <td className="py-3 pr-4 text-muted-foreground">Command not found</td>
-                          <td className="py-3 pr-4 text-muted-foreground">Ensure binary is in PATH</td>
-                          <td className="py-3">
-                            <code className="rounded bg-card px-2 py-1 font-mono text-xs">local-memory --version</code>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Issue">Command not found</td>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Resolution">Ensure binary is in PATH</td>
+                          <td className="py-3" data-label="Command">
+                            <code className="rounded bg-card px-2 py-1 font-mono text-xs code-wrap">local-memory --version</code>
                           </td>
                         </tr>
                         <tr className="border-b border-border">
-                          <td className="py-3 pr-4 text-muted-foreground">Ollama not detected</td>
-                          <td className="py-3 pr-4 text-muted-foreground">Install Ollama</td>
-                          <td className="py-3">
-                            <code className="rounded bg-card px-2 py-1 font-mono text-xs">curl -fsSL https://ollama.ai/install.sh | sh</code>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Issue">Ollama not detected</td>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Resolution">Install Ollama</td>
+                          <td className="py-3" data-label="Command">
+                            <code className="rounded bg-card px-2 py-1 font-mono text-xs code-wrap">curl -fsSL https://ollama.ai/install.sh | sh</code>
                           </td>
                         </tr>
                         <tr className="border-b border-border">
-                          <td className="py-3 pr-4 text-muted-foreground">License activation failed</td>
-                          <td className="py-3 pr-4 text-muted-foreground">Include --accept-terms flag</td>
-                          <td className="py-3">
-                            <code className="rounded bg-card px-2 py-1 font-mono text-xs">local-memory license activate LM-XXXX --accept-terms</code>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Issue">License activation failed</td>
+                          <td className="py-3 pr-4 text-muted-foreground" data-label="Resolution">Include --accept-terms flag</td>
+                          <td className="py-3" data-label="Command">
+                            <code className="rounded bg-card px-2 py-1 font-mono text-xs code-wrap">local-memory license activate LM-XXXX --accept-terms</code>
                           </td>
                         </tr>
                       </tbody>

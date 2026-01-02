@@ -69,6 +69,17 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
 };
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className = "" }) => {
+  // Generate kebab-case ID from heading text
+  const generateId = (text: string): string => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-')          // Replace spaces with hyphens
+      .replace(/-+/g, '-')           // Replace multiple hyphens with single hyphen
+      .replace(/^-|-$/g, '');        // Remove leading/trailing hyphens
+  };
+
   // Simple markdown parsing for our specific use case
   const renderContent = (text: string) => {
     const lines = text.split('\n');
@@ -103,27 +114,35 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
 
       // Headers
       if (line.startsWith('# ')) {
+        const headingText = line.slice(2);
+        const headingId = generateId(headingText);
         elements.push(
-          <h1 key={`h1-${i}`} className="text-3xl font-bold tracking-tight mb-6 mt-8 first:mt-0">
-            {line.slice(2)}
+          <h1 key={`h1-${i}`} id={headingId} className="text-3xl font-bold tracking-tight mb-6 mt-8 first:mt-0 scroll-target">
+            {headingText}
           </h1>
         );
       } else if (line.startsWith('## ')) {
+        const headingText = line.slice(3);
+        const headingId = generateId(headingText);
         elements.push(
-          <h2 key={`h2-${i}`} className="text-2xl font-bold tracking-tight mb-4 mt-8 text-[hsl(var(--brand-blue))]">
-            {line.slice(3)}
+          <h2 key={`h2-${i}`} id={headingId} className="text-2xl font-bold tracking-tight mb-4 mt-8 text-[hsl(var(--brand-blue))] scroll-target">
+            {headingText}
           </h2>
         );
       } else if (line.startsWith('### ')) {
+        const headingText = line.slice(4);
+        const headingId = generateId(headingText);
         elements.push(
-          <h3 key={`h3-${i}`} className="text-xl font-semibold mb-3 mt-6">
-            {line.slice(4)}
+          <h3 key={`h3-${i}`} id={headingId} className="text-xl font-semibold mb-3 mt-6 scroll-target">
+            {headingText}
           </h3>
         );
       } else if (line.startsWith('#### ')) {
+        const headingText = line.slice(5);
+        const headingId = generateId(headingText);
         elements.push(
-          <h4 key={`h4-${i}`} className="text-lg font-semibold mb-2 mt-4">
-            {line.slice(5)}
+          <h4 key={`h4-${i}`} id={headingId} className="text-lg font-semibold mb-2 mt-4 scroll-target">
+            {headingText}
           </h4>
         );
       }

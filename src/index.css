@@ -134,6 +134,16 @@
     color: hsl(var(--terminal-green));
   }
 
+  /* Mobile-responsive terminal body */
+  @media (max-width: 640px) {
+    .terminal-body {
+      @apply text-xs;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+    }
+  }
+
   /* Gradient text */
   .gradient-text {
     @apply bg-clip-text text-transparent;
@@ -270,5 +280,59 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Mobile-responsive code wrapping */
+  .code-wrap {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  /* Mobile-responsive table */
+  .table-responsive {
+    @apply overflow-x-auto;
+  }
+
+  .table-responsive table {
+    @apply min-w-full;
+  }
+
+  /* On mobile, allow table cells to wrap */
+  @media (max-width: 640px) {
+    .table-mobile-wrap td,
+    .table-mobile-wrap th {
+      @apply whitespace-normal break-words;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    /* Stack table rows on very small screens */
+    .table-mobile-stack {
+      @apply block;
+    }
+
+    .table-mobile-stack thead {
+      @apply hidden;
+    }
+
+    .table-mobile-stack tbody,
+    .table-mobile-stack tr,
+    .table-mobile-stack td {
+      @apply block;
+    }
+
+    .table-mobile-stack tr {
+      @apply mb-4 border border-border rounded-lg p-4;
+    }
+
+    .table-mobile-stack td {
+      @apply flex flex-col mb-2 last:mb-0;
+    }
+
+    .table-mobile-stack td::before {
+      @apply font-semibold text-muted-foreground mb-1;
+      content: attr(data-label);
+    }
   }
 }

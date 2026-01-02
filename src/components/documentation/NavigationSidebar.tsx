@@ -26,14 +26,28 @@ const NavItem: React.FC<NavItemProps> = ({
   const isActive = currentSection === item.id;
   const hasChildren = item.children && item.children.length > 0;
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     if (hasChildren) {
       setIsExpanded(!isExpanded);
     } else {
+      // Update URL hash for deep linking
+      window.history.pushState(null, '', `#${item.id}`);
+
+      // Trigger section change
       onSectionChange?.(item.id);
-      // Smooth scroll to section
+
+      // Smooth scroll to section with slight offset for better visibility
       const element = document.getElementById(item.id);
-      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (element) {
+        const offset = 80; // Account for sticky header
+        const elementTop = element.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: elementTop - offset,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
@@ -104,6 +118,38 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
   className = ""
 }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Handle initial load with hash in URL
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      onSectionChange?.(hash);
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          const offset = 80;
+          const elementTop = element.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementTop - offset,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+  }, [onSectionChange]);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        onSectionChange?.(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [onSectionChange]);
 
   useEffect(() => {
     const updateScrollProgress = () => {

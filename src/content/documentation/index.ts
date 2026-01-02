@@ -13,9 +13,7 @@ export const navigationItems: NavigationItem[] = [
     href: '#quick-start',
     level: 0,
     children: [
-      { id: 'installation', title: 'Installation', href: '#installation', level: 1 },
-      { id: 'first-steps', title: 'First Steps', href: '#first-steps', level: 1 },
-      { id: 'basic-usage', title: 'Basic Usage', href: '#basic-usage', level: 1 },
+      { id: 'quick-installation', title: 'Quick Installation', href: '#quick-installation', level: 1 },
     ]
   },
   {
@@ -25,6 +23,7 @@ export const navigationItems: NavigationItem[] = [
     level: 0,
     children: [
       { id: 'what-is-local-memory', title: 'What is Local Memory?', href: '#what-is-local-memory', level: 1 },
+      { id: 'installation', title: 'Installation', href: '#installation', level: 1 },
       { id: 'basic-workflow', title: 'Basic Workflow', href: '#basic-workflow', level: 1 },
       { id: 'core-concepts', title: 'Core Concepts', href: '#core-concepts', level: 1 },
       { id: 'integration-options', title: 'Integration Options', href: '#integration-options', level: 1 },
@@ -36,8 +35,8 @@ export const navigationItems: NavigationItem[] = [
     href: '#configuration',
     level: 0,
     children: [
-      { id: 'config-directory', title: 'Directory Structure', href: '#config-directory', level: 1 },
-      { id: 'config-hierarchy', title: 'File Hierarchy', href: '#config-hierarchy', level: 1 },
+      { id: 'configuration-directory-structure', title: 'Directory Structure', href: '#configuration-directory-structure', level: 1 },
+      { id: 'configuration-file-hierarchy', title: 'File Hierarchy', href: '#configuration-file-hierarchy', level: 1 },
       { id: 'service-integration', title: 'Service Integration', href: '#service-integration', level: 1 },
       { id: 'environment-variables', title: 'Environment Variables', href: '#environment-variables', level: 1 },
     ]
@@ -48,10 +47,10 @@ export const navigationItems: NavigationItem[] = [
     href: '#cli-reference',
     level: 0,
     children: [
-      { id: 'memory-commands', title: 'Memory Commands', href: '#memory-commands', level: 1 },
+      { id: 'core-memory-commands', title: 'Memory Commands', href: '#core-memory-commands', level: 1 },
       { id: 'relationship-commands', title: 'Relationship Commands', href: '#relationship-commands', level: 1 },
       { id: 'analysis-commands', title: 'Analysis Commands', href: '#analysis-commands', level: 1 },
-      { id: 'system-commands', title: 'System Commands', href: '#system-commands', level: 1 },
+      { id: 'daemon-management-commands', title: 'System Commands', href: '#daemon-management-commands', level: 1 },
     ]
   },
   {
@@ -60,10 +59,10 @@ export const navigationItems: NavigationItem[] = [
     href: '#mcp-tools',
     level: 0,
     children: [
-      { id: 'memory-management', title: 'Memory Management', href: '#memory-management', level: 1 },
-      { id: 'search-analysis', title: 'Search & Analysis', href: '#search-analysis', level: 1 },
+      { id: 'memory-management-tools', title: 'Memory Management', href: '#memory-management-tools', level: 1 },
+      { id: 'search-analysis-tools', title: 'Search & Analysis', href: '#search-analysis-tools', level: 1 },
       { id: 'organization-tools', title: 'Organization Tools', href: '#organization-tools', level: 1 },
-      { id: 'administration', title: 'Administration', href: '#administration', level: 1 },
+      { id: 'administration-tools', title: 'Administration', href: '#administration-tools', level: 1 },
     ]
   },
   {
@@ -72,10 +71,10 @@ export const navigationItems: NavigationItem[] = [
     href: '#rest-api',
     level: 0,
     children: [
-      { id: 'memory-operations', title: 'Memory Operations', href: '#memory-operations', level: 1 },
-      { id: 'ai-analysis', title: 'AI Analysis', href: '#ai-analysis', level: 1 },
-      { id: 'relationship-ops', title: 'Relationships', href: '#relationship-ops', level: 1 },
-      { id: 'system-management', title: 'System Management', href: '#system-management', level: 1 },
+      { id: '1-memory-operations', title: 'Memory Operations', href: '#1-memory-operations', level: 1 },
+      { id: '2-ai-analysis-operations', title: 'AI Analysis', href: '#2-ai-analysis-operations', level: 1 },
+      { id: '3-relationship-operations', title: 'Relationships', href: '#3-relationship-operations', level: 1 },
+      { id: '6-system-management-operations', title: 'System Management', href: '#6-system-management-operations', level: 1 },
     ]
   },
   {
