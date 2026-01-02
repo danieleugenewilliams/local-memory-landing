@@ -151,11 +151,11 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>8 unified MCP tools for complete control</span>
+                <span>11 MCP tools for complete control</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>20+ REST API endpoints for integration</span>
+                <span>27 REST API endpoints for integration</span>
               </li>
             </ul>
           </div>
@@ -165,12 +165,12 @@ const Features = () => {
         <div className="mt-16 text-center">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">26</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">11</div>
               <div className="text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">9</div>
-              <div className="text-sm text-muted-foreground">Tool Categories</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">27</div>
+              <div className="text-sm text-muted-foreground">REST Endpoints</div>
             </div>
             <div>
               <div className="text-2xl sm:text-3xl font-bold text-memory-purple mb-2">∞</div>

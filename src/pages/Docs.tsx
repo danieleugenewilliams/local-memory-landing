@@ -197,7 +197,7 @@ const DocsPage = () => {
                   <p className="text-muted-foreground mb-3">Your AI agent now has access to shared, persistent memory.</p>
                   <div className="bg-muted p-3 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 8 unified <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
+                      Give a go! Try asking your AI agent to "remember this conversation" or use any of the 11 <a target="_blank"href="/docs#api-reference" className="text-memory-blue hover:underline">MCP tools</a>.
                     </p>
                   </div>
                 </div>
@@ -482,15 +482,15 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
             <Card className="mb-6 bg-slate-800/50 border-slate-600">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  MCP Protocol (8 Unified Tools)
+                  MCP Protocol (11 Tools)
                 </CardTitle>
-                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. <strong className="text-memory-green">v1.1.6:</strong> Consolidated to 8 unified tools with advanced capabilities for improved agent experience.</CardDescription>
+                <CardDescription className="text-gray-300"><em>Local Memory</em> has native integration with Claude, other MCP agents, and AI editors. 11 comprehensive MCP tools with intelligent token optimization, pagination support, and flexible response formats.</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   {/* Consolidated/Management Tools */}
                   <div>
-                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Consolidated/Management Tools (8)</h6>
+                    <h6 className="font-semibold mb-3 text-memory-green text-lg">Memory Management (4 Tools)</h6>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
                       <div className="bg-slate-700/30 p-3 rounded-md">
                         <h6 className="font-semibold mb-2 text-memory-purple">search</h6>
@@ -563,12 +563,42 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
                       </div>
 
                       <div className="bg-slate-700/30 p-3 rounded-md">
-                        <h6 className="font-semibold mb-2 text-memory-purple">memory</h6>
+                        <h6 className="font-semibold mb-2 text-memory-purple">store_memory</h6>
                         <div className="space-y-1 font-mono text-xs text-gray-300">
-                          <div>• Store memory</div>
-                          <div>• Update memory</div>
-                          <div>• Delete memory</div>
-                          <div>• Get memory by ID</div>
+                          <div>• Create new memories</div>
+                          <div>• Auto-categorization</div>
+                          <div>• Importance scoring</div>
+                          <div>• Tag assignment</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-purple">update_memory</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Modify content</div>
+                          <div>• Update importance</div>
+                          <div>• Change tags</div>
+                          <div>• Track revisions</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-purple">delete_memory</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Remove by ID</div>
+                          <div>• Relationship cleanup</div>
+                          <div>• Soft/hard delete</div>
+                          <div>• Batch operations</div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-700/30 p-3 rounded-md">
+                        <h6 className="font-semibold mb-2 text-memory-purple">get_memory_by_id</h6>
+                        <div className="space-y-1 font-mono text-xs text-gray-300">
+                          <div>• Retrieve by UUID</div>
+                          <div>• Full metadata</div>
+                          <div>• Relationship context</div>
+                          <div>• Version history</div>
                         </div>
                       </div>
 
@@ -577,14 +607,14 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
 
                 </div>
 
-                {/* Consolidation Benefits */}
+                {/* Tool Categories */}
                 <div className="mt-6 bg-memory-green/10 border border-memory-green/30 rounded-lg p-4">
-                  <h6 className="font-semibold mb-2 text-memory-green">v1.1.6 Consolidation Benefits</h6>
+                  <h6 className="font-semibold mb-2 text-memory-green">11 MCP Tools Overview</h6>
                   <ul className="text-sm text-gray-300 space-y-1">
-                    <li>• <strong>Unified Architecture:</strong> 8 unified tools with advanced capabilities for optimal agent experience</li>
-                    <li>• <strong>Intelligent Routing:</strong> Unified tools handle multiple operation types internally</li>
-                    <li>• <strong>Response Optimization:</strong> 95% token reduction with format controls and intelligent routing</li>
-                    <li>• <strong>Anthropic-Aligned:</strong> 9.2/10 rating following official agent tool design guidance</li>
+                    <li>• <strong>Memory Management (4):</strong> store_memory, update_memory, delete_memory, get_memory_by_id</li>
+                    <li>• <strong>Search & Analysis (2):</strong> search (semantic, tags, date_range, hybrid), analysis (Q&A, summarize, patterns, temporal)</li>
+                    <li>• <strong>Organization (3):</strong> relationships, categories, domains</li>
+                    <li>• <strong>Administration (2):</strong> stats, sessions</li>
                   </ul>
                 </div>
 
@@ -598,7 +628,7 @@ If you cannot connect to neither the MCP server nor via jsonrpc, try the REST AP
                   REST API (27 Endpoints)
                 </CardTitle>
                 <CardDescription className="text-gray-300 mt-2">
-                  <em>Local Memory</em> has a universal REST API interface for any platform. <strong className="text-memory-blue">Note:</strong> REST API maintains individual endpoints for backward compatibility while the 8 unified MCP tools provide consolidated architecture.
+                  <em>Local Memory</em> has a universal REST API interface for any platform. 27 endpoints with full CRUD operations, AI-powered analysis, relationship management, categorization, and temporal analysis.
                 </CardDescription>
               </CardHeader>
               <CardContent>

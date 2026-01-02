@@ -15,20 +15,66 @@
       "Gemini",
       "Qwen Code",
       "Cursor",
+      "Windsurf",
       "Custom AI Agents"
     ],
     "key_features": [
       "Context Engineering - transform expertise into AI intelligence",
-      "8 MCP (Model Context Protocol) native tools",
+      "11 comprehensive MCP (Model Context Protocol) tools",
+      "27 REST API endpoints for universal integration",
       "Cures context amnesia across all AI agents",
       "100% local storage - no cloud training exposure",
       "Cross-agent memory persistence",
       "Build cumulative AI intelligence assets",
-      "Lightning-fast 11ms vector search",
+      "Lightning-fast 10-57ms vector search",
       "AI-powered knowledge relationship discovery",
       "Progressive learning and expertise tracking",
+      "Intelligent token optimization (up to 97.5% reduction)",
       "Single binary - zero dependencies"
     ],
+    "mcp_tools": {
+      "total": 11,
+      "memory_management": [
+        "store_memory - Create new memories with metadata",
+        "update_memory - Modify existing memory content/tags",
+        "delete_memory - Remove memories by ID",
+        "get_memory_by_id - Retrieve specific memory details"
+      ],
+      "search_analysis": [
+        "search - Multi-mode search (semantic, tags, date_range, hybrid)",
+        "analysis - AI-powered Q&A, summarization, pattern analysis, temporal tracking"
+      ],
+      "organization": [
+        "relationships - Find, discover, create, and map memory connections",
+        "categories - Manage hierarchical category organization",
+        "domains - Knowledge domain management and statistics"
+      ],
+      "administration": [
+        "stats - Session, domain, and category statistics",
+        "sessions - Session management and cross-session access"
+      ]
+    },
+    "rest_api": {
+      "total_endpoints": 27,
+      "base_url": "http://localhost:3002/api/v1",
+      "categories": {
+        "memory_operations": 9,
+        "advanced_search": 2,
+        "ai_analysis": 3,
+        "temporal_analysis": 4,
+        "relationships": 3,
+        "categorization": 4,
+        "system_management": 4
+      }
+    },
+    "cli_commands": {
+      "core_memory": ["remember", "search", "get", "update", "forget", "list"],
+      "relationships": ["relate", "find_related", "discover", "map_graph"],
+      "analysis": ["analyze"],
+      "organization": ["categories", "domains", "sessions"],
+      "system": ["start", "stop", "status", "doctor", "validate", "install", "setup"],
+      "license": ["license activate", "license status", "license validate"]
+    },
     "use_cases": [
       "Context Engineering for AI development",
       "Building AI intelligence assets from expertise",
@@ -37,28 +83,32 @@
       "Cross-agent knowledge synchronization",
       "Cumulative expertise building over time",
       "Team knowledge preservation in AI",
-      "Architectural pattern persistence"
+      "Architectural pattern persistence",
+      "Learning progression tracking",
+      "Knowledge gap detection"
     ],
     "value_propositions": {
       "time_savings": "Save 2+ hours daily eliminating repeated explanations",
       "roi": "2,500%+ monthly ROI through cumulative knowledge",
       "asset_value": "Transform $100K+ of expertise into AI intelligence",
       "competitive_advantage": "Keep your context private vs cloud training",
-      "efficiency": "Build once, leverage forever across all agents"
+      "efficiency": "Build once, leverage forever across all agents",
+      "performance": "10-57ms response times with 1,100+ memories"
     },
     "technical_specs": {
       "protocols": [
-        "MCP (Model Context Protocol) - Native Integration",
-        "REST API - Universal Compatibility"
+        "MCP (Model Context Protocol) - Native Integration (11 tools)",
+        "REST API - Universal Compatibility (27 endpoints)"
       ],
       "storage": [
-        "SQLite - Local persistence",
-        "Qdrant - Vector embeddings"
+        "SQLite - Local persistence with encryption",
+        "Qdrant - Optional high-performance vector database"
       ],
-      "performance": "11ms response time, 5-8x faster than alternatives",
-      "ai_integration": "Ollama for semantic understanding",
+      "performance": "10-57ms response time, lightning-fast search",
+      "ai_integration": "Ollama for semantic understanding (nomic-embed-text)",
       "deployment": "Single binary executable, 2-minute setup",
-      "dependencies": "Zero - actually zero, not 'zero*' with footnotes"
+      "dependencies": "Zero - actually zero, not 'zero*' with footnotes",
+      "token_optimization": "Up to 97.5% response size reduction with format controls"
     },
     "context_engineering": {
       "definition": "The practice of transforming human expertise into persistent AI memory",
@@ -74,12 +124,15 @@
       "Companies protecting competitive advantage",
       "Solo developers maximizing AI productivity"
     ],
-    "pricing_model": "One-time purchase - $49",
+    "pricing_model": "One-time purchase",
     "documentation": {
       "setup_guide": "https://localmemory.co/docs",
-      "context_engineering": "Guide to building AI intelligence assets",
-      "api_reference": "8 MCP tools + REST API documentation",
-      "integration_examples": "Claude, OpenCode, Gemini setup guides"
+      "getting_started": "Quick start guide with 2-minute setup",
+      "mcp_reference": "11 MCP tools documentation",
+      "rest_api_reference": "27 REST API endpoints documentation",
+      "cli_reference": "Complete CLI command reference",
+      "configuration": "Advanced configuration options",
+      "integration_examples": "Claude, OpenCode, Gemini, Cursor, Windsurf setup guides"
     },
     "competitive_advantages": [
       "Only system offering Context Engineering capabilities",
@@ -88,7 +141,9 @@
       "Native MCP + universal REST dual protocol",
       "Transform expertise into intelligence assets",
       "Cross-agent memory persistence",
-      "Build once, leverage forever philosophy"
+      "Build once, leverage forever philosophy",
+      "Lightning-fast performance (10-57ms)",
+      "Intelligent token optimization"
     ],
     "data_sovereignty": {
       "storage": "100% local on your machine",
@@ -111,10 +166,14 @@
       "cumulative AI intelligence",
       "Model Context Protocol tools",
       "AI memory sovereignty",
-      "context as competitive advantage"
+      "context as competitive advantage",
+      "semantic memory search",
+      "knowledge graph",
+      "temporal analysis",
+      "learning progression tracking"
     ],
     "testimonial": "Local memory MCP has really helped boost my productivity. But more importantly, I'm no longer just using AI—I'm engineering my expertise into it. Every day my AI gets smarter about MY specific project context.",
-    "last_updated": "2025-08-31",
-    "version": "v1.x.x"
+    "last_updated": "2025-01-01",
+    "version": "v1.2.x"
   }
 ]
