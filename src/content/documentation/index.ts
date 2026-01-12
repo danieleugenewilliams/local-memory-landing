@@ -30,8 +30,8 @@ export const navigationItems: NavigationItem[] = [
     href: '#configuration-configuration-guide',
     level: 0,
     children: [
-      { id: 'configuration-directory-structure', title: 'Directory Structure', href: '#configuration-directory-structure', level: 1 },
-      { id: 'configuration-file-hierarchy', title: 'File Hierarchy', href: '#configuration-file-hierarchy', level: 1 },
+      { id: 'configuration-directory-structure', title: 'Directory Structure', href: '#configuration-configuration-directory-structure', level: 1 },
+      { id: 'configuration-file-hierarchy', title: 'File Hierarchy', href: '#configuration-configuration-file-hierarchy', level: 1 },
       { id: 'core-configuration-sections', title: 'Core Configuration', href: '#configuration-core-configuration-sections', level: 1 },
       { id: 'service-integration', title: 'Service Integration', href: '#configuration-service-integration', level: 1 },
       { id: 'knowledge-configuration', title: 'Knowledge Configuration', href: '#configuration-knowledge-configuration', level: 1 },

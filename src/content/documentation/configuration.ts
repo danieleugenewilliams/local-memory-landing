@@ -355,14 +355,14 @@ local-memory start
 
 ### Setup Wizard
 \`\`\`bash
-# Interactive setup
-local-memory setup
+# Interactive setup wizard
+local-memory setup --interactive
 
-# Guided configuration wizard
-local-memory setup --wizard
+# Silent setup with defaults
+local-memory setup --silent
 
 # Validate existing configuration
-local-memory validate
+local-memory validate config
 \`\`\`
 
 ### Diagnostics
@@ -373,8 +373,8 @@ local-memory doctor
 # Run doctor with custom config file
 local-memory doctor --config /path/to/config.yaml
 
-# Service connectivity check
-local-memory doctor --services
+# JSON output for programmatic use
+local-memory doctor --json
 \`\`\`
 
 ## Advanced Configuration
@@ -428,11 +428,11 @@ Critical settings like database path, license configuration, and core service UR
 
 1. **Configuration File Not Found**
    \`\`\`bash
-   # Check configuration search paths
-   local-memory doctor --config-paths
+   # Run diagnostics to check configuration status
+   local-memory doctor
 
-   # Generate default configuration
-   local-memory setup --defaults
+   # Generate default configuration with interactive setup
+   local-memory setup --interactive
    \`\`\`
 
 2. **Permission Issues**
@@ -440,17 +440,17 @@ Critical settings like database path, license configuration, and core service UR
    # Fix directory permissions
    chmod 700 ~/.local-memory
 
-   # Recreate configuration directory
-   local-memory setup --reset
+   # Re-run setup to regenerate configuration
+   local-memory setup --interactive
    \`\`\`
 
 3. **Service Connection Issues**
    \`\`\`bash
-   # Test service connectivity
-   local-memory doctor --services
+   # Run comprehensive diagnostics
+   local-memory doctor
 
-   # Auto-detect services
-   local-memory setup --auto-detect
+   # Check dependency status
+   local-memory setup --show_deps
    \`\`\`
 
 ### Configuration Debugging
