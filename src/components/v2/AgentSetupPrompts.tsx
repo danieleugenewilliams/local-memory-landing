@@ -350,11 +350,14 @@ curl -X POST http://localhost:3002/api/v1/memories \\
         </ol>
       </div>
 
-      {prompts.map(({ id, label, prompt, color }) => (
+      {prompts.map(({ id, label, prompt }) => (
         <div key={id} className="rounded-lg border border-border bg-card">
-          <button
+          <div
             onClick={() => togglePrompt(id)}
-            className="flex w-full items-center justify-between p-4 text-left"
+            className="flex w-full cursor-pointer items-center justify-between p-4 text-left"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && togglePrompt(id)}
           >
             <span className="font-medium">{label} Installation Prompt</span>
             <div className="flex items-center gap-2">
@@ -370,7 +373,7 @@ curl -X POST http://localhost:3002/api/v1/memories \\
               </button>
               <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${openPrompts[id] ? "rotate-180" : ""}`} />
             </div>
-          </button>
+          </div>
 
           {!openPrompts[id] && (
             <div className="border-t border-border px-4 pb-4">

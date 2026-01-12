@@ -123,7 +123,7 @@ export const trackViewItem = () => {
  * Track CTA button clicks throughout the funnel
  */
 export const trackCTAClick = (
-  ctaLocation: 'hero' | 'features' | 'demo' | 'pricing' | 'footer',
+  ctaLocation: 'hero' | 'features' | 'demo' | 'pricing' | 'footer' | 'payment' | 'prompts',
   ctaText: string,
   destination: string
 ) => {

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, Copy, ChevronDown } from "lucide-react";
+import { Check, Copy, ChevronDown, ArrowRight } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
@@ -10,6 +10,18 @@ import AgentSetupPrompts from "@/components/v2/AgentSetupPrompts";
 const PromptsNew = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [openInstall, setOpenInstall] = useState<{ [key: string]: boolean }>({});
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  // Show sticky CTA bar after scrolling past the hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setShowStickyBar(scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -285,6 +297,30 @@ Try different keywords or check ID/tag.
     <div className="min-h-screen bg-background">
       <HeaderNew />
 
+      {/* Sticky CTA Bar - appears on scroll */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-card/95 backdrop-blur-sm transition-transform duration-300 ${
+          showStickyBar ? "translate-y-0" : "translate-y-full"
+        }`}
+      >
+        <div className="container-wide flex items-center justify-between py-3">
+          <p className="hidden text-sm text-muted-foreground sm:block">
+            These prompts work best with Local Memory
+          </p>
+          <div className="flex w-full items-center justify-center gap-3 sm:w-auto sm:justify-end">
+            <span className="text-sm font-medium">$49 one-time</span>
+            <Link
+              to="/payment"
+              className="btn-primary flex items-center gap-2 px-4 py-2 text-sm"
+              onClick={() => trackCTAClick("prompts", "Sticky Get Started", "/payment")}
+            >
+              Get Started
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 grid-pattern grid-fade" />
@@ -481,6 +517,30 @@ Try different keywords or check ID/tag.
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Inline CTA after prompts */}
+      <section className="border-t border-border bg-card/30 py-8">
+        <div className="container-wide">
+          <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-border bg-background p-6 sm:flex-row">
+            <div>
+              <p className="font-medium">
+                Ready to give your AI agents persistent memory?
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                One-time purchase, unlimited usage. 30-day money-back guarantee.
+              </p>
+            </div>
+            <Link
+              to="/payment"
+              className="btn-primary flex shrink-0 items-center gap-2 whitespace-nowrap"
+              onClick={() => trackCTAClick("prompts", "Inline Get Started", "/payment")}
+            >
+              Get Started — $49
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
