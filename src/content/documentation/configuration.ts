@@ -174,7 +174,62 @@ Model Context Protocol integration with configurable tool sets:
 
 \`\`\`yaml
 mcp:
-  enable_legacy_tools: false                   # Enable deprecated individual tools
+  enable_legacy_tools: false                   # Enable deprecated individual tools (sessions, domains, categories, store_memory, stats, relationships)
+\`\`\`
+
+## Knowledge Configuration
+
+### Contradiction Detection
+
+Configure automatic contradiction detection when storing new memories:
+
+\`\`\`yaml
+contradiction:
+  enabled: true                                # Enable automatic contradiction detection
+  similarity_threshold: 0.85                   # Minimum similarity score for detection
+  core_term_overlap_threshold: 0.30            # Required vocabulary overlap (30%)
+  confidence_multiplier: 0.90                  # Confidence adjustment factor
+  max_candidates: 100                          # Maximum candidate memories to compare
+  min_content_length: 15                       # Minimum content length for detection
+  enable_domain_filtering: true                # Filter to same domain
+  enable_subject_consistency: true             # Require same subject for contradictions
+  use_llm_validation: false                    # Use LLM for validation (slower, more accurate)
+  llm_confidence_threshold: 0.8                # LLM confidence threshold (when enabled)
+\`\`\`
+
+**Detection Layers** (all must pass):
+1. Core term overlap (30%+ shared vocabulary)
+2. Domain coherence (same knowledge domain)
+3. Negation asymmetry (one has negation, other doesn't)
+4. Opposing word pairs (always/never, increases/decreases)
+5. Subject consistency (opposing words apply to same subject)
+
+### Knowledge Evolution
+
+Configure weight adjustments, promotion thresholds, and decay scheduling:
+
+\`\`\`yaml
+evolution:
+  # Weight adjustments for validation
+  validation_success_delta: 0.5                # Weight increase on successful validation
+  validation_failure_delta: 0.3                # Weight decrease on failed validation
+  decay_factor: 0.1                            # Decay reduction factor
+  archival_threshold: 0.5                      # Weight below which memories may be archived
+
+  # L1 (Learning) -> L2 (Pattern) promotion thresholds
+  l1_to_l2_validations: 3                      # Required validation count
+  l1_to_l2_min_weight: 5.0                     # Minimum weight required
+  l1_to_l2_min_confidence: 0.7                 # Minimum confidence required
+
+  # L2 (Pattern) -> L3 (Schema) promotion thresholds
+  l2_to_l3_validations: 5                      # Required validation count
+  l2_to_l3_min_weight: 8.0                     # Minimum weight required
+  l2_to_l3_min_confidence: 0.85                # Minimum confidence required
+
+  # Decay scheduling (daemon mode only)
+  decay_enabled: true                          # Enable automated decay
+  decay_interval_hours: 24                     # Hours between decay runs
+  decay_threshold_days: 30                     # Days without validation before decay
 \`\`\`
 
 ## Session Management

@@ -6,429 +6,659 @@ export const mcpToolsContent: DocumentationSection = {
   description: 'Complete Model Context Protocol tools for AI agent integration',
   content: `# MCP Tools Reference
 
-Local Memory provides 11 comprehensive MCP (Model Context Protocol) tools for complete memory management functionality. These tools are designed for both human users and AI agents, with intelligent token optimization, pagination support, and flexible response formats.
+Local Memory v1.2.1 provides 16 MCP (Model Context Protocol) tools for intelligent knowledge management. Tools are organized into categories for knowledge intake, evolution, reasoning, and management.
 
 ## Overview
 
-All MCP tools are fully implemented and functional, providing:
-- Core CRUD operations (store, update, delete, retrieve)
-- Advanced search and analysis capabilities
-- Relationship management
-- Administrative tools (domains, categories, sessions, stats)
-- Clean architecture with zero regressions
+### Tool Categories
 
-## Tool Categories
-
-### Memory Management
-- \`store_memory\` - Create new memories
-- \`update_memory\` - Modify existing memories
-- \`delete_memory\` - Remove memories
+**Core Memory (4 tools)**
+- \`update_memory\` - Update existing memories
+- \`delete_memory\` - Delete memories
 - \`get_memory_by_id\` - Retrieve specific memories
+- \`search\` - Advanced multi-mode search with cursor pagination
 
-### Search & Analysis
-- \`search\` - Advanced multi-mode search
-- \`analysis\` - AI-powered analysis and Q&A
+**Knowledge Intake (3 tools)**
+- \`observe\` - Record observations (L0) for later processing
+- \`question\` - Track epistemic gaps and contradictions
+- \`bootstrap\` - Initialize session with knowledge context
 
-### Organization
-- \`relationships\` - Memory relationship management
-- \`categories\` - Category management
-- \`domains\` - Knowledge domain management
+**Knowledge Evolution (3 tools)**
+- \`reflect\` - Process observations into learnings (L0->L1)
+- \`evolve\` - Validate, promote, or decay knowledge
+- \`resolve\` - Handle contradictions and answer questions
 
-### Administration
-- \`stats\` - Statistics and analytics
-- \`sessions\` - Session management
+**Reasoning (3 tools)**
+- \`predict\` - Generate predictions from patterns and schemas
+- \`explain\` - Trace causal paths between states
+- \`counterfactual\` - Explore "what if" alternative scenarios
+
+**Graph & Status (3 tools)**
+- \`relate\` - Create relationships between memories
+- \`validate\` - Check knowledge graph integrity
+- \`status\` - Unified system status and statistics
+
+### Legacy Tools (Deprecated & Hidden)
+
+The following tools are deprecated, hidden from tool listings, but still functional for backward compatibility. They will be removed in v2.0.0.
+
+| Legacy Tool | Use Instead | Notes |
+|-------------|-------------|-------|
+| \`store_memory\` | \`observe\` | L0 observation intake |
+| \`analysis\` | \`predict\`, \`explain\`, \`counterfactual\` | Split for clearer semantics |
+| \`stats\` | \`status\` | Unified system info |
+| \`relationships\` | \`relate\` | Cleaner API |
+| \`sessions\` | \`bootstrap\` | Session initialization |
+| \`domains\` | \`domain\` parameter on \`observe\` | Pass domain directly |
+| \`categories\` | \`tags\` parameter on \`observe\` | Pass tags directly |
+
+*Deprecation timeline: v1.3.0 warnings -> v1.4.0 hidden (current) -> v1.5.0 logged -> v2.0.0 removed*
 
 ---
 
-## Memory Management Tools
+## Knowledge Hierarchy
 
-### 1. store_memory
+Local Memory implements a four-level knowledge hierarchy:
 
-**Purpose**: Store a new memory with contextual information
-**AI Required**: No
-**Category**: Memory Management
+| Level | Name | Weight Range | Characteristics |
+|-------|------|--------------|-----------------|
+| L0 | Observation | 0.0-1.0 | Raw intake, ephemeral |
+| L1 | Learning | 1.0-5.0 | Candidate insights, volatile |
+| L2 | Pattern | 5.0-9.0 | Validated generalizations, durable |
+| L3 | Schema | 9.0-10.0 | Theoretical frameworks, permanent |
 
-Creates new memories with content, tags, and metadata. Supports automatic categorization, importance scoring, and contextual tagging for knowledge organization.
+Knowledge progresses through levels via validation and promotion. See the \`evolve\` tool for promotion operations.
 
-**Parameters**:
-- \`content\` (string, required): The memory content to store
-- \`importance\` (integer, optional): Importance level (1-10, default: 5)
-- \`tags\` (array of strings, optional): Tags for categorization
-- \`source\` (string, optional): Source of the memory
-- \`domain\` (string, optional): Knowledge domain for organization
+---
 
-**Response Format**:
-\`\`\`json
-{
-  "success": true,
-  "message": "Memory stored successfully",
-  "data": {
-    "id": "uuid",
-    "content": "memory content",
-    "importance": 8,
-    "tags": ["tag1", "tag2"],
-    "domain": "knowledge-domain",
-    "source": null,
-    "session_id": "session-id",
-    "created_at": "2025-11-11T10:00:00Z",
-    "updated_at": "2025-11-11T10:00:00Z"
-  }
-}
-\`\`\`
+## Core Memory Tools
 
-**Usage Examples**:
-\`\`\`javascript
-store_memory(content="Learned about transformer architecture", importance=9, tags=["ai", "deep-learning"])
-store_memory(content="Go channels enable concurrent communication", importance=8, tags=["golang", "concurrency"], domain="programming")
-\`\`\`
-
-**Best Practices**: Use descriptive content, appropriate importance levels (1-3: minor, 4-6: moderate, 7-10: critical), relevant tags, and domains for organization.
-
-### 2. update_memory
+### update_memory
 
 **Purpose**: Update an existing memory's content or metadata
-**AI Required**: No
-**Category**: Memory Management
-
-Modifies existing memories by updating their content, importance level, or tags. Requires the memory ID to identify which memory to update.
 
 **Parameters**:
-- \`id\` (string, required): Memory ID to update
+- \`id\` (string, required): Memory UUID to update
 - \`content\` (string, optional): Updated content
 - \`importance\` (integer, optional): Updated importance (1-10)
 - \`tags\` (array of strings, optional): Updated tags
 
-**Usage Examples**:
+**Example**:
 \`\`\`javascript
-update_memory(id="550e8400-e29b-41d4-a716-446655440000", content="Updated transformer knowledge")
-update_memory(id="550e8400-e29b-41d4-a716-446655440000", importance=10)
+update_memory(
+  id="550e8400-e29b-41d4-a716-446655440000",
+  content="Updated understanding of transformer architecture",
+  importance=8
+)
 \`\`\`
 
-### 3. delete_memory
+### delete_memory
 
-**Purpose**: Delete a memory by ID
-**AI Required**: No
-**Category**: Memory Management
-
-Permanently removes a memory from storage using its unique identifier.
+**Purpose**: Permanently remove a memory by ID
 
 **Parameters**:
-- \`id\` (string, required): Memory ID to delete
+- \`id\` (string, required): Memory UUID to delete
 
-**Usage Example**:
+**Example**:
 \`\`\`javascript
 delete_memory(id="550e8400-e29b-41d4-a716-446655440000")
 \`\`\`
 
-### 4. get_memory_by_id
+### get_memory_by_id
 
-**Purpose**: Get a specific memory by its ID
-**AI Required**: No
-**Category**: Memory Management
-
-Retrieves a specific memory using its unique identifier, returning complete memory data including content, metadata, and timestamps.
+**Purpose**: Retrieve a specific memory with full metadata
 
 **Parameters**:
-- \`id\` (string, required): Memory ID to retrieve
+- \`id\` (string, required): Memory UUID to retrieve
 
-**Usage Example**:
+**Response includes**: content, memory_level, weight, confidence, tags, domain, timestamps, validation counts
+
+**Example**:
 \`\`\`javascript
 get_memory_by_id(id="550e8400-e29b-41d4-a716-446655440000")
 \`\`\`
 
----
+### search
 
-## Search & Analysis Tools
-
-### 5. search
-
-**Purpose**: Advanced search across all memories with multiple search types and intelligent optimization
-**AI Required**: Optional (for semantic search)
-**Category**: Search & Retrieval
-
-Provides comprehensive search capabilities across all stored memories. Supports semantic search using AI embeddings, tag-based filtering, date range queries, and hybrid search combining multiple criteria.
+**Purpose**: Advanced multi-mode search with intelligent token optimization
 
 **Parameters**:
-- \`search_type\` (string, optional): Search method - "semantic", "tags", "date_range", "hybrid" (default: "semantic")
-- \`query\` (string, required for semantic/hybrid): Search query text
-- \`tags\` (array of strings, required for tags/hybrid): Tags to search for
-- \`start_date\`/\`end_date\` (string, optional): Date range in YYYY-MM-DD format
-- \`format\` (string, optional): Response format - "intelligent", "detailed", "summary", "ids_only" (default: "intelligent")
-- \`max_tokens\` (integer, optional): Token budget for intelligent format (default: 1000)
-- \`limit\` (integer, optional): Results per page (default: 10)
-- \`cursor\` (string, optional): Pagination cursor for continuing search
-- \`domain\` (string, optional): Filter by knowledge domain
-- \`session_filter_mode\` (string, optional): Session scope - "all", "session_only", "session_and_shared"
+- \`search_type\` (string): "semantic", "tags", "date_range", "hybrid" (default: "semantic")
+- \`query\` (string): Search text (required for semantic/hybrid)
+- \`tags\` (array): Tags to filter (required for tags/hybrid)
+- \`start_date\`/\`end_date\` (string): Date range in YYYY-MM-DD format
+- \`format\` (string): "intelligent", "detailed", "summary", "ids_only" (default: "intelligent")
+- \`max_tokens\` (integer): Token budget for intelligent format (default: 1000)
+- \`limit\` (integer): Results per page (default: 10, max: 100)
+- \`cursor\` (string): Pagination cursor for continuing search
+- \`domain\` (string): Filter by knowledge domain
+- \`session_filter_mode\` (string): "all", "session_only", "session_and_shared"
+- \`use_ai\` (boolean): Enable vector embeddings for semantic search
 
-**Usage Examples**:
+**Response Formats**:
+- \`intelligent\` - Auto-optimizes based on token budget
+- \`detailed\` - Full content and metadata
+- \`summary\` - Balanced (~50% reduction)
+- \`ids_only\` - Minimal response (~95% reduction)
+
+**Example**:
 \`\`\`javascript
-search(query="machine learning algorithms", format="intelligent", max_tokens=500)
-search(search_type="tags", tags=["python", "ai"], limit=20)
-search(search_type="hybrid", query="neural networks", tags=["deep-learning"], domain="ai")
+search(
+  query="machine learning deployment",
+  format="intelligent",
+  max_tokens=500,
+  domain="ai"
+)
 \`\`\`
-
-**Best Practices**: Use semantic search for natural language, combine search types for precision, leverage intelligent format for token efficiency, use cursors for large datasets.
-
-### 6. analysis
-
-**Purpose**: Intelligent analysis of memories through question answering, summarization, and pattern recognition
-**AI Required**: Yes
-**Category**: AI Analysis
-
-Provides AI-powered analysis capabilities including question answering, content summarization, pattern analysis, and temporal learning progression tracking.
-
-**Parameters**:
-- \`analysis_type\` (string, optional): Analysis method - "question", "summarize", "analyze", "temporal_patterns" (default: "question")
-- \`question\` (string, required for question type): Natural language question
-- \`query\` (string, optional): Filter memories before analysis
-- \`timeframe\` (string, optional): Time period - "today", "week", "month", "all" (default: "all")
-- \`concept\` (string, optional): Specific concept for temporal analysis
-- \`temporal_timeframe\` (string, optional): Timeframe for temporal analysis - "week", "month", "quarter", "year" (default: "month")
-- \`limit\` (integer, optional): Maximum memories to analyze (default: 10)
-- \`context_limit\` (integer, optional): Context memories for Q&A (default: 10)
-- \`response_format\` (string, optional): Response format - "detailed", "concise", "ids_only", "summary", "custom" (default: "concise")
-
-**Usage Examples**:
-\`\`\`javascript
-// Question answering
-analysis(analysis_type="question", question="What are the main challenges in machine learning deployment?")
-
-// Summarization with timeframe
-analysis(analysis_type="summarize", timeframe="week", response_format="concise")
-
-// Pattern analysis
-analysis(analysis_type="analyze", query="performance optimization")
-
-// Temporal learning progression
-analysis(analysis_type="temporal_patterns", concept="deep learning", temporal_timeframe="quarter")
-\`\`\`
-
-**Best Practices**: Ask specific questions, use appropriate timeframes, choose optimal response formats, provide context through filtering, validate with source memories.
 
 ---
 
-## Organization Tools
+## Knowledge Intake Tools
 
-### 7. relationships
+### observe
 
-**Purpose**: Discover, create, and analyze relationships between memories
-**AI Required**: Yes (for discovery)
-**Category**: Relationship Management
+**Purpose**: Record observations for knowledge processing. Replaces \`store_memory\`.
 
-Manages memory relationships including finding related content, AI-powered relationship discovery, creating explicit connections, and mapping relationship graphs.
+Creates L0 observations by default, or higher-level memories with \`level\` parameter. Observations are raw intake meant for later processing via \`reflect\`.
 
 **Parameters**:
-- \`relationship_type\` (string, optional): Operation - "find_related", "discover", "create", "map_graph" (default: "find_related")
-- \`memory_id\` (string, required for find_related/map_graph): Central memory UUID
-- \`source_memory_id\`/\`target_memory_id\` (string, required for create): Memory IDs for new relationship
-- \`relationship_type_enum\` (string, optional): Relationship type - "references", "contradicts", "expands", "similar", "sequential", "causes", "enables"
-- \`strength\` (number, optional): Relationship strength 0.0-1.0 (default: 0.5)
-- \`limit\` (integer, optional): Maximum relationships to return (default: 10)
-- \`min_strength\` (number, optional): Minimum strength threshold (default: 0.0)
-- \`depth\` (integer, optional): Graph mapping depth (default: 2)
+- \`content\` (string, required): The observation content
+- \`level\` (string, optional): "observation", "learning", "pattern", "schema" (default: "observation")
+- \`tags\` (array of strings, optional): Tags for categorization
+- \`domain\` (string, optional): Knowledge domain
+- \`source\` (string, optional): Source of observation
+- \`context\` (string, optional): Additional context
+- \`weight\` (number, optional): Initial weight 0.0-10.0
+- \`auto_promote\` (boolean, optional): Auto-promote when criteria met (default: false)
+- \`session_id\` (string, optional): Session identifier
 
-**Usage Examples**:
+**Example**:
 \`\`\`javascript
-relationships(relationship_type="create", source_memory_id="id1", target_memory_id="id2", relationship_type_enum="expands", strength=0.9)
-relationships(relationship_type="find_related", memory_id="uuid", limit=5)
+// Record a raw observation
+observe(
+  content="Redis SCAN command is O(1) per call but O(N) overall",
+  tags=["redis", "performance"],
+  domain="databases"
+)
+
+// Store a learning directly
+observe(
+  content="Circuit breaker pattern prevents cascading failures in microservices",
+  level="learning",
+  tags=["architecture", "resilience"],
+  weight=3.5
+)
 \`\`\`
 
-**Best Practices**: Use create for explicit relationships, discover for patterns, find_related for connections, map_graph for visualization, strength values for prioritization.
+### question
 
-### 8. categories
+**Purpose**: Record epistemic gaps, contradictions, and knowledge questions
 
-**Purpose**: Manage memory categories and AI-powered categorization
-**AI Required**: Optional (for auto-categorization)
-**Category**: Organization & Categorization
-
-Handles category management including listing existing categories, creating new ones, and using AI to automatically categorize memories.
+Tracks what you don't know or need to investigate. Questions can be answered later via \`resolve\`.
 
 **Parameters**:
-- \`categories_type\` (string, optional): Operation - "list", "create", "categorize" (default: "list")
-- \`name\` (string, required for create): Category name
-- \`description\` (string, optional for create): Category description
-- \`parent_id\` (string, optional): Parent category UUID for hierarchy
-- \`memory_id\` (string, required for categorize): Memory to categorize
-- \`auto_create\` (boolean, optional): Auto-create suggested categories (default: true)
-- \`confidence_threshold\` (number, optional): Minimum confidence for categorization (default: 0.7)
+- \`content\` (string, required): The question or knowledge gap
+- \`question_type\` (string): "epistemic_gap", "contradiction", "prediction_failure" (default: "epistemic_gap")
+- \`priority\` (integer): Priority 1-10 (default: 5)
+- \`domain\` (string, optional): Knowledge domain
+- \`origin_context\` (string, optional): Context that prompted this question
+- \`session_id\` (string, optional): Session identifier
 
-**Usage Examples**:
+**Example**:
 \`\`\`javascript
-categories(categories_type="list")
-categories(categories_type="create", name="Machine Learning", description="AI and machine learning concepts")
+question(
+  content="How does Redis handle persistence during high write load?",
+  question_type="epistemic_gap",
+  priority=7,
+  domain="databases"
+)
 \`\`\`
 
-**Best Practices**: Create hierarchical structures with parent_id, set appropriate confidence thresholds, use descriptive names, regularly refine taxonomy.
+### bootstrap
 
-### 9. domains
+**Purpose**: Initialize session with knowledge context and pending questions
 
-**Purpose**: Manage knowledge domains for memory organization
-**AI Required**: No
-**Category**: Knowledge Organization
-
-Manages knowledge domains, which are high-level organizational units for grouping related memories. Domains help structure knowledge areas and provide context for memory storage and retrieval.
+Call at session start to load relevant schemas, patterns, learnings, and any pending questions. Returns memory statistics and highlights.
 
 **Parameters**:
-- \`domains_type\` (string, optional): Operation - "list", "create", "stats" (default: "list")
-- \`name\` (string, required for create): Domain name
-- \`description\` (string, optional for create): Domain description
-- \`domain\` (string, required for stats): Domain name for statistics
+- \`mode\` (string): "full", "minimal", "domain" (default: "full")
+- \`domain\` (string): Focus domain (required for domain mode)
+- \`include_questions\` (boolean): Include pending questions (default: true)
+- \`include_learnings\` (boolean): Include recent learnings (default: true)
+- \`include_patterns\` (boolean): Include high-weight patterns (default: true)
+- \`limit\` (integer): Max items per category (default: 20, max: 100)
+- \`session_id\` (string, optional): Session identifier
 
-**Usage Examples**:
+**Response includes**:
+- \`memory_stats\`: Counts by level, domain, relationships, questions
+- \`highlights\`: Top schemas, patterns, recent learnings
+- \`pending_questions\`: Unresolved epistemic gaps and contradictions
+
+**Example**:
 \`\`\`javascript
-domains(domains_type="list")
-domains(domains_type="create", name="artificial-intelligence", description="AI research and applications")
-\`\`\`
+// Full bootstrap
+bootstrap(mode="full", include_questions=true)
 
-**Best Practices**: Use descriptive domain names for knowledge areas, create domains for major subjects/projects, apply consistently, monitor usage patterns.
+// Domain-focused
+bootstrap(mode="domain", domain="programming")
+
+// Minimal startup
+bootstrap(mode="minimal")
+\`\`\`
 
 ---
 
-## Administration Tools
+## Knowledge Evolution Tools
 
-### 10. stats
+### reflect
 
-**Purpose**: Comprehensive statistics across sessions, domains, and categories
-**AI Required**: No
-**Category**: Statistics & Analytics
+**Purpose**: Process observations into learnings (L0->L1 transformation)
 
-Provides comprehensive statistics and analytics for different aspects of the memory system. Offers insights into memory usage patterns, domain distributions, category effectiveness, and session activity.
+Analyzes raw observations and synthesizes them into candidate insights. Can process single observations or batches.
 
 **Parameters**:
-- \`stats_type\` (string, optional): Statistics type - "session", "domain", "category" (default: "session")
-- \`domain\` (string, required for domain stats): Specific domain name
-- \`category_id\` (string, required for category stats): Category UUID
-- \`response_format\` (string, optional): Format - "detailed", "concise", "ids_only"
+- \`mode\` (string): "single", "batch", "auto" (default: "single")
+- \`observation_id\` (string): UUID of observation (required for single mode)
+- \`batch_size\` (integer): Observations to process in batch (default: 10, max: 50)
+- \`auto_criteria\` (string): Criteria for auto selection
+- \`session_id\` (string, optional): Session identifier
 
-**Usage Examples**:
+**Example**:
 \`\`\`javascript
-stats(stats_type="session")
-stats(stats_type="domain", domain="machine-learning")
+// Process single observation
+reflect(mode="single", observation_id="uuid-of-observation")
+
+// Batch processing
+reflect(mode="batch", batch_size=10)
+
+// Automatic selection
+reflect(mode="auto", auto_criteria="time_based")
 \`\`\`
 
-**Best Practices**: Use session stats for context, monitor domain growth, track category usage.
+### evolve
 
-### 11. sessions
+**Purpose**: Run evolution operations on knowledge (validate/promote/decay/accommodate)
 
-**Purpose**: Manage and analyze memory sessions
-**AI Required**: No
-**Category**: Session Management
-
-Provides session management capabilities including listing all available sessions and retrieving detailed statistics for the current or specific sessions. Sessions help track memory creation patterns and provide context isolation.
+Manages the lifecycle of knowledge through validation, promotion to higher levels, decay of stale knowledge, and accommodation of new evidence.
 
 **Parameters**:
-- \`sessions_type\` (string, optional): Operation - "list", "stats" (default: "list")
-- \`response_format\` (string, optional): Format - "detailed", "concise", "ids_only"
+- \`operation\` (string, required): "validate", "promote", "decay", "accommodate"
+- \`entity_id\` (string): Memory UUID (required for validate/promote)
+- \`success\` (boolean): Validation success (required for validate)
+- \`context\` (string, optional): Rationale for operation
+- \`threshold_days\` (integer): Days threshold for decay (default: 30, max: 365)
+- \`dry_run\` (boolean): Preview changes without applying (default: false)
+- \`session_id\` (string, optional): Session identifier
 
-**Usage Examples**:
+**Operations**:
+- \`validate\` - Record validation result, adjusts weight
+- \`promote\` - Manually promote to higher level
+- \`decay\` - Reduce weight of stale knowledge
+- \`accommodate\` - Integrate conflicting evidence
+
+**Example**:
 \`\`\`javascript
-sessions(sessions_type="list")
-sessions(sessions_type="stats")
+// Validate a learning (increases weight on success)
+evolve(
+  operation="validate",
+  entity_id="uuid",
+  success=true,
+  context="Verified in production deployment"
+)
+
+// Preview decay without applying
+evolve(operation="decay", threshold_days=30, dry_run=true)
+
+// Promote pattern to schema
+evolve(operation="promote", entity_id="uuid", context="Pattern validated multiple times")
 \`\`\`
 
-**Best Practices**: Organize related work with sessions, monitor activity for insights, clean up periodically, use filtering for focused analysis.
+### resolve
+
+**Purpose**: Resolve contradictions and answer epistemic gaps
+
+Handles detected contradictions between memories and marks questions as answered.
+
+**Parameters**:
+- \`question_id\` (string, required): UUID of question/contradiction to resolve
+- \`resolution_type\` (string, required): One of:
+  - \`a_supersedes\` - Memory A is correct, B is outdated
+  - \`b_supersedes\` - Memory B is correct, A is outdated
+  - \`conditional\` - Both correct under different conditions
+  - \`merged\` - Synthesize new understanding from both
+  - \`context\` - Different contexts, no actual conflict
+  - \`invalidated\` - Both memories were wrong
+  - \`answered\` - Epistemic gap has been answered
+- \`rationale\` (string, required): Explanation for resolution
+- \`synthesis_content\` (string, optional): New synthesized content (for merged)
+- \`create_synthesis\` (boolean): Create new memory from synthesis (default: false)
+- \`update_weights\` (boolean): Adjust weights of affected memories (default: true)
+- \`update_relationship\` (boolean): Update/remove contradicts relationship (default: true)
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+// Resolve contradiction - newer supersedes older
+resolve(
+  question_id="uuid-of-contradiction",
+  resolution_type="a_supersedes",
+  rationale="Memory A reflects updated API documentation from 2025"
+)
+
+// Answer epistemic gap
+resolve(
+  question_id="uuid-of-question",
+  resolution_type="answered",
+  rationale="Redis uses AOF and RDB persistence mechanisms"
+)
+
+// Merge conflicting insights
+resolve(
+  question_id="uuid",
+  resolution_type="merged",
+  rationale="Both perspectives valid in different contexts",
+  synthesis_content="Combined understanding: X in context A, Y in context B",
+  create_synthesis=true
+)
+\`\`\`
+
+---
+
+## Reasoning Tools
+
+### predict
+
+**Purpose**: Generate predictions from stored patterns and schemas
+
+Uses L2 patterns and L3 schemas to predict outcomes given a context.
+
+**Parameters**:
+- \`given\` (string, required): Context or precondition for prediction
+- \`action\` (string, optional): Action being taken in context
+- \`domain\` (string, optional): Focus domain for filtering
+- \`schema_ids\` (array of strings, optional): Specific schemas to use
+- \`use_ai\` (boolean): Enable AI-enhanced predictions (default: false)
+- \`limit\` (integer): Max predictions (default: 5, max: 20)
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+predict(
+  given="user clicks checkout button",
+  action="complete purchase",
+  domain="e-commerce"
+)
+
+predict(
+  given="API receives high traffic",
+  use_ai=true
+)
+\`\`\`
+
+### explain
+
+**Purpose**: Trace causal paths between states
+
+Finds the chain of causes/enables relationships connecting two states.
+
+**Parameters**:
+- \`from_state\` (string, required): Starting state or observation
+- \`to_state\` (string, required): Ending state or observation
+- \`domain\` (string, optional): Focus domain
+- \`max_depth\` (integer): Max relationship hops (default: 4, max: 10)
+- \`use_ai\` (boolean): Enable AI-enhanced explanations (default: false)
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+explain(
+  from_state="user logged in",
+  to_state="user completed purchase",
+  domain="e-commerce"
+)
+
+explain(
+  from_state="test passed locally",
+  to_state="deployment failed",
+  use_ai=true
+)
+\`\`\`
+
+### counterfactual
+
+**Purpose**: Explore "what if" alternative scenarios
+
+Reasons about what might have happened under different conditions.
+
+**Parameters**:
+- \`observed\` (string, required): What actually happened
+- \`if_condition\` (string, required): Alternative condition to explore
+- \`domain\` (string, optional): Focus domain
+- \`schema_ids\` (array of strings, optional): Specific schemas to consult
+- \`use_ai\` (boolean): Enable AI-enhanced reasoning (default: false)
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+counterfactual(
+  observed="deployment failed",
+  if_condition="we had run integration tests",
+  domain="devops"
+)
+
+counterfactual(
+  observed="user churned",
+  if_condition="price was 20% lower",
+  use_ai=true
+)
+\`\`\`
+
+---
+
+## Graph Status Tools
+
+### relate
+
+**Purpose**: Create relationships between memories
+
+Creates typed, weighted relationships between memory entities.
+
+**Parameters**:
+- \`source_memory_id\` (string, required): Source memory UUID
+- \`target_memory_id\` (string, required): Target memory UUID
+- \`relationship_type\` (string): One of:
+  - \`references\` (default) - General reference
+  - \`contradicts\` - Conflicting information
+  - \`expands\` - Elaborates on
+  - \`similar\` - Related content
+  - \`sequential\` - Temporal sequence
+  - \`causes\` - Causal relationship
+  - \`enables\` - Prerequisite
+- \`strength\` (number): Relationship strength 0.0-1.0 (default: 0.5)
+- \`context\` (string, optional): Why this relationship exists
+
+**Example**:
+\`\`\`javascript
+relate(
+  source_memory_id="uuid-1",
+  target_memory_id="uuid-2",
+  relationship_type="causes",
+  strength=0.9,
+  context="Cache invalidation leads to database load spike"
+)
+\`\`\`
+
+### validate
+
+**Purpose**: Check knowledge graph integrity and optionally repair issues
+
+Runs integrity checks on the knowledge graph and can auto-fix certain issues.
+
+**Parameters**:
+- \`checks\` (array of strings, optional): Specific checks to run:
+  - \`orphaned_reference\` - References to deleted memories
+  - \`relationship_cycle\` - Circular relationships
+  - \`weight_inconsistency\` - Weight/level mismatches
+  - \`stale_question\` - Old unresolved questions
+  - \`promotion_chain_broken\` - Invalid promotion paths
+  - \`duplicate_relationship\` - Duplicate edges
+- \`auto_fix\` (boolean): Apply automatic fixes (default: false)
+- \`dry_run\` (boolean): Preview fixes without applying (default: true)
+- \`domain\` (string, optional): Filter to specific domain
+- \`batch_size\` (integer): Processing batch size (default: 1000)
+- \`response_format\` (string): "detailed", "concise", "ids_only", "summary"
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+// Full integrity check
+validate()
+
+// Specific checks with auto-fix preview
+validate(
+  checks=["orphaned_reference", "weight_inconsistency"],
+  auto_fix=true,
+  dry_run=true
+)
+
+// Apply fixes
+validate(auto_fix=true, dry_run=false)
+\`\`\`
+
+### status
+
+**Purpose**: Get unified system status and statistics
+
+Returns comprehensive system health including memory counts by level, domain distribution, relationship statistics, and question states.
+
+**Parameters**:
+- \`response_format\` (string): "detailed", "concise", "summary" (default: "detailed")
+
+**Response includes**:
+- Total memories and counts by level (L0-L3)
+- Domain distribution
+- Relationship count
+- Questions (total, pending, resolved)
+- Recent activity (created/updated in 24h)
+
+**Example**:
+\`\`\`javascript
+status()
+status(response_format="summary")
+\`\`\`
 
 ---
 
 ## Integration Patterns
 
-### Best Practices Summary
+### Recommended Workflow
 
-1. **Memory Storage**: Use appropriate importance levels and descriptive tags
-2. **Search**: Combine search types for precise results
-3. **Analysis**: Ask specific questions and use appropriate response formats
-4. **Organization**: Create logical hierarchies with domains and categories
-5. **Performance**: Use cursor pagination for large datasets
-6. **Token Management**: Choose response formats based on use case requirements`,
+1. **Session Start**: Call \`bootstrap\` to load context
+2. **During Work**: Use \`observe\` to capture insights
+3. **End of Session**: Use \`reflect\` to process observations
+4. **Periodically**: Run \`evolve(operation="decay")\` for maintenance
+
+### Token Optimization
+
+Choose response formats based on use case:
+- \`ids_only\` (~95% reduction): When you only need memory IDs
+- \`summary\` (~50% reduction): Balanced for most operations
+- \`concise\` (~70% reduction): Good default for analysis
+- \`detailed\`: When you need full content
+- \`intelligent\`: Auto-optimizes to token budget
+
+### Best Practices
+
+1. **Use \`observe\` for intake**: Don't skip to learnings, let reflection synthesize
+2. **Track unknowns with \`question\`**: Epistemic gaps are valuable metadata
+3. **Validate frequently**: Use \`evolve(operation="validate")\` to strengthen good knowledge
+4. **Resolve contradictions**: Don't leave them pending indefinitely
+5. **Run periodic maintenance**: \`validate()\` and \`evolve(operation="decay")\` keep the graph healthy`,
   codeExamples: [
     {
-      id: 'basic-memory-ops',
-      title: 'Basic Memory Operations',
-      code: `// Store a new memory with metadata
-store_memory(
-  content="Docker provides containerization for applications",
-  importance=8,
-  tags=["docker", "containers", "devops"],
-  domain="infrastructure"
+      id: 'world-memory-workflow',
+      title: 'World Memory Workflow',
+      code: `// 1. Bootstrap session with context
+bootstrap(mode="full", include_questions=true)
+
+// 2. Record observations during work
+observe(
+  content="Redis SCAN is O(1) per call but O(N) overall",
+  tags=["redis", "performance"],
+  domain="databases"
 )
 
-// Search with semantic similarity
-search(
-  query="containerization technologies",
-  search_type="semantic",
-  limit=5,
-  format="concise"
+// 3. Track knowledge gaps
+question(
+  content="How does Redis handle persistence during high write load?",
+  question_type="epistemic_gap",
+  priority=7
 )
 
-// Update memory content
-update_memory(
-  id="550e8400-e29b-41d4-a716-446655440000",
-  content="Docker provides lightweight containerization for applications",
-  importance=9
+// 4. End of session: process observations
+reflect(mode="batch", batch_size=10)
+
+// 5. Validate proven knowledge
+evolve(
+  operation="validate",
+  entity_id="uuid",
+  success=true,
+  context="Verified in production"
 )`,
       language: 'javascript',
-      description: 'Essential MCP tool operations for memory management'
+      description: 'Complete World Memory workflow: bootstrap, observe, question, reflect, evolve'
     },
     {
-      id: 'advanced-analysis',
-      title: 'Advanced Analysis Workflows',
-      code: `// Question answering with context
-analysis(
-  analysis_type="question",
-  question="What are the best practices for Docker in production?",
-  query="docker production",
-  context_limit=10,
-  response_format="detailed"
+      id: 'knowledge-evolution',
+      title: 'Knowledge Evolution Operations',
+      code: `// Validate a learning (increases weight on success)
+evolve(
+  operation="validate",
+  entity_id="uuid",
+  success=true,
+  context="Verified in production deployment"
 )
 
-// Temporal pattern analysis
-analysis(
-  analysis_type="temporal_patterns",
-  concept="kubernetes",
-  temporal_timeframe="quarter",
-  temporal_analysis_type="learning_progression"
-)
+// Preview decay without applying
+evolve(operation="decay", threshold_days=30, dry_run=true)
 
-// Summarize recent learning
-analysis(
-  analysis_type="summarize",
-  timeframe="week",
-  limit=20,
-  response_format="concise"
+// Apply decay to stale knowledge
+evolve(operation="decay", threshold_days=30, dry_run=false)
+
+// Promote pattern to schema
+evolve(
+  operation="promote",
+  entity_id="uuid",
+  context="Pattern validated multiple times"
 )`,
       language: 'javascript',
-      description: 'AI-powered analysis and learning insights'
+      description: 'Managing knowledge lifecycle through validation, decay, and promotion'
     },
     {
-      id: 'relationship-management',
-      title: 'Relationship Discovery and Management',
-      code: `// Discover relationships automatically
-relationships(
-  relationship_type="discover",
-  limit=15,
-  min_strength=0.7,
-  relationship_types=["expands", "references", "similar"]
+      id: 'reasoning-tools',
+      title: 'Reasoning and Analysis',
+      code: `// Generate predictions from patterns
+predict(
+  given="API receives high traffic",
+  domain="infrastructure",
+  use_ai=true
 )
 
-// Create explicit relationships
-relationships(
-  relationship_type="create",
-  source_memory_id="uuid-1",
-  target_memory_id="uuid-2",
-  relationship_type_enum="expands",
-  strength=0.9,
-  context="Docker builds upon containerization concepts"
+// Trace causal paths
+explain(
+  from_state="test passed locally",
+  to_state="deployment failed",
+  use_ai=true
 )
 
-// Map knowledge graph
-relationships(
-  relationship_type="map_graph",
-  memory_id="central-uuid",
-  depth=3,
-  include_strength=true
+// Explore alternative scenarios
+counterfactual(
+  observed="deployment failed",
+  if_condition="we had run integration tests",
+  domain="devops"
 )`,
       language: 'javascript',
-      description: 'Building and exploring knowledge relationships'
+      description: 'Using reasoning tools for predictions, explanations, and what-if analysis'
     }
   ],
   prevSection: 'cli-reference',

@@ -32,14 +32,17 @@ const NavItem: React.FC<NavItemProps> = ({
     if (hasChildren) {
       setIsExpanded(!isExpanded);
     } else {
+      // Extract the anchor ID from href (remove the # prefix)
+      const anchorId = item.href?.replace('#', '') || item.id;
+
       // Update URL hash for deep linking
-      window.history.pushState(null, '', `#${item.id}`);
+      window.history.pushState(null, '', `#${anchorId}`);
 
       // Trigger section change
       onSectionChange?.(item.id);
 
       // Smooth scroll to section with slight offset for better visibility
-      const element = document.getElementById(item.id);
+      const element = document.getElementById(anchorId);
       if (element) {
         const offset = 80; // Account for sticky header
         const elementTop = element.getBoundingClientRect().top + window.scrollY;
@@ -123,7 +126,26 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (hash) {
-      onSectionChange?.(hash);
+      // Find the navigation item that matches this hash
+      const findItemByHref = (items: NavigationItem[]): NavigationItem | undefined => {
+        for (const item of items) {
+          const anchorId = item.href?.replace('#', '');
+          if (anchorId === hash || item.id === hash) {
+            return item;
+          }
+          if (item.children) {
+            const found = findItemByHref(item.children);
+            if (found) return found;
+          }
+        }
+        return undefined;
+      };
+
+      const matchedItem = findItemByHref(navigation);
+      if (matchedItem) {
+        onSectionChange?.(matchedItem.id);
+      }
+
       setTimeout(() => {
         const element = document.getElementById(hash);
         if (element) {
@@ -136,7 +158,7 @@ const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
         }
       }, 100);
     }
-  }, [onSectionChange]);
+  }, [onSectionChange, navigation]);
 
   // Handle browser back/forward navigation
   useEffect(() => {

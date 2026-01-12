@@ -263,7 +263,7 @@ local-memory start</pre>
                   )}
                 </div>
 
-                <MarkdownRenderer content={section.content} />
+                <MarkdownRenderer content={section.content} sectionId={section.id} />
 
                 {/* Navigation Footer */}
                 <div className="flex justify-between items-center pt-8 mt-8 border-t border-border">

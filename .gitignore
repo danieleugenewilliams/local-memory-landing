@@ -28,3 +28,6 @@ dist-ssr
 
 # local-memory builds
 binaries/
+
+# agentic tools
+.playwright-mcp

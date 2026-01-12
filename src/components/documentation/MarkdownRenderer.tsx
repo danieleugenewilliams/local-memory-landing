@@ -5,6 +5,7 @@ import { useState } from 'react';
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  sectionId?: string; // Prefix for all generated IDs to ensure uniqueness across sections
 }
 
 interface CodeBlockProps {
@@ -68,19 +69,154 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   );
 };
 
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className = "" }) => {
+// Parse inline formatting (bold, italic, inline code, links)
+const parseInlineFormatting = (text: string): React.ReactNode => {
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let keyIndex = 0;
+
+  while (remaining.length > 0) {
+    // Check for inline code first (highest priority)
+    const codeMatch = remaining.match(/^`([^`]+)`/);
+    if (codeMatch) {
+      parts.push(
+        <code key={keyIndex++} className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-sm text-[hsl(var(--brand-blue))]">
+          {codeMatch[1]}
+        </code>
+      );
+      remaining = remaining.slice(codeMatch[0].length);
+      continue;
+    }
+
+    // Check for bold text
+    const boldMatch = remaining.match(/^\*\*([^*]+)\*\*/);
+    if (boldMatch) {
+      parts.push(<strong key={keyIndex++} className="font-semibold text-foreground">{boldMatch[1]}</strong>);
+      remaining = remaining.slice(boldMatch[0].length);
+      continue;
+    }
+
+    // Check for italic text
+    const italicMatch = remaining.match(/^\*([^*]+)\*/);
+    if (italicMatch) {
+      parts.push(<em key={keyIndex++}>{italicMatch[1]}</em>);
+      remaining = remaining.slice(italicMatch[0].length);
+      continue;
+    }
+
+    // Check for links [text](url)
+    const linkMatch = remaining.match(/^\[([^\]]+)\]\(([^)]+)\)/);
+    if (linkMatch) {
+      parts.push(
+        <a
+          key={keyIndex++}
+          href={linkMatch[2]}
+          className="text-[hsl(var(--brand-blue))] hover:underline"
+          target={linkMatch[2].startsWith('http') ? '_blank' : undefined}
+          rel={linkMatch[2].startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          {linkMatch[1]}
+        </a>
+      );
+      remaining = remaining.slice(linkMatch[0].length);
+      continue;
+    }
+
+    // Find the next special character
+    const nextSpecial = remaining.search(/[`*\[]/);
+    if (nextSpecial === -1) {
+      // No more special characters, add the rest as text
+      parts.push(remaining);
+      break;
+    } else if (nextSpecial === 0) {
+      // Special character at start but didn't match a pattern, treat as regular text
+      parts.push(remaining[0]);
+      remaining = remaining.slice(1);
+    } else {
+      // Add text up to the next special character
+      parts.push(remaining.slice(0, nextSpecial));
+      remaining = remaining.slice(nextSpecial);
+    }
+  }
+
+  return parts.length === 1 ? parts[0] : <>{parts}</>;
+};
+
+// Parse a table from lines
+const parseTable = (lines: string[], startIndex: number): { element: React.ReactNode; endIndex: number } => {
+  const tableLines: string[] = [];
+  let i = startIndex;
+
+  // Collect all table lines
+  while (i < lines.length && lines[i].trim().startsWith('|')) {
+    tableLines.push(lines[i]);
+    i++;
+  }
+
+  if (tableLines.length < 2) {
+    return { element: null, endIndex: startIndex };
+  }
+
+  // Parse header row
+  const headerCells = tableLines[0]
+    .split('|')
+    .map(cell => cell.trim())
+    .filter(cell => cell.length > 0);
+
+  // Skip separator row (index 1)
+  // Parse data rows
+  const dataRows = tableLines.slice(2).map(line =>
+    line.split('|').map(cell => cell.trim()).filter(cell => cell.length > 0)
+  );
+
+  const element = (
+    <div key={`table-${startIndex}`} className="overflow-x-auto mb-6">
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr className="border-b border-border bg-card/50">
+            {headerCells.map((cell, idx) => (
+              <th key={idx} className="px-4 py-3 text-left font-semibold text-foreground">
+                {parseInlineFormatting(cell)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {dataRows.map((row, rowIdx) => (
+            <tr key={rowIdx} className="border-b border-border/50 hover:bg-card/30">
+              {row.map((cell, cellIdx) => (
+                <td key={cellIdx} className="px-4 py-3 text-muted-foreground">
+                  {parseInlineFormatting(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  return { element, endIndex: i - 1 };
+};
+
+const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className = "", sectionId }) => {
   // Generate kebab-case ID from heading text
+  // If sectionId is provided, it's prepended to ensure uniqueness across sections
   const generateId = (text: string): string => {
-    return text
+    const baseId = text
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
       .replace(/\s+/g, '-')          // Replace spaces with hyphens
       .replace(/-+/g, '-')           // Replace multiple hyphens with single hyphen
       .replace(/^-|-$/g, '');        // Remove leading/trailing hyphens
+
+    // If sectionId provided, prefix the ID to ensure uniqueness across sections
+    // e.g., "cli-reference" + "overview" = "cli-reference-overview"
+    return sectionId ? `${sectionId}-${baseId}` : baseId;
   };
 
-  // Simple markdown parsing for our specific use case
+  // Parse markdown content
   const renderContent = (text: string) => {
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
@@ -112,13 +248,23 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         continue;
       }
 
+      // Tables
+      if (line.trim().startsWith('|')) {
+        const { element, endIndex } = parseTable(lines, i);
+        if (element) {
+          elements.push(element);
+          i = endIndex + 1;
+          continue;
+        }
+      }
+
       // Headers
       if (line.startsWith('# ')) {
         const headingText = line.slice(2);
         const headingId = generateId(headingText);
         elements.push(
           <h1 key={`h1-${i}`} id={headingId} className="text-3xl font-bold tracking-tight mb-6 mt-8 first:mt-0 scroll-target">
-            {headingText}
+            {parseInlineFormatting(headingText)}
           </h1>
         );
       } else if (line.startsWith('## ')) {
@@ -126,7 +272,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         const headingId = generateId(headingText);
         elements.push(
           <h2 key={`h2-${i}`} id={headingId} className="text-2xl font-bold tracking-tight mb-4 mt-8 text-[hsl(var(--brand-blue))] scroll-target">
-            {headingText}
+            {parseInlineFormatting(headingText)}
           </h2>
         );
       } else if (line.startsWith('### ')) {
@@ -134,7 +280,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         const headingId = generateId(headingText);
         elements.push(
           <h3 key={`h3-${i}`} id={headingId} className="text-xl font-semibold mb-3 mt-6 scroll-target">
-            {headingText}
+            {parseInlineFormatting(headingText)}
           </h3>
         );
       } else if (line.startsWith('#### ')) {
@@ -142,11 +288,53 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         const headingId = generateId(headingText);
         elements.push(
           <h4 key={`h4-${i}`} id={headingId} className="text-lg font-semibold mb-2 mt-4 scroll-target">
-            {headingText}
+            {parseInlineFormatting(headingText)}
           </h4>
         );
       }
-      // Lists
+      // Blockquotes
+      else if (line.startsWith('> ')) {
+        const quoteLines: string[] = [];
+        while (i < lines.length && lines[i].startsWith('> ')) {
+          quoteLines.push(lines[i].slice(2));
+          i++;
+        }
+        i--; // Back up one since the while loop will increment
+
+        elements.push(
+          <blockquote key={`quote-${i}`} className="border-l-4 border-[hsl(var(--brand-blue))] pl-4 py-2 mb-4 bg-card/30 rounded-r">
+            {quoteLines.map((quoteLine, idx) => (
+              <p key={idx} className="text-muted-foreground italic">
+                {parseInlineFormatting(quoteLine)}
+              </p>
+            ))}
+          </blockquote>
+        );
+      }
+      // Horizontal rule
+      else if (line.match(/^-{3,}$/) || line.match(/^\*{3,}$/)) {
+        elements.push(
+          <hr key={`hr-${i}`} className="border-border my-8" />
+        );
+      }
+      // Numbered lists
+      else if (line.match(/^\d+\.\s/)) {
+        const listItems: string[] = [];
+        while (i < lines.length && lines[i].match(/^\d+\.\s/)) {
+          listItems.push(lines[i].replace(/^\d+\.\s/, ''));
+          i++;
+        }
+        i--; // Back up one since the while loop will increment
+
+        elements.push(
+          <ol key={`ol-${i}`} className="list-decimal list-inside mb-4 space-y-1 text-muted-foreground">
+            {listItems.map((item, idx) => (
+              <li key={idx}>{parseInlineFormatting(item)}</li>
+            ))}
+          </ol>
+        );
+      }
+      // Unordered lists
       else if (line.match(/^[-*]\s/)) {
         const listItems: string[] = [];
         while (i < lines.length && lines[i].match(/^[-*]\s/)) {
@@ -158,7 +346,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         elements.push(
           <ul key={`ul-${i}`} className="list-disc list-inside mb-4 space-y-1 text-muted-foreground">
             {listItems.map((item, idx) => (
-              <li key={idx}>{item}</li>
+              <li key={idx}>{parseInlineFormatting(item)}</li>
             ))}
           </ul>
         );
@@ -167,7 +355,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
       else if (line.trim() !== '') {
         elements.push(
           <p key={`p-${i}`} className="text-muted-foreground mb-4 leading-relaxed">
-            {line}
+            {parseInlineFormatting(line)}
           </p>
         );
       }

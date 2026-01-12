@@ -3,20 +3,31 @@ import { DocumentationSection } from '@/types/documentation';
 export const gettingStartedContent: DocumentationSection = {
   id: 'getting-started',
   title: 'Getting Started',
-  description: 'Complete guide to installing and using Local Memory',
+  description: 'Complete guide to installing and using Local Memory v1.2.1',
   content: `# Getting Started with Local Memory
 
-Local Memory is a powerful AI memory system that allows you to store, search, and analyze information using semantic understanding. This guide will help you get started with Local Memory quickly.
+Local Memory v1.2.1 is a knowledge management system that evolves raw observations into validated patterns and theoretical frameworks. This guide covers installation, basic usage, and key concepts.
 
 ## What is Local Memory?
 
-Local Memory provides three complementary interfaces for intelligent information storage and retrieval:
+Local Memory provides three complementary interfaces for intelligent knowledge management:
 
 - **CLI (Command-line Interface)**: Direct human interaction and scripting
 - **MCP (Model Context Protocol)**: Integration with AI agents and Claude
 - **REST API**: Web service integration and automation
 
 All three interfaces provide the same functionality with consistent behavior and responses.
+
+Local Memory implements a four-level knowledge hierarchy:
+
+| Level | Name | Description |
+|-------|------|-------------|
+| L0 | Observation | Raw intake, ephemeral notes |
+| L1 | Learning | Candidate insights, validated observations |
+| L2 | Pattern | Validated generalizations across learnings |
+| L3 | Schema | Theoretical frameworks explaining patterns |
+
+Knowledge progresses through levels via validation and promotion, creating a self-improving knowledge base.
 
 ## Installation
 
@@ -36,9 +47,6 @@ local-memory setup --silent      # Silent setup with defaults
 # Activate your license (required for commercial use)
 local-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX
 
-# Verify license status
-local-memory license status
-
 # Start the daemon
 local-memory start
 
@@ -48,15 +56,13 @@ local-memory doctor
 
 ### Manual Installation
 
-1. Download the appropriate binary for your platform from the releases page
+1. Download the binary for your platform from the [releases page](https://github.com/danieleugenewilliams/local-memory-releases)
 2. Place the binary in your PATH
 3. Run the setup wizard: \`local-memory setup\`
 4. After purchasing from localmemory.co, activate your license
 5. Install MCP integration: \`local-memory install\`
 
 ## Basic Workflow
-
-Here's how to get started with Local Memory:
 
 ### 1. Start the System
 
@@ -68,17 +74,51 @@ local-memory start
 local-memory status
 \`\`\`
 
-### 2. Store Your First Memory
+### 2. Bootstrap Your Session (Recommended)
+
+Start each session by loading context from your knowledge base:
 
 \`\`\`bash
-# Basic memory storage
-local-memory remember "The transformer architecture revolutionized NLP with self-attention mechanisms"
+# Load full context (schemas, patterns, learnings, pending questions)
+# Via MCP tool:
+bootstrap(mode="full", include_questions=true)
 
-# Memory with metadata
-local-memory remember "Python is great for data science" --tags "programming,python,data-science" --importance 8
+# Or via CLI
+local-memory bootstrap --mode full --include_questions
 \`\`\`
 
-### 3. Search Your Memories
+### 3. Capture Observations
+
+Use \`observe\` to record raw observations. These are L0 entries meant for later processing:
+
+\`\`\`bash
+# Record an observation (via MCP)
+observe(
+  content="Redis SCAN is O(1) per call but O(N) overall",
+  tags=["redis", "performance"],
+  domain="databases"
+)
+
+# Or use CLI observe command (preferred)
+local-memory observe "Redis SCAN is O(1) per call but O(N) overall" 
+--tags "redis,performance" 
+--domain "databases"
+
+# Or use CLI remember command (legacy, still works)
+local-memory remember "Redis SCAN is O(1) per call but O(N) overall" 
+--tags "redis,performance"
+\`\`\`
+
+### 4. Process Observations into Learnings
+
+Use \`reflect\` to synthesize observations into candidate insights:
+
+\`\`\`bash
+# Process recent observations (via MCP)
+reflect(mode="batch", batch_size=10)
+\`\`\`
+
+### 5. Search Your Knowledge
 
 \`\`\`bash
 # Simple search
@@ -90,72 +130,102 @@ local-memory search "neural networks" --use_ai
 # Search by tags
 local-memory search --tags "programming,python"
 
-# Date range search
-local-memory search --start_date "2024-01-01" --end_date "2024-12-31"
+# Search by date range
+local-memory search "patterns" --start_date "2025-01-01" --end_date "2025-12-31"
 \`\`\`
 
-### 4. Create Relationships
+### 6. Create Relationships
 
 \`\`\`bash
-# Find related memories first
-local-memory search "transformer" --limit 2
-
-# Create relationships between memories (using IDs from search results)
-local-memory relate 359bf199-0fcf-4403-8dc6-ffd07f6cb900 359bf199-0fcf-4403-8dc6-ffd07f6cb911 --type "references" --strength 0.8 --confirm
+# Create relationships between memories
+local-memory relate 359bf199-0fcf-4403-8dc6-ffd07f6cb900 359bf199-0fcf-4403-8dc6-ffd07f6cb911 --type "causes" --strength 0.8 --confirm
 \`\`\`
 
-### 5. Analyze Your Knowledge
+### 7. Track Unknowns
+
+Record what you don't know or need to investigate:
 
 \`\`\`bash
-# Ask questions about your memories
-local-memory analyze "What are the key concepts I've learned about machine learning?"
+# Record an epistemic gap (via MCP)
+question(
+  content="How does Redis handle persistence during high write load?",
+  question_type="epistemic_gap",
+  priority=7
+)
+\`\`\`
 
-# Summarize recent memories
-local-memory analyze --type summarize --timeframe week
+### 8. Validate and Evolve Knowledge
 
-# Track learning progression
-local-memory analyze --type temporal_patterns --concept "deep learning"
+Strengthen good knowledge and let stale knowledge decay:
+
+\`\`\`bash
+# Validate a learning (via MCP)
+evolve(
+  operation="validate",
+  entity_id="uuid-of-learning",
+  success=true,
+  context="Verified in production"
+)
+
+# Run decay on stale knowledge
+evolve(operation="decay", threshold_days=30, dry_run=true)
 \`\`\`
 
 ## Core Concepts
 
-### Memory Storage
-- Each memory has a unique ID
-- Memories can have tags, importance ratings, and metadata
-- Content is automatically analyzed for semantic understanding
+### Knowledge Hierarchy
+
+- **L0 Observations**: Raw notes, fleeting thoughts, initial intake
+- **L1 Learnings**: Validated observations, candidate insights
+- **L2 Patterns**: Generalizations across multiple learnings
+- **L3 Schemas**: Theoretical frameworks with assertions and predictions
+
+Knowledge weight ranges correspond to levels:
+- L0: 0.0-1.0 (ephemeral)
+- L1: 1.0-5.0 (volatile)
+- L2: 5.0-9.0 (durable)
+- L3: 9.0-10.0 (permanent)
+
+### Contradiction Detection
+
+Local Memory automatically detects potential contradictions when storing new knowledge. Detected contradictions appear in \`bootstrap\` response and can be resolved via the \`resolve\` tool.
 
 ### Search Types
-- **Keyword Search**: Traditional text matching
-- **Semantic Search**: AI-powered meaning-based search
+
+- **Semantic Search**: AI-powered meaning-based search (default)
 - **Tag Search**: Filter by specific tags
-- **Date Range**: Search by time periods *(under development)*
+- **Date Range**: Search by time periods
 - **Hybrid Search**: Combine multiple search criteria
 
 ### Relationships
+
 - Connect related memories with typed relationships
-- Relationship types: references, contradicts, expands, similar, sequential, causes, enables
+- Types: references, contradicts, expands, similar, sequential, causes, enables
 - Relationships have strength ratings (0.0 to 1.0)
 
-### Analysis Types
-- **Question Answering**: Ask natural language questions about your stored knowledge
-- **Summarization**: Generate summaries of memory collections
-- **Pattern Analysis**: Discover patterns and themes in your memories
-- **Temporal Analysis**: Track learning progression over time
+### Questions System
 
-## Configuration Basics
+Track epistemic gaps (what you don't know) and contradictions:
+- \`epistemic_gap\`: Knowledge gaps to investigate
+- \`contradiction\`: Detected conflicts between memories
+- \`prediction_failure\`: When predictions were wrong
+
+## Configuration
 
 ### Configuration Directory
-Local Memory stores its configuration and data in:
-- **macOS**: \`~/.local-memory/\`
-- **Linux**: \`~/.local-memory/\`
+
+Local Memory stores configuration and data in:
+- **macOS/Linux**: \`~/.local-memory/\`
 - **Windows**: \`%USERPROFILE%\\.local-memory\\\`
 
-### Key Configuration Files
+### Key Files
+
 - \`config.yaml\`: Main configuration
-- \`unified-memories.db\`: SQLite database (encrypted)
+- \`unified-memories.db\`: SQLite database
 - \`logs/\`: System logs
 
 ### Environment Variables
+
 \`\`\`bash
 export LOCAL_MEMORY_CONFIG_DIR="$HOME/.local-memory"
 export LOCAL_MEMORY_LOG_LEVEL="info"
@@ -164,62 +234,28 @@ export LOCAL_MEMORY_API_PORT="3002"
 
 ## License Management
 
-Local Memory requires a commercial license for use. You can obtain a license key at [localmemory.co](https://localmemory.co).
-
-### License Commands
+Local Memory requires a commercial license. Obtain a key at [localmemory.co](https://localmemory.co).
 
 \`\`\`bash
-# Activate a new license
+# Activate license
 local-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX
+
+# Check status
+local-memory license status
 
 # Activate with automatic terms acceptance
 local-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX --accept_terms
-
-# Check license status
-local-memory license status
-
-# Validate an existing license
-local-memory license validate LM-XXXX-XXXX-XXXX-XXXX-XXXX
-
-# View license information in JSON format
-local-memory license status --json
 \`\`\`
 
-### License Key Troubleshooting
+### License Troubleshooting
 
-If you encounter issues with license activation, here are common solutions:
-
-#### Character Format Issues
-License keys must use regular hyphens (-) to separate segments. If you copy-paste your license key and see errors about "invalid length," check for:
-
-- **Em-dash (—)**: Often inserted by word processors like Microsoft Word
-- **En-dash (–)**: Sometimes used in documents instead of regular hyphens
-
-**Solution**: Local Memory automatically normalizes these characters, but if you still have issues, manually replace any special dashes with regular hyphens (-).
-
-#### \`--accept-terms\` Flag Issues
-Both formats work correctly:
-\`\`\`bash
-# Both of these work the same way:
-local-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX --accept-terms
-local-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX --accept_terms
-\`\`\`
-
-#### Common Error Messages
-- **"invalid license key length"**: Check for special dash characters (see above)
-- **"terms and conditions not accepted"**: Use \`--accept-terms\` flag or run activation without the flag for interactive prompt
-- **"license key contains invalid characters"**: Ensure only alphanumeric characters and hyphens are used
-
-#### Getting Help
-If issues persist:
-1. Run \`local-memory doctor\` for system diagnostics
-2. Check license status: \`local-memory license status\`
-3. Contact support with the error message and your system information
+If your license key has copy-paste issues:
+- Check for em-dash (--) or en-dash (-) instead of regular hyphens (-)
+- Local Memory auto-normalizes these, but manual replacement may help
 
 ## Integration Options
 
 ### MCP Integration (AI Agents)
-Local Memory integrates with AI agents through the Model Context Protocol:
 
 \`\`\`bash
 # Install MCP integration
@@ -229,58 +265,70 @@ local-memory install
 local-memory install mcp claude-desktop
 local-memory install mcp cursor
 
-# Complete setup and installation in one command
+# Complete setup
 local-memory install --all
 \`\`\`
 
-### REST API Usage
-Access Local Memory via HTTP REST API:
+### REST API
 
 \`\`\`bash
 # Health check
 curl http://localhost:3002/api/v1/health
 
-# Store a memory
+# Store observation
 curl -X POST http://localhost:3002/api/v1/memories \\
   -H "Content-Type: application/json" \\
-  -d '{"content": "Your memory content", "importance": 7}'
+  -d '{"content": "Your observation", "level": "observation"}'
 \`\`\`
 
-### Scripting with CLI
+### CLI / Code Execution
+
 \`\`\`bash
-# Export memories to JSON
-local-memory search "all" --json > memories_backup.json
+# Start CLI
+local-memory start
 
-# Batch operations
-local-memory remember "$(echo 'memory content')" --tags "script-generated"
-
-# Count memories by tag
-local-memory search --tags "python" --json | jq '. | length'
+# Run commands directly
+local-memory search "neural networks" --use_ai
 \`\`\`
 
-## Common Use Cases
+## Common Workflows
 
-### Research and Learning
-- Store research notes and papers
-- Connect related concepts
-- Track learning progression
-- Ask questions about accumulated knowledge
+### Research Session
 
-### Development Knowledge Base
-- Store code snippets and solutions
-- Document lessons learned
-- Track project decisions
-- Build team knowledge base
+1. \`bootstrap(mode="full")\` - Load context
+2. \`observe(content="...", domain="research")\` - Capture findings
+3. \`question(content="What about X?")\` - Track unknowns
+4. \`reflect(mode="batch")\` - End of session synthesis
+5. \`evolve(operation="validate", ...)\` - Strengthen validated findings
 
-### Personal Knowledge Management
-- Store meeting notes and insights
-- Track ideas and thoughts
-- Build personal wiki
-- Organize information by topics
+### Knowledge Maintenance
+
+\`\`\`bash
+# Check graph integrity
+validate()
+
+# Preview decay
+evolve(operation="decay", threshold_days=30, dry_run=true)
+
+# Apply decay
+evolve(operation="decay", threshold_days=30, dry_run=false)
+
+# Resolve pending contradictions
+resolve(question_id="...", resolution_type="a_supersedes", rationale="...")
+\`\`\`
+
+### Building a Knowledge Base
+
+1. Start with observations (L0)
+2. Let reflection create learnings (L1)
+3. Validate learnings when proven correct
+4. Promote to patterns (L2) when generalizations emerge
+5. Create schemas (L3) for theoretical frameworks
 
 ## Getting Help
 
 ### Command-Line Help
+
 \`\`\`bash
 # General help
 local-memory --help
@@ -291,15 +339,10 @@ local-memory search --help
 # Progressive parameter discovery
 local-memory search --help_parameters
 local-memory search --help_parameters --show_all
-
-# Context-aware help
-local-memory search --help_context
-
-# Workflow guidance
-local-memory search --help_workflow
 \`\`\`
 
 ### System Diagnostics
+
 \`\`\`bash
 # Run comprehensive diagnostics
 local-memory doctor
@@ -309,12 +352,10 @@ local-memory status
 
 # Validate installation
 local-memory validate
-
-# Check license status
-local-memory license status
 \`\`\`
 
 ### Troubleshooting
+
 \`\`\`bash
 # Check if daemon is running
 local-memory ps
@@ -328,30 +369,24 @@ local-memory kill_all
 
 ## Next Steps
 
-1. **Explore Advanced Features**: Check out the detailed CLI reference and REST API documentation
-2. **Set Up Integrations**: Configure MCP for your AI tools
-3. **Customize Configuration**: Adjust settings for your specific needs
-4. **Build Workflows**: Create scripts and automation around your knowledge management needs
-
-For detailed documentation on specific features, see:
-- CLI Reference - Complete command documentation
-- REST API - Full API specification
-- MCP Tools - Model Context Protocol integration
-- Configuration - Advanced configuration options`,
+1. **Learn the MCP Tools**: See MCP Tools Reference for all 16 tools
+2. **CLI Commands**: Check CLI Reference for complete command documentation
+3. **REST API**: See REST API for HTTP endpoint details
+4. **Configuration**: Review Configuration for advanced options`,
   codeExamples: [
     {
       id: 'quick-install',
       title: 'Quick Installation',
-      code: 'npm install -g local-memory-mcp\nlocal-memory setup',
+      code: 'npm install -g local-memory-mcp\nlocal-memory setup\nlocal-memory license activate LM-XXXX-XXXX-XXXX-XXXX-XXXX',
       language: 'bash',
-      description: 'Install and set up Local Memory in two commands'
+      description: 'Install, set up, and activate Local Memory'
     },
     {
-      id: 'first-memory',
-      title: 'Store Your First Memory',
-      code: 'local-memory remember "Machine learning transforms how we process data" --tags "ai,ml" --importance 8',
+      id: 'knowledge-workflow',
+      title: 'Knowledge Workflow',
+      code: 'bootstrap(mode="full")\nobserve(content="...", domain="research")\nreflect(mode="batch")\nevolve(operation="validate", entity_id="...", success=true)',
       language: 'bash',
-      description: 'Store a memory with tags and importance rating'
+      description: 'Complete workflow: bootstrap, observe, reflect, evolve'
     },
     {
       id: 'semantic-search',
