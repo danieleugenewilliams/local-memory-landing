@@ -11,16 +11,23 @@ interface DemoStep {
 
 const demoSteps: DemoStep[] = [
   {
-    label: "Store context",
+    label: "Bootstrap session",
     type: "command",
-    command: 'store_memory({ content: "Auth uses JWT with 24h expiry. Refresh tokens stored in httpOnly cookies. Rate limit: 100 req/min.", tags: ["auth", "security"], importance: 9 })',
-    output: `{
-  "id": "mem_7f3a9b",
-  "stored": true,
-  "importance": 9,
-  "tags": ["auth", "security"]
-}`,
-    delay: 2000,
+    command: 'bootstrap({ mode: "full", include_questions: true })',
+    output: `Memory Status: 47 memories across 3 domains
+
+Highlights:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+L3 Schemas (2):  Auth patterns, API design
+L2 Patterns (8): Rate limiting, caching, errors...
+L1 Learnings (15): Recent insights
+
+Pending Questions: 2
+• Token refresh edge cases?
+• Optimal Redis TTL for sessions?
+
+Context loaded. Ready for queries.`,
+    delay: 2500,
   },
   {
     label: "Session cleared",
@@ -37,56 +44,53 @@ const demoSteps: DemoStep[] = [
     label: "New task",
     type: "user",
     message: "I need to add rate limiting to the new /api/users endpoint. What patterns do we use?",
-    output: `I'll search your stored context for relevant patterns...`,
+    output: `I'll search your memory for relevant patterns...`,
     delay: 1200,
   },
   {
     label: "Search memory",
     type: "command",
-    command: 'search({ query: "rate limiting API security patterns", use_ai: true })',
+    command: 'search({ query: "rate limiting API security", use_ai: true })',
     output: `Found 3 memories (8ms):
 
-1. Auth uses JWT with 24h expiry. Refresh tokens stored in 
-   httpOnly cookies. Rate limit: 100 req/min.
-   Score: 0.94 | Tags: auth, security | Importance: 9
+1. Auth uses JWT with 24h expiry. Rate limit: 100 req/min.
+   Level: L2 Pattern | Weight: 7.2 | Tags: auth, security
+   → enables: Redis session caching
 
-2. API endpoints follow /api/v1/{resource} pattern. All routes 
-   require authentication middleware.
-   Score: 0.82 | Tags: api, architecture
+2. API endpoints follow /api/v1/{resource} pattern.
+   Level: L2 Pattern | Weight: 6.5 | Tags: api, architecture
+   → references: Auth middleware
 
 3. Redis used for session caching and rate limit counters.
-   Score: 0.78 | Tags: infrastructure, redis`,
+   Level: L2 Pattern | Weight: 6.8 | Tags: infrastructure`,
     delay: 2000,
   },
   {
-    label: "Find relationships",
+    label: "Observe learning",
     type: "command",
-    command: 'relationships({ memory_id: "mem_7f3a9b", type: "find_related", limit: 3 })',
-    output: `Related memories for "Auth uses JWT...":
-
-→ "Redis used for session caching and rate limit counters"
-  Relationship: enables | Strength: 0.87
-  
-→ "API endpoints follow /api/v1/{resource} pattern"
-  Relationship: references | Strength: 0.72
-
-→ "Error responses use {error, code, message} format"
-  Relationship: similar | Strength: 0.65`,
+    command: 'observe({ content: "Users endpoint: 100 req/min per API key via Redis", level: "learning", tags: ["api", "rate-limiting"] })',
+    output: `{
+  "id": "mem_8d4f2c",
+  "level": "L1",
+  "weight": 1.0,
+  "tags": ["api", "rate-limiting"],
+  "relationships": ["enables:mem_7f3a9b"]
+}`,
     delay: 2000,
   },
   {
-    label: "Ask question",
+    label: "Predict outcomes",
     type: "command",
-    command: 'analysis({ question: "How should I implement rate limiting for the users endpoint?" })',
-    output: `Based on 4 relevant memories:
+    command: 'predict({ given: "High traffic spike on /api/users", domain: "api" })',
+    output: `Based on 3 relevant patterns:
 
-• Apply 100 req/min limit (established auth pattern)
-• Use Redis for rate limit counters (infrastructure standard)  
-• Add X-RateLimit-* headers to responses
-• Return 429 status with retry-after on limit exceeded
-• Implement per-user tracking via JWT claims
+Predicted outcomes:
+• Rate limiter triggers at 100 req/min threshold
+• Redis counters increment, may hit memory pressure
+• 429 responses returned with Retry-After headers
+• User experience: brief delays, automatic retry
 
-Example middleware pattern available in mem_8c2d1e.`,
+Confidence: 0.87 | Sources: L2 patterns`,
     delay: 2500,
   },
 ];
@@ -175,7 +179,7 @@ const DemoNew = () => {
             Memory that survives /clear
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Store context. Wipe the session. Pick up right where you left off.
+            Bootstrap context. Observe learnings. Predict outcomes. Pick up right where you left off.
           </p>
         </div>
 
