@@ -3,10 +3,10 @@ import { DocumentationSection } from '@/types/documentation';
 export const gettingStartedContent: DocumentationSection = {
   id: 'getting-started',
   title: 'Getting Started',
-  description: 'Complete guide to installing and using Local Memory v1.2.1',
+  description: 'Complete guide to installing and using Local Memory v1.3.0',
   content: `# Getting Started with Local Memory
 
-Local Memory v1.2.1 is a knowledge management system that evolves raw observations into validated patterns and theoretical frameworks. This guide covers installation, basic usage, and key concepts.
+Local Memory v1.3.0 is a knowledge management system that evolves raw observations into validated patterns and theoretical frameworks. This guide covers installation, basic usage, and key concepts.
 
 ## What is Local Memory?
 

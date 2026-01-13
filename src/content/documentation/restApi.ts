@@ -3,10 +3,10 @@ import { DocumentationSection } from '@/types/documentation';
 export const restApiContent: DocumentationSection = {
   id: 'rest-api',
   title: 'REST API Reference',
-  description: 'Complete HTTP API for integrating Local Memory v1.2.1 with any application',
+  description: 'Complete HTTP API for integrating Local Memory v1.3.0 with any application',
   content: `# REST API Reference
 
-Local Memory v1.2.1 provides a comprehensive REST API accessible at \`http://localhost:3002/api/v1\`. Endpoints are organized into categories matching the knowledge lifecycle.
+Local Memory v1.3.0 provides a comprehensive REST API accessible at \`http://localhost:3002/api/v1\`. Endpoints are organized into categories matching the knowledge lifecycle.
 
 ## Overview
 

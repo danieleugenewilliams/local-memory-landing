@@ -20,39 +20,57 @@
     ],
     "key_features": [
       "Context Engineering - transform expertise into AI intelligence",
-      "11 comprehensive MCP (Model Context Protocol) tools",
+      "16 MCP (Model Context Protocol) tools in 5 categories",
       "27 REST API endpoints for universal integration",
+      "Four-level Knowledge Architecture (L0-L3)",
       "Cures context amnesia across all AI agents",
       "100% local storage - no cloud training exposure",
       "Cross-agent memory persistence",
       "Build cumulative AI intelligence assets",
       "Lightning-fast 10-57ms vector search",
       "AI-powered knowledge relationship discovery",
-      "Progressive learning and expertise tracking",
+      "Reasoning capabilities (predict, explain, counterfactual)",
       "Intelligent token optimization (up to 97.5% reduction)",
       "Single binary - zero dependencies"
     ],
     "mcp_tools": {
-      "total": 11,
-      "memory_management": [
-        "store_memory - Create new memories with metadata",
+      "total": 16,
+      "core_memory": [
+        "search - Multi-mode search (semantic, tags, date_range, hybrid)",
         "update_memory - Modify existing memory content/tags",
         "delete_memory - Remove memories by ID",
         "get_memory_by_id - Retrieve specific memory details"
       ],
-      "search_analysis": [
-        "search - Multi-mode search (semantic, tags, date_range, hybrid)",
-        "analysis - AI-powered Q&A, summarization, pattern analysis, temporal tracking"
+      "knowledge_intake": [
+        "observe - Record observations for knowledge processing (L0)",
+        "question - Track epistemic gaps and contradictions",
+        "bootstrap - Initialize session with knowledge context"
       ],
-      "organization": [
-        "relationships - Find, discover, create, and map memory connections",
-        "categories - Manage hierarchical category organization",
-        "domains - Knowledge domain management and statistics"
+      "knowledge_evolution": [
+        "reflect - Process observations into learnings (L0→L1)",
+        "evolve - Validate, promote, or decay knowledge",
+        "resolve - Handle contradictions and answer questions"
       ],
-      "administration": [
-        "stats - Session, domain, and category statistics",
-        "sessions - Session management and cross-session access"
+      "reasoning": [
+        "predict - Generate predictions from patterns and schemas",
+        "explain - Trace causal paths between states",
+        "counterfactual - Explore 'what if' alternative scenarios"
+      ],
+      "graph_status": [
+        "relate - Create typed relationships between memories",
+        "validate - Check knowledge graph integrity",
+        "status - Unified system status and statistics"
       ]
+    },
+    "knowledge_architecture": {
+      "description": "Four-level knowledge hierarchy from raw observations to theoretical frameworks",
+      "levels": {
+        "L0_observation": { "weight_range": "0.0-1.0", "characteristics": "Raw intake, ephemeral" },
+        "L1_learning": { "weight_range": "1.0-5.0", "characteristics": "Candidate insights, volatile" },
+        "L2_pattern": { "weight_range": "5.0-9.0", "characteristics": "Validated generalizations, durable" },
+        "L3_schema": { "weight_range": "9.0-10.0", "characteristics": "Theoretical frameworks, permanent" }
+      },
+      "workflow": "observe → reflect → evolve → validate"
     },
     "rest_api": {
       "total_endpoints": 27,
@@ -69,10 +87,13 @@
     },
     "cli_commands": {
       "core_memory": ["remember", "search", "get", "update", "forget", "list"],
-      "relationships": ["relate", "find_related", "discover", "map_graph"],
-      "analysis": ["analyze"],
-      "organization": ["categories", "domains", "sessions"],
-      "system": ["start", "stop", "status", "doctor", "validate", "install", "setup"],
+      "knowledge_intake": ["observe", "question", "bootstrap"],
+      "knowledge_evolution": ["reflect", "evolve", "resolve"],
+      "reasoning": ["predict", "explain", "counterfactual", "analyze"],
+      "graph_status": ["relate", "find_related", "discover", "map_graph", "validate_graph", "status"],
+      "organization": ["list_domains", "create_domain", "domain_stats", "list_categories", "create_category", "category_stats"],
+      "sessions": ["list_sessions", "session_stats"],
+      "system": ["start", "stop", "doctor", "validate", "install", "setup", "ps", "kill", "kill_all"],
       "license": ["license activate", "license status", "license validate"]
     },
     "use_cases": [
@@ -97,7 +118,7 @@
     },
     "technical_specs": {
       "protocols": [
-        "MCP (Model Context Protocol) - Native Integration (11 tools)",
+        "MCP (Model Context Protocol) - Native Integration (16 tools)",
         "REST API - Universal Compatibility (27 endpoints)"
       ],
       "storage": [
@@ -128,7 +149,7 @@
     "documentation": {
       "setup_guide": "https://localmemory.co/docs",
       "getting_started": "Quick start guide with 2-minute setup",
-      "mcp_reference": "11 MCP tools documentation",
+      "mcp_reference": "16 MCP tools documentation",
       "rest_api_reference": "27 REST API endpoints documentation",
       "cli_reference": "Complete CLI command reference",
       "configuration": "Advanced configuration options",
@@ -169,11 +190,13 @@
       "context as competitive advantage",
       "semantic memory search",
       "knowledge graph",
-      "temporal analysis",
-      "learning progression tracking"
+      "knowledge architecture",
+      "L0 L1 L2 L3 knowledge levels",
+      "AI reasoning",
+      "predict explain counterfactual"
     ],
     "testimonial": "Local memory MCP has really helped boost my productivity. But more importantly, I'm no longer just using AI—I'm engineering my expertise into it. Every day my AI gets smarter about MY specific project context.",
-    "last_updated": "2025-01-01",
-    "version": "v1.2.x"
+    "last_updated": "2026-01-12",
+    "version": "v1.3.0"
   }
 ]

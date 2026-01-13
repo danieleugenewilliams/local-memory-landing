@@ -3,10 +3,10 @@ import { DocumentationSection } from '@/types/documentation';
 export const cliReferenceContent: DocumentationSection = {
   id: 'cli-reference',
   title: 'CLI Reference Guide',
-  description: 'Complete command-line interface reference for Local Memory v1.2.1',
+  description: 'Complete command-line interface reference for Local Memory v1.3.0',
   content: `# CLI Reference Guide
 
-Local Memory v1.2.1 provides a comprehensive command-line interface for intelligent knowledge management. Commands are organized into categories matching the knowledge lifecycle.
+Local Memory v1.3.0 provides a comprehensive command-line interface for intelligent knowledge management. Commands are organized into categories matching the knowledge lifecycle.
 
 ## Overview
 

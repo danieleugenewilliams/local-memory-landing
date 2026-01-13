@@ -71,7 +71,7 @@ const ArchitectureNew = () => {
               System Architecture
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Local Memory v1.2.1 — Layered architecture with complete data isolation.
+              Local Memory v1.3.0 — Layered architecture with complete data isolation.
             </p>
           </div>
 

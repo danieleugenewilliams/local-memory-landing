@@ -1,9 +1,9 @@
 # Local Memory
-**The External Brain for AI Agents** - Version 1.1.6
+**The External Brain for AI Agents** - Version 1.3.0
 
 Transform your AI interactions with persistent, searchable memory that grows smarter over time. Local Memory provides vector search, semantic analysis, and intelligent categorization while keeping all your data completely private and local.
 
-## Experience the v1.1.6 Difference
+## Experience the v1.3.0 Difference
 
 - **Agent-Optimized**: Rated 9.2/10 for tool design following Anthropic's guidance
 - **Unified Intelligence**: 8 unified MCP tools with advanced AI capabilities

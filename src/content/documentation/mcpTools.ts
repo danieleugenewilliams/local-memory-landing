@@ -6,7 +6,7 @@ export const mcpToolsContent: DocumentationSection = {
   description: 'Complete Model Context Protocol tools for AI agent integration',
   content: `# MCP Tools Reference
 
-Local Memory v1.2.1 provides 16 MCP (Model Context Protocol) tools for intelligent knowledge management. Tools are organized into categories for knowledge intake, evolution, reasoning, and management.
+Local Memory v1.3.0 provides 16 MCP (Model Context Protocol) tools for intelligent knowledge management. Tools are organized into categories for knowledge intake, evolution, reasoning, and management.
 
 ## Overview
 
@@ -52,7 +52,7 @@ The following tools are deprecated, hidden from tool listings, but still functio
 | \`domains\` | \`domain\` parameter on \`observe\` | Pass domain directly |
 | \`categories\` | \`tags\` parameter on \`observe\` | Pass tags directly |
 
-*Deprecation timeline: v1.3.0 warnings -> v1.4.0 hidden (current) -> v1.5.0 logged -> v2.0.0 removed*
+*Deprecation timeline: v1.3.0 hidden (current) -> v1.4.0 logged -> v2.0.0 removed*
 
 ---
 
