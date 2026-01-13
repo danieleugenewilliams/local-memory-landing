@@ -11,6 +11,17 @@ interface DemoStep {
 
 const demoSteps: DemoStep[] = [
   {
+    label: "Session cleared",
+    type: "system",
+    message: "User types /clear — session context is wiped",
+    output: `Context cleared. Starting new session...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  New session started. Previous context forgotten.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+    delay: 1500,
+  },
+  {
     label: "Bootstrap session",
     type: "command",
     command: 'bootstrap({ mode: "full", include_questions: true })',
@@ -28,17 +39,6 @@ Pending Questions: 2
 
 Context loaded. Ready for queries.`,
     delay: 2500,
-  },
-  {
-    label: "Session cleared",
-    type: "system",
-    message: "User types /clear — session context is wiped",
-    output: `Context cleared. Starting new session...
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  New session started. Previous context forgotten.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    delay: 1500,
   },
   {
     label: "New task",
@@ -179,7 +179,7 @@ const DemoNew = () => {
             Memory that survives /clear
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Bootstrap context. Observe learnings. Predict outcomes. Pick up right where you left off.
+            Clear session. Bootstrap context. Pick up right where you left off.
           </p>
         </div>
 
