@@ -71,12 +71,28 @@ const BlogPost = () => {
     p: ({ children }) => {
       // Check if the paragraph contains only a video URL
       const childArray = Array.isArray(children) ? children : [children];
-      if (childArray.length === 1 && typeof childArray[0] === "string") {
-        const text = childArray[0].trim();
-        if (
-          text.match(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|loom\.com)/)
+      if (childArray.length === 1) {
+        let videoUrl: string | null = null;
+
+        // Check for plain text URL
+        if (typeof childArray[0] === "string") {
+          videoUrl = childArray[0].trim();
+        }
+        // Check for auto-linked URL (remark-gfm wraps bare URLs in <a> tags)
+        else if (
+          childArray[0] &&
+          typeof childArray[0] === "object" &&
+          "props" in childArray[0] &&
+          childArray[0].props?.href
         ) {
-          return <VideoEmbed url={text} />;
+          videoUrl = childArray[0].props.href;
+        }
+
+        if (
+          videoUrl &&
+          videoUrl.match(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|loom\.com)/)
+        ) {
+          return <VideoEmbed url={videoUrl} />;
         }
       }
       return <p className="text-foreground/90 leading-relaxed mb-4">{children}</p>;

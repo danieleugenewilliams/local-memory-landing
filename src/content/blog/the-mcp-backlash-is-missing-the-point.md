@@ -26,6 +26,8 @@ Stateless data fetching? Code execution works fine. Complex operations with stat
 
 **In short: The debate isn't "tools vs code execution." It's "what abstraction level does your domain require?"**
 
+![Tools vs Code Execution](/blog/images/mcp-backlash-tools-vs-code.png)
+
 ---
 
 ## Understanding the Current Debate
