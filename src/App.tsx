@@ -14,6 +14,8 @@ import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
 import PromptsNew from "./pages/PromptsNew";
 import ArchitectureNew from "./pages/ArchitectureNew";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import DynamicPageTitle from "./components/DynamicPageTitle";
 import { useEffect } from "react";
@@ -58,6 +60,8 @@ const App = () => (
             <Route path="/architecture" element={<ArchitectureNew />} />
             <Route path="/privacy" element={<PrivacyNew />} />
             <Route path="/terms" element={<TermsNew />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -11,7 +11,7 @@ const HeaderNew = () => {
     { label: "Features", href: "/features" },
     { label: "Docs", href: "/docs" },
     { label: "Architecture", href: "/architecture" },
-    { label: "Prompts", href: "/prompts" },
+    { label: "Blog", href: "/blog" },
   ];
 
   const handleNavClick = useCallback((path: string) => {
