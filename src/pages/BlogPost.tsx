@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import HeaderNew from "@/components/v2/HeaderNew";
@@ -7,12 +8,20 @@ import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 import VideoEmbed from "@/components/blog/VideoEmbed";
 import { getPostBySlug } from "@/content/blog/posts";
+import { trackBlogVisit, trackCTAClick } from "@/lib/analytics";
 import type { Components } from "react-markdown";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const post = slug ? getPostBySlug(slug) : undefined;
+
+  // Track blog post visit
+  useEffect(() => {
+    if (post && slug) {
+      trackBlogVisit('post', slug, post.title);
+    }
+  }, [slug, post]);
 
   if (!post) {
     return (
@@ -241,10 +250,18 @@ const BlogPost = () => {
             Give your AI persistent memory. Keep your data local.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link to="/payment" className="btn-primary text-base">
+            <Link
+              to="/payment"
+              className="btn-primary text-base"
+              onClick={() => trackCTAClick("blog-post", "Get Started", "/payment")}
+            >
               Get Started — $49
             </Link>
-            <Link to="/docs" className="btn-secondary text-base">
+            <Link
+              to="/docs"
+              className="btn-secondary text-base"
+              onClick={() => trackCTAClick("blog-post", "View documentation", "/docs")}
+            >
               View documentation
             </Link>
           </div>

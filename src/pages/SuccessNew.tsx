@@ -6,7 +6,7 @@ import FooterNew from "@/components/v2/FooterNew";
 import AgentSetupPrompts from "@/components/v2/AgentSetupPrompts";
 import CryptoJS from "crypto-js";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
-import { trackPurchase, trackDownloadInitiated, trackLicenseKeyGenerated } from "@/lib/analytics";
+import { trackPurchase, trackDownloadInitiated, trackLicenseKeyGenerated, trackCloseConvertLead } from "@/lib/analytics";
 
 const SuccessNew = () => {
   const [searchParams] = useSearchParams();
@@ -152,6 +152,7 @@ const SuccessNew = () => {
         setProductKey(generatedKey);
 
         trackPurchase(sessionId);
+        trackCloseConvertLead(sessionId);
         trackLicenseKeyGenerated(sessionId);
 
         localStorage.removeItem("payment_token");

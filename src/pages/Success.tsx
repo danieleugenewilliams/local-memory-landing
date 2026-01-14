@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import PostPurchaseAgentSetup from "@/components/PostPurchaseAgentSetup";
 import CryptoJS from "crypto-js";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
-import { trackPurchase, trackDownloadInitiated, trackLicenseKeyGenerated } from "@/lib/analytics";
+import { trackPurchase, trackDownloadInitiated, trackLicenseKeyGenerated, trackCloseConvertLead } from "@/lib/analytics";
 
 const SuccessPage = () => {
   const [searchParams] = useSearchParams();
@@ -271,8 +271,9 @@ const SuccessPage = () => {
         setDownloadUrls(allDownloadUrls);
         setProductKey(generatedKey);
         
-        // Track successful purchase and license key generation in GA4
+        // Track successful purchase, lead conversion, and license key generation in GA4
         trackPurchase(sessionId);
+        trackCloseConvertLead(sessionId);
         trackLicenseKeyGenerated(sessionId);
         
         // Clear payment tokens to prevent reuse

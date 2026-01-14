@@ -5,7 +5,7 @@ import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 import { handleStripePayment } from "@/lib/payment";
-import { trackAddToCart, trackCTAClick } from "@/lib/analytics";
+import { trackAddToCart, trackCTAClick, trackQualifyLead } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
@@ -57,6 +57,7 @@ const faqs = [
 const PaymentNew = () => {
   useEffect(() => {
     trackAddToCart();
+    trackQualifyLead();
   }, []);
 
   return (

@@ -7,18 +7,18 @@
 export interface EcommerceItem {
   item_id: string;
   item_name: string;
-  category: string;
+  item_category: string;  // GA4 requires "item_category" not "category"
   price: number;
   currency: string;
   quantity: number;
 }
 
 // Custom event types for Local Memory funnel
-export type LocalMemoryEvent = 
+export type LocalMemoryEvent =
   | 'page_view'
   | 'view_item'
   | 'add_to_cart'
-  | 'begin_checkout' 
+  | 'begin_checkout'
   | 'purchase'
   | 'download_initiated'
   | 'license_key_generated'
@@ -26,13 +26,16 @@ export type LocalMemoryEvent =
   | 'cta_click'
   | 'demo_interaction'
   | 'docs_visit'
-  | 'support_contact';
+  | 'support_contact'
+  | 'qualify_lead'
+  | 'close_convert_lead'
+  | 'blog_visit';
 
 // Product information for consistent tracking
 export const LOCAL_MEMORY_PRODUCT: EcommerceItem = {
   item_id: 'local-memory-v1',
   item_name: 'Local Memory - AI Agent Memory System',
-  category: 'AI Tools',
+  item_category: 'AI Tools',  // GA4 requires "item_category" not "category"
   price: 49, // Current launch price
   currency: 'USD',
   quantity: 1
@@ -123,7 +126,7 @@ export const trackViewItem = () => {
  * Track CTA button clicks throughout the funnel
  */
 export const trackCTAClick = (
-  ctaLocation: 'hero' | 'features' | 'demo' | 'pricing' | 'footer' | 'payment' | 'prompts',
+  ctaLocation: 'hero' | 'features' | 'demo' | 'pricing' | 'footer' | 'payment' | 'prompts' | 'blog-post' | 'final-cta' | 'value-prop',
   ctaText: string,
   destination: string
 ) => {
@@ -264,6 +267,51 @@ export const trackSupportContact = (
 };
 
 /**
+ * Track when a lead is qualified (user shows strong purchase intent)
+ * Fires when user reaches the payment page
+ */
+export const trackQualifyLead = () => {
+  trackEvent('qualify_lead', {
+    event_category: 'lead',
+    event_label: 'qualified',
+    currency: LOCAL_MEMORY_PRODUCT.currency,
+    value: LOCAL_MEMORY_PRODUCT.price,
+    items: [LOCAL_MEMORY_PRODUCT]
+  });
+};
+
+/**
+ * Track when a lead converts (completes purchase)
+ * Fires on successful payment
+ */
+export const trackCloseConvertLead = (sessionId: string) => {
+  trackEvent('close_convert_lead', {
+    event_category: 'lead',
+    event_label: 'converted',
+    session_id: sessionId,
+    currency: LOCAL_MEMORY_PRODUCT.currency,
+    value: LOCAL_MEMORY_PRODUCT.price,
+    items: [LOCAL_MEMORY_PRODUCT]
+  });
+};
+
+/**
+ * Track blog visits
+ */
+export const trackBlogVisit = (
+  section: 'index' | 'post',
+  postSlug?: string,
+  postTitle?: string
+) => {
+  trackEvent('blog_visit', {
+    blog_section: section,
+    post_slug: postSlug || null,
+    post_title: postTitle || null,
+    content_type: 'blog'
+  });
+};
+
+/**
  * Set up custom user properties
  */
 export const setUserProperties = (properties: Record<string, unknown>) => {
@@ -341,30 +389,49 @@ export const initializeAnalytics = () => {
 export const detectAndTrackFunnelStage = () => {
   const path = window.location.pathname;
   const searchParams = new URLSearchParams(window.location.search);
-  
+
   let funnelStage = 'awareness';
   const customData: Record<string, unknown> = {};
 
-  switch (path) {
-    case '/':
-      funnelStage = 'awareness';
-      break;
-    case '/payment':
-      funnelStage = 'consideration';
-      // trackAddToCart() is now handled in Payment page useEffect
-      break;
-    case '/success':
-      if (searchParams.get('session_id')) {
-        funnelStage = 'conversion';
-        // trackPurchase() is handled in Success page component
-      }
-      break;
-    case '/docs':
-      funnelStage = 'education';
-      trackDocsVisit('main', document.referrer);
-      break;
-    default:
-      funnelStage = 'exploration';
+  // Handle blog paths (e.g., /blog, /blog/some-post)
+  if (path === '/blog' || path.startsWith('/blog/')) {
+    funnelStage = 'education';
+    // Blog tracking is handled separately in Blog/BlogPost components
+  } else {
+    switch (path) {
+      case '/':
+        funnelStage = 'awareness';
+        break;
+      case '/payment':
+        funnelStage = 'consideration';
+        // trackAddToCart() and trackQualifyLead() are handled in Payment page useEffect
+        break;
+      case '/success':
+        if (searchParams.get('session_id')) {
+          funnelStage = 'conversion';
+          // trackPurchase() and trackCloseConvertLead() are handled in Success page component
+        }
+        break;
+      case '/docs':
+        funnelStage = 'education';
+        trackDocsVisit('main', document.referrer);
+        break;
+      case '/features':
+        funnelStage = 'consideration';
+        break;
+      case '/architecture':
+        funnelStage = 'education';
+        break;
+      case '/prompts':
+        funnelStage = 'education';
+        break;
+      case '/privacy':
+      case '/terms':
+        funnelStage = 'consideration';
+        break;
+      default:
+        funnelStage = 'exploration';
+    }
   }
 
   // Track the funnel stage

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { handleStripePayment } from "@/lib/payment";
-import { trackAddToCart } from "@/lib/analytics";
+import { trackAddToCart, trackQualifyLead } from "@/lib/analytics";
 import { useEffect } from "react";
 
 const PaymentPage = () => {
-  // Track add_to_cart event when user reaches payment page
+  // Track add_to_cart and qualify_lead events when user reaches payment page
   useEffect(() => {
     trackAddToCart();
+    trackQualifyLead();
   }, []);
 
   return (

@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import { useEffect } from "react";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getAllPosts } from "@/content/blog/posts";
+import { trackBlogVisit } from "@/lib/analytics";
 
 const Blog = () => {
   const posts = getAllPosts();
+
+  // Track blog index visit
+  useEffect(() => {
+    trackBlogVisit('index');
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
