@@ -110,9 +110,7 @@ As Gupta and Garg put it: “The context graph will be the single most valuable 
 
 The core question isn’t whether systems of record survive. They will. The question is whether the next trillion-dollar platforms are built by adding AI to existing data, or by capturing the decision traces that make data actionable.
 
-“The hypothesis: if you build the resolution mechanics right, the context graph emerges from use.”
-
-## Who’s Building It
+## Who's Building It
 
 The pattern emerging across the companies tackling this problem: sit in the execution path, capture what incumbents can’t.
 
