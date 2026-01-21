@@ -7,9 +7,7 @@ const CTANew = () => {
       <div className="container-tight text-center">
         {/* Headline */}
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-          Stop explaining.
-          <br />
-          Start building.
+          Ready to stop repeating yourself?
         </h2>
 
         {/* Subtext */}

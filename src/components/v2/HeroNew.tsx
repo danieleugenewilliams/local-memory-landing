@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { trackCTAClick } from "@/lib/analytics";
 import { useState, useEffect } from "react";
+import LogoBar from "./LogoBar";
 
 const HeroNew = () => {
   const [typedText, setTypedText] = useState("");
@@ -85,6 +86,11 @@ const HeroNew = () => {
           <p className="animate-in animate-in-delay-4 mt-8 text-sm text-muted-foreground">
             One-time purchase. Works with Claude, GPT, Gemini, Codex, and any MCP client.
           </p>
+
+          {/* Logo bar */}
+          <div className="animate-in animate-in-delay-5 mt-10">
+            <LogoBar />
+          </div>
         </div>
       </div>
     </section>
