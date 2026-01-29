@@ -72,19 +72,19 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session;
       console.log('Payment successful:', session.id);
-      
+
       // Store successful session for download access verification
       successfulSessions.set(session.id, {
         timestamp: Date.now(),
         customerEmail: session.customer_details?.email || undefined
       });
-      
+
       // Here you could also:
       // 1. Update your database with the purchase
       // 2. Send confirmation email
       // 3. Generate secure download links
       // 4. Add user to your system
-      
+
       break;
     }
     default:

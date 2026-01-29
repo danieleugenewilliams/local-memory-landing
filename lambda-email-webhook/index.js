@@ -8,6 +8,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const DOWNLOAD_SECRET = process.env.DOWNLOAD_SECRET;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@updates.localmemory.co';
+const GA4_MEASUREMENT_ID = process.env.GA4_MEASUREMENT_ID;
+const GA4_API_SECRET = process.env.GA4_API_SECRET;
 
 // License key generation (matches frontend logic)
 function generateProductKey(sessionId) {
@@ -84,6 +86,44 @@ function generateDownloadUrls() {
     'windows': `${baseUrl}local-memory-windows.exe`,
     'linux': `${baseUrl}local-memory-linux`
   };
+}
+
+// Send purchase event to GA4 via Measurement Protocol (server-side, 100% reliable)
+async function sendGA4PurchaseEvent(session) {
+  if (!GA4_MEASUREMENT_ID || !GA4_API_SECRET) {
+    console.warn('GA4 credentials not configured - skipping analytics');
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://www.google-analytics.com/mp/collect?measurement_id=${GA4_MEASUREMENT_ID}&api_secret=${GA4_API_SECRET}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: session.id,
+          events: [{
+            name: 'purchase',
+            params: {
+              transaction_id: session.id,
+              value: (session.amount_total || 4900) / 100,
+              currency: (session.currency || 'usd').toUpperCase(),
+              items: [{
+                item_id: 'local-memory-v1',
+                item_name: 'Local Memory - AI Agent Memory System',
+                item_category: 'AI Tools',
+                price: (session.amount_total || 4900) / 100,
+                quantity: 1
+              }]
+            }
+          }]
+        })
+      }
+    );
+    console.log('GA4 purchase event sent:', session.id, 'Status:', response.status);
+  } catch (error) {
+    console.error('GA4 tracking error:', error);
+  }
 }
 
 // Verify Stripe webhook signature
@@ -267,6 +307,9 @@ exports.handler = async (event) => {
       });
 
       console.log('Email sent successfully:', emailResult);
+
+      // Send GA4 purchase event (server-side tracking, 100% reliable)
+      await sendGA4PurchaseEvent(session);
 
       return {
         statusCode: 200,
