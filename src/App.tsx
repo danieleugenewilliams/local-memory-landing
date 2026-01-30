@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import IndexNew from "./pages/IndexNew";
+import IndexDifferentiated from "./pages/IndexDifferentiated";
 import FeaturesNew from "./pages/FeaturesNew";
 import NotFound from "./pages/NotFound";
 import PaymentNew from "./pages/PaymentNew";
@@ -51,7 +52,8 @@ const App = () => (
           <DynamicPageTitle />
           <AutoScrollToTop />
           <Routes>
-            <Route path="/" element={<IndexNew />} />
+            <Route path="/" element={<IndexDifferentiated />} />
+            <Route path="/v3" element={<IndexDifferentiated />} />
             <Route path="/features" element={<FeaturesNew />} />
             <Route path="/payment" element={<PaymentNew />} />
             <Route path="/success" element={<SuccessNew />} />
