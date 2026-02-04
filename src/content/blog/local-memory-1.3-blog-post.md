@@ -15,8 +15,6 @@ The 1.3 series is my attempt to solve that problem. Over the last several releas
 
 Here's the story of how we got here.
 
----
-
 ## v1.3.0: Teaching AI to Think About What It Knows
 
 **Released: January 10, 2026**
@@ -65,8 +63,6 @@ The other big addition in v1.3.0 is a suite of reasoning tools. These go beyond 
 
 These tools let AI agents do something they couldn't before: reason about their own knowledge, not just retrieve it.
 
----
-
 ## v1.3.1: The Performance Patch
 
 **Released: January 23, 2026**
@@ -80,8 +76,6 @@ In v1.3.0, that filtering happened *after* the vector search completed. We'd sea
 The fix was obvious in retrospect: push the domain filter into the vector search itself. For Qdrant users, we now include the domain in the query's `must` clause. For SQLite users, we filter during the search loop rather than after.
 
 The result is faster searches with less data transfer, especially noticeable on large memory stores. If you've been using domain filtering heavily, v1.3.1 should feel noticeably snappier.
-
----
 
 ## v1.3.2: The Bug That Taught Me About Windows
 
@@ -131,8 +125,6 @@ Neil's bug report led to three fixes that make Local Memory more robust for ever
 
 If you've been experiencing mysterious hangs or daemon issues, especially on Windows or with large collections, v1.3.2 should resolve them.
 
----
-
 ## Upgrading
 
 All 1.3.x releases are backwards compatible. To upgrade:
@@ -150,8 +142,6 @@ local-memory start
 local-memory status
 ```
 
----
-
 ## What's Coming
 
 The 1.3 series laid the foundation for intelligent knowledge management. But we're just getting started.
@@ -159,8 +149,6 @@ The 1.3 series laid the foundation for intelligent knowledge management. But we'
 I'm working on enterprise data pipelines: scheduled collectors for Slack, Discord, email, and other sources where knowledge accumulates. I'm exploring cross-agent knowledge sharing, so all your AI agents can draw from the same memory. And I'm experimenting with using L3 schemas for automated decision-making.
 
 The goal hasn't changed since I started: give AI agents the persistent memory they need to be genuinely useful over time. The 1.3 series was a big step toward that goal. There's more to come.
-
----
 
 ## Thank You
 
