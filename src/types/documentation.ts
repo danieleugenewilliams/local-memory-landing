@@ -47,5 +47,5 @@ export interface SearchResult {
 export interface DocumentationConfig {
   sections: DocumentationSection[];
   navigation: NavigationItem[];
-  searchIndex?: any;
+  searchIndex?: Record<string, unknown>;
 }

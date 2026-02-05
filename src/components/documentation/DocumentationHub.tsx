@@ -14,7 +14,7 @@ interface DocumentationHubProps {
 const DocumentationHub: React.FC<DocumentationHubProps> = ({ className = "" }) => {
   const [currentSection, setCurrentSection] = useState<string>('getting-started');
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<{ id: string; title: string; content: string }[]>([]);
   const [showSearch, setShowSearch] = useState(false);
 
   // Handle section changes and scroll tracking

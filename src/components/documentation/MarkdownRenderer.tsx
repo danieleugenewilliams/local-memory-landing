@@ -123,7 +123,7 @@ const parseInlineFormatting = (text: string): React.ReactNode => {
     }
 
     // Find the next special character
-    const nextSpecial = remaining.search(/[`*\[]/);
+    const nextSpecial = remaining.search(/[`*[]/)
     if (nextSpecial === -1) {
       // No more special characters, add the rest as text
       parts.push(remaining);
