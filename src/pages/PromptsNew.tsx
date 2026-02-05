@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, Copy, ChevronDown, ArrowRight } from "lucide-react";
+import { Check, Copy, ArrowRight, Plug, Globe, Terminal } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 import AgentSetupPrompts from "@/components/v2/AgentSetupPrompts";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const PromptsNew = () => {
   const [copied, setCopied] = useState<string | null>(null);
-  const [openInstall, setOpenInstall] = useState<{ [key: string]: boolean }>({});
   const [showStickyBar, setShowStickyBar] = useState(false);
 
-  // Show sticky CTA bar after scrolling past the hero section
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -29,275 +28,208 @@ const PromptsNew = () => {
     setTimeout(() => setCopied(null), 2000);
   };
 
+  // System prompts for each integration method
   const prompts = {
-    minimal: `## Local Memory
+    mcp: `## Local Memory
 
-Use local-memory to store and retrieve context across sessions. Store architectural decisions, solutions, and learnings. Search semantically before answering to ensure consistency with past work.
+Persistent knowledge system. Use proactively to build expertise across sessions.
 
-Fallback: REST API at http://localhost:3002/api/v1 if MCP unavailable.`,
+### Getting Started
+Call \`bootstrap()\` at session start to load context and pending questions.
 
-    standard: `## Local Memory
+### Core Workflow
+1. **Observe** - Record insights as they emerge
+   \`observe({ content: "...", level: "learning", tags: [...] })\`
 
-Persistent knowledge system for maintaining context across sessions.
+2. **Search** - Check existing knowledge before answering
+   \`search({ query: "...", use_ai: true, session_filter_mode: "all" })\`
 
-### Operations
-- \`store_memory\`: Save decisions, solutions, learnings (importance 1-10, tags, domain)
-- \`search\`: Find relevant context semantically before answering
-- \`analysis\`: Ask questions against stored knowledge
-- \`relationships\`: Map connections between memories
+3. **Reflect** - Process observations into learnings
+   \`reflect({ mode: "batch" })\`
+
+4. **Evolve** - Validate and promote knowledge
+   \`evolve({ operation: "validate", entity_id: "...", success: true })\`
+
+### Memory Levels (World Memory)
+- **L0 Observation** (weight 0-1): Raw intake, ephemeral
+- **L1 Learning** (weight 1-5): Candidate insights, volatile
+- **L2 Pattern** (weight 5-9): Validated generalizations, durable
+- **L3 Schema** (weight 9-10): Theoretical frameworks, permanent
 
 ### When to Store
 - Architecture decisions and rationale
 - Bug fixes and root causes
-- Configuration and setup details
 - Patterns that worked (or didn't)
-
-### Workflow
-1. Search for relevant memories before providing solutions
-2. Reference past decisions for consistency
-3. Store new insights worth preserving`,
-
-    comprehensive: `## Local Memory
-
-Persistent knowledge system. Use proactively to build expertise across sessions.
-
-To start local-memory, use local-memory start
-This will start the daemon and REST API on port 3002.
-
-Proactively use local-memory to store, retrieve, update, and analyze memories to maintain context and build expertise over time. Store key insights including lessons learned, architectural decisions, development strategies, and project outcomes. Use semantic search and relationship mapping to find relevant memories across all projects and sessions.
-
-If you are unable to connect directly to the local-memory MCP server, try using jsonrpc directly to the binary (local-memory --mcp).
-
-If you cannot connect to neither the MCP server nor via jsonrpc, try the REST API at http://localhost:3002/api/v1.
-
-### Storage Strategy
-Store when encountering:
-- **Decisions**: Architecture, design patterns, technology choices
-- **Solutions**: Bug fixes, workarounds, implementations
-- **Learnings**: What worked, what didn't, reasoning
-- **Context**: Requirements, constraints, preferences
-
-\`\`\`javascript
-store_memory({
-  content: "Chose PostgreSQL over MongoDB — need ACID compliance and complex joins",
-  importance: 9,
-  tags: ["architecture", "database", "decision"],
-  domain: "project-x"
-})
-\`\`\`
-
-### Retrieval Pattern
-Before answering:
-
-\`\`\`javascript
-// 1. Search for context
-search({
-  query: "database architecture",
-  search_type: "semantic",
-  use_ai: true,
-  session_filter_mode: "all"
-})
-
-// 2. Check relationships
-relationships({
-  relationship_type: "find_related",
-  memory_id: "relevant-id"
-})
-
-// 3. Analyze patterns
-analysis({
-  analysis_type: "question",
-  question: "What database patterns have worked?",
-  session_filter_mode: "all"
-})
-\`\`\`
+- User preferences and context
 
 ### Best Practices
 - Be specific: store context, not just outcomes
 - Tag consistently for retrieval
-- Rate importance: 7+ for significant items
-- Search first: check existing knowledge before answering
-- Cross-session: use \`session_filter_mode: "all"\``,
+- Use \`session_filter_mode: "all"\` for cross-session search
+- Check for contradictions with \`question()\`
 
-    reference: `## Local Memory Quick Reference
+### Fallback
+If MCP unavailable, use JSON-RPC directly:
+\`echo '{"jsonrpc":"2.0","method":"observe","params":{...},"id":1}' | local-memory --mcp\`
 
-Store: \`store_memory(content, importance, tags[], domain)\`
-Search: \`search(query, use_ai: true, session_filter_mode: "all")\`
-Ask: \`analysis(analysis_type: "question", question)\`
-Related: \`relationships(relationship_type: "find_related", memory_id)\`
+Or REST API at http://localhost:3002/api/v1`,
 
-Always search before answering. Store decisions and learnings.`
+    rest: `## Local Memory (REST API)
+
+Persistent knowledge system via HTTP. Base URL: http://localhost:3002/api/v1
+
+### Service Management
+Ensure the daemon is running:
+\`\`\`bash
+local-memory start
+curl http://localhost:3002/api/v1/health
+\`\`\`
+
+### Core Operations
+
+**Store a memory:**
+\`\`\`bash
+curl -X POST http://localhost:3002/api/v1/memories \\
+  -H "Content-Type: application/json" \\
+  -d '{"content": "Your insight here", "importance": 8, "tags": ["tag1", "tag2"]}'
+\`\`\`
+
+**Search with AI:**
+\`\`\`bash
+curl "http://localhost:3002/api/v1/memories/search?query=your+query&use_ai=true"
+\`\`\`
+
+**Record observation (World Memory):**
+\`\`\`bash
+curl -X POST http://localhost:3002/api/v1/observe \\
+  -H "Content-Type: application/json" \\
+  -d '{"content": "...", "level": "learning", "tags": ["..."]}'
+\`\`\`
+
+### Token Optimization
+Use \`response_format\` parameter to reduce token usage:
+- \`detailed\` - Full response (~100%)
+- \`concise\` - Essential fields (~30%)
+- \`summary\` - Truncated content (~50%)
+- \`ids_only\` - Minimal (~5%)
+
+Example: \`?response_format=concise\`
+
+### Key Endpoints
+- POST /memories - Store memory
+- GET /memories/search - Search with semantic + keyword
+- POST /observe - Record observation (L0-L3)
+- POST /reflect - Process observations into learnings
+- POST /evolve - Validate/promote/decay knowledge
+- POST /bootstrap - Initialize session context
+- GET /status - System health and stats
+
+### Workflow
+1. Call /bootstrap at session start
+2. Search before answering: GET /memories/search
+3. Store insights: POST /memories or POST /observe
+4. Periodically: POST /reflect to process observations`,
+
+    cli: `## Local Memory (CLI)
+
+Persistent knowledge system via command line. Use for automation, scripts, and terminal workflows.
+
+### Service Management
+\`\`\`bash
+local-memory start   # Start daemon + REST API on port 3002
+local-memory stop    # Stop daemon
+local-memory status  # Check health
+\`\`\`
+
+### Core Operations
+
+**Store a memory:**
+\`\`\`bash
+local-memory observe "PostgreSQL uses MVCC for concurrency" --level learning --tags database,postgres
+\`\`\`
+
+**Search:**
+\`\`\`bash
+local-memory search "database patterns" --use_ai --limit 5
+\`\`\`
+
+**Record observation (World Memory):**
+\`\`\`bash
+local-memory observe "API rate limits are 100/min" --level learning --tags api,limits
+\`\`\`
+
+**Process observations into learnings:**
+\`\`\`bash
+local-memory reflect --mode batch
+\`\`\`
+
+**Validate/promote knowledge:**
+\`\`\`bash
+local-memory evolve --operation validate --entity_id UUID --success
+\`\`\`
+
+### Output Formatting
+Use \`--response_format\` to control output:
+- \`detailed\` - Full output
+- \`concise\` - Essential fields only
+- \`ids_only\` - Just IDs
+- \`json\` - Machine-readable JSON
+
+Example: \`local-memory search "api" --response_format json | jq '.results[].content'\`
+
+### Automation Examples
+
+**Capture git context:**
+\`\`\`bash
+git log --oneline -5 | xargs -I {} local-memory observe "{}" --level observation --tags git,history
+\`\`\`
+
+**Git hook (post-commit):**
+\`\`\`bash
+#!/bin/bash
+local-memory observe "Committed: $(git log -1 --oneline)" --level observation --tags git
+\`\`\`
+
+**Daily reflection cron:**
+\`\`\`bash
+0 18 * * * local-memory reflect --mode batch
+\`\`\`
+
+### Workflow
+1. \`local-memory start\` at system startup
+2. \`local-memory search\` before making decisions
+3. \`local-memory observe\` to store insights
+4. \`local-memory reflect\` periodically to process knowledge`
   };
 
-  const commands = {
-    gather: `## /gather
+  // Tool/endpoint references for each method
+  const mcpTools = [
+    { category: "Core Memory", color: "brand-blue", count: 4, tools: ["search", "update_memory", "delete_memory", "get_memory_by_id"] },
+    { category: "Knowledge Intake", color: "brand-green", count: 3, tools: ["observe", "question", "bootstrap"] },
+    { category: "Evolution", color: "brand-purple", count: 3, tools: ["reflect", "evolve", "resolve"] },
+    { category: "Reasoning", color: "brand-orange", count: 3, tools: ["predict", "explain", "counterfactual"] },
+    { category: "Graph & Status", color: "brand-pink", count: 3, tools: ["relate", "validate", "status"] },
+  ];
 
-Generate 5-7 numbered questions:
-- Core requirements
-- Constraints/limitations
-- Success criteria
-- Context/background
-- Edge cases
+  const restEndpoints = [
+    { category: "Memory", color: "brand-green", endpoints: ["POST /memories", "GET /memories/search", "GET /memories/{id}", "PUT /memories/{id}", "DELETE /memories/{id}"] },
+    { category: "Knowledge", color: "brand-purple", endpoints: ["POST /observe", "POST /reflect", "POST /evolve", "POST /bootstrap"] },
+    { category: "Reasoning", color: "brand-orange", endpoints: ["POST /predict", "POST /explain", "POST /counterfactual"] },
+    { category: "System", color: "brand-blue", endpoints: ["GET /health", "GET /status", "POST /validate"] },
+  ];
 
-Track responses → refine → transition when complete
-
-**Output:**
-\`\`\`
-I'll gather the necessary information.
-
-**Information Gathering**
-1. [Q1 - core]
-2. [Q2 - constraints/context]
-3. [Q3 - success]
-4. [Q4 - details]
-5. [Q5 - edge cases]
-
-Answer all at once or individually.
-\`\`\``,
-
-    reframe: `## /reframe
-
-1. Synthesize understanding
-2. Structure: situation → objective → requirements → constraints → success → assumptions
-3. Request confirmation
-4. Wait—don't proceed until confirmed
-
-**Output:**
-\`\`\`
-## My Understanding
-
-[2-3 sentences: situation/context]
-
-**Core Objective:** [what needs achieving]
-
-**Key Requirements:**
-- [R1]
-- [R2]
-- [R3]
-
-**Constraints/Limitations:**
-- [C1]
-- [C2]
-
-**Success:** [desired end state]
-
-**Assumptions:**
-- [A1]
-- [A2]
-
-Correct? Proceed with [next action]?
-\`\`\``,
-
-    truth: `## /truth
-
-**Activate Truth-First + No-Fluff**
-
-**Principles:**
-1. Truth > all
-2. Evidence-based
-3. Zero padding
-4. Quantified precision
-5. Transparent uncertainty
-
-**Rules:**
-- Truth > brevity
-- <80% confidence → "Unknown" + data needs
-- Cite non-obvious/post-2010; mark opinions
-- Direct answer ≤150 words or ≤5 bullets
-- No preambles/flattery/restating
-- Quantify everything
-- Separate Fact/Inference/Speculation
-
-**Schema:**
-\`\`\`
-[DIRECT ANSWER - ≤150 words or ≤5 bullets]
-
-**Facts:** [verifiable, cited]
-**Inferences:** [logical conclusions]
-**Speculation:** [marked clearly]
-**Confidence:** X% [reasoning]
-
-**Trade-offs:**
-- Pro: [advantage]
-- Con: [disadvantage]
-
-**Failure Modes:**
-- [what could fail]
-- [edge cases]
-
-**Data Gaps:** [if <80%]
-- Missing: [needed info]
-- Source: [where to find]
-\`\`\``,
-
-    memorize: `## /memorize
-
-1. Analyze conversation: core understanding, key decisions, points, evolution, specs/artifacts, user context, related systems, constraints
-2. Search local-memory: semantic search, similarity >0.7 = related
-3. Determine: UPDATE if related + same topic | CREATE NEW otherwise
-4. Tag: \`topic_context_year\` format, lowercase + underscores
-5. Structure: Core Understanding, Conversation Evolution, Key Decisions, Specifications/Artifacts, Important Points, User Context, Related Systems, Context & Constraints
-6. Save: \`store_memory\` (new) or \`update_memory\` (existing), importance 7-9, tags array, domain
-7. Return: UUID, tag, action
-
-**Output:**
-\`\`\`
-## Memory Saved
-
-**Retrieval:**
-- **Memory ID:** [UUID]
-- **Tag:** [tag]
-- **Action:** [Created new | Updated [uuid]]
-
-Use \`/recall [id]\` or \`/recall [tag]\` to restore.
-\`\`\``,
-
-    recall: `## /recall
-
-1. Accept: UUID, tag, or query
-2. Search: UUID → \`get_memory_by_id\` | tag/text → \`search\` (use_ai=true, limit=5)
-3. Retrieve content + metadata
-4. Reconstruct: parse all sections
-5. Present with metadata
-6. Load into active conversation
-7. Ready to continue
-
-**Output:**
-\`\`\`
-## Memory Recalled
-
-**Context Restored From:** [identifier]
-**Memory ID:** [UUID]
-**Original Date:** [date]
-
-**Core Understanding:** [main context]
-**Conversation Evolution:** [changes]
-**Key Decisions:** [decision + rationale]
-**Specifications/Artifacts:** [detailed outputs, specs]
-**Important Points:** [critical elements]
-**User Context:** [why matters, broader work, use case]
-**Related Systems:** [integrations, dependencies]
-**Context & Constraints:** [boundaries]
-
----
-**Status:** Complete context loaded. Operating with full understanding.
-Ready to continue. What would you like to work on?
-\`\`\`
-
-**If not found:**
-\`\`\`
-## Memory Not Found
-
-No memory matching: [identifier]
-Try different keywords or check ID/tag.
-\`\`\``
-  };
+  const cliCommands = [
+    { category: "Service", color: "terminal-amber", commands: ["start", "stop", "status"] },
+    { category: "Memory", color: "brand-green", commands: ["search", "get", "update", "forget", "list"] },
+    { category: "Knowledge", color: "brand-purple", commands: ["observe", "bootstrap", "reflect", "evolve", "question"] },
+    { category: "Graph", color: "brand-pink", commands: ["relate"] },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       <HeaderNew />
 
-      {/* Sticky CTA Bar - appears on scroll */}
+      {/* Sticky CTA Bar */}
       <div
         className={`fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-card/95 backdrop-blur-sm transition-transform duration-300 ${
           showStickyBar ? "translate-y-0" : "translate-y-full"
@@ -327,180 +259,126 @@ Try different keywords or check ID/tag.
         <div className="container-wide relative">
           <div className="flex flex-col items-center justify-center py-16 text-center md:py-24">
             <h1 className="max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
-              Agent integration prompts
+              Integration prompts
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-              Copy these instructions into your agent's configuration to enable persistent memory.
-              Works with CLAUDE.md, .cursorrules, AGENTS.md, or any system prompt.
+              Copy the system prompt for your integration method. Works with any AI agent that supports MCP, HTTP, or shell commands.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Prompts Grid */}
+      {/* Main Tabbed Content */}
       <section className="section-sm border-t border-border">
         <div className="container-wide">
-          <div className="grid gap-8 lg:grid-cols-2">
-            
-            {/* Minimal */}
-            <div className="rounded-xl border border-border bg-card">
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div>
-                  <h3 className="font-semibold">Minimal</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    3 lines. Get started fast.
-                  </p>
-                </div>
-                <button
-                  onClick={() => copyToClipboard(prompts.minimal, "minimal")}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
-                >
-                  {copied === "minimal" ? (
-                    <>
-                      <Check size={14} className="text-[hsl(var(--brand-green))]" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={14} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
-              <div className="p-6">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {prompts.minimal}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <Tabs defaultValue="mcp" className="w-full">
+            <TabsList className="mb-8 grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+              <TabsTrigger value="mcp" className="flex items-center gap-2">
+                <Plug size={16} />
+                <span>MCP</span>
+              </TabsTrigger>
+              <TabsTrigger value="rest" className="flex items-center gap-2">
+                <Globe size={16} />
+                <span>REST</span>
+              </TabsTrigger>
+              <TabsTrigger value="cli" className="flex items-center gap-2">
+                <Terminal size={16} />
+                <span>CLI</span>
+              </TabsTrigger>
+            </TabsList>
 
-            {/* Standard */}
-            <div className="rounded-xl border border-border bg-card">
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div>
-                  <h3 className="font-semibold">Standard</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Core operations and workflow guidance.
-                  </p>
+            {/* MCP Tab */}
+            <TabsContent value="mcp" className="space-y-8">
+              {/* When to use */}
+              <div className="rounded-xl border border-[hsl(var(--brand-blue))]/30 bg-[hsl(var(--brand-blue))]/5 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="rounded bg-[hsl(var(--brand-blue))]/20 px-2 py-1 font-mono text-xs font-medium text-[hsl(var(--brand-blue))]">
+                    MCP
+                  </span>
+                  <h3 className="font-semibold">Model Context Protocol</h3>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(prompts.standard, "standard")}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
-                >
-                  {copied === "standard" ? (
-                    <>
-                      <Check size={14} className="text-[hsl(var(--brand-green))]" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={14} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
+                <p className="text-sm text-muted-foreground">
+                  <strong>Use when:</strong> Claude Desktop, Claude Code, Cursor, Windsurf, or any MCP-enabled client.
+                  Tools appear automatically — no HTTP overhead, native integration.
+                </p>
               </div>
-              <div className="p-6">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {prompts.standard}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Comprehensive - Full Width */}
-            <div className="rounded-xl border border-border bg-card lg:col-span-2">
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div>
-                  <h3 className="font-semibold">Comprehensive</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Full implementation with code examples and advanced patterns.
-                  </p>
+              {/* System Prompt */}
+              <div className="rounded-xl border border-border bg-card">
+                <div className="flex items-center justify-between border-b border-border px-6 py-4">
+                  <div>
+                    <h3 className="font-semibold">System Prompt</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Add to CLAUDE.md, .cursorrules, or your agent's system prompt
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(prompts.mcp, "mcp-prompt")}
+                    className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
+                  >
+                    {copied === "mcp-prompt" ? (
+                      <>
+                        <Check size={14} className="text-[hsl(var(--brand-green))]" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={14} />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(prompts.comprehensive, "comprehensive")}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
-                >
-                  {copied === "comprehensive" ? (
-                    <>
-                      <Check size={14} className="text-[hsl(var(--brand-green))]" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={14} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
-              </div>
-              <div className="p-6">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
+                <div className="p-6">
+                  <div className="terminal">
+                    <div className="terminal-header">
+                      <div className="flex gap-2">
+                        <div className="terminal-dot terminal-dot-red" />
+                        <div className="terminal-dot terminal-dot-yellow" />
+                        <div className="terminal-dot terminal-dot-green" />
+                      </div>
+                      <span className="ml-4 font-mono text-xs text-muted-foreground">CLAUDE.md</span>
+                    </div>
+                    <div className="terminal-body max-h-[500px] overflow-auto">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                        {prompts.mcp}
+                      </pre>
                     </div>
                   </div>
-                  <div className="terminal-body max-h-96 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {prompts.comprehensive}
-                    </pre>
-                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Quick Reference */}
-            <div className="rounded-xl border border-border bg-card lg:col-span-2">
-              <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <div>
-                  <h3 className="font-semibold">Quick Reference</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Cheat sheet for experienced users.
-                  </p>
+              {/* MCP Tools Grid */}
+              <div>
+                <h3 className="mb-4 text-lg font-semibold">16 MCP Tools</h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                  {mcpTools.map((group) => (
+                    <div
+                      key={group.category}
+                      className={`rounded-xl border border-[hsl(var(--${group.color}))]/30 bg-[hsl(var(--${group.color}))]/5 p-4`}
+                    >
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className={`flex h-6 w-6 items-center justify-center rounded bg-[hsl(var(--${group.color}))]/20 font-mono text-xs font-bold text-[hsl(var(--${group.color}))]`}>
+                          {group.count}
+                        </span>
+                        <h4 className="text-sm font-semibold">{group.category}</h4>
+                      </div>
+                      <div className="space-y-1 font-mono text-xs text-muted-foreground">
+                        {group.tools.map((tool) => (
+                          <div key={tool}>{tool}</div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <button
-                  onClick={() => copyToClipboard(prompts.reference, "reference")}
-                  className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
-                >
-                  {copied === "reference" ? (
-                    <>
-                      <Check size={14} className="text-[hsl(var(--brand-green))]" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy size={14} />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
               </div>
-              <div className="p-6">
+
+              {/* JSON-RPC Fallback */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <h3 className="mb-3 font-semibold">JSON-RPC Fallback</h3>
+                <p className="mb-4 text-sm text-muted-foreground">
+                  If MCP connection fails, call the binary directly via stdin:
+                </p>
                 <div className="terminal">
                   <div className="terminal-header">
                     <div className="flex gap-2">
@@ -508,20 +386,251 @@ Try different keywords or check ID/tag.
                       <div className="terminal-dot terminal-dot-yellow" />
                       <div className="terminal-dot terminal-dot-green" />
                     </div>
+                    <span className="ml-4 font-mono text-xs text-muted-foreground">bash</span>
                   </div>
                   <div className="terminal-body">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {prompts.reference}
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-[hsl(var(--terminal-green))]">
+{`echo '{"jsonrpc":"2.0","method":"observe","params":{"content":"My insight","level":"learning"},"id":1}' | local-memory --mcp`}
                     </pre>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </TabsContent>
+
+            {/* REST Tab */}
+            <TabsContent value="rest" className="space-y-8">
+              {/* When to use */}
+              <div className="rounded-xl border border-[hsl(var(--brand-green))]/30 bg-[hsl(var(--brand-green))]/5 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="rounded bg-[hsl(var(--brand-green))]/20 px-2 py-1 font-mono text-xs font-medium text-[hsl(var(--brand-green))]">
+                    REST
+                  </span>
+                  <h3 className="font-semibold">HTTP API</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  <strong>Use when:</strong> GPT, Gemini, or agents without MCP support. Custom applications, CI/CD pipelines,
+                  web services, or any HTTP-capable client.
+                </p>
+              </div>
+
+              {/* System Prompt */}
+              <div className="rounded-xl border border-border bg-card">
+                <div className="flex items-center justify-between border-b border-border px-6 py-4">
+                  <div>
+                    <h3 className="font-semibold">System Prompt</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      For agents that can make HTTP requests (GPT with actions, custom agents)
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(prompts.rest, "rest-prompt")}
+                    className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
+                  >
+                    {copied === "rest-prompt" ? (
+                      <>
+                        <Check size={14} className="text-[hsl(var(--brand-green))]" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={14} />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="p-6">
+                  <div className="terminal">
+                    <div className="terminal-header">
+                      <div className="flex gap-2">
+                        <div className="terminal-dot terminal-dot-red" />
+                        <div className="terminal-dot terminal-dot-yellow" />
+                        <div className="terminal-dot terminal-dot-green" />
+                      </div>
+                      <span className="ml-4 font-mono text-xs text-muted-foreground">system-prompt.md</span>
+                    </div>
+                    <div className="terminal-body max-h-[500px] overflow-auto">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                        {prompts.rest}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* REST Endpoints Grid */}
+              <div>
+                <h3 className="mb-4 text-lg font-semibold">Key Endpoints</h3>
+                <p className="mb-4 text-sm text-muted-foreground">Base URL: <code className="rounded bg-secondary px-1.5 py-0.5">http://localhost:3002/api/v1</code></p>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {restEndpoints.map((group) => (
+                    <div
+                      key={group.category}
+                      className={`rounded-xl border border-[hsl(var(--${group.color}))]/30 bg-[hsl(var(--${group.color}))]/5 p-4`}
+                    >
+                      <h4 className="mb-3 text-sm font-semibold">{group.category}</h4>
+                      <div className="space-y-1 font-mono text-xs text-muted-foreground">
+                        {group.endpoints.map((endpoint) => (
+                          <div key={endpoint}>{endpoint}</div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Code Examples */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <h3 className="mb-4 font-semibold">Quick Examples</h3>
+                <div className="space-y-4">
+                  <div className="terminal">
+                    <div className="terminal-header">
+                      <div className="flex gap-2">
+                        <div className="terminal-dot terminal-dot-red" />
+                        <div className="terminal-dot terminal-dot-yellow" />
+                        <div className="terminal-dot terminal-dot-green" />
+                      </div>
+                      <span className="ml-4 font-mono text-xs text-muted-foreground">Python</span>
+                    </div>
+                    <div className="terminal-body">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-[hsl(var(--terminal-green))]">
+{`import requests
+
+# Store a memory
+requests.post("http://localhost:3002/api/v1/memories", json={
+    "content": "PostgreSQL MVCC provides snapshot isolation",
+    "importance": 8,
+    "tags": ["database", "postgres"]
+})
+
+# Search with AI
+results = requests.get("http://localhost:3002/api/v1/memories/search", params={
+    "query": "database concurrency",
+    "use_ai": True,
+    "response_format": "concise"
+}).json()`}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* CLI Tab */}
+            <TabsContent value="cli" className="space-y-8">
+              {/* When to use */}
+              <div className="rounded-xl border border-[hsl(var(--terminal-amber))]/30 bg-[hsl(var(--terminal-amber))]/5 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="rounded bg-[hsl(var(--terminal-amber))]/20 px-2 py-1 font-mono text-xs font-medium text-[hsl(var(--terminal-amber))]">
+                    CLI
+                  </span>
+                  <h3 className="font-semibold">Command Line</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  <strong>Use when:</strong> Shell scripts, automation, git hooks, CI/CD pipelines, or agentic coding tools
+                  that can execute bash commands (Claude Code, Aider, etc).
+                </p>
+              </div>
+
+              {/* System Prompt */}
+              <div className="rounded-xl border border-border bg-card">
+                <div className="flex items-center justify-between border-b border-border px-6 py-4">
+                  <div>
+                    <h3 className="font-semibold">System Prompt</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      For agents that can execute shell commands
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(prompts.cli, "cli-prompt")}
+                    className="flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm transition-colors hover:bg-secondary"
+                  >
+                    {copied === "cli-prompt" ? (
+                      <>
+                        <Check size={14} className="text-[hsl(var(--brand-green))]" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={14} />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="p-6">
+                  <div className="terminal">
+                    <div className="terminal-header">
+                      <div className="flex gap-2">
+                        <div className="terminal-dot terminal-dot-red" />
+                        <div className="terminal-dot terminal-dot-yellow" />
+                        <div className="terminal-dot terminal-dot-green" />
+                      </div>
+                      <span className="ml-4 font-mono text-xs text-muted-foreground">CLAUDE.md</span>
+                    </div>
+                    <div className="terminal-body max-h-[500px] overflow-auto">
+                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
+                        {prompts.cli}
+                      </pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* CLI Commands Grid */}
+              <div>
+                <h3 className="mb-4 text-lg font-semibold">Command Reference</h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {cliCommands.map((group) => (
+                    <div
+                      key={group.category}
+                      className={`rounded-xl border border-[hsl(var(--${group.color}))]/30 bg-[hsl(var(--${group.color}))]/5 p-4`}
+                    >
+                      <h4 className="mb-3 text-sm font-semibold">{group.category}</h4>
+                      <div className="space-y-1 font-mono text-xs text-muted-foreground">
+                        {group.commands.map((cmd) => (
+                          <div key={cmd}>{cmd}</div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Automation Example */}
+              <div className="rounded-xl border border-border bg-card p-6">
+                <h3 className="mb-4 font-semibold">Automation Example</h3>
+                <div className="terminal">
+                  <div className="terminal-header">
+                    <div className="flex gap-2">
+                      <div className="terminal-dot terminal-dot-red" />
+                      <div className="terminal-dot terminal-dot-yellow" />
+                      <div className="terminal-dot terminal-dot-green" />
+                    </div>
+                    <span className="ml-4 font-mono text-xs text-muted-foreground">.git/hooks/post-commit</span>
+                  </div>
+                  <div className="terminal-body">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-[hsl(var(--terminal-green))]">
+{`#!/bin/bash
+# Capture commit context to Local Memory
+
+COMMIT_MSG=$(git log -1 --pretty=format:"%s")
+COMMIT_HASH=$(git log -1 --pretty=format:"%h")
+CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD | head -5 | tr '\\n' ', ')
+
+local-memory observe "Commit $COMMIT_HASH: $COMMIT_MSG. Files: $CHANGED_FILES" \\
+  --level observation \\
+  --tags git,commits,$(basename $(pwd))`}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
-      {/* Inline CTA after prompts */}
+      {/* Inline CTA */}
       <section className="border-t border-border bg-card/30 py-8">
         <div className="container-wide">
           <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-border bg-background p-6 sm:flex-row">
@@ -545,271 +654,10 @@ Try different keywords or check ID/tag.
         </div>
       </section>
 
-      {/* Workflow Commands */}
-      <section className="section-sm border-t border-border bg-card/30">
-        <div className="container-wide">
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Workflow commands
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Structured commands for gathering requirements, confirming understanding, and managing memory.
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {/* /gather */}
-            <div className="rounded-xl border border-border bg-background">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/gather</code>
-                <button
-                  onClick={() => copyToClipboard(commands.gather, "gather")}
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
-                >
-                  {copied === "gather" ? (
-                    <><Check size={12} className="text-[hsl(var(--brand-green))]" /><span>Copied</span></>
-                  ) : (
-                    <><Copy size={12} /><span>Copy</span></>
-                  )}
-                </button>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground">
-                  Generate structured questions to gather requirements, constraints, and success criteria.
-                </p>
-              </div>
-              <div className="p-5">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {commands.gather}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* /reframe */}
-            <div className="rounded-xl border border-border bg-background">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/reframe</code>
-                <button
-                  onClick={() => copyToClipboard(commands.reframe, "reframe")}
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
-                >
-                  {copied === "reframe" ? (
-                    <><Check size={12} className="text-[hsl(var(--brand-green))]" /><span>Copied</span></>
-                  ) : (
-                    <><Copy size={12} /><span>Copy</span></>
-                  )}
-                </button>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground">
-                  Synthesize and confirm understanding before proceeding with execution.
-                </p>
-              </div>
-              <div className="p-5">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {commands.reframe}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* /truth */}
-            <div className="rounded-xl border border-border bg-background">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--terminal-white))]">/truth</code>
-                <button
-                  onClick={() => copyToClipboard(commands.truth, "truth")}
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
-                >
-                  {copied === "truth" ? (
-                    <><Check size={12} className="text-[hsl(var(--brand-green))]" /><span>Copied</span></>
-                  ) : (
-                    <><Copy size={12} /><span>Copy</span></>
-                  )}
-                </button>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground">
-                  Activate truth-first mode with evidence requirements and confidence scoring.
-                </p>
-              </div>
-              <div className="p-5">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {commands.truth}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* /memorize */}
-            <div className="rounded-xl border border-border bg-background">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/memorize</code>
-                <button
-                  onClick={() => copyToClipboard(commands.memorize, "memorize")}
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
-                >
-                  {copied === "memorize" ? (
-                    <><Check size={12} className="text-[hsl(var(--brand-green))]" /><span>Copied</span></>
-                  ) : (
-                    <><Copy size={12} /><span>Copy</span></>
-                  )}
-                </button>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground">
-                  Save conversation context to Local Memory with structured tagging and metadata.
-                </p>
-              </div>
-              <div className="p-5">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {commands.memorize}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* /recall */}
-            <div className="rounded-xl border border-border bg-background">
-              <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <code className="text-sm font-medium text-[hsl(var(--brand-white))]">/recall</code>
-                <button
-                  onClick={() => copyToClipboard(commands.recall, "recall")}
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-card px-2.5 text-xs transition-colors hover:bg-secondary"
-                >
-                  {copied === "recall" ? (
-                    <><Check size={12} className="text-[hsl(var(--brand-green))]" /><span>Copied</span></>
-                  ) : (
-                    <><Copy size={12} /><span>Copy</span></>
-                  )}
-                </button>
-              </div>
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground">
-                  Restore context from Local Memory by ID, tag, or semantic search.
-                </p>
-              </div>
-              <div className="p-5">
-                <div className="terminal">
-                  <div className="terminal-header">
-                    <div className="flex gap-2">
-                      <div className="terminal-dot terminal-dot-red" />
-                      <div className="terminal-dot terminal-dot-yellow" />
-                      <div className="terminal-dot terminal-dot-green" />
-                    </div>
-                  </div>
-                  <div className="terminal-body max-h-64 overflow-auto">
-                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-foreground/80">
-                      {commands.recall}
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Copy All */}
-            <div className="flex items-center justify-center rounded-xl border border-dashed border-border bg-background p-5">
-              <button
-                onClick={() => copyToClipboard(
-                  Object.values(commands).join("\n\n---\n\n"),
-                  "all-commands"
-                )}
-                className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {copied === "all-commands" ? (
-                  <><Check size={16} className="text-[hsl(var(--brand-green))]" /><span>All commands copied</span></>
-                ) : (
-                  <><Copy size={16} /><span>Copy all commands</span></>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Integration Guide */}
-      <section className="section-sm border-t border-border">
-        <div className="container-wide">
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Where to add these prompts
-            </h2>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">CLAUDE.md</code>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Claude Code project instructions
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">.cursorrules</code>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Cursor AI configuration
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--terminal-blue))]">AGENTS.md</code>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Multi-agent orchestration
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-background p-5">
-              <code className="text-sm font-medium text-[hsl(var(--brand-blue))]">System Prompt</code>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Any agent configuration
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Agent Setup Prompts */}
+      {/* Installation Guide */}
       <section className="section-sm border-t border-border bg-card/30">
         <div className="container-wide text-left">
-          <h2 className="mb-2 text-lg font-semibold">Agent-Assisted Installation</h2>
+          <h2 className="mb-2 text-lg font-semibold">Installation Guide</h2>
           <p className="mb-6 text-sm text-muted-foreground">
             Copy a prompt for your OS and paste it into your AI agent for guided installation.
           </p>
