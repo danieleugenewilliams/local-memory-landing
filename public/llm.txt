@@ -1,8 +1,8 @@
-# Local Memory
+# Local Memory — Long-Term Memory Infrastructure for AI Agents
 
-> Context Engineering system that transforms developer expertise into permanent AI intelligence with 16 MCP tools, 27 REST endpoints, and 100% local storage.
+> Private, persistent memory for AI agents. Knowledge that evolves from observations to insights. Local embeddings, multi-provider reasoning, semantic search. Fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.
 
-Local Memory is a Context Engineering system that cures AI context amnesia by transforming developer expertise into permanent AI intelligence. It offers 16 MCP tools organized into 5 categories and 27 REST API endpoints with intelligent token optimization and lightning performance (10-57ms response times), enabling developers to build cumulative AI knowledge assets that work across all agents while keeping context 100% local and private.
+Local Memory is long-term memory infrastructure for AI agents. It provides private, persistent memory where knowledge evolves from observations to insights through a four-level hierarchy. With local embeddings, multi-provider reasoning, semantic search, 16 MCP tools, and 27 REST API endpoints, it ships as a single binary with lightning performance (10-57ms response times). Works with Claude, GPT, Ollama, and any OpenAI-compatible platform.
 
 ## Quick Facts
 

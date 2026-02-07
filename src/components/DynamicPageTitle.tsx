@@ -9,8 +9,8 @@ interface PageMetadata {
 
 const routeMetadata: Record<string, PageMetadata> = {
   '/': {
-    title: 'Home - Local Memory | Cure AI Context Amnesia, Build Permanent AI Intelligence',
-    description: 'Stop repeating yourself to AI agents. Local Memory transforms developer expertise into persistent AI intelligence with 8 unified MCP tools, 97.5% token optimization, and lightning-fast 10-57ms responses. One-time purchase, lifetime value.',
+    title: 'Local Memory — Long-Term Memory Infrastructure for AI Agents',
+    description: 'Private, persistent memory for AI agents. Knowledge that evolves from observations to insights. Local embeddings, multi-provider reasoning, semantic search. Fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.',
     keywords: 'AI context amnesia, persistent AI memory, AI intelligence building, context engineering, MCP integration, Claude Desktop memory, AI agent memory, cross-session learning, developer productivity, AI memory system, Model Context Protocol, vector search, token optimization'
   },
   '/features': {
