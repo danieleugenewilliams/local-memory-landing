@@ -81,16 +81,17 @@ const FlatMemoryProblem = () => {
           {/* The insight */}
           <div className="mt-12 rounded-xl border-2 border-[hsl(var(--brand-blue))/50] bg-[hsl(var(--brand-blue))/5] p-6 md:p-8 text-center">
             <h3 className="text-xl font-bold mb-4">
-              The Problem Isn't Features. It's Architecture.
+              You don't need better storage. You need a knowledge layer.
             </h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              You can't bolt cognition onto flat storage. The free tools optimize for 
-              <span className="text-foreground font-medium"> storage and retrieval</span>. 
-              They should optimize for 
-              <span className="text-foreground font-medium"> understanding</span>.
+              Files, notes, and flat memory tools are for
+              <span className="text-foreground font-medium"> working</span>.
+              Local Memory is for
+              <span className="text-foreground font-medium"> knowing</span> — where
+              observations mature into learnings, learnings into patterns, and patterns into understanding.
             </p>
             <p className="mt-4 text-lg font-medium">
-              That's what Local Memory does differently.
+              Complementary, not competing. A layer above your files.
             </p>
           </div>
         </div>

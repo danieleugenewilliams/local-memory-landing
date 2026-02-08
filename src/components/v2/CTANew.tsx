@@ -7,12 +7,12 @@ const CTANew = () => {
       <div className="container-tight text-center">
         {/* Headline */}
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-          Ready to stop repeating yourself?
+          Ready to add a knowledge layer?
         </h2>
 
         {/* Subtext */}
         <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-          Two-minute setup. Your data stays on your machine. Works with every AI agent you use.
+          Two-minute setup. Your files stay yours. Local Memory adds the layer that turns working knowledge into lasting understanding.
         </p>
 
         {/* CTA buttons */}

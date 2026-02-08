@@ -40,7 +40,7 @@ const HeroDifferentiated = () => {
           <div className="animate-in mb-8">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm text-muted-foreground">
               <span className="h-2 w-2 rounded-full bg-[hsl(var(--brand-green))]" />
-              Other tools store. We think.
+              Not a replacement. A knowledge layer.
             </span>
           </div>
 
@@ -59,8 +59,8 @@ const HeroDifferentiated = () => {
 
           {/* Subheadline - Architecture focus */}
           <p className="animate-in animate-in-delay-2 mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Flat memory breaks at scale. Local Memory models how knowledge actually matures — 
-            from observations to patterns to understanding.
+            Your files are for working. Local Memory is for knowing. Observations evolve
+            into learnings, then patterns, then understanding.
           </p>
 
           {/* Differentiator pills */}
