@@ -10,7 +10,7 @@ interface PageMetadata {
 const routeMetadata: Record<string, PageMetadata> = {
   '/': {
     title: 'Local Memory — Long-Term Memory Infrastructure for AI Agents',
-    description: 'Private, persistent memory for AI agents. Knowledge that evolves from observations to insights. Local embeddings, multi-provider reasoning, semantic search. Fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.',
+    description: 'Not a file replacement — a knowledge layer. Observations evolve into learnings, then patterns. Semantic search, local embeddings, multi-provider reasoning. Private, fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.',
     keywords: 'AI context amnesia, persistent AI memory, AI intelligence building, context engineering, MCP integration, Claude Desktop memory, AI agent memory, cross-session learning, developer productivity, AI memory system, Model Context Protocol, vector search, token optimization'
   },
   '/features': {

@@ -1,8 +1,8 @@
 # Local Memory — Long-Term Memory Infrastructure for AI Agents
 
-> Private, persistent memory for AI agents. Knowledge that evolves from observations to insights. Local embeddings, multi-provider reasoning, semantic search. Fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.
+> Not a file replacement — a knowledge layer. Observations evolve into learnings, then patterns. Semantic search, local embeddings, multi-provider reasoning. Private, fast, ships as a single binary. Works with Claude, GPT, Ollama, and OpenAI-compatible platforms.
 
-Local Memory is long-term memory infrastructure for AI agents. It provides private, persistent memory where knowledge evolves from observations to insights through a four-level hierarchy. With local embeddings, multi-provider reasoning, semantic search, 16 MCP tools, and 27 REST API endpoints, it ships as a single binary with lightning performance (10-57ms response times). Works with Claude, GPT, Ollama, and any OpenAI-compatible platform.
+Local Memory is long-term memory infrastructure for AI agents. Not a file replacement — a knowledge layer where observations evolve into learnings, then patterns, through a four-level hierarchy. With semantic search, local embeddings, multi-provider reasoning, 16 MCP tools, and 27 REST API endpoints, it ships as a single binary with lightning performance (10-57ms response times). Works with Claude, GPT, Ollama, and any OpenAI-compatible platform.
 
 ## Quick Facts
 
