@@ -11,87 +11,114 @@ interface DemoStep {
 
 const demoSteps: DemoStep[] = [
   {
-    label: "Session cleared",
-    type: "system",
-    message: "User types /clear — session context is wiped",
-    output: `Context cleared. Starting new session...
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  New session started. Previous context forgotten.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    delay: 1500,
-  },
-  {
-    label: "Bootstrap session",
+    label: "Bootstrap",
     type: "command",
     command: 'bootstrap({ mode: "full", include_questions: true })',
-    output: `Memory Status: 47 memories across 3 domains
-
-Highlights:
+    output: `Session initialized:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-L3 Schemas (2):  Auth patterns, API design
-L2 Patterns (8): Rate limiting, caching, errors...
-L1 Learnings (15): Recent insights
+  memories:  142 total
+             12 observations · 89 learnings
+             34 patterns · 7 schemas
 
-Pending Questions: 2
-• Token refresh edge cases?
-• Optimal Redis TTL for sessions?
+  domains:   backend · infrastructure · auth
+             frontend · deployment
 
-Context loaded. Ready for queries.`,
+  pending:   2 unresolved questions
+             ⚠ "JWT auth vs OAuth2 — which is current?"
+             ⚠ "Redis pool size: 10 or 50 connections?"
+
+  context:   3 schemas loaded
+             18 high-weight patterns active
+
+  ✓ Knowledge layer ready`,
+    delay: 3000,
+  },
+  {
+    label: "Observe",
+    type: "command",
+    command: 'observe({ content: "Auth service migrated to OAuth2 with PKCE flow", level: "observation", tags: ["auth", "security"] })',
+    output: `Observation stored:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  id:     mem_9e2d4f
+  level:  L0 Observation
+  weight: 0.5
+  tags:   auth, security
+  domain: backend`,
     delay: 2500,
   },
   {
-    label: "New task",
-    type: "user",
-    message: "I need to add rate limiting to the new /api/users endpoint. What patterns do we use?",
-    output: `I'll search your memory for relevant patterns...`,
-    delay: 1200,
-  },
-  {
-    label: "Search memory",
-    type: "command",
-    command: 'search({ query: "rate limiting API security", use_ai: true })',
-    output: `Found 3 memories (8ms):
+    label: "Contradiction found",
+    type: "system",
+    message: "⚠ Contradiction detected with existing memory",
+    output: `Conflict found:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  EXISTING  "Auth uses JWT with 24h expiry"
+            Level: L2 Pattern | Weight: 7.2
 
-1. Auth uses JWT with 24h expiry. Rate limit: 100 req/min.
-   Level: L2 Pattern | Weight: 7.2 | Tags: auth, security
-   → enables: Redis session caching
+  NEW       "Auth service migrated to OAuth2 with PKCE"
+            Level: L0 Observation | Weight: 0.5
 
-2. API endpoints follow /api/v1/{resource} pattern.
-   Level: L2 Pattern | Weight: 6.5 | Tags: api, architecture
-   → references: Auth middleware
-
-3. Redis used for session caching and rate limit counters.
-   Level: L2 Pattern | Weight: 6.8 | Tags: infrastructure`,
-    delay: 2000,
-  },
-  {
-    label: "Observe learning",
-    type: "command",
-    command: 'observe({ content: "Users endpoint: 100 req/min per API key via Redis", level: "learning", tags: ["api", "rate-limiting"] })',
-    output: `{
-  "id": "mem_8d4f2c",
-  "level": "L1",
-  "weight": 1.0,
-  "tags": ["api", "rate-limiting"],
-  "relationships": ["enables:mem_7f3a9b"]
-}`,
-    delay: 2000,
-  },
-  {
-    label: "Predict outcomes",
-    type: "command",
-    command: 'predict({ given: "High traffic spike on /api/users", domain: "api" })',
-    output: `Based on 3 relevant patterns:
-
-Predicted outcomes:
-• Rate limiter triggers at 100 req/min threshold
-• Redis counters increment, may hit memory pressure
-• 429 responses returned with Retry-After headers
-• User experience: brief delays, automatic retry
-
-Confidence: 0.87 | Sources: L2 patterns`,
+  → Question created: q_3f8a1c
+    "JWT auth vs OAuth2 PKCE — which is current?"`,
     delay: 2500,
+  },
+  {
+    label: "Resolve conflict",
+    type: "command",
+    command: 'resolve({ question_id: "q_3f8a1c", resolution_type: "a_supersedes", rationale: "OAuth2 migration completed, JWT deprecated" })',
+    output: `Resolved: new observation supersedes old pattern
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✓ "Auth uses JWT" weight: 7.2 → 1.0 (deprecated)
+  ✓ "Auth migrated to OAuth2" weight: 0.5 → 2.5
+  ✓ Question q_3f8a1c marked resolved
+  ✓ Contradicts relationship recorded`,
+    delay: 2500,
+  },
+  {
+    label: "Reflect",
+    type: "command",
+    command: 'reflect({ mode: "single", observation_id: "mem_9e2d4f" })',
+    output: `Promoted: L0 Observation → L1 Learning
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  id:      mem_9e2d4f
+  level:   L0 → L1
+  weight:  2.5 → 3.2
+  insight: "Auth stack modernized to OAuth2/PKCE,
+           replacing legacy JWT token flow"`,
+    delay: 2500,
+  },
+  {
+    label: "Validate",
+    type: "command",
+    command: 'evolve({ operation: "validate", entity_id: "mem_9e2d4f", success: true, context: "Confirmed in production deploy" })',
+    output: `Validation recorded:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  weight:      3.2 → 5.4
+  validations: 3
+  confidence:  0.92
+
+  ⬆ Auto-promotion criteria met
+    validations ≥ 3  ✓
+    weight ≥ 5.0     ✓
+    confidence ≥ 0.8 ✓`,
+    delay: 2500,
+  },
+  {
+    label: "Knowledge evolved",
+    type: "system",
+    message: "Auto-promotion triggered: L1 Learning → L2 Pattern",
+    output: `Knowledge evolved:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  mem_9e2d4f promoted to L2 Pattern
+
+  "Auth stack uses OAuth2 with PKCE flow"
+  Weight: 6.8 | Confidence: 0.92
+
+  This pattern now influences:
+  • predict() outcomes for auth queries
+  • explain() causal chains
+  • Future contradiction detection`,
+    delay: 3000,
   },
 ];
 
@@ -176,10 +203,10 @@ const DemoNew = () => {
         {/* Section header */}
         <div className="mb-12 text-center md:mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Memory that survives /clear
+            A knowledge layer in action
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Clear session. Bootstrap context. Pick up right where you left off.
+            Observe. Detect contradictions. Evolve knowledge. Watch insights mature.
           </p>
         </div>
 

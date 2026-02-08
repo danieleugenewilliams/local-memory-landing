@@ -18,17 +18,9 @@ const FooterNew = () => {
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Persistent memory for AI agents. Your data stays local, your context persists forever.
             </p>
-            <div className="mt-4">
-              <p className="text-sm text-muted-foreground">
-                Built by D.E. Williams & Co.
-              </p>
-              <a
-                href="mailto:hello@localmemory.io"
-                className="mt-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                hello@localmemory.io
-              </a>
-            </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Built by D.E. Williams & Co.
+            </p>
           </div>
 
           {/* Product links */}
@@ -45,7 +37,7 @@ const FooterNew = () => {
                 Pricing
               </Link>
               <a
-                href="https://github.com/Dewilliams/local-memory"
+                href="https://github.com/danieleugenewilliams/local-memory-releases"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors hover:text-foreground"
@@ -67,12 +59,6 @@ const FooterNew = () => {
               >
                 Community
               </a>
-              <a
-                href="mailto:hello@localmemory.io"
-                className="transition-colors hover:text-foreground"
-              >
-                Contact
-              </a>
               <Link to="/privacy" className="transition-colors hover:text-foreground">
                 Privacy
               </Link>
@@ -92,7 +78,7 @@ const FooterNew = () => {
           {/* Social links */}
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/Dewilliams/local-memory"
+              href="https://github.com/danieleugenewilliams/local-memory-releases"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
