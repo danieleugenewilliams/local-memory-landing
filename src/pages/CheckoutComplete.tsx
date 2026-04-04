@@ -75,17 +75,6 @@ const CheckoutComplete = () => {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const handleDownload = (platform: Platform = selectedPlatform) => {
-    const downloadUrl = downloadUrls[platform];
-    if (!downloadUrl) return;
-    trackDownloadInitiated(platform, downloadUrl, sessionId);
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = getPlatformInfo(platform).filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const detectedInfo = getPlatformInfo(selectedPlatform);
 
@@ -224,13 +213,15 @@ const CheckoutComplete = () => {
                     <p className="text-sm text-muted-foreground">{detectedInfo.description}</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => handleDownload(selectedPlatform)}
+                <a
+                  href={downloadUrls[selectedPlatform]}
+                  download={detectedInfo.filename}
+                  onClick={() => trackDownloadInitiated(selectedPlatform, downloadUrls[selectedPlatform], sessionId)}
                   className="btn-primary mx-auto flex w-full max-w-xs items-center justify-center gap-2"
                 >
                   <Download className="h-5 w-5" />
                   Download for {detectedInfo.label}
-                </button>
+                </a>
                 <p className="mt-3 text-center text-sm text-muted-foreground">~13MB</p>
               </div>
 
@@ -260,13 +251,15 @@ const CheckoutComplete = () => {
                               <p className="text-xs text-muted-foreground">{info.description}</p>
                             </div>
                           </div>
-                          <button
-                            onClick={() => handleDownload(info.platform)}
+                          <a
+                            href={downloadUrls[info.platform]}
+                            download={info.filename}
+                            onClick={() => trackDownloadInitiated(info.platform, downloadUrls[info.platform], sessionId)}
                             className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm hover:bg-card"
                           >
                             <Download className="h-3.5 w-3.5" />
                             Download
-                          </button>
+                          </a>
                         </div>
                       ))}
                   </div>

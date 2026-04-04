@@ -65,16 +65,6 @@ function CheckoutInner({
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const handleDownload = () => {
-    const url = downloadUrls[platform as keyof typeof downloadUrls];
-    if (!url) return;
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = platformInfo.filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <div className="flex flex-col h-full">
@@ -142,13 +132,14 @@ function CheckoutInner({
             </div>
 
             {/* Download */}
-            <button
-              onClick={handleDownload}
+            <a
+              href={downloadUrls[platform as keyof typeof downloadUrls]}
+              download={platformInfo.filename}
               className="btn-primary w-full text-center flex items-center justify-center gap-2"
             >
               <Download className="h-4 w-4" />
               Download for {platformInfo.label}
-            </button>
+            </a>
 
             <a
               href={`/checkout/complete?session_id=${sessionId}`}
