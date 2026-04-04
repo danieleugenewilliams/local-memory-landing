@@ -79,13 +79,7 @@ const CheckoutComplete = () => {
     const downloadUrl = downloadUrls[platform];
     if (!downloadUrl) return;
     trackDownloadInitiated(platform, downloadUrl, sessionId);
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = getPlatformInfo(platform).filename;
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.location.href = downloadUrl;
   };
 
   const detectedInfo = getPlatformInfo(selectedPlatform);
