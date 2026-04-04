@@ -152,7 +152,7 @@ export const trackAddToCart = () => {
 /**
  * Track when user initiates Stripe checkout
  */
-export const trackBeginCheckout = (paymentMethod: 'stripe_payment_link' = 'stripe_payment_link') => {
+export const trackBeginCheckout = (paymentMethod: 'stripe_payment_link' | 'stripe_embedded' = 'stripe_embedded') => {
   trackEvent('begin_checkout', {
     currency: LOCAL_MEMORY_PRODUCT.currency,
     value: LOCAL_MEMORY_PRODUCT.price,

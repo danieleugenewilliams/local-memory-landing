@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
 
 const FeaturesNew = () => {
+  const { openCheckout } = useCheckout();
   return (
     <div className="min-h-screen bg-background">
       <HeaderNew />
@@ -498,13 +500,12 @@ local-memory evolve validate --dry-run`}</pre>
             One-time purchase. All interfaces included. Updates forever.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              to="/payment"
+            <button
               className="btn-primary text-base"
-              onClick={() => trackCTAClick("features", "Get Started", "/payment")}
+              onClick={() => { trackCTAClick("features", "Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started — $49
-            </Link>
+            </button>
             <Link
               to="/docs"
               className="btn-secondary text-base"

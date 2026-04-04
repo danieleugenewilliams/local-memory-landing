@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
 import { trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import { useState, useEffect } from "react";
 import LogoBar from "./LogoBar";
 
 const HeroNew = () => {
   const [typedText, setTypedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
+  const { openCheckout } = useCheckout();
   const fullWord = "remember";
 
   // Typewriter effect
@@ -66,13 +67,12 @@ const HeroNew = () => {
 
           {/* CTA */}
           <div className="animate-in animate-in-delay-3 mt-10 flex flex-col gap-4 sm:flex-row sm:gap-6">
-            <Link
-              to="/payment"
+            <button
               className="btn-primary text-base"
-              onClick={() => trackCTAClick("hero", "Get Started", "/payment")}
+              onClick={() => { trackCTAClick("hero", "Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started — $49
-            </Link>
+            </button>
             <a
               href="#demo"
               className="btn-secondary text-base"

@@ -17,6 +17,8 @@ import PromptsNew from "./pages/PromptsNew";
 import ArchitectureNew from "./pages/ArchitectureNew";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import CheckoutComplete from "./pages/CheckoutComplete";
+import { CheckoutProvider } from "./contexts/CheckoutContext";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import DynamicPageTitle from "./components/DynamicPageTitle";
 import { useEffect } from "react";
@@ -48,6 +50,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <CheckoutProvider>
           <AnalyticsTracker />
           <DynamicPageTitle />
           <AutoScrollToTop />
@@ -64,9 +67,11 @@ const App = () => (
             <Route path="/terms" element={<TermsNew />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/checkout/complete" element={<CheckoutComplete />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </CheckoutProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
