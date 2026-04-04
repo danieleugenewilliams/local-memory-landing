@@ -1,4 +1,6 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import Stripe from 'stripe';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
@@ -190,7 +192,35 @@ app.get('/api/verify-payment/:sessionId', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
+// Production: serve built frontend
+if (process.env.NODE_ENV === 'production') {
+  const serverDir = path.dirname(fileURLToPath(import.meta.url));
+  const distPath = path.resolve(serverDir, '..', 'dist');
+  app.use(express.static(distPath, {
+    maxAge: '1y',
+    immutable: true,
+    index: false,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache');
+      }
+    },
+  }));
+  app.get('{*path}', (req, res) => {
+    if (req.path.startsWith('/api/') || req.path.startsWith('/downloads/')) {
+      res.status(404).json({ error: 'Not found' });
+    } else {
+      res.sendFile(path.join(distPath, 'index.html'));
+    }
+  });
+}
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

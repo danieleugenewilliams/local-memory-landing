@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-api
 dist-ssr
 *.local
 
@@ -25,6 +26,7 @@ dist-ssr
 
 #Env
 .env*
+!.env.example
 
 # local-memory builds
 binaries/
