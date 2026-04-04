@@ -68,7 +68,12 @@ function CheckoutInner({
   const handleDownload = () => {
     const url = downloadUrls[platform as keyof typeof downloadUrls];
     if (!url) return;
-    window.location.href = url;
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = platformInfo.filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
