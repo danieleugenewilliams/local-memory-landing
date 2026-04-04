@@ -75,17 +75,24 @@ const CheckoutComplete = () => {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const handleDownload = (platform: Platform = selectedPlatform) => {
+  const handleDownload = async (platform: Platform = selectedPlatform) => {
     const downloadUrl = downloadUrls[platform];
     if (!downloadUrl) return;
     trackDownloadInitiated(platform, downloadUrl, sessionId);
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = getPlatformInfo(platform).filename;
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const response = await fetch(downloadUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = getPlatformInfo(platform).filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      window.open(downloadUrl, "_blank");
+    }
   };
 
   const detectedInfo = getPlatformInfo(selectedPlatform);
