@@ -39,9 +39,13 @@ const CheckoutComplete = () => {
 
         if (data.status === "complete") {
           setPageState("success");
-          trackPurchase(sessionId);
-          trackLicenseKeyGenerated(sessionId);
-          trackCloseConvertLead(sessionId);
+          const trackingKey = `checkout_tracked_${sessionId}`;
+          if (!sessionStorage.getItem(trackingKey)) {
+            sessionStorage.setItem(trackingKey, "true");
+            trackPurchase(sessionId);
+            trackLicenseKeyGenerated(sessionId);
+            trackCloseConvertLead(sessionId);
+          }
         } else if (data.status === "open") {
           setPageState("incomplete");
         } else {

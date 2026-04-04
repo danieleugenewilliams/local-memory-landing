@@ -187,8 +187,9 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
   const mountRef = useRef<HTMLDivElement>(null!);
   const checkoutRef = useRef<StripeEmbeddedCheckout | null>(null);
   const sessionIdRef = useRef<string>("");
+  const destroyedRef = useRef(false);
 
-  const initCheckout = async (destroyed: { current: boolean }) => {
+  const initCheckout = async () => {
     if (!stripePromise) {
       setErrorMessage("Stripe is not configured.");
       setState("error");
@@ -200,7 +201,7 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
 
     try {
       const stripe = await stripePromise;
-      if (destroyed.current || !stripe) return;
+      if (destroyedRef.current || !stripe) return;
 
       const checkout = await stripe.initEmbeddedCheckout({
         fetchClientSecret: async () => {
@@ -228,7 +229,7 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
         },
       });
 
-      if (destroyed.current) {
+      if (destroyedRef.current) {
         checkout.destroy();
         return;
       }
@@ -239,7 +240,7 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
         setState("mounted");
       }
     } catch (error) {
-      if (!destroyed.current) {
+      if (!destroyedRef.current) {
         setErrorMessage(error instanceof Error ? error.message : "Something went wrong.");
         setState("error");
       }
@@ -249,11 +250,11 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
   useEffect(() => {
     if (!isOpen) return;
 
-    const destroyed = { current: false };
-    initCheckout(destroyed);
+    destroyedRef.current = false;
+    initCheckout();
 
     return () => {
-      destroyed.current = true;
+      destroyedRef.current = true;
       checkoutRef.current?.destroy();
       checkoutRef.current = null;
     };
@@ -271,8 +272,8 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
   const handleRetry = () => {
     checkoutRef.current?.destroy();
     checkoutRef.current = null;
-    const destroyed = { current: false };
-    initCheckout(destroyed);
+    destroyedRef.current = false;
+    initCheckout();
   };
 
   const innerProps = {
