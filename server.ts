@@ -114,6 +114,44 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
   res.json({ received: true });
 });
 
+// Download proxy — streams GitHub release assets with correct filename
+const VALID_ASSETS = ['local-memory-macos-arm', 'local-memory-macos-intel', 'local-memory-windows.exe', 'local-memory-linux'];
+const GITHUB_RELEASE_BASE = 'https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download';
+
+app.get('/api/download/:asset', async (req, res) => {
+  const asset = req.params.asset;
+  if (!VALID_ASSETS.includes(asset)) {
+    return res.status(400).json({ error: 'Invalid asset name' });
+  }
+  try {
+    const upstream = await fetch(`${GITHUB_RELEASE_BASE}/${asset}`, { redirect: 'follow' });
+    if (!upstream.ok) {
+      return res.status(upstream.status).json({ error: 'Failed to fetch release asset' });
+    }
+    res.setHeader('Content-Disposition', `attachment; filename="${asset}"`);
+    res.setHeader('Content-Type', 'application/octet-stream');
+    const contentLength = upstream.headers.get('content-length');
+    if (contentLength) res.setHeader('Content-Length', contentLength);
+
+    // Stream the response body
+    const reader = upstream.body?.getReader();
+    if (!reader) {
+      return res.status(500).json({ error: 'No response body' });
+    }
+    const pump = async () => {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) { res.end(); break; }
+        res.write(value);
+      }
+    };
+    await pump();
+  } catch (error) {
+    console.error('Error proxying download:', error);
+    res.status(500).json({ error: 'Download failed' });
+  }
+});
+
 // Verify payment status and download access
 app.get('/api/verify-payment/:sessionId', async (req, res) => {
   try {

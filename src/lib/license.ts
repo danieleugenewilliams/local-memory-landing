@@ -59,12 +59,10 @@ export const generateLicenseKey = (sessionId: string): string => {
   }
 };
 
-/** Get GitHub releases download URL for a specific platform */
+/** Get download URL for a specific platform (proxied through our server for correct filenames) */
 export const getGitHubDownloadUrl = (platform: Platform = "macos-arm"): string => {
-  const baseUrl = "https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download/";
   const platformInfo = getPlatformInfo(platform);
-  const filename = platformInfo.filename;
-  return `${baseUrl}${filename}`;
+  return `/api/download/${platformInfo.filename}`;
 };
 
 /** Generate download URLs for all platforms */

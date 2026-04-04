@@ -75,24 +75,11 @@ const CheckoutComplete = () => {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const handleDownload = async (platform: Platform = selectedPlatform) => {
+  const handleDownload = (platform: Platform = selectedPlatform) => {
     const downloadUrl = downloadUrls[platform];
     if (!downloadUrl) return;
     trackDownloadInitiated(platform, downloadUrl, sessionId);
-    try {
-      const response = await fetch(downloadUrl);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = getPlatformInfo(platform).filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-    } catch {
-      window.open(downloadUrl, "_blank");
-    }
+    window.location.href = downloadUrl;
   };
 
   const detectedInfo = getPlatformInfo(selectedPlatform);
