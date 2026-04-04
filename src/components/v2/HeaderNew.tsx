@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useCallback } from "react";
 import { Menu, X } from "lucide-react";
+import { useCheckout } from "@/contexts/CheckoutContext";
 
 const HeaderNew = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { openCheckout } = useCheckout();
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -60,13 +62,12 @@ const HeaderNew = () => {
             >
               Community
             </a>
-            <Link
-              to="/payment"
+            <button
               className="btn-primary text-sm"
-              onClick={() => handleNavClick("/payment")}
+              onClick={openCheckout}
             >
               Get Started
-            </Link>
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -104,13 +105,12 @@ const HeaderNew = () => {
               Community
             </a>
             <div className="mt-2 px-4">
-              <Link
-                to="/payment"
+              <button
                 className="btn-primary w-full text-center text-sm"
-                onClick={() => handleNavClick("/payment")}
+                onClick={() => { setMobileMenuOpen(false); openCheckout(); }}
               >
                 Get Started
-              </Link>
+              </button>
             </div>
           </nav>
         </div>

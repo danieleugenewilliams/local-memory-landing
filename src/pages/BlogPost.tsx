@@ -9,11 +9,13 @@ import ScrollToTop from "@/components/ScrollToTop";
 import VideoEmbed from "@/components/blog/VideoEmbed";
 import { getPostBySlug } from "@/content/blog/posts";
 import { trackBlogVisit, trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import type { Components } from "react-markdown";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { openCheckout } = useCheckout();
   const post = slug ? getPostBySlug(slug) : undefined;
 
   // Track blog post visit
@@ -266,13 +268,12 @@ const BlogPost = () => {
             Give your AI persistent memory. Keep your data local.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              to="/payment"
+            <button
               className="btn-primary text-base"
-              onClick={() => trackCTAClick("blog-post", "Get Started", "/payment")}
+              onClick={() => { trackCTAClick("blog-post", "Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started — $49
-            </Link>
+            </button>
             <Link
               to="/docs"
               className="btn-secondary text-base"

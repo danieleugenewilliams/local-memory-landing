@@ -1,6 +1,7 @@
 import express from 'express';
 import Stripe from 'stripe';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -26,31 +27,50 @@ setInterval(() => {
 app.use(cors());
 app.use(express.json());
 
-// Create checkout session
-app.post('/api/create-checkout-session', async (req, res) => {
-  try {
-    const { priceId, successUrl, cancelUrl } = req.body;
+const checkoutLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  message: { error: 'Too many checkout requests, please try again later' },
+});
 
+// Create embedded checkout session
+app.post('/api/create-checkout-session', checkoutLimiter, async (req, res) => {
+  try {
     const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
       mode: 'payment',
-      payment_method_types: ['card'],
       line_items: [
         {
-          price: priceId || process.env.STRIPE_PRICE_ID,
+          price: process.env.STRIPE_PRICE_ID,
           quantity: 1,
         },
       ],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
+      return_url: `${process.env.DOMAIN || 'https://localmemory.co'}/checkout/complete?session_id={CHECKOUT_SESSION_ID}`,
+      allow_promotion_codes: true,
       metadata: {
         product: 'local-memory-pro',
       },
     });
 
-    res.json({ url: session.url });
+    res.json({ clientSecret: session.client_secret, sessionId: session.id });
   } catch (error) {
     console.error('Error creating checkout session:', error);
     res.status(500).json({ error: 'Failed to create checkout session' });
+  }
+});
+
+// Get checkout session status (for embedded checkout completion)
+app.get('/api/session-status', async (req, res) => {
+  try {
+    const sessionId = req.query.session_id as string;
+    if (!sessionId) {
+      return res.status(400).json({ error: 'session_id is required' });
+    }
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    res.json({ status: session.status });
+  } catch (error) {
+    console.error('Error retrieving session status:', error);
+    res.status(500).json({ error: 'Failed to retrieve session status' });
   }
 });
 

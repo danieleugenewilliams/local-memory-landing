@@ -4,8 +4,8 @@ import { Shield, Check } from "lucide-react";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
-import { handleStripePayment } from "@/lib/payment";
 import { trackAddToCart, trackCTAClick, trackQualifyLead } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import {
   Accordion,
   AccordionContent,
@@ -55,6 +55,7 @@ const faqs = [
 ];
 
 const PaymentNew = () => {
+  const { openCheckout } = useCheckout();
   useEffect(() => {
     trackAddToCart();
     trackQualifyLead();
@@ -121,8 +122,8 @@ const PaymentNew = () => {
               {/* CTA */}
               <button
                 onClick={() => {
-                  trackCTAClick("payment", "Purchase", "/stripe");
-                  handleStripePayment();
+                  trackCTAClick("payment", "Purchase", "/checkout");
+                  openCheckout();
                 }}
                 className="btn-primary w-full text-base"
               >

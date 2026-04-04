@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 
 const CTANew = () => {
+  const { openCheckout } = useCheckout();
   return (
     <section className="section bg-card/30">
       <div className="container-tight text-center">
@@ -17,13 +19,12 @@ const CTANew = () => {
 
         {/* CTA buttons */}
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-6">
-          <Link
-            to="/payment"
+          <button
             className="btn-primary text-base"
-            onClick={() => trackCTAClick("final-cta", "Get Started", "/payment")}
+            onClick={() => { trackCTAClick("final-cta", "Get Started", "/checkout"); openCheckout(); }}
           >
             Get Started — $49
-          </Link>
+          </button>
           <Link
             to="/docs"
             className="btn-secondary text-base"

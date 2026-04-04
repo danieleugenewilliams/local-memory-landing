@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Check, Copy, ArrowRight, Plug, Globe, Terminal } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 import HeaderNew from "@/components/v2/HeaderNew";
 import FooterNew from "@/components/v2/FooterNew";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -11,6 +12,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 const PromptsNew = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const { openCheckout } = useCheckout();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -241,14 +243,13 @@ local-memory observe "Committed: $(git log -1 --oneline)" --level observation --
           </p>
           <div className="flex w-full items-center justify-center gap-3 sm:w-auto sm:justify-end">
             <span className="text-sm font-medium">$49 one-time</span>
-            <Link
-              to="/payment"
+            <button
               className="btn-primary flex items-center gap-2 px-4 py-2 text-sm"
-              onClick={() => trackCTAClick("prompts", "Sticky Get Started", "/payment")}
+              onClick={() => { trackCTAClick("prompts", "Sticky Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started
               <ArrowRight size={14} />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -642,14 +643,13 @@ local-memory observe "Commit $COMMIT_HASH: $COMMIT_MSG. Files: $CHANGED_FILES" \
                 One-time purchase, unlimited usage. 30-day money-back guarantee.
               </p>
             </div>
-            <Link
-              to="/payment"
+            <button
               className="btn-primary flex shrink-0 items-center gap-2 whitespace-nowrap"
-              onClick={() => trackCTAClick("prompts", "Inline Get Started", "/payment")}
+              onClick={() => { trackCTAClick("prompts", "Inline Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started — $49
               <ArrowRight size={16} />
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -675,13 +675,12 @@ local-memory observe "Commit $COMMIT_HASH: $COMMIT_MSG. Files: $CHANGED_FILES" \
             One-time purchase. All integrations included.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              to="/payment"
+            <button
               className="btn-primary text-base"
-              onClick={() => trackCTAClick("prompts", "Get Started", "/payment")}
+              onClick={() => { trackCTAClick("prompts", "Get Started", "/checkout"); openCheckout(); }}
             >
               Get Started — $49
-            </Link>
+            </button>
             <Link
               to="/docs"
               className="btn-secondary text-base"

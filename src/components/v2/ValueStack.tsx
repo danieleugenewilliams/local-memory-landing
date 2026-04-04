@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { trackCTAClick } from "@/lib/analytics";
+import { useCheckout } from "@/contexts/CheckoutContext";
 
 const tiers = [
   {
@@ -101,6 +101,7 @@ const comparisonRows = [
 ];
 
 const ValueStack = () => {
+  const { openCheckout } = useCheckout();
   return (
     <section className="section bg-card/30">
       <div className="container-wide">
@@ -310,13 +311,12 @@ const ValueStack = () => {
 
         {/* CTA */}
         <div className="mt-16 text-center">
-          <Link
-            to="/payment"
+          <button
             className="btn-primary text-base"
-            onClick={() => trackCTAClick("value-stack", "Get Started", "/payment")}
+            onClick={() => { trackCTAClick("value-stack", "Get Started", "/checkout"); openCheckout(); }}
           >
             Get Started — $49
-          </Link>
+          </button>
         </div>
       </div>
     </section>
