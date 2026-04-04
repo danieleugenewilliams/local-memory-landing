@@ -114,13 +114,15 @@ app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) =
   res.json({ received: true });
 });
 
-// Download proxy — streams GitHub release assets with correct filename
-const VALID_ASSETS = ['local-memory-macos-arm', 'local-memory-macos-intel', 'local-memory-windows.exe', 'local-memory-linux'];
+// Download proxy — serves GitHub release assets as static files
+// Uses express.static-style URL paths so Chrome uses the URL filename
+const VALID_ASSETS = new Set(['local-memory-macos-arm', 'local-memory-macos-intel', 'local-memory-windows.exe', 'local-memory-linux']);
 const GITHUB_RELEASE_BASE = 'https://github.com/danieleugenewilliams/local-memory-releases/releases/latest/download';
 
-app.get('/api/download/:asset', async (req, res) => {
+app.get('/downloads/:asset', async (req, res) => {
   const asset = req.params.asset;
-  if (!VALID_ASSETS.includes(asset)) {
+  console.log(`[download] Request for asset: ${asset}`);
+  if (!VALID_ASSETS.has(asset)) {
     return res.status(400).json({ error: 'Invalid asset name' });
   }
   try {
@@ -128,27 +130,23 @@ app.get('/api/download/:asset', async (req, res) => {
     if (!upstream.ok) {
       return res.status(upstream.status).json({ error: 'Failed to fetch release asset' });
     }
-    res.setHeader('Content-Disposition', `attachment; filename="${asset}"`);
-    res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Disposition', `attachment; filename=${asset}`);
+    // Set specific Content-Type so Chrome doesn't generate UUID filenames
+    const contentType = asset.endsWith('.exe') ? 'application/x-msdownload' : 'application/x-executable';
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Cache-Control', 'no-cache');
     const contentLength = upstream.headers.get('content-length');
     if (contentLength) res.setHeader('Content-Length', contentLength);
 
-    // Stream the response body
-    const reader = upstream.body?.getReader();
-    if (!reader) {
-      return res.status(500).json({ error: 'No response body' });
-    }
-    const pump = async () => {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) { res.end(); break; }
-        res.write(value);
-      }
-    };
-    await pump();
+    const { Readable } = await import('stream');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const nodeStream = Readable.fromWeb(upstream.body as any);
+    nodeStream.pipe(res);
   } catch (error) {
     console.error('Error proxying download:', error);
-    res.status(500).json({ error: 'Download failed' });
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Download failed' });
+    }
   }
 });
 

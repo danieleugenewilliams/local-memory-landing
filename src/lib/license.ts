@@ -62,7 +62,7 @@ export const generateLicenseKey = (sessionId: string): string => {
 /** Get download URL for a specific platform (proxied through our server for correct filenames) */
 export const getGitHubDownloadUrl = (platform: Platform = "macos-arm"): string => {
   const platformInfo = getPlatformInfo(platform);
-  return `/api/download/${platformInfo.filename}`;
+  return `/downloads/${platformInfo.filename}`;
 };
 
 /** Generate download URLs for all platforms */
