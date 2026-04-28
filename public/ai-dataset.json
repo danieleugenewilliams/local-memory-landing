@@ -37,26 +37,14 @@
     ],
     "mcp_tools": {
       "total": 23,
-      "knowledge_intake": [
-        "observe - Record observations for knowledge processing (L0); returns structured JSON with memory_id, level_label, importance, tags, summary, suggested_actions",
-        "question - Track epistemic gaps, contradictions, and prediction failures",
-        "bootstrap - Initialize session with knowledge context and pending questions"
-      ],
       "core_memory": [
-        "search - Multi-mode search (semantic, tags, date_range, hybrid) with level_label and level distribution",
+        "observe - Record observations for knowledge processing (L0); returns structured JSON with memory_id, level_label, importance, tags, summary, suggested_actions",
         "update_memory - Modify existing memory content and metadata",
         "delete_memory - Remove memories with relationship cleanup",
         "get_memory_by_id - Retrieve specific memory details"
       ],
-      "knowledge_evolution": [
-        "reflect - Process observations into learnings (L0→L1); idempotent via promotion links; dry_run=true previews without modifying data",
-        "evolve - Validate, promote, or decay knowledge",
-        "resolve - Handle contradictions and answer questions"
-      ],
-      "reasoning": [
-        "predict - Generate predictions from patterns and schemas (session-scoped)",
-        "explain - Trace causal paths between states (session-scoped)",
-        "counterfactual - Explore 'what if' alternative scenarios (session-scoped)",
+      "search_retrieval": [
+        "search - Multi-mode search (semantic, tags, date_range, hybrid) with level_label and level distribution",
         "ask - Answer a question using stored memories as context",
         "summarize - Summarize stored memories for a given timeframe"
       ],
@@ -66,12 +54,24 @@
         "discover - Find latent relationships across stored memories without needing IDs",
         "map_graph - Traverse the explicit relationship graph around a memory"
       ],
+      "knowledge_evolution": [
+        "reflect - Process observations into learnings (L0→L1); idempotent via promotion links; dry_run=true previews without modifying data",
+        "evolve - Validate, promote, or decay knowledge",
+        "question - Track epistemic gaps, contradictions, and prediction failures",
+        "resolve - Handle contradictions and answer questions"
+      ],
+      "reasoning": [
+        "predict - Generate predictions from patterns and schemas (session-scoped)",
+        "explain - Trace causal paths between states (session-scoped)",
+        "counterfactual - Explore 'what if' alternative scenarios (session-scoped)",
+        "validate - Check knowledge graph integrity; requires confirm_auto_fix=true for destructive operations"
+      ],
+      "session_orientation": [
+        "bootstrap - Initialize session with knowledge context and pending questions",
+        "status - Unified system status with level_distribution (observation/learning/pattern/schema counts)"
+      ],
       "temporal_analysis": [
         "temporal - Analyze knowledge evolution over time; operations: patterns, progression, gaps, timeline"
-      ],
-      "graph_status": [
-        "validate - Check knowledge graph integrity; requires confirm_auto_fix=true for destructive operations",
-        "status - Unified system status with level_distribution (observation/learning/pattern/schema counts)"
       ],
       "management": [
         "migrate_domain - Batch-rename all memories from one domain to another; supports dry_run"
@@ -106,7 +106,7 @@
       }
     },
     "cli_commands": {
-      "core_memory": ["observe", "search", "get", "update", "forget", "list"],
+      "core_memory": ["search", "get", "update", "forget", "list"],
       "knowledge_intake": ["observe", "question", "bootstrap"],
       "knowledge_evolution": ["reflect", "reflect --dry_run", "evolve", "resolve"],
       "reasoning": ["predict", "explain", "counterfactual"],

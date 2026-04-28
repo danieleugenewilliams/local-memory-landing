@@ -37,26 +37,14 @@ Knowledge progresses through levels via validation and promotion. Observations b
 
 ## Core Capabilities (23 MCP Tools)
 
-**Knowledge Intake (3 Tools)**
-- observe: Record observations for knowledge processing; returns structured JSON with level_label, importance, and suggested_actions
-- question: Track epistemic gaps, contradictions, and prediction failures
-- bootstrap: Initialize session with knowledge context and pending questions
-
 **Core Memory (4 Tools)**
-- search: Multi-mode search (semantic, tags, date_range, hybrid) with 10-57ms performance; includes level distribution summaries
+- observe: Record observations for knowledge processing; returns structured JSON with level_label, importance, and suggested_actions
 - update_memory: Modify existing memory content and metadata
 - delete_memory: Remove memories with relationship cleanup
 - get_memory_by_id: Retrieve specific memory details
 
-**Knowledge Evolution (3 Tools)**
-- reflect: Process observations into learnings (L0→L1); idempotent via promotion links; dry_run=true previews without modifying data
-- evolve: Validate, promote, or decay knowledge
-- resolve: Handle contradictions and answer questions
-
-**Reasoning (5 Tools)**
-- predict: Generate predictions from patterns and schemas
-- explain: Trace causal paths between states
-- counterfactual: Explore "what if" alternative scenarios
+**Search & Retrieval (3 Tools)**
+- search: Multi-mode search (semantic, tags, date_range, hybrid) with 10-57ms performance; includes level distribution summaries
 - ask: Answer a question using stored memories as context
 - summarize: Summarize stored memories for a given timeframe
 
@@ -66,12 +54,24 @@ Knowledge progresses through levels via validation and promotion. Observations b
 - discover: Find latent relationships across stored memories without needing IDs
 - map_graph: Traverse the explicit relationship graph around a memory
 
+**Knowledge Evolution (4 Tools)**
+- reflect: Process observations into learnings (L0→L1); idempotent via promotion links; dry_run=true previews without modifying data
+- evolve: Validate, promote, or decay knowledge
+- question: Track epistemic gaps, contradictions, and prediction failures
+- resolve: Handle contradictions and answer questions
+
+**Reasoning (4 Tools)**
+- predict: Generate predictions from patterns and schemas
+- explain: Trace causal paths between states
+- counterfactual: Explore "what if" alternative scenarios
+- validate: Check knowledge graph integrity; requires confirm_auto_fix=true for destructive operations
+
+**Session & Orientation (2 Tools)**
+- bootstrap: Initialize session with knowledge context and pending questions
+- status: Unified system status with level_distribution (observation/learning/pattern/schema counts)
+
 **Temporal Analysis (1 Tool)**
 - temporal: Analyze knowledge evolution over time; operations: patterns, progression, gaps, timeline
-
-**Graph & Status (2 Tools)**
-- validate: Check knowledge graph integrity; requires confirm_auto_fix=true for destructive operations
-- status: Unified system status with level_distribution (observation/learning/pattern/schema counts)
 
 **Management (1 Tool)**
 - migrate_domain: Batch-rename all memories from one domain to another; supports dry_run

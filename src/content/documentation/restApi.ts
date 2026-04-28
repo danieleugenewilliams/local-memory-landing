@@ -80,7 +80,7 @@ Currently, no authentication is required for local development. All endpoints ar
 
 ### Response Patterns
 
-**Knowledge Engineering (KE) tools** — \`observe\`, \`question\`, \`reflect\`, \`evolve\`, \`search\`, \`ask\`, \`status\`, and similar — return flat JSON directly:
+**Knowledge Engineering (KE) tools** — \`observe\`, \`question\`, \`search\`, \`ask\`, \`status\`, and similar — return flat JSON directly:
 \`\`\`json
 {
   "memory_id": "uuid",
