@@ -73,7 +73,7 @@ const ArchitectureNew = () => {
               System Architecture
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Local Memory v1.3.0 — Layered architecture with complete data isolation.
+              Local Memory v1.5.0 — Layered architecture with complete data isolation.
             </p>
           </div>
 
@@ -136,10 +136,10 @@ const ArchitectureNew = () => {
               <div className="text-muted-foreground">↓</div>
             </div>
 
-            {/* Layer 3: MCP Tools (16 Total) */}
+            {/* Layer 3: MCP Tools (23 Total) */}
             <div className="rounded-xl border-2 border-yellow-500/30 bg-yellow-500/5 p-4">
               <div className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-400">
-                MCP Tools (16 Total)
+                MCP Tools (23 Total)
               </div>
               <div className="grid gap-2 sm:grid-cols-5">
                 {/* Core Memory */}
@@ -441,7 +441,7 @@ const ArchitectureNew = () => {
         </div>
       </section>
 
-      {/* MCP Tools - 16 Tools in 5 Categories */}
+      {/* MCP Tools - 23 Tools in 8 Categories */}
       <section id="tools" className="scroll-target section-sm border-b border-border">
         <div className="container-wide">
           <div className="mb-12 text-center">
@@ -449,7 +449,7 @@ const ArchitectureNew = () => {
               MCP Tools
             </h2>
             <p className="mt-4 text-muted-foreground">
-              16 tools organized into 5 categories for complete memory management.
+              23 tools organized into 8 categories for complete memory management.
             </p>
           </div>
 

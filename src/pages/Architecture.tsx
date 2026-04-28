@@ -1,3 +1,4 @@
+// UNROUTED — not served by any active route; content reflects legacy API. Out of v1.5.0 scope.
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {

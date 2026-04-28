@@ -1,3 +1,4 @@
+// UNROUTED — not served by any active route; content reflects legacy API. Out of v1.5.0 scope.
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, Bot, Settings, Globe, Terminal, Plug, Apple, Dot } from "lucide-react";

@@ -3,17 +3,16 @@ import { DocumentationSection } from '@/types/documentation';
 export const cliReferenceContent: DocumentationSection = {
   id: 'cli-reference',
   title: 'CLI Reference Guide',
-  description: 'Complete command-line interface reference for Local Memory v1.3.0',
+  description: 'Complete command-line interface reference for Local Memory v1.5.0',
   content: `# CLI Reference Guide
 
-Local Memory v1.3.0 provides a comprehensive command-line interface for intelligent knowledge management. Commands are organized into categories matching the knowledge lifecycle.
+Local Memory v1.5.0 provides a comprehensive command-line interface for intelligent knowledge management. Commands are organized into categories matching the knowledge lifecycle.
 
 ## Overview
 
 ### Command Categories
 
-**Core Memory (6 commands)**
-- \`remember\` - Store a memory with AI categorization
+**Core Memory (5 commands)**
 - \`search\` - Search memories with semantic matching
 - \`get\` - Retrieve a specific memory by ID
 - \`update\` - Update memory content or metadata
@@ -96,29 +95,7 @@ Key workflow: \`bootstrap\` -> \`observe\` -> \`reflect\` -> \`evolve\`
 
 ## Core Memory Commands
 
-### remember (legacy, use \`observe\` instead)
-
-**Purpose**: Store information with automatic AI categorization.
-
-\`\`\`bash
-local-memory remember [content] [flags]
-\`\`\`
-
-**Parameters**:
-- \`content\` (string, required): The memory content to store
-- \`--importance int\`: Importance level 1-10 (default: 5)
-- \`--tags strings\`: Tags for categorization
-- \`--domain string\`: Knowledge domain
-- \`--json\`: Output in JSON format
-
-**Example**:
-\`\`\`bash
-local-memory remember "Go channels are like pipes between goroutines"
-local-memory remember "Redis is excellent for caching" --importance 8 --tags caching,databases
-local-memory remember "Neural networks for NLP" --domain ai-research
-\`\`\`
-
-> **Note**: For workflows with explicit level control, use the \`observe\` command instead.
+> **Note**: The \`remember\` command was removed in v1.5.0. Use \`observe\` instead.
 
 ### search
 
@@ -327,13 +304,20 @@ local-memory reflect [flags]
 **Parameters**:
 - \`--mode string\`: Mode (single, batch, auto) (default: single)
 - \`--observation_id string\`: UUID for single mode
-- \`--batch_size int\`: Batch size (default: 10)
+- \`--batch_size int\`: Batch size (default: 10, max: 50)
+- \`--dry_run\`: Preview which observations would be promoted without modifying the database
+- \`--session_id string\`: Scope to a specific session (only processes observations from that session)
+- \`--response_format string\`: Format: detailed, concise, summary, ids_only
 - \`--json\`: Output in JSON format
+
+**Idempotency**: \`reflect\` tracks which observations have been promoted. Calling it twice on the same session is safe — already-promoted observations are skipped.
 
 **Example**:
 \`\`\`bash
 local-memory reflect --mode single --observation_id <uuid>
 local-memory reflect --mode batch --batch_size 10
+local-memory reflect batch --dry_run                         # preview without committing
+local-memory reflect batch --session_id <session-uuid>       # scope to session
 \`\`\`
 
 ### evolve
@@ -413,6 +397,7 @@ local-memory predict <given> [flags]
 - \`--limit int\`: Maximum predictions to return (default: 5)
 - \`--schema_ids strings\`: Specific schema UUIDs to use
 - \`--session_id string\`: Session identifier
+- \`--response_format string\`: Format: detailed, concise, summary, ids_only (default: detailed)
 - \`--use_ai\`: Enable AI-enhanced predictions
 - \`--json\`: Output in JSON format
 
@@ -436,6 +421,7 @@ local-memory explain <from_state> <to_state> [flags]
 - \`--max_depth int\`: Maximum relationship hops to traverse (default: 4)
 - \`--domain string\`: Focus domain for causal path discovery
 - \`--session_id string\`: Session identifier
+- \`--response_format string\`: Format: detailed, concise, summary, ids_only (default: detailed)
 - \`--use_ai\`: Enable AI-enhanced explanation generation
 - \`--json\`: Output in JSON format
 
@@ -462,6 +448,7 @@ local-memory counterfactual <observed> <if_condition> [flags]
 - \`--schema_ids strings\`: Specific schema UUIDs to consult for reasoning
 - \`--domain string\`: Focus domain for counterfactual reasoning
 - \`--session_id string\`: Session identifier
+- \`--response_format string\`: Format: detailed, concise, summary, ids_only (default: detailed)
 - \`--use_ai\`: Enable AI-enhanced counterfactual reasoning
 - \`--json\`: Output in JSON format
 
@@ -705,6 +692,30 @@ local-memory domain_stats <domain> [flags]
 local-memory domain_stats "ai-research"
 local-memory domain_stats "programming" --json
 \`\`\`
+
+### migrate_domain
+
+**Purpose**: Batch-rename all memories from one domain to another.
+
+\`\`\`bash
+local-memory migrate_domain --from <old-domain> --to <new-domain> [--dry_run]
+\`\`\`
+
+**Aliases**: \`migrate-domain\`
+
+**Parameters**:
+- \`--from string\` (required): Source domain name
+- \`--to string\` (required): Target domain name
+- \`--dry_run\`: Preview the affected count without modifying any memories
+- \`--json\`: Output in JSON format
+
+**Example**:
+\`\`\`bash
+local-memory migrate_domain --from "ai-research" --to "machine-learning"
+local-memory migrate_domain --from "old-domain" --to "new-domain" --dry_run  # preview
+\`\`\`
+
+---
 
 ### list_categories
 

@@ -6,6 +6,8 @@ slug: "the-day-your-ai-stops-forgetting"
 image: "/blog/images/local-memory-introducing.png"
 ---
 
+> **Note:** Tool names in this post reflect the API at time of writing. See the [v1.5.0 release post](/blog/local-memory-v150-knowledge-engineering-verified) for current names.
+
 Something profound happened last week. While the tech world debated whether AI has "peaked," a small but fundamental shift occurred in how AI systems work. For the first time, developers can give their AI assistants actual, persistent memory—not in some corporate cloud, but running entirely on their own machines.
 
 This isn't another incremental improvement. It's the difference between talking to someone with amnesia and collaborating with a colleague who remembers every conversation, every decision, every lesson learned.
