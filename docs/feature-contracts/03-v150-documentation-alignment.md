@@ -170,10 +170,16 @@ Batch-renames all memories from one domain to another. `--dry_run` previews the 
 
 ---
 
+### `src/content/documentation/configuration.ts`
+
+**Line 177:** The `enable_legacy_tools` flag comment lists `store_memory` as deprecated-but-functional. It is removed in v1.5.0 — update the comment to say "removed in v1.5.0" rather than "deprecated."
+
+---
+
 ## Acceptance Criteria
 
 - [ ] All four documentation files reference `v1.5.0`
-- [ ] `store_memory` does not appear anywhere as available or deprecated-but-functional
+- [ ] `store_memory` does not appear anywhere as available or deprecated-but-functional (including `configuration.ts` line 177)
 - [ ] `remember` CLI command does not appear as available
 - [ ] `reflect --dry_run` is documented across MCP, REST, and CLI
 - [ ] `validate` `confirm_auto_fix` requirement is documented
