@@ -6,53 +6,58 @@ export const mcpToolsContent: DocumentationSection = {
   description: 'Complete Model Context Protocol tools for AI agent integration',
   content: `# MCP Tools Reference
 
-Local Memory v1.3.0 provides 16 MCP (Model Context Protocol) tools for intelligent knowledge management. Tools are organized into categories for knowledge intake, evolution, reasoning, and management.
+Local Memory v1.5.0 provides 23 MCP tools for knowledge engineering. Tools are organized into 8 categories covering intake, retrieval, evolution, reasoning, relationships, temporal analysis, and management.
+
+> **v1.5.0**: All tool responses include a \`level_label\` field using canonical vocabulary — \`"observation (L0)"\`, \`"learning (L1)"\`, \`"pattern (L2)"\`, \`"schema (L3)"\` — so agents can always see the knowledge level of what they're working with. Tools that return lists also include level distribution summaries and \`suggested_actions\` tailored to result composition.
 
 ## Overview
 
 ### Tool Categories
 
 **Core Memory (4 tools)**
+- \`observe\` - Record observations for knowledge processing; returns structured JSON
 - \`update_memory\` - Update existing memories
 - \`delete_memory\` - Delete memories
 - \`get_memory_by_id\` - Retrieve specific memories
-- \`search\` - Advanced multi-mode search with cursor pagination
 
-**Knowledge Intake (3 tools)**
-- \`observe\` - Record observations (L0) for later processing
-- \`question\` - Track epistemic gaps and contradictions
-- \`bootstrap\` - Initialize session with knowledge context
+**Search & Retrieval (3 tools)**
+- \`search\` - Advanced multi-mode search with level distribution summaries
+- \`ask\` - Answer a question using stored memories as context
+- \`summarize\` - Summarize stored memories for a given timeframe
 
-**Knowledge Evolution (3 tools)**
-- \`reflect\` - Process observations into learnings (L0->L1)
+**Relationships (4 tools)**
+- \`relate\` - Create typed relationships between memories
+- \`find_related\` - Find memories connected via graph traversal and vector similarity
+- \`discover\` - Find latent relationships across stored memories without needing IDs
+- \`map_graph\` - Traverse the explicit relationship graph around a memory
+
+**Knowledge Evolution (4 tools)**
+- \`reflect\` - Process observations into learnings (L0→L1); idempotent, supports dry_run
 - \`evolve\` - Validate, promote, or decay knowledge
+- \`question\` - Track epistemic gaps, contradictions, and prediction failures
 - \`resolve\` - Handle contradictions and answer questions
 
-**Reasoning (3 tools)**
-- \`predict\` - Generate predictions from patterns and schemas
-- \`explain\` - Trace causal paths between states
-- \`counterfactual\` - Explore "what if" alternative scenarios
-
-**Graph & Status (3 tools)**
-- \`relate\` - Create relationships between memories
+**Reasoning (4 tools)**
+- \`predict\` - Generate predictions from patterns and schemas (session-scoped)
+- \`explain\` - Trace causal paths between states (session-scoped)
+- \`counterfactual\` - Explore "what if" alternative scenarios (session-scoped)
 - \`validate\` - Check knowledge graph integrity
-- \`status\` - Unified system status and statistics
 
-### Legacy Tools (Deprecated & Hidden)
+**Session & Orientation (2 tools)**
+- \`bootstrap\` - Initialize session with knowledge context
+- \`status\` - Unified system status with level_distribution
 
-The following tools are deprecated, hidden from tool listings, but still functional for backward compatibility. They will be removed in v2.0.0.
+**Temporal Analysis (1 tool)**
+- \`temporal\` - Analyze how knowledge evolves over time
 
-| Legacy Tool | Use Instead | Notes |
-|-------------|-------------|-------|
-| \`store_memory\` | \`observe\` | L0 observation intake |
-| \`analysis\` | \`predict\`, \`explain\`, \`counterfactual\` | Split for clearer semantics |
-| \`stats\` | \`status\` | Unified system info |
-| \`relationships\` | \`relate\` | Cleaner API |
-| \`sessions\` | \`bootstrap\` | Session initialization |
-| \`domains\` | \`domain\` parameter on \`observe\` | Pass domain directly |
-| \`categories\` | \`tags\` parameter on \`observe\` | Pass tags directly |
+**Management (1 tool)**
+- \`migrate_domain\` - Batch-rename all memories from one domain to another
 
-*Deprecation timeline: v1.3.0 hidden (current) -> v1.4.0 logged -> v2.0.0 removed*
+### Removed in v1.5.0
+
+- \`store_memory\` — **removed**; returns \`-32601 Method Not Found\`. Use \`observe\` instead.
+- \`analysis\` — hidden; use \`predict\`, \`explain\`, \`counterfactual\`, or \`temporal\`.
+- \`stats\`, \`relationships\`, \`sessions\`, \`domains\`, \`categories\` — hidden legacy tools still accessible via \`enable_legacy_tools\` config flag.
 
 ---
 
@@ -157,9 +162,9 @@ search(
 
 ### observe
 
-**Purpose**: Record observations for knowledge processing. Replaces \`store_memory\`.
+**Purpose**: Record observations for knowledge processing. Returns structured JSON — not a plain string.
 
-Creates L0 observations by default, or higher-level memories with \`level\` parameter. Observations are raw intake meant for later processing via \`reflect\`.
+Creates L0 observations by default, or higher-level memories with the \`level\` parameter. Observations are raw intake meant for later processing via \`reflect\`.
 
 **Parameters**:
 - \`content\` (string, required): The observation content
@@ -168,9 +173,26 @@ Creates L0 observations by default, or higher-level memories with \`level\` para
 - \`domain\` (string, optional): Knowledge domain
 - \`source\` (string, optional): Source of observation
 - \`context\` (string, optional): Additional context
+- \`importance\` (number, optional): Importance 0.0-1.0
 - \`weight\` (number, optional): Initial weight 0.0-10.0
 - \`auto_promote\` (boolean, optional): Auto-promote when criteria met (default: false)
 - \`session_id\` (string, optional): Session identifier
+
+**Response**:
+\`\`\`json
+{
+  "memory_id": "uuid",
+  "level_label": "observation (L0)",
+  "knowledge_type": "observation",
+  "importance": 0.4,
+  "tags": ["redis", "performance"],
+  "domain": "databases",
+  "summary": "Stored as an L0 observation for later reflection.",
+  "suggested_actions": ["Call reflect(mode=batch) to promote observations into learnings"]
+}
+\`\`\`
+
+When \`auto_promote=true\` fires, the response also includes \`auto_promoted: true\`, \`promoted_from_level\`, and \`promoted_to_level\`.
 
 **Example**:
 \`\`\`javascript
@@ -192,7 +214,7 @@ observe(
 
 ### question
 
-**Purpose**: Record epistemic gaps, contradictions, and knowledge questions
+**Purpose**: Record epistemic gaps, contradictions, and knowledge questions. Returns structured JSON.
 
 Tracks what you don't know or need to investigate. Questions can be answered later via \`resolve\`.
 
@@ -202,7 +224,19 @@ Tracks what you don't know or need to investigate. Questions can be answered lat
 - \`priority\` (integer): Priority 1-10 (default: 5)
 - \`domain\` (string, optional): Knowledge domain
 - \`origin_context\` (string, optional): Context that prompted this question
+- \`contradiction_memory_ids\` (array of strings, optional): UUIDs of conflicting memories (must be valid UUIDs)
 - \`session_id\` (string, optional): Session identifier
+
+**Response**:
+\`\`\`json
+{
+  "question_id": "uuid",
+  "question_type": "epistemic_gap",
+  "priority": 7,
+  "summary": "Recorded as an epistemic gap...",
+  "suggested_actions": ["Use search to find related knowledge", "Use resolve when you have an answer"]
+}
+\`\`\`
 
 **Example**:
 \`\`\`javascript
@@ -252,16 +286,35 @@ bootstrap(mode="minimal")
 
 ### reflect
 
-**Purpose**: Process observations into learnings (L0->L1 transformation)
+**Purpose**: Process observations into learnings (L0→L1 transformation). Idempotent — safe to call twice.
 
-Analyzes raw observations and synthesizes them into candidate insights. Can process single observations or batches.
+Analyzes raw observations and synthesizes them into candidate insights. Observations are marked as promoted after processing, so calling \`reflect\` again on the same session does not create duplicate learnings.
 
 **Parameters**:
 - \`mode\` (string): "single", "batch", "auto" (default: "single")
 - \`observation_id\` (string): UUID of observation (required for single mode)
 - \`batch_size\` (integer): Observations to process in batch (default: 10, max: 50)
 - \`auto_criteria\` (string): Criteria for auto selection
-- \`session_id\` (string, optional): Session identifier
+- \`dry_run\` (boolean): Preview which observations would be promoted without creating learnings, calling Ollama, or syncing Qdrant (default: false)
+- \`session_id\` (string, optional): Session identifier — scopes observation retrieval to that session only
+- \`response_format\` (string): "detailed", "concise", "summary", "ids_only"
+
+**Response** (wrapped envelope):
+\`\`\`json
+{
+  "operation": "reflect",
+  "result": {
+    "observations_processed": 5,
+    "learnings_created": 3,
+    "unpromoted_count": 2,
+    "dry_run": false
+  },
+  "summary": "Processed 5 observations, created 3 learnings.",
+  "suggested_actions": [...]
+}
+\`\`\`
+
+When \`dry_run=true\`, the result includes \`"dry_run": true\` and placeholder IDs (\`"hypothetical-0"\`, etc.) — no data is written.
 
 **Example**:
 \`\`\`javascript
@@ -271,8 +324,11 @@ reflect(mode="single", observation_id="uuid-of-observation")
 // Batch processing
 reflect(mode="batch", batch_size=10)
 
-// Automatic selection
-reflect(mode="auto", auto_criteria="time_based")
+// Preview without committing
+reflect(mode="batch", dry_run=true)
+
+// Session-scoped batch
+reflect(mode="batch", session_id="session-uuid")
 \`\`\`
 
 ### evolve
@@ -509,20 +565,22 @@ Runs integrity checks on the knowledge graph and can auto-fix certain issues.
 - \`response_format\` (string): "detailed", "concise", "ids_only", "summary"
 - \`session_id\` (string, optional): Session identifier
 
+**Safety gate**: Calling \`validate(auto_fix=true, dry_run=false)\` requires \`confirm_auto_fix=true\`. Without it the call returns an error. This prevents accidental graph mutations.
+
 **Example**:
 \`\`\`javascript
-// Full integrity check
+// Full integrity check (read-only)
 validate()
 
-// Specific checks with auto-fix preview
+// Preview auto-fixes without applying
 validate(
   checks=["orphaned_reference", "weight_inconsistency"],
   auto_fix=true,
   dry_run=true
 )
 
-// Apply fixes
-validate(auto_fix=true, dry_run=false)
+// Apply fixes — confirm_auto_fix required
+validate(auto_fix=true, dry_run=false, confirm_auto_fix=true)
 \`\`\`
 
 ### status
@@ -535,16 +593,180 @@ Returns comprehensive system health including memory counts by level, domain dis
 - \`response_format\` (string): "detailed", "concise", "summary" (default: "detailed")
 
 **Response includes**:
-- Total memories and counts by level (L0-L3)
+- \`level_distribution\`: observation/learning/pattern/schema counts
 - Domain distribution
 - Relationship count
-- Questions (total, pending, resolved)
+- \`epistemic_gaps\`: count of open gap-type questions
+- \`contradictions\`: count of open contradiction-type questions
 - Recent activity (created/updated in 24h)
+- \`suggested_actions\` branched on knowledge base state
+
+> **v1.5.0**: \`pending_questions\` was replaced by \`epistemic_gaps\` + \`contradictions\`.
 
 **Example**:
 \`\`\`javascript
 status()
 status(response_format="summary")
+\`\`\`
+
+---
+
+## Search & Retrieval Tools
+
+### ask
+
+**Purpose**: Answer a question using stored memories as context.
+
+**Parameters**:
+- \`question\` (string, required): The question to answer
+- \`limit\` (integer): Max memories to use as context (default: 10)
+- \`use_ai\` (boolean): Enable AI-enhanced answering (default: false)
+- \`domain\` (string, optional): Filter by domain
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "summary", "ids_only"
+
+**Example**:
+\`\`\`javascript
+ask(
+  question="What are the key patterns in my Redis usage?",
+  domain="databases",
+  use_ai=true
+)
+\`\`\`
+
+### summarize
+
+**Purpose**: Summarize stored memories for a given timeframe.
+
+**Parameters**:
+- \`query\` (string, optional): Filter memories before summarizing
+- \`timeframe\` (string): "today", "week", "month", "all" (default: "all")
+- \`limit\` (integer): Max memories to summarize (default: 10)
+- \`domain\` (string, optional): Filter by domain
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "summary"
+
+**Example**:
+\`\`\`javascript
+summarize(timeframe="week", domain="programming")
+\`\`\`
+
+---
+
+## Relationship Tools
+
+### find_related
+
+**Purpose**: Find memories connected to a seed memory via graph traversal and vector similarity.
+
+**Parameters**:
+- \`memory_id\` (string, required): Seed memory UUID
+- \`limit\` (integer): Max results (default: 10)
+- \`min_strength\` (number): Minimum relationship strength 0.0-1.0
+- \`relationship_types\` (array): Filter by relationship types
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "ids_only", "summary"
+
+**Example**:
+\`\`\`javascript
+find_related(memory_id="uuid", limit=10, min_strength=0.5)
+\`\`\`
+
+### discover
+
+**Purpose**: Find latent relationships across stored memories without needing specific IDs.
+
+**Parameters**:
+- \`memory_id\` (string, optional): Center discovery around a specific memory
+- \`limit\` (integer): Max relationships to discover (default: 20)
+- \`min_strength\` (number): Minimum strength threshold (default: 0.5)
+- \`relationship_types\` (array): Filter by types
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "ids_only", "summary"
+
+**Example**:
+\`\`\`javascript
+discover(limit=20, min_strength=0.7)
+discover(memory_id="uuid", relationship_types=["similar", "expands"])
+\`\`\`
+
+### map_graph
+
+**Purpose**: Traverse the explicit relationship graph around a memory (edges created via \`relate\`).
+
+**Parameters**:
+- \`memory_id\` (string, required): Central memory UUID
+- \`depth\` (integer): Relationship hops 1-5 (default: 2)
+- \`include_strength\` (boolean): Include edge strength values (default: true)
+- \`relationship_types\` (array): Filter by types
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "ids_only", "summary"
+
+**Example**:
+\`\`\`javascript
+map_graph(memory_id="uuid", depth=3)
+\`\`\`
+
+---
+
+## Temporal Analysis Tools
+
+### temporal
+
+**Purpose**: Analyze how knowledge evolves over time. Provides full MCP parity with the four REST temporal endpoints.
+
+**Parameters**:
+- \`operation\` (string, required): "patterns", "progression", "gaps", "timeline"
+- \`analysis_type\` (string, optional): Operation-specific type
+- \`timeframe\` (string, optional): "today", "week", "month", "quarter", "year", "all"
+- \`concept\` (string, optional): Specific concept to analyze
+- \`focus_areas\` (array of strings, optional): Focus domains or topics (max 10)
+- \`memory_ids\` (array of strings, optional): Specific memories to include (max 50)
+- \`session_id\` (string, optional): Session identifier
+- \`response_format\` (string): "detailed", "concise", "summary", "ids_only"
+
+**Operations**:
+- \`patterns\` — Identify recurring patterns in knowledge acquisition over time
+- \`progression\` — Track mastery progression for a specific concept (\`concept\` required)
+- \`gaps\` — Surface knowledge gaps and areas needing more depth
+- \`timeline\` — Chronological view of how knowledge about a concept developed
+
+**Example**:
+\`\`\`javascript
+// Learning trends over the last month
+temporal(operation="patterns", timeframe="month")
+
+// Track mastery of a specific concept
+temporal(operation="progression", concept="Go concurrency")
+
+// Find knowledge gaps
+temporal(operation="gaps", focus_areas=["databases", "distributed systems"])
+
+// Chronological knowledge timeline
+temporal(operation="timeline", concept="microservices")
+\`\`\`
+
+---
+
+## Management Tools
+
+### migrate_domain
+
+**Purpose**: Batch-rename all memories from one domain to another.
+
+**Parameters**:
+- \`from_domain\` (string, required): Source domain name
+- \`to_domain\` (string, required): Target domain name
+- \`dry_run\` (boolean): Preview affected count without modifying any memories (default: false)
+- \`session_id\` (string, optional): Session identifier
+
+**Example**:
+\`\`\`javascript
+// Preview the migration
+migrate_domain(from_domain="ai-research", to_domain="machine-learning", dry_run=true)
+
+// Apply the migration
+migrate_domain(from_domain="ai-research", to_domain="machine-learning")
 \`\`\`
 
 ---

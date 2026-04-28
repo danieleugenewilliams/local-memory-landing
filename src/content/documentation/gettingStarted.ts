@@ -3,10 +3,10 @@ import { DocumentationSection } from '@/types/documentation';
 export const gettingStartedContent: DocumentationSection = {
   id: 'getting-started',
   title: 'Getting Started',
-  description: 'Complete guide to installing and using Local Memory v1.3.0',
+  description: 'Complete guide to installing and using Local Memory v1.5.0',
   content: `# Getting Started with Local Memory
 
-Local Memory v1.3.0 is a knowledge management system that evolves raw observations into validated patterns and theoretical frameworks. This guide covers installation, basic usage, and key concepts.
+Local Memory v1.5.0 is a knowledge management system that evolves raw observations into validated patterns and theoretical frameworks. This guide covers installation, basic usage, and key concepts.
 
 ## What is Local Memory?
 
@@ -99,14 +99,10 @@ observe(
   domain="databases"
 )
 
-# Or use CLI observe command (preferred)
-local-memory observe "Redis SCAN is O(1) per call but O(N) overall" 
---tags "redis,performance" 
---domain "databases"
-
-# Or use CLI remember command (legacy, still works)
-local-memory remember "Redis SCAN is O(1) per call but O(N) overall" 
+# Or use CLI observe command
+local-memory observe "Redis SCAN is O(1) per call but O(N) overall"
 --tags "redis,performance"
+--domain "databases"
 \`\`\`
 
 ### 4. Process Observations into Learnings
@@ -369,7 +365,7 @@ local-memory kill_all
 
 ## Next Steps
 
-1. **Learn the MCP Tools**: See MCP Tools Reference for all 16 tools
+1. **Learn the MCP Tools**: See MCP Tools Reference for all 23 tools
 2. **CLI Commands**: Check CLI Reference for complete command documentation
 3. **REST API**: See REST API for HTTP endpoint details
 4. **Configuration**: Review Configuration for advanced options`,

@@ -174,7 +174,7 @@ Model Context Protocol integration with configurable tool sets:
 
 \`\`\`yaml
 mcp:
-  enable_legacy_tools: false                   # Enable deprecated individual tools (sessions, domains, categories, store_memory, stats, relationships)
+  enable_legacy_tools: false                   # Enable deprecated legacy tools (sessions, domains, categories, stats, relationships). Note: store_memory was removed in v1.5.0 and is not re-enabled by this flag.
 \`\`\`
 
 ## Knowledge Configuration

@@ -3,10 +3,12 @@ import { DocumentationSection } from '@/types/documentation';
 export const restApiContent: DocumentationSection = {
   id: 'rest-api',
   title: 'REST API Reference',
-  description: 'Complete HTTP API for integrating Local Memory v1.3.0 with any application',
+  description: 'Complete HTTP API for integrating Local Memory v1.5.0 with any application',
   content: `# REST API Reference
 
-Local Memory v1.3.0 provides a comprehensive REST API accessible at \`http://localhost:3002/api/v1\`. Endpoints are organized into categories matching the knowledge lifecycle.
+Local Memory v1.5.0 provides 51 documented REST endpoints accessible at \`http://localhost:3002/api/v1\`. The full endpoint catalogue is available at \`GET /api/v1/\` — it is dynamically generated and includes \`deprecated\` and \`replaced_by\` metadata for each entry. Unknown paths return \`404\`; the catalogue is only at the exact root path.
+
+Endpoints are organized into categories matching the knowledge lifecycle.
 
 ## Overview
 
@@ -76,15 +78,38 @@ http://localhost:3002/api/v1
 ### Authentication
 Currently, no authentication is required for local development. All endpoints are accessible without credentials.
 
-### Response Format
-All responses follow a consistent JSON structure:
+### Response Patterns
+
+**Knowledge Engineering (KE) tools** — \`observe\`, \`question\`, \`reflect\`, \`evolve\`, \`search\`, \`ask\`, \`status\`, and similar — return flat JSON directly:
 \`\`\`json
 {
-  "success": true|false,
+  "memory_id": "uuid",
+  "level_label": "observation (L0)",
+  "summary": "...",
+  "suggested_actions": [...]
+}
+\`\`\`
+
+**CRUD tools** — \`POST /memories\`, \`PUT /memories/{id}\`, etc. — use the wrapped envelope:
+\`\`\`json
+{
+  "success": true,
   "message": "Human-readable message",
   "data": { ... }
 }
 \`\`\`
+
+**\`reflect\` and \`evolve\`** return a structured operation envelope:
+\`\`\`json
+{
+  "operation": "reflect",
+  "result": { "observations_processed": 5, "learnings_created": 3, "dry_run": false },
+  "summary": "Processed 5 observations...",
+  "suggested_actions": [...]
+}
+\`\`\`
+
+**\`level\` field**: All memory objects carry \`level\` as an integer (0–3) and \`level_name\` as a string. Examples: \`"level": 0, "level_name": "observation"\` or \`"level": 1, "level_name": "learning"\`. The \`level_label\` field uses canonical vocabulary: \`"observation (L0)"\`, \`"learning (L1)"\`, \`"pattern (L2)"\`, \`"schema (L3)"\`.
 
 ### Error Responses
 \`\`\`json
@@ -256,7 +281,7 @@ curl -X DELETE "http://localhost:3002/api/v1/memories/550e8400-e29b-41d4-a716-44
 
 **Endpoint**: \`POST /api/v1/observe\`
 
-**Purpose**: Record observations for knowledge processing (World Memory Phase 3).
+**Purpose**: Record observations for knowledge processing. Returns a flat JSON object — not the \`{success, data, message}\` envelope.
 
 **Request Body**:
 \`\`\`json
@@ -281,6 +306,22 @@ curl -X DELETE "http://localhost:3002/api/v1/memories/550e8400-e29b-41d4-a716-44
 - \`source\` (string, optional): Source of observation
 - \`context\` (string, optional): Additional context
 - \`auto_promote\` (boolean, optional): Auto-promote when criteria met
+
+**Response**:
+\`\`\`json
+{
+  "memory_id": "uuid",
+  "level_label": "observation (L0)",
+  "knowledge_type": "observation",
+  "importance": 0.4,
+  "tags": ["api", "performance"],
+  "domain": "backend",
+  "summary": "Stored as an L0 observation for later reflection.",
+  "suggested_actions": ["Call reflect(mode=batch) to promote observations into learnings"]
+}
+\`\`\`
+
+When \`auto_promote=true\` fires, the response also includes \`auto_promoted: true\`, \`promoted_from_level\`, and \`promoted_to_level\`.
 
 **Example**:
 \`\`\`bash
@@ -488,11 +529,89 @@ curl "http://localhost:3002/api/v1/memories/{id}/graph?depth=3"
 **Purpose**: Get comprehensive system status and statistics.
 
 **Response includes**:
-- Memory counts by level (L0-L3)
+- Memory counts by level (L0-L3) via \`level_distribution\` (observation/learning/pattern/schema counts)
 - Domain distribution
 - Relationship statistics
-- Questions (total, pending, resolved)
-- Recent activity
+- \`epistemic_gaps\`: count of open gap-type questions
+- \`contradictions\`: count of open contradiction-type questions
+- Recent activity (24h)
+- \`suggested_actions\` branched on knowledge base state
+
+> **v1.5.0 note**: \`pending_questions\` was split into \`epistemic_gaps\` and \`contradictions\`. Clients reading \`pending_questions\` must update to read these two fields.
+
+---
+
+### Validate Graph
+
+**Endpoint**: \`POST /api/v1/validate\`
+
+**Purpose**: Check knowledge graph integrity and optionally repair issues.
+
+> **Safety gate**: Calling with \`auto_fix=true\` and \`dry_run=false\` requires the \`X-Confirm-Auto-Fix: true\` header. Without it the call returns an error. This prevents accidental graph mutations from default-argument calls.
+
+**Request Body**:
+\`\`\`json
+{
+  "auto_fix": true,
+  "dry_run": false,
+  "checks": ["orphaned_reference", "weight_inconsistency"]
+}
+\`\`\`
+
+**Headers** (required when \`auto_fix=true, dry_run=false\`):
+\`\`\`
+X-Confirm-Auto-Fix: true
+\`\`\`
+
+**Example**:
+\`\`\`bash
+# Safe: preview only
+curl -X POST http://localhost:3002/api/v1/validate \\
+  -H "Content-Type: application/json" \\
+  -d '{"auto_fix": true, "dry_run": true}'
+
+# Destructive: requires confirmation header
+curl -X POST http://localhost:3002/api/v1/validate \\
+  -H "Content-Type: application/json" \\
+  -H "X-Confirm-Auto-Fix: true" \\
+  -d '{"auto_fix": true, "dry_run": false}'
+\`\`\`
+
+### Reflect
+
+**Endpoint**: \`POST /api/v1/reflect\`
+
+**Purpose**: Process observations into learnings. Safe to call repeatedly — already-promoted observations are skipped.
+
+**Request Body**:
+\`\`\`json
+{
+  "mode": "batch",
+  "batch_size": 10,
+  "dry_run": false,
+  "session_id": "optional-session-uuid",
+  "response_format": "detailed"
+}
+\`\`\`
+
+**\`dry_run=true\`**: Previews which observations would be promoted without creating learnings, calling Ollama, or syncing Qdrant. The response includes \`dry_run: true\` to distinguish a preview from a real run.
+
+**Response** (wrapped envelope):
+\`\`\`json
+{
+  "operation": "reflect",
+  "result": {
+    "observations_processed": 5,
+    "learnings_created": 3,
+    "unpromoted_count": 2,
+    "dry_run": false
+  },
+  "summary": "Processed 5 observations, created 3 learnings.",
+  "suggested_actions": [...]
+}
+\`\`\`
+
+> **v1.5.0 note**: \`response_format\` is validated — invalid values return \`400\` with valid options listed.
 
 ---
 
