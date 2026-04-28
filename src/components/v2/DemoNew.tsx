@@ -68,7 +68,7 @@ const demoSteps: DemoStep[] = [
     command: 'resolve({ question_id: "q_3f8a1c", resolution_type: "a_supersedes", rationale: "OAuth2 migration completed, JWT deprecated" })',
     output: `Resolved: new observation supersedes old pattern
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ✓ "Auth uses JWT" weight: 7.2 → 1.0 (deprecated)
+  ✓ "Auth uses JWT" weight: 7.2 → 1.0 (decayed)
   ✓ "Auth migrated to OAuth2" weight: 0.5 → 2.5
   ✓ Question q_3f8a1c marked resolved
   ✓ Contradicts relationship recorded`,

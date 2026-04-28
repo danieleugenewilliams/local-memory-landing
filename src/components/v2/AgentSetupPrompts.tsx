@@ -296,7 +296,7 @@ local-memory start
 VERIFY:
 curl http://localhost:3002/api/v1/health
 
-REST API ENDPOINTS (27 total):
+REST API ENDPOINTS (51 total):
 
 CORE MEMORY:
 - POST /memories - Store new memory

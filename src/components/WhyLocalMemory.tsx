@@ -1,3 +1,4 @@
+// UNROUTED — not served by any active route; content reflects legacy API. Out of v1.5.0 scope.
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, Copy, Bot } from "lucide-react";

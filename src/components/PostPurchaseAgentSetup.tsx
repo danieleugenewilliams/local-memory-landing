@@ -263,7 +263,7 @@ TROUBLESHOOTING:
 - NPM binary missing: cd ~/.npm-global/lib/node_modules/local-memory-mcp && node scripts/install.js
 - Qdrant architecture issues: Script auto-detects ARM64 vs Intel
 - Permission errors: Use sudo for /usr/local/bin operations
-- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Version mismatch: Ensure you have v1.5.0
 - Update failures: Try fresh installation as fallback
 
 NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. Manual fixes are rarely needed.`;
@@ -482,7 +482,7 @@ TROUBLESHOOTING:
 - NPM binary missing: cd %APPDATA%\\npm\\node_modules\\local-memory-mcp && node scripts\\install.js
 - PATH issues: npm installation automatically handles PATH; manual installation requires adding "C:\\Program Files\\LocalMemory" to system PATH
 - Permission errors: Run Command Prompt as Administrator for manual installations
-- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Version mismatch: Ensure you have v1.5.0
 - Qdrant connection issues: Check Windows Firewall settings for port 6333
 - Update failures: Try fresh installation as fallback
 
@@ -680,7 +680,7 @@ TROUBLESHOOTING:
 - NPM binary missing: cd ~/.npm-global/lib/node_modules/local-memory-mcp && node scripts/install.js
 - Permission errors: For manual installation, use sudo for /usr/local/bin operations
 - PATH issues: npm installation automatically handles PATH; manual installation may need PATH updates
-- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Version mismatch: Ensure you have v1.5.0
 - Service management: Use systemctl --user start/stop/status ollama for Ollama service control
 - Architecture issues: Script auto-detects ARM64 vs x86_64 for Qdrant downloads
 - Update failures: Try fresh installation as fallback
@@ -776,7 +776,7 @@ Should return: {"status":"ok"}
 STEP 5 - COMPLETE REST API REFERENCE:
 Base URL: http://localhost:3002/api/v1/
 
-ALL 27 REST API ENDPOINTS (organized by category):
+ALL 51 REST API ENDPOINTS (organized by category):
 
 CORE MEMORY OPERATIONS (4 endpoints):
 - POST /memories - Store new memory with content, tags, importance
@@ -839,11 +839,11 @@ TROUBLESHOOTING:
 - Port conflicts: local-memory auto-selects available ports 3002-3005
 - API connectivity: Check local-memory start output for actual port
 - Cross-platform paths: npm handles PATH automatically; manual installs need PATH setup
-- Version mismatch: Ensure you have v1.0.4+ with enhanced installation scripts
+- Version mismatch: Ensure you have v1.5.0
 - Service status: Use local-memory status to check running services
 - Update failures: Try fresh installation as fallback
 
-NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. The REST API provides 27 endpoints covering all MCP functionality plus additional REST-specific features.`;
+NOTE: The npm installation is now highly reliable with enhanced v1.0.4+ scripts that automatically handle installation detection, version management, and error recovery. The REST API provides 51 endpoints covering all MCP functionality plus additional REST-specific features.`;
 
   return (
     <div className="mt-8">

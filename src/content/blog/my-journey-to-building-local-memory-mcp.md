@@ -5,6 +5,8 @@ description: "The strategic imperative of persistent AI memory and context. How 
 slug: "my-journey-to-building-local-memory-mcp"
 ---
 
+> **Note:** Tool names in this post reflect the API at time of writing. See the [v1.5.0 release post](/blog/local-memory-v150-knowledge-engineering-verified) for current names.
+
 ## TL;DR
 
 I built my first MCP (Model-Context-Protocol) server called Local-Memory-MCP. Basically, it gives LLMs "memory" so they can save details of your work and retrieve them either within that session or in a new session. It reduces (and eventually eliminates) the need to constantly provide context or remind the LLM of details that it often forgets.

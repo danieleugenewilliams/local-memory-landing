@@ -1,3 +1,4 @@
+// UNROUTED — not served by any active route; content reflects legacy API. Out of v1.5.0 scope.
 import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";

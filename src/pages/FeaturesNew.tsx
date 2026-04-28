@@ -196,15 +196,15 @@ const FeaturesNew = () => {
         </div>
       </section>
 
-      {/* MCP Tools - 16 Tools in 5 Categories */}
+      {/* MCP Tools - 23 Tools in 8 Categories */}
       <section className="section-sm border-b border-border bg-card/30">
         <div className="container-wide">
           <div className="mb-10 text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              16 MCP Tools
+              23 MCP Tools
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Organized into 5 categories for complete knowledge management.
+              Organized into 8 categories for complete knowledge management.
             </p>
           </div>
 
@@ -301,7 +301,7 @@ const FeaturesNew = () => {
               </div>
               <p className="mb-4 text-sm text-muted-foreground">
                 Native integration with Claude Desktop, Cursor, and any MCP-enabled agent.
-                16 tools appear automatically — no configuration needed.
+                23 tools appear automatically — no configuration needed.
               </p>
               <div className="terminal">
                 <div className="terminal-header">
@@ -317,10 +317,10 @@ const FeaturesNew = () => {
                 <div className="terminal-body">
                   <pre className="text-sm text-[hsl(var(--terminal-green))]">{`observe({
   content: "Auth uses JWT with 24h expiry. Refresh tokens in httpOnly cookies.",
-  level: "learning",
+  level: 1, level_name: "learning",
   tags: ["auth", "security", "api"]
 })`}</pre>
-                  <pre className="mt-4 text-sm text-foreground/70">{`// Returns: { id: "mem_7f3a9b", level: "L1", weight: 1.0 }`}</pre>
+                  <pre className="mt-4 text-sm text-foreground/70">{`// Returns: { memory_id: "mem_7f3a9b", level: 1, level_label: "learning (L1)", importance: 1.0 }`}</pre>
                 </div>
               </div>
             </div>
@@ -334,7 +334,7 @@ const FeaturesNew = () => {
                 <h3 className="text-lg font-semibold">HTTP API</h3>
               </div>
               <p className="mb-4 text-sm text-muted-foreground">
-                27 endpoints on localhost:3002. Connect GPT, custom agents, CI/CD pipelines,
+                51 endpoints on localhost:3002. Connect GPT, custom agents, CI/CD pipelines,
                 or any system that speaks HTTP.
               </p>
               <div className="terminal">

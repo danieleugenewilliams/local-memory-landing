@@ -1,12 +1,12 @@
 # Local Memory
-**The External Brain for AI Agents** - Version 1.3.0
+**The External Brain for AI Agents** - Version 1.5.0
 
 Transform your AI interactions with persistent, searchable memory that grows smarter over time. Local Memory provides vector search, semantic analysis, and intelligent categorization while keeping all your data completely private and local.
 
-## Experience the v1.3.0 Difference
+## Experience the v1.5.0 Difference
 
 - **Agent-Optimized**: Rated 9.2/10 for tool design following Anthropic's guidance
-- **Unified Intelligence**: 8 unified MCP tools with advanced AI capabilities
+- **Unified Intelligence**: 23 MCP tools with knowledge engineering capabilities
 - **Smart Responses**: Up to 97.5% token optimization with intelligent format controls
 - **Natural IDs**: Human-readable memory references for better agent communication
 - **100% Private**: Your data never leaves your machine
@@ -17,7 +17,7 @@ Transform your AI interactions with persistent, searchable memory that grows sma
 
 ### For Developers
 - **Complete MCP Integration**: Works seamlessly with Claude Desktop, Claude Code, Cursor, and MCP clients
-- **REST API**: 27 endpoints with universal compatibility for any AI platform
+- **REST API**: 51 endpoints with universal compatibility for any AI platform
 - **Dual Vector Backend**: Qdrant integration with automatic SQLite fallback
 - **Production Ready**: CORS, rate limiting, monitoring included
 
