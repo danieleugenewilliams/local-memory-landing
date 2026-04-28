@@ -50,4 +50,9 @@ Crawl-delay: 5
 # Disallow sensitive areas (if any)
 Disallow: /api/
 Disallow: /admin/
+
+# Allow AI dataset file explicitly (would otherwise be blocked by *.json pattern)
+Allow: /ai-dataset.json
+
+# Block other JSON files (internal configs, manifests)
 Disallow: /*.json$

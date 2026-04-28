@@ -20,81 +20,111 @@
     ],
     "key_features": [
       "Context Engineering - transform expertise into AI intelligence",
-      "16 MCP (Model Context Protocol) tools in 5 categories",
-      "27 REST API endpoints for universal integration",
-      "Four-level Knowledge Architecture (L0-L3)",
+      "23 MCP (Model Context Protocol) tools in 8 categories",
+      "51 REST API endpoints for universal integration",
+      "Four-level Knowledge Architecture (L0-L3) with level_label in every response",
       "Cures context amnesia across all AI agents",
       "100% local storage - no cloud training exposure",
-      "Cross-agent memory persistence",
+      "Cross-agent memory persistence with session isolation",
       "Build cumulative AI intelligence assets",
       "Lightning-fast 10-57ms vector search",
       "AI-powered knowledge relationship discovery",
       "Reasoning capabilities (predict, explain, counterfactual)",
       "Intelligent token optimization (up to 97.5% reduction)",
-      "Single binary - zero dependencies"
+      "Single binary - zero dependencies",
+      "Idempotent reflect with dry-run preview",
+      "Temporal analysis (patterns, progression, gaps, timeline)"
     ],
     "mcp_tools": {
-      "total": 16,
+      "total": 23,
+      "knowledge_intake": [
+        "observe - Record observations for knowledge processing (L0); returns structured JSON with memory_id, level_label, importance, tags, summary, suggested_actions",
+        "question - Track epistemic gaps, contradictions, and prediction failures",
+        "bootstrap - Initialize session with knowledge context and pending questions"
+      ],
       "core_memory": [
-        "search - Multi-mode search (semantic, tags, date_range, hybrid)",
-        "update_memory - Modify existing memory content/tags",
-        "delete_memory - Remove memories by ID",
+        "search - Multi-mode search (semantic, tags, date_range, hybrid) with level_label and level distribution",
+        "update_memory - Modify existing memory content and metadata",
+        "delete_memory - Remove memories with relationship cleanup",
         "get_memory_by_id - Retrieve specific memory details"
       ],
-      "knowledge_intake": [
-        "observe - Record observations for knowledge processing (L0)",
-        "question - Track epistemic gaps and contradictions",
-        "bootstrap - Initialize session with knowledge context"
-      ],
       "knowledge_evolution": [
-        "reflect - Process observations into learnings (L0→L1)",
+        "reflect - Process observations into learnings (L0→L1); idempotent via promotion links; dry_run=true previews without modifying data",
         "evolve - Validate, promote, or decay knowledge",
         "resolve - Handle contradictions and answer questions"
       ],
       "reasoning": [
-        "predict - Generate predictions from patterns and schemas",
-        "explain - Trace causal paths between states",
-        "counterfactual - Explore 'what if' alternative scenarios"
+        "predict - Generate predictions from patterns and schemas (session-scoped)",
+        "explain - Trace causal paths between states (session-scoped)",
+        "counterfactual - Explore 'what if' alternative scenarios (session-scoped)",
+        "ask - Answer a question using stored memories as context",
+        "summarize - Summarize stored memories for a given timeframe"
+      ],
+      "relationships": [
+        "relate - Create typed relationships between memories",
+        "find_related - Find connected memories via graph traversal and vector similarity",
+        "discover - Find latent relationships across stored memories without needing IDs",
+        "map_graph - Traverse the explicit relationship graph around a memory"
+      ],
+      "temporal_analysis": [
+        "temporal - Analyze knowledge evolution over time; operations: patterns, progression, gaps, timeline"
       ],
       "graph_status": [
-        "relate - Create typed relationships between memories",
-        "validate - Check knowledge graph integrity",
-        "status - Unified system status and statistics"
+        "validate - Check knowledge graph integrity; requires confirm_auto_fix=true for destructive operations",
+        "status - Unified system status with level_distribution (observation/learning/pattern/schema counts)"
+      ],
+      "management": [
+        "migrate_domain - Batch-rename all memories from one domain to another; supports dry_run"
       ]
     },
     "knowledge_architecture": {
-      "description": "Four-level knowledge hierarchy from raw observations to theoretical frameworks",
+      "description": "Four-level knowledge hierarchy from raw observations to theoretical frameworks. Every response includes level_label using canonical vocabulary.",
       "levels": {
-        "L0_observation": { "weight_range": "0.0-1.0", "characteristics": "Raw intake, ephemeral" },
-        "L1_learning": { "weight_range": "1.0-5.0", "characteristics": "Candidate insights, volatile" },
-        "L2_pattern": { "weight_range": "5.0-9.0", "characteristics": "Validated generalizations, durable" },
-        "L3_schema": { "weight_range": "9.0-10.0", "characteristics": "Theoretical frameworks, permanent" }
+        "L0_observation": { "label": "observation (L0)", "weight_range": "0.0-1.0", "characteristics": "Raw intake, ephemeral" },
+        "L1_learning": { "label": "learning (L1)", "weight_range": "1.0-5.0", "characteristics": "Candidate insights, volatile" },
+        "L2_pattern": { "label": "pattern (L2)", "weight_range": "5.0-9.0", "characteristics": "Validated generalizations, durable" },
+        "L3_schema": { "label": "schema (L3)", "weight_range": "9.0-10.0", "characteristics": "Theoretical frameworks, permanent" }
       },
       "workflow": "observe → reflect → evolve → validate"
     },
     "rest_api": {
-      "total_endpoints": 27,
+      "total_endpoints": 51,
       "base_url": "http://localhost:3002/api/v1",
+      "discovery": "GET /api/v1/ returns a dynamically generated catalogue of all 51 endpoints with deprecated and replaced_by metadata",
+      "note": "Unknown paths return 404. observe endpoint returns flat JSON (no success/data envelope). Reflect and evolve return {operation, result, summary, suggested_actions}.",
       "categories": {
         "memory_operations": 9,
         "advanced_search": 2,
         "ai_analysis": 3,
         "temporal_analysis": 4,
         "relationships": 3,
-        "categorization": 4,
-        "system_management": 4
+        "knowledge_evolution": 6,
+        "system_management": 8,
+        "configuration": 5,
+        "sessions": 4,
+        "domains": 7
       }
     },
     "cli_commands": {
-      "core_memory": ["remember", "search", "get", "update", "forget", "list"],
+      "core_memory": ["observe", "search", "get", "update", "forget", "list"],
       "knowledge_intake": ["observe", "question", "bootstrap"],
-      "knowledge_evolution": ["reflect", "evolve", "resolve"],
-      "reasoning": ["predict", "explain", "counterfactual", "analyze"],
+      "knowledge_evolution": ["reflect", "reflect --dry_run", "evolve", "resolve"],
+      "reasoning": ["predict", "explain", "counterfactual"],
       "graph_status": ["relate", "find_related", "discover", "map_graph", "validate_graph", "status"],
-      "organization": ["list_domains", "create_domain", "domain_stats", "list_categories", "create_category", "category_stats"],
+      "management": ["migrate_domain", "migrate_domain --dry_run"],
       "sessions": ["list_sessions", "session_stats"],
       "system": ["start", "stop", "doctor", "validate", "install", "setup", "ps", "kill", "kill_all"],
       "license": ["license activate", "license status", "license validate"]
+    },
+    "breaking_changes_v150": {
+      "store_memory_removed": "store_memory MCP tool removed; use observe instead (returns -32601 Method Not Found)",
+      "remember_cli_removed": "CLI remember command removed; use observe instead",
+      "observe_response": "MCP observe and question now return structured JSON, not plain strings",
+      "rest_observe_response": "POST /api/v1/observe returns flat object (no {success, data, message} envelope)",
+      "reflect_evolve_response": "reflect and evolve responses wrapped: {operation, result, summary, suggested_actions}",
+      "validate_confirmation": "validate(auto_fix=true, dry_run=false) requires confirm_auto_fix=true or X-Confirm-Auto-Fix header",
+      "level_field_type": "memory level field is now integer (0-3); use level_name for the string label",
+      "status_fields": "pending_questions replaced by epistemic_gaps and contradictions"
     },
     "use_cases": [
       "Context Engineering for AI development",
@@ -105,8 +135,8 @@
       "Cumulative expertise building over time",
       "Team knowledge preservation in AI",
       "Architectural pattern persistence",
-      "Learning progression tracking",
-      "Knowledge gap detection"
+      "Temporal knowledge analysis and progression tracking",
+      "Knowledge gap detection and resolution"
     ],
     "value_propositions": {
       "time_savings": "Save 2+ hours daily eliminating repeated explanations",
@@ -118,8 +148,8 @@
     },
     "technical_specs": {
       "protocols": [
-        "MCP (Model Context Protocol) - Native Integration (16 tools)",
-        "REST API - Universal Compatibility (27 endpoints)"
+        "MCP (Model Context Protocol) - Native Integration (23 tools)",
+        "REST API - Universal Compatibility (51 endpoints)"
       ],
       "storage": [
         "SQLite - Local persistence with encryption",
@@ -149,8 +179,8 @@
     "documentation": {
       "setup_guide": "https://localmemory.co/docs",
       "getting_started": "Quick start guide with 2-minute setup",
-      "mcp_reference": "16 MCP tools documentation",
-      "rest_api_reference": "27 REST API endpoints documentation",
+      "mcp_reference": "23 MCP tools documentation",
+      "rest_api_reference": "51 REST API endpoints documentation",
       "cli_reference": "Complete CLI command reference",
       "configuration": "Advanced configuration options",
       "integration_examples": "Claude, OpenCode, Gemini, Cursor, Windsurf setup guides"
@@ -161,10 +191,11 @@
       "100% local - no cloud training data exposure",
       "Native MCP + universal REST dual protocol",
       "Transform expertise into intelligence assets",
-      "Cross-agent memory persistence",
+      "Cross-agent memory persistence with session isolation",
       "Build once, leverage forever philosophy",
       "Lightning-fast performance (10-57ms)",
-      "Intelligent token optimization"
+      "Intelligent token optimization",
+      "Knowledge levels visible in every response"
     ],
     "data_sovereignty": {
       "storage": "100% local on your machine",
@@ -193,10 +224,12 @@
       "knowledge architecture",
       "L0 L1 L2 L3 knowledge levels",
       "AI reasoning",
-      "predict explain counterfactual"
+      "predict explain counterfactual",
+      "temporal knowledge analysis",
+      "knowledge engineering"
     ],
     "testimonial": "Local memory MCP has really helped boost my productivity. But more importantly, I'm no longer just using AI—I'm engineering my expertise into it. Every day my AI gets smarter about MY specific project context.",
-    "last_updated": "2026-01-12",
-    "version": "v1.3.0"
+    "last_updated": "2026-04-28",
+    "version": "v1.5.0"
   }
 ]
