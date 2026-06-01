@@ -22,6 +22,7 @@ import { detectUserPlatform, getPlatformInfo } from "@/lib/utils";
 import {
   trackBeginCheckout,
   trackPurchase,
+  trackPageView,
   trackLicenseKeyGenerated,
   trackCloseConvertLead,
 } from "@/lib/analytics";
@@ -223,6 +224,12 @@ export default function CheckoutDrawer({ isOpen, onClose }: CheckoutDrawerProps)
           setState("success");
           const sid = sessionIdRef.current;
           if (sid) {
+            // Fire page_view first so GA4 has a landing page if the session expired
+            // during the Stripe iframe interaction (30-min inactivity timeout).
+            // Without this, the purchase fires in a new session with landing page "(not set)".
+            trackPageView("checkout_complete_inline");
+            // Mark as tracked so CheckoutComplete page doesn't double-fire purchase events
+            sessionStorage.setItem(`checkout_tracked_${sid}`, "true");
             trackPurchase(sid);
             trackLicenseKeyGenerated(sid);
             trackCloseConvertLead(sid);
