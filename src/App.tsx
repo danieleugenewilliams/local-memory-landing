@@ -2,10 +2,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import IndexNew from "./pages/IndexNew";
 import IndexDifferentiated from "./pages/IndexDifferentiated";
+import Landing from "./pages/Landing";
+import Architecture from "./pages/site/Architecture";
+import Docs from "./pages/site/Docs";
+import AgentSetup from "./pages/site/AgentSetup";
+import Pricing from "./pages/site/Pricing";
 import FeaturesNew from "./pages/FeaturesNew";
 import NotFound from "./pages/NotFound";
 import PaymentNew from "./pages/PaymentNew";
@@ -55,14 +60,19 @@ const App = () => (
           <DynamicPageTitle />
           <AutoScrollToTop />
           <Routes>
-            <Route path="/" element={<IndexDifferentiated />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/v3" element={<IndexDifferentiated />} />
             <Route path="/features" element={<FeaturesNew />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/payment" element={<PaymentNew />} />
             <Route path="/success" element={<SuccessNew />} />
-            <Route path="/docs" element={<DocsNew />} />
-            <Route path="/prompts" element={<PromptsNew />} />
-            <Route path="/architecture" element={<ArchitectureNew />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/docs-legacy" element={<DocsNew />} />
+            <Route path="/agent-setup" element={<AgentSetup />} />
+            <Route path="/prompts" element={<Navigate to="/agent-setup" replace />} />
+            <Route path="/prompts-legacy" element={<PromptsNew />} />
+            <Route path="/architecture" element={<Architecture />} />
+            <Route path="/architecture-legacy" element={<ArchitectureNew />} />
             <Route path="/privacy" element={<PrivacyNew />} />
             <Route path="/terms" element={<TermsNew />} />
             <Route path="/blog" element={<Blog />} />
