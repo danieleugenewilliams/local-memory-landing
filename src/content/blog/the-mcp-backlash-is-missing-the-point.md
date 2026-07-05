@@ -3,6 +3,7 @@ title: "The MCP Backlash Is Missing the Point: Why Structured Operations Beat Co
 date: "2025-11-20"
 description: "We've been here before: SOAP, REST, and why abandoning structured APIs is always the wrong lesson"
 slug: "the-mcp-backlash-is-missing-the-point"
+tag: "ESSAY"
 image: "/blog/images/mcp-backlash-tools-vs-code.png"
 ---
 

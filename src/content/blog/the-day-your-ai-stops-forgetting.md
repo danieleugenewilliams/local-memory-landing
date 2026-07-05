@@ -3,6 +3,7 @@ title: "The Day Your AI Stops Forgetting: Introducing Local Memory"
 date: "2025-09-02"
 description: "A Memory Revolution Hidden in Plain Sight"
 slug: "the-day-your-ai-stops-forgetting"
+tag: "ESSAY"
 image: "/blog/images/local-memory-introducing.png"
 ---
 

@@ -3,6 +3,7 @@ title: "Local Memory 1.3 Series: The Journey to World Memory"
 date: "2026-02-04"
 description: "Rearchitecting Local Memory from Basic RAG to a Cognitive Knowledge Architecture"
 slug: "local-memory-1.3-series-the-journey-to-world-memory"
+tag: "RELEASE"
 ---
 
 *Published: February 4, 2026*

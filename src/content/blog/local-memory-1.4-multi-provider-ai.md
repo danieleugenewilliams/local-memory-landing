@@ -3,6 +3,7 @@ title: "Local Memory 1.4: Multi-Provider AI and the End of Vendor Lock-In"
 date: "2026-02-06"
 description: "v1.4 introduces a split provider architecture — mix and match AI providers for embeddings and chat. Run Ollama locally for embeddings, Anthropic for reasoning, with automatic fallback. Your memory, your providers, your rules."
 slug: "local-memory-1.4-multi-provider-ai"
+tag: "RELEASE"
 ---
 
 *Published: February 6, 2026*

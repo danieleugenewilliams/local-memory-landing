@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Architecture", href: "/architecture" },
   { label: "Docs", href: "/docs" },
   { label: "Agent Setup", href: "/agent-setup" },
+  { label: "Blog", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
 ];
 
@@ -50,7 +51,9 @@ const SiteHeader = () => {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 font-plex text-[12.5px] font-medium text-lm-stone-2 md:flex">
           {NAV_ITEMS.map((item) => {
-            const active = location.pathname === item.href;
+            const active =
+              location.pathname === item.href ||
+              location.pathname.startsWith(item.href + "/");
             return (
               <Link
                 key={item.label}

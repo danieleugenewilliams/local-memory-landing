@@ -3,6 +3,7 @@ title: "Local Memory v1.5.0: Knowledge Engineering, Verified"
 date: "2026-04-28"
 description: "Driven by a 227-probe audit, 20 feature contracts, and a decomposed verification pass: v1.5.0 makes Local Memory behave the way the architecture always claimed."
 slug: "local-memory-v150-knowledge-engineering-verified"
+tag: "RELEASE"
 ---
 
 Local Memory v1.5.0 closes a 227-probe audit of v1.4.4 by Merlin (5 critical findings, 8 notable) across 20 feature contracts. It changes enough about how the system responds to qualify as a major release with breaking changes. After this version, Local Memory behaves the way the architecture has always claimed: knowledge levels surface in every response, the intake pipeline is safe and idempotent, destructive paths require explicit confirmation, and MCP, REST, and CLI agree on what they return.

@@ -3,6 +3,7 @@ title: "What If Your Systems of Record Are Just a Tangled Web of Contradictory D
 date: "2026-01-16"
 description: "Why the next trillion-dollar platforms won’t eliminate contradictions, they’ll resolve them."
 slug: "systems-of-record-tangled-web-of-contradictory-data"
+tag: "ESSAY"
 image: "/blog/images/hidden-contradictions.png"
 ---
 

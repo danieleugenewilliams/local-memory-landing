@@ -1,25 +1,60 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Check, AlertCircle, Download, Copy, ChevronDown } from "lucide-react";
-import HeaderNew from "@/components/v2/HeaderNew";
-import FooterNew from "@/components/v2/FooterNew";
-import AgentSetupPrompts from "@/components/v2/AgentSetupPrompts";
+import { Helmet } from "react-helmet-async";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
+import ScrollToTop from "@/components/ScrollToTop";
 import { generateLicenseKey, generateAllDownloadUrls } from "@/lib/license";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
-import { trackPurchase, trackLicenseKeyGenerated, trackCloseConvertLead, trackDownloadInitiated } from "@/lib/analytics";
+import { getSetupPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
+import {
+  trackPurchase,
+  trackLicenseKeyGenerated,
+  trackCloseConvertLead,
+  trackDownloadInitiated,
+} from "@/lib/analytics";
+
+/* Checkout Complete — redesigned from Checkout Complete.dc.html (warm-paper).
+   All payment verification, license generation, platform detection, download
+   URLs, and analytics are preserved from the previous implementation; only the
+   presentation changed. The design's stub download handlers are wired to the
+   real download URLs + trackDownloadInitiated here. */
 
 type PageState = "checking" | "success" | "incomplete" | "error";
+
+const CONTAINER = "mx-auto max-w-[1280px] px-6 sm:px-10 lg:px-16 box-border";
+const LICENSE_ERROR_KEY = "LM-ERROR-ERROR-ERROR-ERROR-ERROR";
+
+const copyWithFallback = async (text: string) => {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  }
+};
 
 const CheckoutComplete = () => {
   const [searchParams] = useSearchParams();
   const [pageState, setPageState] = useState<PageState>("checking");
-  const [isCopied, setIsCopied] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>("macos-arm");
-  const [showAlternatives, setShowAlternatives] = useState(false);
+  const [os, setOs] = useState<SetupOS>("macos");
+
+  // Independent 2s "Copied ✓" flags per copy target.
+  const [copied, setCopied] = useState({ key: false, activate: false, prompt: false, cmds: false });
+  const flash = (field: keyof typeof copied) => {
+    setCopied((c) => ({ ...c, [field]: true }));
+    setTimeout(() => setCopied((c) => ({ ...c, [field]: false })), 2000);
+  };
 
   const sessionId = searchParams.get("session_id") || "";
   const licenseKey = sessionId ? generateLicenseKey(sessionId) : "";
   const downloadUrls = generateAllDownloadUrls();
+  const hasLicenseError = licenseKey === LICENSE_ERROR_KEY;
 
   useEffect(() => {
     setSelectedPlatform(detectUserPlatform());
@@ -59,284 +94,401 @@ const CheckoutComplete = () => {
     checkStatus();
   }, [sessionId]);
 
-  const copyLicenseKey = async () => {
-    if (!licenseKey) return;
-    try {
-      await navigator.clipboard.writeText(licenseKey);
-    } catch {
-      const textArea = document.createElement("textarea");
-      textArea.value = licenseKey;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-    }
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-  };
-
-
   const detectedInfo = getPlatformInfo(selectedPlatform);
+  const otherPlatforms = getAllPlatforms().filter((p) => p.platform !== selectedPlatform);
+
+  const activateCmd = `local-memory license activate ${licenseKey} --accept-terms`;
+  const licenseShort = licenseKey ? licenseKey.split("-").slice(0, 2).join("-") + "-…" : "";
+  const allCommands = [
+    activateCmd,
+    "local-memory start",
+    "claude mcp add local-memory -- local-memory --mcp",
+  ].join("\n");
+  const promptContent = getSetupPrompt(os, licenseKey);
 
   return (
-    <div className="min-h-screen bg-background">
-      <HeaderNew />
+    <div className="lm-theme min-h-screen">
+      <Helmet>
+        <title>Order complete — Local Memory</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
 
-      {/* Loading / Error / Incomplete states */}
+      <SiteHeader />
+
+      {/* ---------- Checking ---------- */}
       {pageState === "checking" && (
-        <div className="flex min-h-[60vh] items-center justify-center">
-          <div className="text-center">
-            <div className="mx-auto mb-6 h-12 w-12 animate-spin rounded-full border-4 border-[hsl(var(--brand-green))] border-t-transparent" />
-            <h1 className="text-2xl font-bold">Verifying Payment...</h1>
-            <p className="mt-2 text-muted-foreground">Please wait while we confirm your purchase.</p>
+        <div className="flex min-h-[70vh] items-center justify-center px-6 text-center">
+          <div>
+            <div className="mx-auto mb-6 h-9 w-9 animate-spin rounded-full border-[3px] border-lm-line border-t-lm-amber" />
+            <div className="mb-2 font-serif text-[30px] font-normal text-lm-ink">
+              Verifying your payment…
+            </div>
+            <div className="font-plex text-[12.5px] text-lm-muted">
+              This usually takes a second or two.
+            </div>
           </div>
         </div>
       )}
 
+      {/* ---------- Incomplete ---------- */}
       {pageState === "incomplete" && (
-        <div className="flex min-h-[60vh] items-center justify-center px-4">
-          <div className="text-center">
-            <AlertCircle className="mx-auto h-10 w-10 text-yellow-500" />
-            <h1 className="mt-4 text-xl font-bold">Payment not completed</h1>
-            <p className="mt-2 text-muted-foreground">
-              It looks like your checkout session is still open. Please complete your payment or try again.
+        <div className="flex min-h-[70vh] items-center justify-center px-6 text-center">
+          <div className="max-w-[440px]">
+            <div className="mb-4 font-plex text-xs font-medium uppercase tracking-[0.08em] text-lm-amber">
+              Session still open
+            </div>
+            <div className="mb-3.5 font-serif text-[34px] font-normal leading-[1.15] tracking-[-0.02em] text-lm-ink">
+              Payment not completed
+            </div>
+            <p className="mb-7 text-[15px] leading-[1.65] text-lm-stone">
+              Your checkout session is still open. Nothing was charged — you can pick up where you
+              left off.
             </p>
-            <Link to="/pricing" className="btn-primary mt-6 inline-block">
-              Go to pricing
+            <Link
+              to="/pricing"
+              className="inline-block rounded-lg bg-lm-ink px-[26px] py-[13px] text-[14px] font-semibold text-lm-cream transition-colors hover:bg-lm-ink-soft"
+            >
+              Return to checkout
             </Link>
           </div>
         </div>
       )}
 
+      {/* ---------- Error ---------- */}
       {pageState === "error" && (
-        <div className="flex min-h-[60vh] items-center justify-center px-4">
-          <div className="text-center">
-            <AlertCircle className="mx-auto h-10 w-10 text-destructive" />
-            <h1 className="mt-4 text-xl font-bold">Something went wrong</h1>
-            <p className="mt-2 text-muted-foreground">
-              We couldn't verify your payment. If you completed a purchase, please contact support.
+        <div className="flex min-h-[70vh] items-center justify-center px-6 text-center">
+          <div className="max-w-[460px]">
+            <div className="mb-4 font-plex text-xs font-medium uppercase tracking-[0.08em] text-[#b91c1c]">
+              Verification failed
+            </div>
+            <div className="mb-3.5 font-serif text-[34px] font-normal leading-[1.15] tracking-[-0.02em] text-lm-ink">
+              We couldn't verify your payment
+            </div>
+            <p className="mb-7 text-[15px] leading-[1.65] text-lm-stone">
+              If you completed a purchase, your license key was still emailed to you. Otherwise,
+              contact support and we'll sort it out.
             </p>
-            <div className="mt-6 flex justify-center gap-4">
-              <Link to="/" className="btn-secondary">Home</Link>
-              <Link to="/pricing" className="btn-primary">Try again</Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                to="/pricing"
+                className="inline-block rounded-lg bg-lm-ink px-[26px] py-[13px] text-[14px] font-semibold text-lm-cream transition-colors hover:bg-lm-ink-soft"
+              >
+                Try again
+              </Link>
+              <a
+                href="mailto:support@localmemory.co"
+                className="inline-block rounded-lg border border-lm-line-2 px-[26px] py-[13px] text-[14px] font-medium text-lm-ink transition-colors hover:border-lm-amber hover:text-lm-amber"
+              >
+                Contact support
+              </a>
             </div>
           </div>
         </div>
       )}
 
-      {/* Success — full post-purchase experience */}
+      {/* ---------- Success ---------- */}
       {pageState === "success" && (
-        <>
-          {/* Hero */}
-          <section className="relative overflow-hidden border-b border-border">
-            <div className="absolute inset-0 grid-pattern grid-fade" />
-            <div className="container-wide relative py-12 text-center md:py-16">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[hsl(var(--brand-green))]/10">
-                <Check className="h-8 w-8 text-[hsl(var(--brand-green))]" />
-              </div>
-              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Payment Successful</h1>
-              <p className="mt-3 text-lg text-muted-foreground">
-                Thank you for purchasing Local Memory.
-              </p>
-              <div className="mx-auto mt-4 max-w-md rounded-lg border border-[hsl(var(--brand-blue))]/30 bg-[hsl(var(--brand-blue))]/5 p-4">
-                <p className="font-medium">Check your email</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  We've sent your license key and download links to your email address.
-                  <span className="block text-xs text-muted-foreground/70 mt-1">(Don't see it? Check your spam folder)</span>
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <div className="container-tight py-12">
-            {/* License Key */}
-            <div className="mb-8 rounded-xl border-2 border-[hsl(var(--brand-blue))]/30 bg-card p-6">
-              <h2 className="mb-4 text-center text-lg font-semibold">Your License Key</h2>
-              {licenseKey === "LM-ERROR-ERROR-ERROR-ERROR-ERROR" ? (
-                <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-center">
-                  <p className="mb-3 font-medium text-red-400">License key generation error</p>
-                  <button onClick={() => window.location.reload()} className="btn-secondary text-sm">
-                    Refresh Page
-                  </button>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    If this persists, contact support with session ID: {sessionId.slice(0, 12)}...
-                  </p>
+        <main>
+          {/* Hero: confirmation + license (left) · agent-assisted install (right) */}
+          <div className="border-b border-lm-line">
+            <div
+              className={`${CONTAINER} grid items-start gap-16 pb-[60px] pt-[52px] lg:grid-cols-[0.9fr_1.1fr]`}
+            >
+              {/* left: confirmation + license */}
+              <div>
+                <div className="mb-[18px] font-plex text-xs font-medium uppercase tracking-[0.08em] text-lm-amber">
+                  ✓ Payment complete · order confirmed
                 </div>
-              ) : (
-                <>
-                  <div className="flex items-center gap-3">
-                    <code className="flex-1 rounded-lg border border-border bg-background px-4 py-3 text-center font-mono text-lg">
-                      {licenseKey}
-                    </code>
+                <h1 className="mb-4 font-serif text-[40px] font-normal leading-[1.1] tracking-[-0.02em] text-lm-ink sm:text-[44px]">
+                  Your AI just got a <em className="italic text-lm-amber">memory.</em>
+                </h1>
+                <p className="mb-7 max-w-[44ch] text-[15.5px] leading-[1.65] text-lm-stone">
+                  The fastest setup: copy the prompt on the right into Claude Code — or any coding
+                  agent — and it installs, activates, and connects Local Memory for you.
+                </p>
+
+                {/* license key box */}
+                {hasLicenseError ? (
+                  <div className="rounded-xl border border-[#b91c1c]/40 bg-[#b91c1c]/5 p-5 text-center">
+                    <p className="mb-3 font-medium text-[#b91c1c]">License key generation error</p>
                     <button
-                      onClick={copyLicenseKey}
-                      className="flex h-12 w-24 items-center justify-center gap-2 rounded-lg border border-border bg-card text-sm font-medium transition-colors hover:bg-card/80"
+                      onClick={() => window.location.reload()}
+                      className="rounded-lg border border-lm-line-2 px-4 py-2 text-sm font-medium text-lm-ink transition-colors hover:border-lm-amber"
                     >
-                      {isCopied ? (
-                        <>
-                          <Check className="h-4 w-4 text-[hsl(var(--brand-green))]" />
-                          Copied
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="h-4 w-4" />
-                          Copy
-                        </>
-                      )}
+                      Refresh page
                     </button>
-                  </div>
-                  <div className="mt-4 space-y-1 text-sm text-muted-foreground">
-                    <p>Keep this key safe — it's unique to your purchase.</p>
-                    <p>
-                      Activate with: <code className="rounded bg-background px-2 py-0.5 font-mono text-xs">local-memory license activate {licenseKey} --accept-terms</code>
+                    <p className="mt-3 font-plex text-[11px] text-lm-muted">
+                      If this persists, contact support with session ID: {sessionId.slice(0, 12)}…
                     </p>
                   </div>
-                </>
-              )}
-            </div>
-
-            {/* Download */}
-            <div className="mb-8 rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-6 text-center text-lg font-semibold">Download</h2>
-
-              {/* Detected Platform */}
-              <div className="mb-6 rounded-lg border border-[hsl(var(--brand-green))]/30 bg-[hsl(var(--brand-green))]/5 p-5">
-                <div className="mb-4 flex items-center justify-center gap-3">
-                  <span className="text-3xl">{detectedInfo.icon}</span>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold">{detectedInfo.label}</span>
-                      <span className="rounded bg-[hsl(var(--brand-blue))]/10 px-2 py-0.5 text-xs text-[hsl(var(--brand-blue))]">
-                        Detected
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{detectedInfo.description}</p>
-                  </div>
-                </div>
-                <a
-                  href={downloadUrls[selectedPlatform]}
-                  download={detectedInfo.filename}
-                  onClick={() => trackDownloadInitiated(selectedPlatform, downloadUrls[selectedPlatform], sessionId)}
-                  className="btn-primary mx-auto flex w-full max-w-xs items-center justify-center gap-2"
-                >
-                  <Download className="h-5 w-5" />
-                  Download for {detectedInfo.label}
-                </a>
-                <p className="mt-3 text-center text-sm text-muted-foreground">~13MB</p>
-              </div>
-
-              {/* Other Platforms */}
-              <div className="text-center">
-                <button
-                  onClick={() => setShowAlternatives(!showAlternatives)}
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Need a different platform?
-                  <ChevronDown className={`h-4 w-4 transition-transform ${showAlternatives ? "rotate-180" : ""}`} />
-                </button>
-
-                {showAlternatives && (
-                  <div className="mt-4 space-y-2">
-                    {getAllPlatforms()
-                      .filter((p) => p.platform !== selectedPlatform)
-                      .map((info) => (
-                        <div
-                          key={info.platform}
-                          className="flex items-center justify-between rounded-lg border border-border bg-background p-3"
+                ) : (
+                  <>
+                    <div className="mb-3.5 rounded-xl bg-lm-ink px-[22px] py-[18px]">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="font-plex text-[10.5px] font-medium uppercase tracking-[0.08em] text-[#78716c]">
+                          Your license key
+                        </span>
+                        <button
+                          onClick={() => {
+                            copyWithFallback(licenseKey);
+                            flash("key");
+                          }}
+                          className={`rounded-md border border-lm-ink-soft px-3.5 py-1.5 font-plex text-[12px] font-medium transition-colors hover:border-lm-gold ${
+                            copied.key ? "text-lm-green" : "text-[#b8ad99]"
+                          }`}
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="text-xl">{info.icon}</span>
-                            <div className="text-left">
-                              <p className="font-medium">{info.label}</p>
-                              <p className="text-xs text-muted-foreground">{info.description}</p>
-                            </div>
-                          </div>
-                          <a
-                            href={downloadUrls[info.platform]}
-                            download={info.filename}
-                            onClick={() => trackDownloadInitiated(info.platform, downloadUrls[info.platform], sessionId)}
-                            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm hover:bg-card"
-                          >
-                            <Download className="h-3.5 w-3.5" />
-                            Download
-                          </a>
-                        </div>
-                      ))}
-                  </div>
+                          {copied.key ? "Copied ✓" : "Copy"}
+                        </button>
+                      </div>
+                      <div className="mb-3.5 break-all font-plex text-[16px] font-medium tracking-[0.04em] text-lm-gold">
+                        {licenseKey}
+                      </div>
+                      <div className="flex items-center justify-between gap-3 border-t border-lm-ink-soft pt-3">
+                        <span className="min-w-0 truncate font-plex text-[11.5px] text-[#78716c]">
+                          <span className="text-lm-amber">$</span> local-memory license activate{" "}
+                          {licenseShort} --accept-terms
+                        </span>
+                        <button
+                          onClick={() => {
+                            copyWithFallback(activateCmd);
+                            flash("activate");
+                          }}
+                          className={`shrink-0 font-plex text-[11px] font-medium transition-colors hover:text-lm-gold ${
+                            copied.activate ? "text-lm-green" : "text-[#78716c]"
+                          }`}
+                        >
+                          {copied.activate ? "Copied ✓" : "Copy command"}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 font-plex text-xs text-lm-muted">
+                      <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-lm-amber" />
+                      Key + download links also sent to your email · check spam if missing
+                    </div>
+                  </>
                 )}
               </div>
-            </div>
 
-            {/* Quick Start */}
-            <div className="rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-4 text-lg font-semibold">Quick Start</h2>
-
-              <div className="space-y-4">
-                <div className="rounded-lg border border-border bg-background p-4">
-                  <p className="mb-2 text-sm font-medium">1. Install (if you haven't already)</p>
-                  <div className="terminal">
-                    <div className="terminal-body py-3">
-                      <pre className="text-sm text-[hsl(var(--terminal-green))]">npm install -g local-memory-mcp</pre>
-                    </div>
+              {/* right: agent-assisted install */}
+              <div className="overflow-hidden rounded-2xl bg-lm-ink shadow-[0_24px_48px_-20px_rgba(31,27,22,0.35)]">
+                <div className="flex items-center justify-between gap-3 border-b border-lm-ink-soft px-[22px] py-[15px]">
+                  <div className="flex items-center gap-3">
+                    <span className="rounded-full bg-lm-gold px-2 py-0.5 font-plex text-[10px] font-medium tracking-[0.05em] text-lm-ink-deep">
+                      RECOMMENDED
+                    </span>
+                    <span className="font-serif text-[15px] font-medium text-[#f3ead9]">
+                      Agent-assisted install
+                    </span>
                   </div>
+                  <button
+                    onClick={() => {
+                      copyWithFallback(promptContent);
+                      flash("prompt");
+                    }}
+                    className={`rounded-md px-5 py-[9px] text-[12.5px] font-semibold text-lm-ink-deep transition-colors hover:bg-lm-gold-2 ${
+                      copied.prompt ? "bg-lm-green" : "bg-lm-gold"
+                    }`}
+                  >
+                    {copied.prompt ? "Copied ✓" : "Copy prompt"}
+                  </button>
                 </div>
-
-                <div className="rounded-lg border border-border bg-background p-4">
-                  <p className="mb-2 text-sm font-medium">2. Activate your license</p>
-                  <div className="terminal">
-                    <div className="terminal-body py-3">
-                      <pre className="text-sm text-[hsl(var(--terminal-green))]">local-memory license activate {licenseKey} --accept-terms</pre>
-                    </div>
+                <div className="flex items-center justify-between gap-3 border-b border-lm-ink-soft px-[22px] py-3">
+                  <div className="inline-flex overflow-hidden rounded-md border border-lm-ink-soft">
+                    {SETUP_OS_TABS.map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setOs(t.id);
+                          setCopied((c) => ({ ...c, prompt: false }));
+                        }}
+                        className={`border-r border-lm-ink-soft px-4 py-[7px] font-plex text-[11.5px] font-medium transition-colors last:border-r-0 ${
+                          os === t.id ? "bg-lm-gold text-lm-ink-deep" : "text-[#78716c] hover:text-[#b8ad99]"
+                        }`}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
                   </div>
+                  <span className="hidden font-plex text-[11px] text-[#78716c] sm:inline">
+                    license key embedded ✓
+                  </span>
                 </div>
-
-                <div className="rounded-lg border border-border bg-background p-4">
-                  <p className="mb-2 text-sm font-medium">3. Start the daemon</p>
-                  <div className="terminal">
-                    <div className="terminal-body py-3">
-                      <pre className="text-sm text-[hsl(var(--terminal-green))]">local-memory start</pre>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-lg border border-border bg-background p-4">
-                  <p className="mb-2 text-sm font-medium">4. Connect your AI agent</p>
-                  <div className="terminal">
-                    <div className="terminal-body py-3">
-                      <pre className="text-sm text-[hsl(var(--terminal-green))]">claude mcp add local-memory -- local-memory --mcp</pre>
-                    </div>
-                  </div>
+                <pre className="m-0 h-[296px] overflow-auto whitespace-pre-wrap px-[22px] py-5 font-plex text-[11.5px] leading-[1.7] text-[#b8ad99]">
+                  {promptContent}
+                </pre>
+                <div className="flex items-center gap-2.5 border-t border-lm-ink-soft px-[22px] py-3 font-plex text-[11.5px] text-[#78716c]">
+                  <span className="text-lm-gold">→</span> Paste into Claude Code, Cursor, Windsurf… it
+                  checks existing installs, downloads, activates &amp; wires up MCP.
                 </div>
               </div>
-
-              <div className="mt-6 text-center">
-                <p className="text-sm text-muted-foreground">
-                  Need help?{" "}
-                  <a href="https://discord.gg/rMmn8xP3fZ" target="_blank" rel="noopener noreferrer" className="text-[hsl(var(--brand-blue))] hover:underline">
-                    Join Discord
-                  </a>{" "}
-                  or check the{" "}
-                  <a href="/docs" className="text-[hsl(var(--brand-blue))] hover:underline">
-                    documentation
-                  </a>
-                  .
-                </p>
-              </div>
-            </div>
-
-            {/* Agent Setup Prompts */}
-            <div className="mt-8 rounded-xl border border-border bg-card p-6">
-              <h2 className="mb-2 text-lg font-semibold">Agent-Assisted Installation</h2>
-              <p className="mb-6 text-sm text-muted-foreground">
-                Copy a prompt for your OS and paste it into your AI agent for guided installation.
-              </p>
-              <AgentSetupPrompts productKey={licenseKey} />
             </div>
           </div>
-        </>
+
+          {/* Manual path */}
+          <div className={`${CONTAINER} pb-[88px] pt-14`}>
+            <div className="mb-11 flex flex-wrap items-baseline gap-4 border-b border-lm-line pb-5">
+              <h2 className="font-serif text-[26px] font-normal tracking-[-0.02em] text-lm-ink">
+                Prefer to install it yourself?
+              </h2>
+              <span className="font-plex text-xs text-lm-muted">two steps · ~2 minutes</span>
+            </div>
+
+            <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              {/* download */}
+              <div>
+                <div className="mb-3.5 font-plex text-[11px] font-medium uppercase tracking-[0.08em] text-lm-muted">
+                  Manual · Step 1
+                </div>
+                <h3 className="mb-[22px] font-serif text-[30px] font-normal leading-[1.2] tracking-[-0.02em] text-lm-ink">
+                  Get the binary
+                </h3>
+
+                <div className="mb-3 rounded-xl border border-lm-amber bg-lm-sand-2 px-6 py-[22px]">
+                  <div className="mb-1.5 flex items-center justify-between gap-3">
+                    <span className="font-serif text-[17px] font-medium text-lm-ink">
+                      {detectedInfo.label}
+                    </span>
+                    <span className="rounded-full bg-lm-amber px-2 py-[3px] font-plex text-[10px] font-medium tracking-[0.05em] text-lm-cream">
+                      DETECTED
+                    </span>
+                  </div>
+                  <div className="mb-[18px] font-plex text-xs text-lm-muted">
+                    {detectedInfo.description} · ~13 MB
+                  </div>
+                  <a
+                    href={downloadUrls[selectedPlatform]}
+                    download={detectedInfo.filename}
+                    onClick={() =>
+                      trackDownloadInitiated(selectedPlatform, downloadUrls[selectedPlatform], sessionId)
+                    }
+                    className="block rounded-lg bg-lm-ink py-[13px] text-center text-[14px] font-semibold text-lm-cream transition-colors hover:bg-lm-ink-soft"
+                  >
+                    Download for {detectedInfo.label} ↓
+                  </a>
+                </div>
+
+                {otherPlatforms.map((pl) => (
+                  <div
+                    key={pl.platform}
+                    className="mb-2 flex items-center justify-between gap-3 rounded-lg border border-lm-line px-[18px] py-[13px]"
+                  >
+                    <div className="min-w-0">
+                      <span className="text-[13.5px] font-medium text-lm-ink">{pl.label}</span>
+                      <span className="ml-2.5 font-plex text-[11.5px] text-lm-muted">{pl.description}</span>
+                    </div>
+                    <a
+                      href={downloadUrls[pl.platform]}
+                      download={pl.filename}
+                      onClick={() =>
+                        trackDownloadInitiated(pl.platform, downloadUrls[pl.platform], sessionId)
+                      }
+                      className="shrink-0 rounded-md border border-lm-line-2 px-3.5 py-1.5 font-plex text-[12px] font-medium text-lm-stone transition-colors hover:border-lm-amber hover:text-lm-amber"
+                    >
+                      Download ↓
+                    </a>
+                  </div>
+                ))}
+
+                <div className="mt-3.5 font-plex text-[11.5px] text-lm-muted">
+                  Prefer npm? <span className="text-lm-stone">npm install -g local-memory-mcp</span>
+                </div>
+              </div>
+
+              {/* quick start terminal */}
+              <div>
+                <div className="mb-3.5 font-plex text-[11px] font-medium uppercase tracking-[0.08em] text-lm-muted">
+                  Manual · Step 2
+                </div>
+                <h3 className="mb-[22px] font-serif text-[30px] font-normal leading-[1.2] tracking-[-0.02em] text-lm-ink">
+                  Activate &amp; connect
+                </h3>
+
+                <div className="overflow-hidden rounded-xl bg-lm-ink shadow-[0_24px_48px_-20px_rgba(31,27,22,0.35)]">
+                  <div className="flex items-center justify-between border-b border-lm-ink-soft px-5 py-3.5">
+                    <span className="font-plex text-xs text-[#78716c]">terminal</span>
+                    <button
+                      onClick={() => {
+                        copyWithFallback(allCommands);
+                        flash("cmds");
+                      }}
+                      className={`rounded-md border border-lm-ink-soft px-3.5 py-1.5 font-plex text-[12px] font-medium transition-colors hover:border-lm-gold ${
+                        copied.cmds ? "text-lm-green" : "text-[#b8ad99]"
+                      }`}
+                    >
+                      {copied.cmds ? "Copied ✓" : "Copy all"}
+                    </button>
+                  </div>
+                  <div className="px-6 py-[22px] font-plex text-[12.5px] leading-[1.8] text-[#b8ad99]">
+                    <div className="text-[#78716c]"># 1 · activate your license</div>
+                    <div className="mb-3.5 break-all">
+                      <span className="text-lm-amber">$</span> local-memory license activate {licenseKey}{" "}
+                      --accept-terms
+                    </div>
+                    <div className="text-[#78716c]"># 2 · start the daemon</div>
+                    <div className="mb-3.5">
+                      <span className="text-lm-amber">$</span> local-memory start
+                    </div>
+                    <div className="text-[#78716c]"># 3 · connect your agent</div>
+                    <div>
+                      <span className="text-lm-amber">$</span> claude mcp add local-memory -- local-memory
+                      --mcp
+                    </div>
+                    <div className="mt-3.5 text-lm-green">
+                      ✓ 24 MCP tools available · memory persists across sessions
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2 font-plex text-xs text-lm-muted">
+                  <span className="h-[5px] w-[5px] shrink-0 rounded-full bg-lm-amber" />
+                  Stuck?{" "}
+                  <Link to="/docs" className="text-lm-stone hover:text-lm-amber">
+                    Read the docs
+                  </Link>{" "}
+                  or{" "}
+                  <a
+                    href="https://discord.gg/rMmn8xP3fZ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lm-stone hover:text-lm-amber"
+                  >
+                    join Discord
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* After install → Agent Setup */}
+          <div className="border-t border-lm-line bg-lm-ink text-[#f3ead9]">
+            <div
+              className={`${CONTAINER} flex flex-wrap items-center justify-between gap-8 py-12`}
+            >
+              <div>
+                <div className="mb-3 font-plex text-xs font-medium uppercase tracking-[0.08em] text-lm-gold">
+                  After install
+                </div>
+                <div className="mb-1.5 font-serif text-[24px] font-normal">
+                  Teach your agents to remember.
+                </div>
+                <div className="font-plex text-[13px] text-[#78716c]">
+                  Skills, CLAUDE.md blocks, system prompts, and automation recipes — copy the artifact
+                  that fits your agent.
+                </div>
+              </div>
+              <Link
+                to="/agent-setup"
+                className="shrink-0 rounded-lg bg-lm-gold px-7 py-3.5 text-[15px] font-semibold text-lm-ink-deep transition-colors hover:bg-lm-gold-2"
+              >
+                Agent Setup →
+              </Link>
+            </div>
+          </div>
+        </main>
       )}
 
-      <FooterNew />
+      <SiteFooter minimal />
+      <ScrollToTop />
     </div>
   );
 };
