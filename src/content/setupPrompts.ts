@@ -1,11 +1,9 @@
 /**
  * Agent-assisted install prompts, parameterized by license key.
  *
- * The text here is kept byte-identical to the prompts in
- * src/components/v2/AgentSetupPrompts.tsx (the other consumer). This module
- * exists so the redesigned CheckoutComplete success page can render the same
- * prompts in the warm-paper theme without importing that legacy component.
- * If you edit a prompt, update both places.
+ * Single source of truth for the install-prompt text. Consumed by both the
+ * redesigned CheckoutComplete success page and the legacy
+ * src/components/v2/AgentSetupPrompts.tsx component.
  */
 
 export type SetupOS = "macos" | "windows" | "linux" | "api";

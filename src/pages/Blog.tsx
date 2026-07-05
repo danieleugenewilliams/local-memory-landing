@@ -25,6 +25,7 @@ const FILTERS: { key: Filter; label: string }[] = [
 const fmtLong = (date: string) => format(new Date(date + "T12:00:00"), "MMMM d, yyyy");
 const fmtShort = (date: string) => format(new Date(date + "T12:00:00"), "MMM d, yyyy");
 const tagLabel = (tag: BlogTag) => (tag === "RELEASE" ? "Release" : "Essay");
+const readCta = (tag: BlogTag) => (tag === "RELEASE" ? "Read the release notes →" : "Read the essay →");
 
 const Blog = () => {
   const posts = getAllPosts();
@@ -89,7 +90,7 @@ const Blog = () => {
               <p className="mb-4 max-w-[68ch] text-[15px] leading-[1.6] text-lm-stone">
                 {featured.description}
               </p>
-              <span className="font-plex text-[13px] font-medium text-lm-amber">Read the essay →</span>
+              <span className="font-plex text-[13px] font-medium text-lm-amber">{readCta(featured.tag)}</span>
             </Link>
           </div>
         )}
@@ -98,7 +99,7 @@ const Blog = () => {
         <div className={`${CONTAINER} pb-[88px] pt-11`}>
           <div className="mb-2 flex flex-wrap items-baseline justify-between gap-5">
             <div className="font-plex text-[11.5px] font-medium uppercase tracking-[0.08em] text-lm-muted">
-              All essays
+              {filter === "all" ? "All posts" : FILTERS.find((f) => f.key === filter)?.label}
             </div>
             <div className="flex gap-2">
               {FILTERS.map((f) => {
