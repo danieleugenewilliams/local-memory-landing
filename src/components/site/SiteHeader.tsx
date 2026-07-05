@@ -18,7 +18,15 @@ const NAV_ITEMS = [
 
 const CTA_LABEL = "Get Started — $49";
 
-const SiteHeader = () => {
+interface SiteHeaderProps {
+  /**
+   * Replaces the "Get Started" CTA. Used by the post-purchase page, which
+   * shouldn't invite a repeat checkout — it shows a "Licensed" status pill.
+   */
+  cta?: React.ReactNode;
+}
+
+const SiteHeader = ({ cta }: SiteHeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { openCheckout } = useCheckout();
@@ -69,12 +77,14 @@ const SiteHeader = () => {
               </Link>
             );
           })}
-          <button
-            onClick={openCheckout}
-            className="rounded-md bg-lm-ink px-[18px] py-[9px] text-lm-cream transition-colors hover:bg-lm-ink-soft"
-          >
-            {CTA_LABEL}
-          </button>
+          {cta ?? (
+            <button
+              onClick={openCheckout}
+              className="rounded-md bg-lm-ink px-[18px] py-[9px] text-lm-cream transition-colors hover:bg-lm-ink-soft"
+            >
+              {CTA_LABEL}
+            </button>
+          )}
         </nav>
 
         {/* Mobile toggle */}
@@ -102,15 +112,17 @@ const SiteHeader = () => {
               </Link>
             ))}
             <div className="mt-2 px-1">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openCheckout();
-                }}
-                className="w-full rounded-md bg-lm-ink px-4 py-3 text-center text-lm-cream transition-colors hover:bg-lm-ink-soft"
-              >
-                {CTA_LABEL}
-              </button>
+              {cta ?? (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openCheckout();
+                  }}
+                  className="w-full rounded-md bg-lm-ink px-4 py-3 text-center text-lm-cream transition-colors hover:bg-lm-ink-soft"
+                >
+                  {CTA_LABEL}
+                </button>
+              )}
             </div>
           </nav>
         </div>

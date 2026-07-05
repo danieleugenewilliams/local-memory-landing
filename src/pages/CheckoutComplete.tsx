@@ -113,7 +113,15 @@ const CheckoutComplete = () => {
         <meta name="robots" content="noindex" />
       </Helmet>
 
-      <SiteHeader />
+      <SiteHeader
+        cta={
+          pageState === "success" ? (
+            <span className="rounded-full border border-lm-line-2 px-3 py-1.5 font-plex text-[11px] font-medium uppercase tracking-[0.05em] text-lm-amber">
+              Licensed ✓
+            </span>
+          ) : undefined
+        }
+      />
 
       {/* ---------- Checking ---------- */}
       {pageState === "checking" && (

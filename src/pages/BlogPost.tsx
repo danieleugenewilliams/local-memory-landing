@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet-async";
@@ -21,6 +21,12 @@ const WIDE = "mx-auto max-w-[1080px] px-6 sm:px-10 lg:px-16 box-border";
 const READ = "mx-auto max-w-[760px] px-6 sm:px-10 box-border";
 
 const fmtLong = (date: string) => format(new Date(date + "T12:00:00"), "MMMM d, yyyy");
+
+// True while rendering inside a <pre> block, so `code` children of a fenced
+// block render plain on the dark terminal rather than as light inline chips —
+// react-markdown gives no className to no-language fenced blocks, so we can't
+// rely on className alone to tell inline code from block code.
+const InPreContext = createContext(false);
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -127,21 +133,26 @@ const BlogPost = () => {
       </blockquote>
     ),
     hr: () => <hr className="my-11 border-lm-line" />,
-    code: ({ className, children }) => {
-      const isInline = !className;
-      if (isInline) {
-        return (
-          <code className="rounded border border-lm-line-2 bg-lm-sand-2 px-1.5 py-0.5 font-plex text-[13.5px] text-lm-ink-soft">
-            {children}
-          </code>
-        );
+    code: ({ children }) => {
+      // Inside a <pre>, render plain so the dark terminal styling shows through;
+      // bare inline code gets the light chip treatment.
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const inPre = useContext(InPreContext);
+      if (inPre) {
+        return <code className="font-plex text-[#b8ad99]">{children}</code>;
       }
-      return <code className="font-plex text-[13px] leading-[1.8] text-[#b8ad99]">{children}</code>;
+      return (
+        <code className="rounded border border-lm-line-2 bg-lm-sand-2 px-1.5 py-0.5 font-plex text-[13.5px] text-lm-ink-soft">
+          {children}
+        </code>
+      );
     },
     pre: ({ children }) => (
-      <pre className="my-6 overflow-x-auto rounded-xl bg-lm-ink px-6 py-5 font-plex text-[13px] leading-[1.8] text-[#b8ad99]">
-        {children}
-      </pre>
+      <InPreContext.Provider value={true}>
+        <pre className="my-6 overflow-x-auto rounded-xl bg-lm-ink px-6 py-5 font-plex text-[13px] leading-[1.8] text-[#b8ad99]">
+          {children}
+        </pre>
+      </InPreContext.Provider>
     ),
     table: ({ children }) => (
       <div className="my-6 overflow-x-auto rounded-xl border border-lm-line">
