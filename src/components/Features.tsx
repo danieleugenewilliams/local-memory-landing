@@ -59,7 +59,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-green mt-1">•</span>
-                <span>Token optimization (up to 97.5% response reduction)</span>
+                <span>Token optimization (up to 95% response reduction)</span>
               </li>
             </ul>
           </div>
@@ -151,7 +151,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>23 MCP tools for complete control</span>
+                <span>24 MCP tools for complete control</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
@@ -165,11 +165,11 @@ const Features = () => {
         <div className="mt-16 text-center">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">11</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">24</div>
               <div className="text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">27</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">51</div>
               <div className="text-sm text-muted-foreground">REST Endpoints</div>
             </div>
             <div>

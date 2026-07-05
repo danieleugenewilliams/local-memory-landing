@@ -30,20 +30,10 @@ const Performance = () => {
               <tr className="border-b border-slate-600">
                 <td className="p-4 font-medium text-white border-r border-slate-600">Vector Search</td>
                 <td className="p-4 text-left text-red-400 border-r border-slate-600">50-100ms</td>
-                <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">11-15ms</td>
+                <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">&lt;15ms</td>
                 <td className="p-4 text-left">
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
                     5-8x FASTER
-                  </span>
-                </td>
-              </tr>
-              <tr className="border-b border-slate-600">
-                <td className="p-4 font-medium text-white border-r border-slate-600">Memory Usage</td>
-                <td className="p-4 text-left text-red-400 border-r border-slate-600">200MB+</td>
-                <td className="p-4 text-left text-memory-green font-medium border-r border-slate-600">16MB</td>
-                <td className="p-4 text-left">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-purple/20 text-memory-purple rounded-md text-sm font-bold">
-                    12x LIGHTER
                   </span>
                 </td>
               </tr>
@@ -72,32 +62,12 @@ const Performance = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-300">After:</span>
-                <span className="text-memory-green font-medium">11-15ms</span>
+                <span className="text-memory-green font-medium">&lt;15ms</span>
               </div>
               <div className="flex justify-between items-center pt-2">
                 <span className="text-gray-300">Improvement:</span>
                 <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-xs font-bold">
                   5-8x FASTER
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-slate-800/50 rounded-lg border border-slate-600 p-4">
-            <h4 className="font-semibold text-white mb-3">Memory Usage</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300">Before:</span>
-                <span className="text-red-400">200MB+</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300">After:</span>
-                <span className="text-memory-green font-medium">16MB</span>
-              </div>
-              <div className="flex justify-between items-center pt-2">
-                <span className="text-gray-300">Improvement:</span>
-                <span className="inline-flex items-center gap-1 px-2 py-1 bg-memory-blue/20 text-memory-blue rounded-md text-xs font-bold">
-                  12x LIGHTER
                 </span>
               </div>
             </div>

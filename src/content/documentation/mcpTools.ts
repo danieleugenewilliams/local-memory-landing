@@ -6,7 +6,7 @@ export const mcpToolsContent: DocumentationSection = {
   description: 'Complete Model Context Protocol tools for AI agent integration',
   content: `# MCP Tools Reference
 
-Local Memory v1.5.0 provides 23 MCP tools for knowledge engineering. Tools are organized into 8 categories covering intake, retrieval, evolution, reasoning, relationships, temporal analysis, and management.
+Local Memory v1.5.0 provides 24 MCP tools for knowledge engineering. Tools are organized into 8 categories covering intake, retrieval, evolution, reasoning, relationships, temporal analysis, and management.
 
 > **v1.5.0**: All tool responses include a \`level_label\` field using canonical vocabulary — \`"observation (L0)"\`, \`"learning (L1)"\`, \`"pattern (L2)"\`, \`"schema (L3)"\` — so agents can always see the knowledge level of what they're working with. Tools that return lists also include level distribution summaries and \`suggested_actions\` tailored to result composition.
 
@@ -31,10 +31,11 @@ Local Memory v1.5.0 provides 23 MCP tools for knowledge engineering. Tools are o
 - \`discover\` - Find latent relationships across stored memories without needing IDs
 - \`map_graph\` - Traverse the explicit relationship graph around a memory
 
-**Knowledge Evolution (4 tools)**
+**Knowledge Evolution (5 tools)**
 - \`reflect\` - Process observations into learnings (L0→L1); idempotent, supports dry_run
 - \`evolve\` - Validate, promote, or decay knowledge
 - \`question\` - Track epistemic gaps, contradictions, and prediction failures
+- \`questions\` - List pending questions, contradictions, and epistemic gaps
 - \`resolve\` - Handle contradictions and answer questions
 
 **Reasoning (4 tools)**

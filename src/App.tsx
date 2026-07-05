@@ -2,19 +2,17 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import IndexNew from "./pages/IndexNew";
-import IndexDifferentiated from "./pages/IndexDifferentiated";
-import FeaturesNew from "./pages/FeaturesNew";
+import Landing from "./pages/Landing";
+import Architecture from "./pages/site/Architecture";
+import Docs from "./pages/site/Docs";
+import AgentSetup from "./pages/site/AgentSetup";
+import Pricing from "./pages/site/Pricing";
 import NotFound from "./pages/NotFound";
-import PaymentNew from "./pages/PaymentNew";
-import SuccessNew from "./pages/SuccessNew";
-import DocsNew from "./pages/DocsNew";
 import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
-import PromptsNew from "./pages/PromptsNew";
-import ArchitectureNew from "./pages/ArchitectureNew";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import CheckoutComplete from "./pages/CheckoutComplete";
@@ -43,6 +41,15 @@ const AnalyticsTracker = () => {
   return null;
 };
 
+// /success (legacy Stripe Payment-Link completion page) is retired. Forward any
+// straggler completion — including live Payment Link redirects — to the current
+// post-checkout page, preserving session_id so the license + downloads still
+// resolve (CheckoutComplete verifies any Checkout Session via /api/session-status).
+const SuccessRedirect = () => {
+  const { search } = useLocation();
+  return <Navigate to={`/checkout/complete${search}`} replace />;
+};
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -55,14 +62,15 @@ const App = () => (
           <DynamicPageTitle />
           <AutoScrollToTop />
           <Routes>
-            <Route path="/" element={<IndexDifferentiated />} />
-            <Route path="/v3" element={<IndexDifferentiated />} />
-            <Route path="/features" element={<FeaturesNew />} />
-            <Route path="/payment" element={<PaymentNew />} />
-            <Route path="/success" element={<SuccessNew />} />
-            <Route path="/docs" element={<DocsNew />} />
-            <Route path="/prompts" element={<PromptsNew />} />
-            <Route path="/architecture" element={<ArchitectureNew />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/features" element={<Navigate to="/docs" replace />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/payment" element={<Navigate to="/pricing" replace />} />
+            <Route path="/success" element={<SuccessRedirect />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/agent-setup" element={<AgentSetup />} />
+            <Route path="/prompts" element={<Navigate to="/agent-setup" replace />} />
+            <Route path="/architecture" element={<Architecture />} />
             <Route path="/privacy" element={<PrivacyNew />} />
             <Route path="/terms" element={<TermsNew />} />
             <Route path="/blog" element={<Blog />} />

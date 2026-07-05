@@ -938,8 +938,8 @@ Available fields: \`id\`, \`content\`, \`importance\`, \`tags\`, \`domain\`, \`c
     {
       id: 'basic-commands',
       title: 'Essential Commands',
-      code: `# Store a memory with tags and importance
-local-memory remember "Docker containers isolate applications" --tags docker,devops --importance 8
+      code: `# Store a memory with tags and weight
+local-memory observe "Docker containers isolate applications" --tags docker,devops --weight 8
 
 # Search with AI-powered semantic matching
 local-memory search "containerization" --use_ai --limit 5

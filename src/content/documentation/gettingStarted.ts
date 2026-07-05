@@ -365,7 +365,7 @@ local-memory kill_all
 
 ## Next Steps
 
-1. **Learn the MCP Tools**: See MCP Tools Reference for all 23 tools
+1. **Learn the MCP Tools**: See MCP Tools Reference for all 24 tools
 2. **CLI Commands**: Check CLI Reference for complete command documentation
 3. **REST API**: See REST API for HTTP endpoint details
 4. **Configuration**: Review Configuration for advanced options`,

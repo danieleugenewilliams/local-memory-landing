@@ -263,6 +263,24 @@
 }
 
 @layer utilities {
+  /* Redesign: warm marker-highlight behind text (Newsreader emphasis) */
+  .lm-highlight {
+    box-shadow: inset 0 -0.4em #f3d68b;
+  }
+
+  /* Redesign page root: opt-in warm paper theme without touching shadcn vars */
+  .lm-theme {
+    background: #faf7f1;
+    color: #1f1b16;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    letter-spacing: normal;
+  }
+
+  .lm-theme ::selection {
+    background: rgba(161, 98, 7, 0.18);
+    color: #1f1b16;
+  }
+
   /* Text utilities */
   .text-balance {
     text-wrap: balance;

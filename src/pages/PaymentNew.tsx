@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     question: "What's included in my purchase?",
-    answer: "You get the complete Local Memory system: 23 MCP tools, 51 REST API endpoints, CLI access, all integrations (Claude, GPT, Gemini, Cursor, Cline), and cross-platform support for macOS, Windows, and Linux. Plus free updates and bug fixes.",
+    answer: "You get the complete Local Memory system: 24 MCP tools, 51 REST API endpoints, CLI access, all integrations (Claude, GPT, Gemini, Cursor, Cline), and cross-platform support for macOS, Windows, and Linux. Plus free updates and bug fixes.",
   },
   {
     question: "How do I get support?",
@@ -95,7 +95,7 @@ const PaymentNew = () => {
               <ul className="mb-8 space-y-3 text-left text-sm">
                 <li className="flex items-start gap-3">
                   <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-[hsl(var(--brand-green))]" />
-                  <span>23 MCP tools + 51 REST endpoints + CLI</span>
+                  <span>24 MCP tools + 51 REST endpoints + CLI</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-[hsl(var(--brand-green))]" />

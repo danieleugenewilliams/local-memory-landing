@@ -30,8 +30,8 @@ const tiers = [
     valueAnchor: "$100+",
     valueNote: "infrastructure you'd otherwise build yourself",
     features: [
-      "34,466 memories/second — Benchmarked performance on standard hardware",
-      "97.5% token optimization — Intelligent context compression",
+      "10–57ms semantic search — fast local recall on standard hardware",
+      "Up to 95% token reduction — Intelligent response-format compression",
       "Domain separation — Keep project knowledge isolated or shared",
       "Session management — Pick up exactly where you left off",
     ],
