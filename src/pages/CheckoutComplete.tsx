@@ -6,7 +6,7 @@ import SiteFooter from "@/components/site/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { generateLicenseKey, generateAllDownloadUrls } from "@/lib/license";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
-import { getSetupPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
+import { getInstallPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
 import {
   trackPurchase,
   trackLicenseKeyGenerated,
@@ -104,7 +104,7 @@ const CheckoutComplete = () => {
     "local-memory start",
     "claude mcp add local-memory -- local-memory --mcp",
   ].join("\n");
-  const promptContent = getSetupPrompt(os, licenseKey);
+  const promptContent = getInstallPrompt(os, licenseKey);
 
   return (
     <div className="lm-theme min-h-screen">

@@ -360,23 +360,42 @@ If you don't have a valid license key, visit https://localmemory.co/purchase fir
 }
 
 /**
- * Standalone install prompt for the /agent-setup page, shown before any purchase
- * context exists. Carries a `<YOUR-LICENSE-KEY>` placeholder and a STEP 0 that
- * tells the agent to stop and ask for the key if it wasn't filled in; manual
- * downloaders are pointed at the purchase email.
+ * Install prompt that leads with the license key in STEP 0.
+ *
+ * When a real `key` is passed (the post-purchase success page), it's embedded
+ * directly so the agent has it up front, and manual downloaders are pointed at
+ * the success page. With no key (the /agent-setup page, shown before any
+ * purchase context exists), it falls back to a `<YOUR-LICENSE-KEY>` placeholder
+ * plus a STEP 0 that tells the agent to stop and ask for the key, and points
+ * manual downloaders at the purchase email.
  */
-export function getInstallPrompt(os: SetupOS): string {
-  const key = "<YOUR-LICENSE-KEY>";
-  const step0 = `STEP 0 - LICENSE KEY:
-MY LICENSE KEY: ${key}
+export function getInstallPrompt(os: SetupOS, key?: string): string {
+  const realKey = key?.trim();
 
-IMPORTANT: If the key above still reads ${key}, STOP and ask me for my
+  if (realKey) {
+    const step0 = `STEP 0 - LICENSE KEY:
+MY LICENSE KEY: ${realKey}
+
+This key was emailed to you (from noreply@updates.localmemory.co) and is shown
+on your confirmation page. It never expires — keep it somewhere safe.`;
+    return buildPrompts({
+      key: realKey,
+      step0,
+      manualSource: "Download from the success page",
+    })[os];
+  }
+
+  const placeholder = "<YOUR-LICENSE-KEY>";
+  const step0 = `STEP 0 - LICENSE KEY:
+MY LICENSE KEY: ${placeholder}
+
+IMPORTANT: If the key above still reads ${placeholder}, STOP and ask me for my
 license key before proceeding. It was emailed to me after purchase from
 noreply@updates.localmemory.co (subject: "Your Local Memory license key").
 If I don't have a key, direct me to https://localmemory.co/purchase and
 do not continue with installation.`;
   return buildPrompts({
-    key,
+    key: placeholder,
     step0,
     manualSource: "Download from the link in my purchase email",
   })[os];
