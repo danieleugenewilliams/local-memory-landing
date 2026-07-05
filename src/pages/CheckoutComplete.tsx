@@ -101,7 +101,7 @@ const CheckoutComplete = () => {
             <p className="mt-2 text-muted-foreground">
               It looks like your checkout session is still open. Please complete your payment or try again.
             </p>
-            <Link to="/payment" className="btn-primary mt-6 inline-block">
+            <Link to="/pricing" className="btn-primary mt-6 inline-block">
               Go to pricing
             </Link>
           </div>
@@ -118,7 +118,7 @@ const CheckoutComplete = () => {
             </p>
             <div className="mt-6 flex justify-center gap-4">
               <Link to="/" className="btn-secondary">Home</Link>
-              <Link to="/payment" className="btn-primary">Try again</Link>
+              <Link to="/pricing" className="btn-primary">Try again</Link>
             </div>
           </div>
         </div>
