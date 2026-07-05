@@ -9,7 +9,7 @@ import { getInstallPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPr
 /* Agent Setup — redesigned from Agent Setup.dc.html.
    Skill front-matter (allowed-tools) matches the shipped skill:
    local-memory-golang/integrations/local-memory-skill/skills/local-memory/SKILL.md
-   — 22 tools (delete_memory + migrate_domain sensibly excluded), mcp__local-memory__ prefix.
+   — 23 tools (only the destructive delete_memory excluded), mcp__local-memory__ prefix.
 
    The "Install prompt" artifact (first, recommended) shares its text with the
    post-purchase success page via getInstallPrompt(os) — single source of truth. */
@@ -48,6 +48,7 @@ allowed-tools: >-
   mcp__local-memory__explain mcp__local-memory__counterfactual
   mcp__local-memory__temporal mcp__local-memory__get_memory_by_id
   mcp__local-memory__update_memory mcp__local-memory__validate
+  mcp__local-memory__migrate_domain
   Bash(local-memory:*)
 ---
 

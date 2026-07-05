@@ -76,14 +76,14 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${key} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept_terms
 
 OPTION 2 - UPDATE EXISTING INSTALLATION:
 If local-memory is already installed but outdated:
 1. Update via npm: npm update -g local-memory-mcp
 2. Verify update: local-memory --version
 3. Check license status: local-memory license status
-4. Reactivate if needed: local-memory license activate ${key} --accept-terms
+4. Reactivate if needed: local-memory license activate ${key} --accept_terms
 
 STEP 2 - INSTALL/UPDATE OLLAMA:
 if ! command -v ollama &> /dev/null; then
@@ -145,7 +145,7 @@ STEP 7 - VERIFICATION:
 5. Restart Claude Desktop and verify memory tools appear
 
 TROUBLESHOOTING:
-- License not activated: Use --accept-terms flag
+- License not activated: Use --accept_terms flag
 - Qdrant architecture issues: Script auto-detects ARM64 vs Intel
 - Permission errors: Use sudo for /usr/local/bin operations`;
 
@@ -168,14 +168,14 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${key} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept_terms
 
 OPTION 2 - MANUAL BINARY:
 1. ${manualSource}
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
 4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH
-5. Activate license: local-memory.exe license activate ${key} --accept-terms
+5. Activate license: local-memory.exe license activate ${key} --accept_terms
 
 STEP 2 - INSTALL OLLAMA:
 1. Download Ollama from https://ollama.ai/download/windows
@@ -236,13 +236,13 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${key} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept_terms
 
 OPTION 2 - MANUAL BINARY:
 1. ${manualSource}
 2. Make executable: chmod +x ~/Downloads/local-memory*
 3. Install: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate: local-memory license activate ${key} --accept-terms
+4. Activate: local-memory license activate ${key} --accept_terms
 
 STEP 2 - INSTALL OLLAMA:
 curl -fsSL https://ollama.ai/install.sh | sh
@@ -296,7 +296,7 @@ ${step0}
 
 INSTALLATION:
 npm install -g local-memory-mcp
-local-memory license activate ${key} --accept-terms
+local-memory license activate ${key} --accept_terms
 
 START REST API:
 local-memory start
