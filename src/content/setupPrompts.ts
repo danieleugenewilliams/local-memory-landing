@@ -38,74 +38,55 @@ function buildPrompts({ key, step0, manualSource }: PromptOptions): Record<Setup
 ${step0}
 
 STEP 1 - CHECK EXISTING INSTALLATION:
-Let's first check what's already installed:
-
-# Check if local-memory is already installed
 if command -v local-memory &> /dev/null; then
   echo "Local Memory found in PATH"
   local-memory --version
   local-memory license status
-elif [ -f "/usr/local/bin/local-memory" ]; then
-  echo "Local Memory found at /usr/local/bin/local-memory"
-  /usr/local/bin/local-memory --version
-  /usr/local/bin/local-memory license status
 else
   echo "Local Memory not installed - proceeding with fresh installation"
 fi
 
-# Check Ollama status
-if command -v ollama &> /dev/null; then
-  echo "Ollama is installed:"
-  ollama --version
-  echo "Installed models:"
-  ollama list
-else
-  echo "Ollama not installed"
-fi
-
-# Check Qdrant status
-if [ -f "$HOME/.local-memory/qdrant" ]; then
-  echo "Qdrant found:"
-  ~/.local-memory/qdrant --version 2>/dev/null || echo "Qdrant binary exists but may need update"
-else
-  echo "Qdrant not installed"
-fi
-
-INSTALLATION OPTIONS:
-
-OPTION 1 - NPM INSTALLATION (RECOMMENDED):
-1. Install via npm: npm install -g local-memory-mcp
-2. Verify installation: local-memory --version
+STEP 2 - INSTALL, ACTIVATE, START:
+1. Install (recommended): npm install -g local-memory-mcp
+   Already installed? Update instead: npm update -g local-memory-mcp
+2. Verify: local-memory --version
 3. Activate license: local-memory license activate ${key} --accept_terms
+4. Start the daemon + REST API: local-memory start
 
-OPTION 2 - UPDATE EXISTING INSTALLATION:
-If local-memory is already installed but outdated:
-1. Update via npm: npm update -g local-memory-mcp
-2. Verify update: local-memory --version
-3. Check license status: local-memory license status
-4. Reactivate if needed: local-memory license activate ${key} --accept_terms
+STEP 3 - CONNECT TO YOUR AGENT (MCP):
+Let Local Memory write the client config for you instead of editing JSON by hand:
+  local-memory install mcp
+This auto-detects and configures Claude Desktop — it writes the correct
+~/Library/Application Support/Claude/claude_desktop_config.json for you.
 
-STEP 2 - INSTALL/UPDATE OLLAMA:
-if ! command -v ollama &> /dev/null; then
-  echo "Installing Ollama..."
-  # Download and install Ollama from https://ollama.ai/download/mac
-else
-  echo "Ollama already installed."
-fi
+Using Claude Code? Auto-detect doesn't cover it yet, so add it explicitly:
+  local-memory install mcp claude-code
+(That runs 'claude mcp add' for you under the hood.)
 
-# Install required models if not present
-if ! ollama list | grep -q "nomic-embed-text"; then
-  echo "Installing embedding model..."
+Supported targets today are Claude Desktop and Claude Code.
+
+STEP 4 - VERIFY EVERYTHING:
+1. local-memory doctor                        (checks install, license, services, MCP)
+2. curl http://localhost:3002/api/v1/health   (expect {"data":{"status":"healthy"},...})
+3. local-memory license status
+Then restart Claude Desktop / Claude Code and confirm the memory tools appear.
+
+STEP 5 - OPTIONAL LOCAL AI FEATURES (ASK ME FIRST):
+Core capture and search already work on SQLite — nothing else is required.
+Ollama (local embeddings/chat) and Qdrant (faster vector search) are OPTIONAL
+and only enhance AI features like 'ask' and semantic 'search --use_ai'.
+
+>>> Before installing anything below, ASK ME whether I want the optional local-AI
+    stack. If I say no, stop here — the setup above is complete. If I say yes:
+
+  # Ollama + models (Local Memory auto-detects Ollama on start)
+  if ! command -v ollama &> /dev/null; then
+    echo "Install Ollama from https://ollama.ai/download/mac, then continue"
+  fi
   ollama pull nomic-embed-text
-fi
-
-if ! ollama list | grep -q "qwen2.5:3b"; then
-  echo "Installing chat model..."
   ollama pull qwen2.5:3b
-fi
 
-STEP 3 - INSTALL QDRANT (RECOMMENDED FOR PERFORMANCE):
-if [ ! -f "$HOME/.local-memory/qdrant" ]; then
+  # Qdrant — optional vector DB, OFF by default
   mkdir -p ~/.local-memory
   ARCH=$(uname -m)
   if [ "$ARCH" = "arm64" ]; then
@@ -114,40 +95,27 @@ if [ ! -f "$HOME/.local-memory/qdrant" ]; then
     QDRANT_URL="https://github.com/qdrant/qdrant/releases/latest/download/qdrant-x86_64-apple-darwin.tar.gz"
   fi
   curl -L "$QDRANT_URL" -o ~/.local-memory/qdrant.tar.gz
-  cd ~/.local-memory && tar -xzf qdrant.tar.gz && chmod +x qdrant && rm qdrant.tar.gz
-fi
+  cd ~/.local-memory && tar -xzf qdrant.tar.gz && chmod +x qdrant && rm qdrant.tar.gz && ./qdrant &
+  # To use Qdrant, set qdrant.enabled: true in ~/.local-memory/config.yaml
 
-STEP 4 - START SERVICES:
-1. Start local-memory daemon: local-memory start
-2. Start Qdrant (optional): cd ~/.local-memory && ./qdrant &
-3. Verify Qdrant: curl http://localhost:6333/healthz
+  # Apply the optional services (restart so Local Memory picks them up):
+  local-memory stop && local-memory start
+  local-memory doctor --services
 
-STEP 5 - CONFIGURE MCP INTEGRATION:
-claude mcp add --transport stdio local-memory -- local-memory --mcp
-
-STEP 6 - CLAUDE DESKTOP CONFIGURATION:
-Edit ~/.claude_desktop_config.json:
-{
-  "mcpServers": {
-    "local-memory": {
-      "command": "/path/to/local-memory",
-      "args": ["--mcp"],
-      "transport": "stdio"
+MANUAL FALLBACK (only if 'local-memory install mcp' is unavailable):
+- Claude Code:    claude mcp add --transport stdio local-memory -- local-memory --mcp
+- Claude Desktop: edit ~/Library/Application Support/Claude/claude_desktop_config.json
+  {
+    "mcpServers": {
+      "local-memory": { "command": "/path/to/local-memory", "args": ["--mcp"], "transport": "stdio" }
     }
   }
-}
-
-STEP 7 - VERIFICATION:
-1. Check local-memory status: local-memory license status
-2. Test Claude Code MCP: claude mcp list
-3. Verify Qdrant: curl http://localhost:6333/healthz
-4. Test Ollama models: ollama list
-5. Restart Claude Desktop and verify memory tools appear
 
 TROUBLESHOOTING:
-- License not activated: Use --accept_terms flag
-- Qdrant architecture issues: Script auto-detects ARM64 vs Intel
-- Permission errors: Use sudo for /usr/local/bin operations`;
+- License rejected: watch for em/en-dashes (— –) pasted instead of hyphens (-); re-activate with --accept_terms.
+- MCP tools absent: re-run local-memory install mcp (or the claude-code variant), then restart the client.
+- Service unreachable: local-memory ps; if down, local-memory start; then local-memory doctor.
+- Stuck processes: local-memory kill_all && local-memory start.`;
 
   const windows = `I have purchased a license key for local-memory. Please help me install and configure it completely on Windows:
 
