@@ -11,7 +11,6 @@ import Docs from "./pages/site/Docs";
 import AgentSetup from "./pages/site/AgentSetup";
 import Pricing from "./pages/site/Pricing";
 import NotFound from "./pages/NotFound";
-import SuccessNew from "./pages/SuccessNew";
 import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
 import Blog from "./pages/Blog";
@@ -42,6 +41,15 @@ const AnalyticsTracker = () => {
   return null;
 };
 
+// /success (legacy Stripe Payment-Link completion page) is retired. Forward any
+// straggler completion — including live Payment Link redirects — to the current
+// post-checkout page, preserving session_id so the license + downloads still
+// resolve (CheckoutComplete verifies any Checkout Session via /api/session-status).
+const SuccessRedirect = () => {
+  const { search } = useLocation();
+  return <Navigate to={`/checkout/complete${search}`} replace />;
+};
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -58,7 +66,7 @@ const App = () => (
             <Route path="/features" element={<Navigate to="/docs" replace />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/payment" element={<Navigate to="/pricing" replace />} />
-            <Route path="/success" element={<SuccessNew />} />
+            <Route path="/success" element={<SuccessRedirect />} />
             <Route path="/docs" element={<Docs />} />
             <Route path="/agent-setup" element={<AgentSetup />} />
             <Route path="/prompts" element={<Navigate to="/agent-setup" replace />} />
