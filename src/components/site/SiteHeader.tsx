@@ -8,12 +8,22 @@ import { useCheckout } from "@/contexts/CheckoutContext";
  * Used by the redesigned pages only, so legacy pages keep HeaderNew intact
  * until each page is converted.
  */
-const NAV_ITEMS = [
+const DISCORD_URL = "https://discord.gg/rMmn8xP3fZ";
+
+interface NavItem {
+  label: string;
+  href: string;
+  /** External links open in a new tab and render as <a> instead of <Link>. */
+  external?: boolean;
+}
+
+const NAV_ITEMS: NavItem[] = [
   { label: "Architecture", href: "/architecture" },
   { label: "Docs", href: "/docs" },
   { label: "Agent Setup", href: "/agent-setup" },
   { label: "Blog", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Community", href: DISCORD_URL, external: true },
 ];
 
 const CTA_LABEL = "Get Started — $49";
@@ -59,6 +69,19 @@ const SiteHeader = ({ cta }: SiteHeaderProps) => {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-7 font-plex text-[12.5px] font-medium text-lm-stone-2 md:flex">
           {NAV_ITEMS.map((item) => {
+            if (item.external) {
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-lm-ink"
+                >
+                  {item.label}
+                </a>
+              );
+            }
             const active =
               location.pathname === item.href ||
               location.pathname.startsWith(item.href + "/");
@@ -101,16 +124,29 @@ const SiteHeader = ({ cta }: SiteHeaderProps) => {
       {mobileMenuOpen && (
         <div className="border-t border-lm-line bg-lm-cream md:hidden">
           <nav className="mx-auto flex max-w-[1280px] flex-col gap-1 px-6 py-4 font-plex text-[13px] text-lm-stone-2">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={() => handleNavClick(item.href)}
-                className="rounded-lg px-3 py-3 transition-colors hover:bg-lm-sand-2 hover:text-lm-ink"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) =>
+              item.external ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-lg px-3 py-3 transition-colors hover:bg-lm-sand-2 hover:text-lm-ink"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  onClick={() => handleNavClick(item.href)}
+                  className="rounded-lg px-3 py-3 transition-colors hover:bg-lm-sand-2 hover:text-lm-ink"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <div className="mt-2 px-1">
               {cta ?? (
                 <button

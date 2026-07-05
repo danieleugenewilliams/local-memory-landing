@@ -1,9 +1,16 @@
 /**
- * Agent-assisted install prompts, parameterized by license key.
+ * Agent install-prompt text — single source of truth.
  *
- * Single source of truth for the install-prompt text. Consumed by both the
- * redesigned CheckoutComplete success page and the legacy
- * src/components/v2/AgentSetupPrompts.tsx component.
+ * Two public builders share one internal template (buildPrompts):
+ *  - getSetupPrompt(os, key): post-purchase success page, where the real license
+ *    key is already known and embedded; manual downloaders are sent to the
+ *    success page.
+ *  - getInstallPrompt(os): the /agent-setup page, shown before any purchase
+ *    context exists; carries a `<YOUR-LICENSE-KEY>` placeholder + a STEP 0 that
+ *    tells the agent to stop and ask for the key, and sends manual downloaders
+ *    to the purchase email.
+ *
+ * The install steps are otherwise identical, so they live in exactly one place.
  */
 
 export type SetupOS = "macos" | "windows" | "linux" | "api";
@@ -15,13 +22,20 @@ export const SETUP_OS_TABS: { id: SetupOS; label: string }[] = [
   { id: "api", label: "REST API" },
 ];
 
-export function getSetupPrompt(os: SetupOS, key: string): string {
-  const displayKey = key || "LM-XXXX-XXXX-XXXX-XXXX-XXXX";
+interface PromptOptions {
+  /** License key (or placeholder) interpolated into activation commands. */
+  key: string;
+  /** The STEP 0 block — the only real difference between the two contexts. */
+  step0: string;
+  /** OPTION 2 manual-binary download source (macOS/API don't use it). */
+  manualSource: string;
+}
 
+/** Build all four OS prompts from the shared install procedure. */
+function buildPrompts({ key, step0, manualSource }: PromptOptions): Record<SetupOS, string> {
   const macos = `I have purchased a license key for local-memory. Please help me install and configure it completely on macOS:
 
-STEP 0 - LICENSE VERIFICATION:
-If you don't have a valid license key, visit https://localmemory.co/purchase first.
+${step0}
 
 STEP 1 - CHECK EXISTING INSTALLATION:
 Let's first check what's already installed:
@@ -62,14 +76,14 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${displayKey} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept-terms
 
 OPTION 2 - UPDATE EXISTING INSTALLATION:
 If local-memory is already installed but outdated:
 1. Update via npm: npm update -g local-memory-mcp
 2. Verify update: local-memory --version
 3. Check license status: local-memory license status
-4. Reactivate if needed: local-memory license activate ${displayKey} --accept-terms
+4. Reactivate if needed: local-memory license activate ${key} --accept-terms
 
 STEP 2 - INSTALL/UPDATE OLLAMA:
 if ! command -v ollama &> /dev/null; then
@@ -137,8 +151,7 @@ TROUBLESHOOTING:
 
   const windows = `I have purchased a license key for local-memory. Please help me install and configure it completely on Windows:
 
-STEP 0 - LICENSE VERIFICATION:
-If you don't have a valid license key, visit https://localmemory.co/purchase first.
+${step0}
 
 STEP 1 - CHECK EXISTING INSTALLATION:
 # Check if local-memory is already installed
@@ -155,14 +168,14 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${displayKey} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept-terms
 
 OPTION 2 - MANUAL BINARY:
-1. Download from the success page
+1. ${manualSource}
 2. Create directory: mkdir "C:\\Program Files\\LocalMemory"
 3. Move binary: move "C:\\Downloads\\local-memory*.exe" "C:\\Program Files\\LocalMemory\\local-memory.exe"
 4. Add to PATH: Add "C:\\Program Files\\LocalMemory" to system PATH
-5. Activate license: local-memory.exe license activate ${displayKey} --accept-terms
+5. Activate license: local-memory.exe license activate ${key} --accept-terms
 
 STEP 2 - INSTALL OLLAMA:
 1. Download Ollama from https://ollama.ai/download/windows
@@ -207,8 +220,7 @@ TROUBLESHOOTING:
 
   const linux = `I have purchased a license key for local-memory. Please help me install and configure it completely on Linux:
 
-STEP 0 - LICENSE VERIFICATION:
-If you don't have a valid license key, visit https://localmemory.co/purchase first.
+${step0}
 
 STEP 1 - CHECK EXISTING INSTALLATION:
 if command -v local-memory &> /dev/null; then
@@ -224,13 +236,13 @@ INSTALLATION OPTIONS:
 OPTION 1 - NPM INSTALLATION (RECOMMENDED):
 1. Install via npm: npm install -g local-memory-mcp
 2. Verify installation: local-memory --version
-3. Activate license: local-memory license activate ${displayKey} --accept-terms
+3. Activate license: local-memory license activate ${key} --accept-terms
 
 OPTION 2 - MANUAL BINARY:
-1. Download from the success page
+1. ${manualSource}
 2. Make executable: chmod +x ~/Downloads/local-memory*
 3. Install: sudo mv ~/Downloads/local-memory* /usr/local/bin/local-memory
-4. Activate: local-memory license activate ${displayKey} --accept-terms
+4. Activate: local-memory license activate ${key} --accept-terms
 
 STEP 2 - INSTALL OLLAMA:
 curl -fsSL https://ollama.ai/install.sh | sh
@@ -280,12 +292,11 @@ TROUBLESHOOTING:
 
   const api = `I have purchased a license key for local-memory and want to run it as a REST API server (for editors without MCP support):
 
-STEP 0 - LICENSE VERIFICATION:
-If you don't have a valid license key, visit https://localmemory.co/purchase first.
+${step0}
 
 INSTALLATION:
 npm install -g local-memory-mcp
-local-memory license activate ${displayKey} --accept-terms
+local-memory license activate ${key} --accept-terms
 
 START REST API:
 local-memory start
@@ -330,5 +341,62 @@ curl -X POST http://localhost:3002/api/v1/memories \\
   -H "Content-Type: application/json" \\
   -d '{"content": "My insight", "importance": 8, "tags": ["ai"]}'`;
 
-  return { macos, windows, linux, api }[os];
+  return { macos, windows, linux, api };
+}
+
+/**
+ * Install prompt with the real license key embedded — used on the post-purchase
+ * success page. Manual downloaders are pointed at the success page.
+ */
+export function getSetupPrompt(os: SetupOS, key: string): string {
+  const displayKey = key || "LM-XXXX-XXXX-XXXX-XXXX-XXXX";
+  const step0 = `STEP 0 - LICENSE VERIFICATION:
+If you don't have a valid license key, visit https://localmemory.co/purchase first.`;
+  return buildPrompts({
+    key: displayKey,
+    step0,
+    manualSource: "Download from the success page",
+  })[os];
+}
+
+/**
+ * Install prompt that leads with the license key in STEP 0.
+ *
+ * When a real `key` is passed (the post-purchase success page), it's embedded
+ * directly so the agent has it up front, and manual downloaders are pointed at
+ * the success page. With no key (the /agent-setup page, shown before any
+ * purchase context exists), it falls back to a `<YOUR-LICENSE-KEY>` placeholder
+ * plus a STEP 0 that tells the agent to stop and ask for the key, and points
+ * manual downloaders at the purchase email.
+ */
+export function getInstallPrompt(os: SetupOS, key?: string): string {
+  const realKey = key?.trim();
+
+  if (realKey) {
+    const step0 = `STEP 0 - LICENSE KEY:
+MY LICENSE KEY: ${realKey}
+
+This key was emailed to you (from noreply@updates.localmemory.co) and is shown
+on your confirmation page. It never expires — keep it somewhere safe.`;
+    return buildPrompts({
+      key: realKey,
+      step0,
+      manualSource: "Download from the success page",
+    })[os];
+  }
+
+  const placeholder = "<YOUR-LICENSE-KEY>";
+  const step0 = `STEP 0 - LICENSE KEY:
+MY LICENSE KEY: ${placeholder}
+
+IMPORTANT: If the key above still reads ${placeholder}, STOP and ask me for my
+license key before proceeding. It was emailed to me after purchase from
+noreply@updates.localmemory.co (subject: "Your Local Memory license key").
+If I don't have a key, direct me to https://localmemory.co/purchase and
+do not continue with installation.`;
+  return buildPrompts({
+    key: placeholder,
+    step0,
+    manualSource: "Download from the link in my purchase email",
+  })[os];
 }

@@ -36,7 +36,7 @@ const TESTIMONIALS = [
 const FAQS = [
   {
     q: "What's your refund policy?",
-    a: "We offer a 30-day money-back guarantee. If you're not satisfied with Local Memory for any reason, contact us within 30 days of purchase for a full refund — no questions asked.",
+    a: "We offer a 5-day money-back guarantee. If you're not satisfied with Local Memory for any reason, contact us within 5 days of purchase for a full refund — no questions asked.",
   },
   {
     q: "What's included in my purchase?",
@@ -102,7 +102,7 @@ const Pricing = () => {
                 root cause
               </div>
               <div className="flex gap-3">
-                <span className="text-lm-amber">→</span> 30-day money-back guarantee, no questions asked
+                <span className="text-lm-amber">→</span> 5-day money-back guarantee, no questions asked
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ const Pricing = () => {
           <div className="rounded-2xl border border-lm-line bg-lm-sand px-[38px] py-9 shadow-[0_24px_48px_-24px_rgba(31,27,22,0.25)]">
             <div className="mb-[22px] inline-flex items-center gap-2 rounded-full border border-lm-line-2 bg-lm-cream px-3.5 py-1.5 font-plex text-[11.5px] font-medium text-lm-amber">
               <span className="h-1.5 w-1.5 rounded-full bg-lm-amber" />
-              30-day money-back guarantee
+              5-day money-back guarantee
             </div>
             <div className="mb-0.5 font-serif text-xl font-medium text-lm-ink">Local Memory</div>
             <div className="mb-[22px] font-plex text-[13px] text-lm-muted">Personal license</div>

@@ -6,7 +6,7 @@ import SiteFooter from "@/components/site/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { generateLicenseKey, generateAllDownloadUrls } from "@/lib/license";
 import { detectUserPlatform, getPlatformInfo, getAllPlatforms, type Platform } from "@/lib/utils";
-import { getSetupPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
+import { getInstallPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
 import {
   trackPurchase,
   trackLicenseKeyGenerated,
@@ -104,7 +104,7 @@ const CheckoutComplete = () => {
     "local-memory start",
     "claude mcp add local-memory -- local-memory --mcp",
   ].join("\n");
-  const promptContent = getSetupPrompt(os, licenseKey);
+  const promptContent = getInstallPrompt(os, licenseKey);
 
   return (
     <div className="lm-theme min-h-screen">
@@ -174,7 +174,7 @@ const CheckoutComplete = () => {
             </div>
             <p className="mb-7 text-[15px] leading-[1.65] text-lm-stone">
               If you completed a purchase, your license key was still emailed to you. Otherwise,
-              contact support and we'll sort it out.
+              reach out on Discord and we'll sort it out.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link
@@ -184,10 +184,12 @@ const CheckoutComplete = () => {
                 Try again
               </Link>
               <a
-                href="mailto:support@localmemory.co"
+                href="https://discord.gg/rMmn8xP3fZ"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block rounded-lg border border-lm-line-2 px-[26px] py-[13px] text-[14px] font-medium text-lm-ink transition-colors hover:border-lm-amber hover:text-lm-amber"
               >
-                Contact support
+                Get help on Discord
               </a>
             </div>
           </div>

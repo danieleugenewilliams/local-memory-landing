@@ -138,106 +138,128 @@ function verifyStripeSignature(body, signature, secret) {
   return crypto.timingSafeEqual(Buffer.from(sig, 'hex'), Buffer.from(expectedSig, 'hex'));
 }
 
-// HTML email template
+// HTML email template — warm-paper redesign (matches the site + success page).
+// Table-based layout with inline styles for broad email-client compatibility.
 function createEmailTemplate(customerEmail, licenseKey, downloadUrls) {
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Local Memory!</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .logo-container { display: flex; align-items: center; justify-content: center; gap: 16px; }
-        .logo-img { width: 40px; height: 40px; }
-        .logo-text { font-size: 40px; font-weight: bold; color: #0066cc; line-height: 1; display: flex; align-items: center; }
-        .welcome { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px; }
-        .license-key { background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center; }
-        .license-code { font-family: 'Courier New', monospace; font-size: 18px; font-weight: bold; color: #0066cc; background: white; padding: 10px; border-radius: 4px; display: inline-block; }
-        .download-section { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .download-link { display: inline-block; background: #6c757d; color: white !important; border: 2px solid white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 5px; font-weight: bold; }
-        .download-link:hover { background: #5a6268; color: white !important; }
-        .setup-section { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef; color: #666; }
-        .discord-link { color: #7289da; text-decoration: none; font-weight: bold; }
-        .security-note { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 15px; margin: 20px 0; font-size: 14px; }
-        .setup-option { margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa; }
-        .setup-option h3 { margin: 0 0 10px 0; color: #333; }
-        .setup-option-quick { border: 2px solid #28a745; }
-        .setup-option-agent { border: 2px solid #e67e22; }
-        .setup-option-advanced { border: 2px solid #8e44ad; }
-        .docs-link { color: #0066cc; text-decoration: none; font-weight: bold; }
-        .docs-link:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Your Local Memory license key</title>
 </head>
-<body>
-    <div class="header">
-        <div class="logo-container">
-            <img src="https://www.localmemory.co/lm-logo.png" alt="Local Memory Logo" class="logo-img">
-            <div class="logo-text">Local Memory</div>
-        </div>
-    </div>
+<body style="margin:0; padding:0; background-color:#faf7f1;">
+  <!-- preheader (hidden) -->
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your license key and a one-paste agent install prompt are inside.</div>
 
-    <div class="welcome">
-        <h1>Welcome to Local Memory!</h1>
-        <p>Thank you for your purchase! Your AI memory system is ready to transform how you work with Claude.</p>
-    </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#faf7f1;">
+    <tr><td align="center" style="padding:32px 16px;">
 
-    <div class="license-key">
-        <h2>Your Product License Key</h2>
-        <p>Save this key - you'll need it to activate Local Memory:</p>
-        <div class="license-code">${licenseKey}</div>
-        <p><small>Keep this key safe as it is unique to your purchase</small></p>
-    </div>
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:100%;">
 
-    <div class="download-section">
-        <h2>Download Local Memory</h2>
-        <p>Choose your platform to download:</p>
-        <div style="text-align: center;">
-            <a href="${downloadUrls['macos-arm']}" class="download-link">macOS (Apple Silicon)</a>
-            <a href="${downloadUrls['macos-intel']}" class="download-link">macOS (Intel)</a>
-            <a href="${downloadUrls.windows}" class="download-link">Windows</a>
-            <a href="${downloadUrls.linux}" class="download-link">Linux</a>
-        </div>
-    </div>
+        <!-- header -->
+        <tr><td style="padding:0 8px 24px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="vertical-align:middle;">
+                <img src="https://www.localmemory.co/lm-logo.png" alt="Local Memory" width="28" height="28" style="vertical-align:middle; border-radius:6px;">
+                <span style="font-family:Georgia, 'Times New Roman', serif; font-size:17px; font-weight:bold; color:#1f1b16; padding-left:10px; vertical-align:middle;">Local Memory</span>
+              </td>
+              <td align="right" style="font-family:'Courier New', Courier, monospace; font-size:11px; letter-spacing:1px; color:#a16207; vertical-align:middle;">ORDER CONFIRMED</td>
+            </tr>
+          </table>
+        </td></tr>
 
-    <div class="setup-section">
-        <h2>Setup Options</h2>
-        <p>Choose the setup method that works best for you:</p>
+        <!-- hero -->
+        <tr><td style="padding:8px 8px 28px;">
+          <div style="font-family:Georgia, 'Times New Roman', serif; font-size:34px; line-height:1.15; color:#1f1b16;">Your AI just got a <em style="color:#a16207;">memory.</em></div>
+          <div style="font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:15px; line-height:1.6; color:#57503f; padding-top:12px;">Thanks for purchasing Local Memory. Everything you need is below — your license key, a one-paste agent install, and direct downloads.</div>
+        </td></tr>
 
-        <div class="setup-option setup-option-quick">
-            <h3>Quick Start (2 Minutes)</h3>
-            <p>Zero-config setup with automatic detection. Perfect for most users.</p>
-            <p><a href="https://www.localmemory.co/docs#quick-start" class="docs-link">View Quick Start Guide</a></p>
-        </div>
+        <!-- license key card -->
+        <tr><td style="padding:0 0 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#1f1b16; border-radius:12px;">
+            <tr><td style="padding:22px 26px 8px; font-family:'Courier New', Courier, monospace; font-size:11px; letter-spacing:1.5px; color:#78716c;">YOUR LICENSE KEY</td></tr>
+            <tr><td style="padding:6px 26px 16px; font-family:'Courier New', Courier, monospace; font-size:19px; font-weight:bold; letter-spacing:1px; color:#eab308;">${licenseKey}</td></tr>
+            <tr><td style="padding:0 26px 22px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #3a332a;">
+                <tr><td style="padding-top:14px; font-family:'Courier New', Courier, monospace; font-size:12px; line-height:1.7; color:#b8ad99;">
+                  <span style="color:#78716c;"># activate after install</span><br>
+                  <span style="color:#a16207;">$</span> local-memory license activate ${licenseKey} --accept-terms
+                </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
 
-        <div class="setup-option setup-option-agent">
-            <h3>Agent Setup Prompts (Recommended)</h3>
-            <p>Let your AI assistant handle the complete installation and configuration.</p>
-            <p><a href="https://www.localmemory.co/docs#agent-setup" class="docs-link">View Agent Setup Guide</a></p>
-        </div>
+        <!-- recommended: agent install -->
+        <tr><td style="padding:0 0 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4ecd9; border:1px solid #a16207; border-radius:12px;">
+            <tr><td style="padding:24px 26px 0;">
+              <span style="font-family:'Courier New', Courier, monospace; font-size:10px; font-weight:bold; letter-spacing:1px; color:#faf7f1; background-color:#a16207; padding:3px 9px; border-radius:20px;">RECOMMENDED</span>
+            </td></tr>
+            <tr><td style="padding:14px 26px 6px; font-family:Georgia, 'Times New Roman', serif; font-size:22px; color:#1f1b16;">Let your agent do the install.</td></tr>
+            <tr><td style="padding:0 26px 18px; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:14px; line-height:1.6; color:#57503f;">
+              Grab the install prompt from our Agent Setup page and paste it into Claude Code, Cursor, or any coding agent along with your license key above. The agent installs, activates, and connects Local Memory end to end — and will ask for your key if you forget to include it.
+            </td></tr>
+            <tr><td style="padding:0 26px 24px;">
+              <a href="https://www.localmemory.co/agent-setup" style="display:inline-block; background-color:#1f1b16; color:#faf7f1; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:14px; font-weight:bold; text-decoration:none; padding:13px 26px; border-radius:8px;">Get the install prompt &rarr;</a>
+            </td></tr>
+          </table>
+        </td></tr>
 
-        <div class="setup-option setup-option-advanced">
-            <h3>Advanced Setup</h3>
-            <p>Custom configurations for developers and advanced users.</p>
-            <p><a href="https://www.localmemory.co/docs#manual-setup" class="docs-link">View Advanced Setup Guide</a></p>
-        </div>
+        <!-- manual downloads -->
+        <tr><td style="padding:0 0 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border:1px solid #e5dfd3; border-radius:12px;">
+            <tr><td style="padding:24px 26px 4px; font-family:Georgia, 'Times New Roman', serif; font-size:19px; color:#1f1b16;">Prefer to install it yourself?</td></tr>
+            <tr><td style="padding:4px 26px 16px; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:13.5px; line-height:1.6; color:#57503f;">
+              Easiest: <span style="font-family:'Courier New', Courier, monospace; color:#1f1b16;">npm install -g local-memory-mcp</span> &nbsp;·&nbsp; or download the binary:
+            </td></tr>
+            <tr><td style="padding:0 26px 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:0 8px 8px 0;"><a href="${downloadUrls['macos-arm']}" style="display:inline-block; border:1px solid #d6cfc0; color:#1f1b16; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; text-decoration:none; padding:9px 16px; border-radius:7px;">macOS &middot; Apple Silicon &darr;</a></td>
+                  <td style="padding:0 0 8px;"><a href="${downloadUrls['macos-intel']}" style="display:inline-block; border:1px solid #d6cfc0; color:#1f1b16; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; text-decoration:none; padding:9px 16px; border-radius:7px;">macOS &middot; Intel &darr;</a></td>
+                </tr>
+                <tr>
+                  <td style="padding:0 8px 0 0;"><a href="${downloadUrls['windows']}" style="display:inline-block; border:1px solid #d6cfc0; color:#1f1b16; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; text-decoration:none; padding:9px 16px; border-radius:7px;">Windows &darr;</a></td>
+                  <td><a href="${downloadUrls['linux']}" style="display:inline-block; border:1px solid #d6cfc0; color:#1f1b16; font-family:'Courier New', Courier, monospace; font-size:12px; font-weight:bold; text-decoration:none; padding:9px 16px; border-radius:7px;">Linux &darr;</a></td>
+                </tr>
+              </table>
+            </td></tr>
+            <tr><td style="padding:0 26px 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e5dfd3;">
+                <tr><td style="padding-top:16px; font-family:'Courier New', Courier, monospace; font-size:12px; line-height:1.9; color:#57503f;">
+                  <span style="color:#8a8172;"># then</span><br>
+                  <span style="color:#a16207;">$</span> local-memory license activate ${licenseKey} --accept-terms<br>
+                  <span style="color:#a16207;">$</span> local-memory start<br>
+                  <span style="color:#a16207;">$</span> claude mcp add local-memory -- local-memory --mcp
+                </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
 
-        <p><strong>API Documentation:</strong> View the complete <a href="https://www.localmemory.co/docs#api-reference" class="docs-link">MCP and REST API reference</a> for integration details.</p>
+        <!-- help row -->
+        <tr><td style="padding:8px 8px 0; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:13px; line-height:1.7; color:#57503f;">
+          Questions? <a href="https://www.localmemory.co/docs" style="color:#a16207;">Read the docs</a>, <a href="https://discord.gg/rMmn8xP3fZ" style="color:#a16207;">join Discord</a> — the fastest way to get help.
+        </td></tr>
 
-        <p><strong>Need help?</strong> Join our <a href="https://discord.gg/rMmn8xP3fZ" class="discord-link">Discord community</a> for support and tips!</p>
-    </div>
+        <!-- footer -->
+        <tr><td style="padding:28px 8px 8px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e5dfd3;">
+            <tr><td style="padding-top:18px; font-family:'Courier New', Courier, monospace; font-size:11px; line-height:1.8; color:#8a8172;">
+              Your license key never expires and can reactivate Local Memory anytime.<br>
+              Downloads are served from the official Local Memory GitHub releases.<br><br>
+              &copy; 2026 Local Memory &middot; 100% local &middot; no telemetry
+            </td></tr>
+          </table>
+        </td></tr>
 
-    <div class="security-note">
-        <strong>Security Note:</strong> Your download links are secure from the Local Memory GitHub releases repo. Your license key never expires and can be used to reactivate Local Memory anytime.
-    </div>
-
-    <div class="footer">
-        <p>Best regards,<br>The Local Memory Team</p>
-        <p><small>Having trouble? Reply to this email or reach out on <a href="https://discord.gg/rMmn8xP3fZ" class="discord-link">Discord</a></small></p>
-    </div>
+      </table>
+    </td></tr>
+  </table>
 </body>
 </html>`;
 }
@@ -302,7 +324,7 @@ exports.handler = async (event) => {
       const emailResult = await resend.emails.send({
         from: FROM_EMAIL,
         to: customerEmail,
-        subject: 'Welcome to Local Memory - Your Download & License Key',
+        subject: 'Your Local Memory license key',
         html: emailHtml
       });
 

@@ -34,7 +34,7 @@ const testimonials = [
 const faqs = [
   {
     question: "What's your refund policy?",
-    answer: "We offer a 30-day money-back guarantee. If you're not satisfied with Local Memory for any reason, contact us within 30 days of purchase for a full refund—no questions asked.",
+    answer: "We offer a 5-day money-back guarantee. If you're not satisfied with Local Memory for any reason, contact us within 5 days of purchase for a full refund—no questions asked.",
   },
   {
     question: "What's included in my purchase?",
@@ -76,7 +76,7 @@ const PaymentNew = () => {
               {/* Money-back guarantee badge */}
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[hsl(var(--brand-green)/0.3)] bg-[hsl(var(--brand-green)/0.1)] px-4 py-1.5 text-sm text-[hsl(var(--brand-green))]">
                 <Shield className="h-4 w-4" />
-                <span>30-day money-back guarantee</span>
+                <span>5-day money-back guarantee</span>
               </div>
 
               <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">

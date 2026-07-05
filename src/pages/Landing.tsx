@@ -423,7 +423,7 @@ const Landing = () => {
                   {CTA_LABEL}
                 </button>
                 <span className="font-plex text-[12.5px] text-[#78716c]">
-                  30-day refund, no questions asked
+                  5-day refund, no questions asked
                 </span>
               </div>
             </div>

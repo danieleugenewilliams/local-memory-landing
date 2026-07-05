@@ -643,7 +643,7 @@ local-memory observe "Commit $COMMIT_HASH: $COMMIT_MSG. Files: $CHANGED_FILES" \
                 Ready to give your AI agents persistent memory?
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                One-time purchase, unlimited usage. 30-day money-back guarantee.
+                One-time purchase, unlimited usage. 5-day money-back guarantee.
               </p>
             </div>
             <button

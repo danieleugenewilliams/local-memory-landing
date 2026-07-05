@@ -4,14 +4,26 @@ import { useCheckout } from "@/contexts/CheckoutContext";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
+import { getInstallPrompt, SETUP_OS_TABS, type SetupOS } from "@/content/setupPrompts";
 
 /* Agent Setup — redesigned from Agent Setup.dc.html.
    Skill front-matter (allowed-tools) matches the shipped skill:
    local-memory-golang/integrations/local-memory-skill/skills/local-memory/SKILL.md
-   — 22 tools (delete_memory + migrate_domain sensibly excluded), mcp__local-memory__ prefix. */
+   — 22 tools (delete_memory + migrate_domain sensibly excluded), mcp__local-memory__ prefix.
+
+   The "Install prompt" artifact (first, recommended) shares its text with the
+   post-purchase success page via getInstallPrompt(os) — single source of truth. */
 
 type Protocol = "mcp" | "rest" | "cli";
-type ArtifactKey = "skill" | "claudemd" | "prompt" | "automation";
+type ArtifactKey = "install" | "skill" | "claudemd" | "prompt" | "automation";
+
+// Filename label shown in the code panel header, per OS, for the install prompt.
+const INSTALL_FILENAME: Record<SetupOS, string> = {
+  macos: "install-macos.txt",
+  windows: "install-windows.txt",
+  linux: "install-linux.txt",
+  api: "install-rest-api.txt",
+};
 
 const skillMd = `---
 name: local-memory
@@ -228,19 +240,37 @@ interface ArtifactDef {
   tag: string;
   blurb: string;
   recommended: boolean;
-  filename: string | Record<Protocol, string>;
   description: string;
   points: string[];
-  content: string | Record<Protocol, string>;
   protocolPicker: boolean;
+  osPicker?: boolean;
+  // content/filename are omitted for the install artifact, whose text is
+  // OS-dependent and resolved via getInstallPrompt(os) at render time.
+  filename?: string | Record<Protocol, string>;
+  content?: string | Record<Protocol, string>;
 }
 
 const ARTIFACTS: Record<ArtifactKey, ArtifactDef> = {
+  install: {
+    title: "Install prompt",
+    tag: "INSTALL",
+    blurb: "One paste installs, activates, and connects Local Memory end to end.",
+    recommended: true,
+    description:
+      "Paste this into Claude Code, Cursor, or any coding agent. It checks existing installs, installs the binary, activates your license, and wires up MCP. Replace <YOUR-LICENSE-KEY> with the key from your purchase email — or don't: the prompt tells the agent to ask you for it before doing anything.",
+    points: [
+      "Agent asks for your license key if missing",
+      "Detects existing installs before changing anything",
+      "Ends with a verified, connected memory daemon",
+    ],
+    protocolPicker: false,
+    osPicker: true,
+  },
   skill: {
     title: "Skill",
     tag: "SKILL.md",
     blurb: "Installable, auto-invoked. The agent discovers it when memory work is relevant.",
-    recommended: true,
+    recommended: false,
     filename: "skills/local-memory/SKILL.md · ships with Local Memory",
     description:
       "The official Local Memory skill — an open-standard SKILL.md read natively by Claude Code/Desktop, Codex, Gemini CLI, Cursor, Copilot, and Windsurf. Discovered and loaded only when memory work is relevant; zero context cost otherwise. Install as a Claude Code plugin (bundles the MCP server) or copy the skill folder into any agent's skills directory.",
@@ -299,17 +329,31 @@ const ARTIFACTS: Record<ArtifactKey, ArtifactDef> = {
   },
 };
 
-const ARTIFACT_ORDER: ArtifactKey[] = ["skill", "claudemd", "prompt", "automation"];
+const ARTIFACT_ORDER: ArtifactKey[] = ["install", "skill", "claudemd", "prompt", "automation"];
 
 const AgentSetup = () => {
   const { openCheckout } = useCheckout();
-  const [artifact, setArtifact] = useState<ArtifactKey>("skill");
+  const [artifact, setArtifact] = useState<ArtifactKey>("install");
   const [protocol, setProtocol] = useState<Protocol>("mcp");
+  const [os, setOs] = useState<SetupOS>("macos");
   const [copied, setCopied] = useState(false);
 
   const active = ARTIFACTS[artifact];
-  const activeContent = typeof active.content === "string" ? active.content : active.content[protocol];
-  const activeFilename = typeof active.filename === "string" ? active.filename : active.filename[protocol];
+
+  // The install artifact's text is OS-dependent (shared with the success page);
+  // every other artifact stores its content statically (string or per-protocol).
+  let activeContent: string;
+  let activeFilename: string;
+  if (artifact === "install") {
+    activeContent = getInstallPrompt(os);
+    activeFilename = `${INSTALL_FILENAME[os]} · paste into your agent`;
+  } else if (typeof active.content === "string") {
+    activeContent = active.content;
+    activeFilename = active.filename as string;
+  } else {
+    activeContent = active.content![protocol];
+    activeFilename = (active.filename as Record<Protocol, string>)[protocol];
+  }
 
   const copyContent = async () => {
     await navigator.clipboard.writeText(activeContent);
@@ -344,14 +388,14 @@ const AgentSetup = () => {
             Teach your agents to <em className="italic text-lm-amber">remember.</em>
           </h1>
           <p className="max-w-[58ch] text-[17px] leading-[1.65] text-lm-stone">
-            Four ways to wire Local Memory into an agent, from most durable to most portable. Pick the
+            Five ways to wire Local Memory into an agent, from first install to most portable. Pick the
             artifact that fits how your agent consumes context — copy it, and you're done.
           </p>
         </section>
 
         {/* Artifact picker */}
         <section className="mx-auto max-w-[1280px] px-6 pb-[88px] sm:px-10 lg:px-16">
-          <div className="mb-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {ARTIFACT_ORDER.map((key) => {
               const a = ARTIFACTS[key];
               const isActive = key === artifact;
@@ -392,6 +436,30 @@ const AgentSetup = () => {
                   </div>
                 ))}
               </div>
+
+              {active.osPicker && (
+                <div className="mt-7">
+                  <div className="mb-3 font-plex text-[11px] font-medium uppercase tracking-[0.08em] text-lm-muted">
+                    Platform
+                  </div>
+                  <div className="inline-flex overflow-hidden rounded-lg border border-lm-line-2">
+                    {SETUP_OS_TABS.map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setOs(t.id);
+                          setCopied(false);
+                        }}
+                        className={`border-r border-lm-line-2 px-5 py-2.5 font-plex text-[12.5px] font-medium last:border-r-0 ${
+                          t.id === os ? "bg-lm-ink text-lm-cream" : "text-lm-stone-2 hover:text-lm-ink"
+                        }`}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {active.protocolPicker && (
                 <div className="mt-7">
@@ -446,7 +514,7 @@ const AgentSetup = () => {
                 These artifacts work best with Local Memory installed.
               </div>
               <div className="font-plex text-[13px] text-[#78716c]">
-                $49 one-time · 30-day refund · 100% local
+                $49 one-time · 5-day refund · 100% local
               </div>
             </div>
             <button
