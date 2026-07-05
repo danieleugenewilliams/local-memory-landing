@@ -5,14 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import IndexNew from "./pages/IndexNew";
-import IndexDifferentiated from "./pages/IndexDifferentiated";
 import Landing from "./pages/Landing";
 import Architecture from "./pages/site/Architecture";
 import Docs from "./pages/site/Docs";
 import AgentSetup from "./pages/site/AgentSetup";
 import Pricing from "./pages/site/Pricing";
 import NotFound from "./pages/NotFound";
-import PaymentNew from "./pages/PaymentNew";
 import SuccessNew from "./pages/SuccessNew";
 import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
@@ -57,10 +55,9 @@ const App = () => (
           <AutoScrollToTop />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/v3" element={<IndexDifferentiated />} />
             <Route path="/features" element={<Navigate to="/docs" replace />} />
             <Route path="/pricing" element={<Pricing />} />
-            <Route path="/payment" element={<PaymentNew />} />
+            <Route path="/payment" element={<Navigate to="/pricing" replace />} />
             <Route path="/success" element={<SuccessNew />} />
             <Route path="/docs" element={<Docs />} />
             <Route path="/agent-setup" element={<AgentSetup />} />
