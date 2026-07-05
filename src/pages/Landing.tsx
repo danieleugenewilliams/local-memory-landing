@@ -187,7 +187,7 @@ const Landing = () => {
             <div className="text-[#b8ad99]">
               <span className="text-lm-gold">$</span> local-memory search "auth patterns"
             </div>
-            <div className="text-[#78716c]">→ 3 memories · 11ms</div>
+            <div className="text-[#78716c]">→ 3 memories · 23ms</div>
             <div className="text-lm-cream">L2 · "JWT refresh in middleware, not routes"</div>
             <div className="text-[#b8ad99]">L1 · "Session store moved to Redis, May 12"</div>
             <div className="text-[#78716c]">

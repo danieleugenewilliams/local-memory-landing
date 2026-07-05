@@ -169,7 +169,7 @@ const Features = () => {
               <div className="text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">27</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-green mb-2">51</div>
               <div className="text-sm text-muted-foreground">REST Endpoints</div>
             </div>
             <div>

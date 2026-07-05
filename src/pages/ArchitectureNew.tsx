@@ -54,7 +54,7 @@ const ArchitectureNew = () => {
               <div className="mt-1 text-sm text-muted-foreground">Knowledge Levels</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center animate-in animate-in-delay-2">
-              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-purple))]">27</div>
+              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-purple))]">51</div>
               <div className="mt-1 text-sm text-muted-foreground">REST Endpoints</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center animate-in animate-in-delay-3">
