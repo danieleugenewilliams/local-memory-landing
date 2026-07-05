@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
@@ -51,7 +52,7 @@ const THIRD_PARTIES: ThirdParty[] = [
   },
   {
     name: "Google Analytics",
-    desc: "Aggregate, anonymous website traffic — which pages get visited. IP anonymization is on.",
+    desc: "Aggregate, anonymous website traffic — which pages get visited. GA4 doesn't log or store IP addresses.",
     link: "https://policies.google.com/privacy",
   },
   {
@@ -85,9 +86,9 @@ const PrivacyNew = () => {
           </h1>
           <div className="font-plex text-[13px] text-lm-muted">
             Last updated: {LAST_UPDATED} ·{" "}
-            <a href="/terms" className="text-lm-amber hover:underline">
+            <Link to="/terms" className="text-lm-amber hover:underline">
               Terms of Service →
-            </a>
+            </Link>
           </div>
         </div>
 

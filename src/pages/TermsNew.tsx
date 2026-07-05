@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
@@ -122,9 +123,9 @@ const TermsNew = () => {
           </h1>
           <div className="font-plex text-[13px] text-lm-muted">
             Last updated: {LAST_UPDATED} ·{" "}
-            <a href="/privacy" className="text-lm-amber hover:underline">
+            <Link to="/privacy" className="text-lm-amber hover:underline">
               Privacy Policy →
-            </a>
+            </Link>
           </div>
         </div>
 
