@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Agent Setup", href: "/agent-setup" },
   { label: "Blog", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Discord", href: DISCORD_URL, external: true },
+  { label: "Community", href: DISCORD_URL, external: true },
 ];
 
 const CTA_LABEL = "Get Started — $49";
