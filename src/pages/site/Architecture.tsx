@@ -210,9 +210,9 @@ const Architecture = () => {
                         SQLite <span className="text-lm-muted">~/.local-memory/unified-memories.db</span>
                       </div>
                       <div>
-                        Embedded vector index <span className="text-lm-muted">11–15ms semantic search</span>
+                        Embedded vector index <span className="text-lm-muted">10–57ms semantic search</span>
                       </div>
-                      <div className="text-lm-muted">automatic creation · 16MB RAM footprint</div>
+                      <div className="text-lm-muted">automatic creation · single-file, WAL journaling</div>
                     </div>
                   </div>
                 </div>

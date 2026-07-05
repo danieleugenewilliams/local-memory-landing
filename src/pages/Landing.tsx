@@ -89,7 +89,7 @@ const INTEGRATION_POINTS = [
 
 const COMPARISON_ROWS = [
   { capability: "Your data stays local", lm: "Always", cloud: "Never", md: "Always" },
-  { capability: "Semantic search", lm: "11–15ms", cloud: "Variable", md: "Manual" },
+  { capability: "Semantic search", lm: "10–57ms", cloud: "Variable", md: "Manual" },
   { capability: "Cross-agent memory", lm: "Universal", cloud: "Vendor lock", md: "Copy/paste" },
   { capability: "Knowledge evolution", lm: "L0→L3 hierarchy", cloud: "Flat", md: "None" },
   { capability: "Contradiction detection", lm: "Built-in", cloud: "None", md: "None" },
@@ -118,7 +118,7 @@ const TESTIMONIALS = [
 const PRICE_FEATURES = [
   "Full cognitive engine — hierarchy, contradictions, gaps, evolution",
   "MCP + REST + CLI on every platform",
-  "11–15ms semantic search · runs fully on-device",
+  "10–57ms semantic search · runs fully on-device",
   "Lifetime updates — every feature we ship, forever",
   "100% local — your knowledge stays yours, guaranteed",
 ];
@@ -323,11 +323,11 @@ const Landing = () => {
               <div className="text-[#b8ad99]">
                 <span className="text-lm-gold">$</span> local-memory start
               </div>
-              <div className="text-lm-green">✓ database created · vector search ready · 16MB RAM</div>
+              <div className="text-lm-green">✓ database created · vector search ready</div>
               <div className="mt-[18px] text-[#78716c]"># teach it something</div>
               <div className="text-[#b8ad99]">
-                <span className="text-lm-gold">$</span> local-memory remember "Redis for caching"
-                --importance 8
+                <span className="text-lm-gold">$</span> local-memory observe "Redis for caching"
+                --weight 8
               </div>
               <div className="text-lm-green">✓ stored as L0 · related to 4 memories</div>
               <div className="mt-[18px] text-[#78716c]"># see what needs your judgment</div>

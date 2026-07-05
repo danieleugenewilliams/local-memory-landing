@@ -195,12 +195,12 @@ local-memory start | stop | status
 ### Core operations
 local-memory observe "PostgreSQL uses MVCC" --level learning --tags database
 local-memory search "database patterns" --use_ai --limit 5
-local-memory reflect --mode batch
-local-memory evolve --operation validate --entity_id UUID --success
+local-memory reflect batch
+local-memory evolve validate --entity_id UUID --success
 
 ### Output formatting
---response_format detailed | concise | ids_only | json
-local-memory search "api" --response_format json | jq '.results[].content'
+--response_format detailed | concise | ids_only | summary   ·   --json for JSON output
+local-memory search "api" --json | jq '.results[].content'
 
 ### Workflow
 1. local-memory start at system startup
@@ -218,7 +218,7 @@ local-memory observe "Committed: $(git log -1 --oneline)" \\
   --level observation --tags git
 
 # Daily reflection cron
-0 18 * * * local-memory reflect --mode batch
+0 18 * * * local-memory reflect batch
 
 # Weekly triage: what needs your judgment?
 0 9 * * 1 local-memory questions --status pending --format summary`;
