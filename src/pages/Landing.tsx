@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCheckout } from "@/contexts/CheckoutContext";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
@@ -126,6 +127,177 @@ const PRICE_FEATURES = [
 const SECTION_X = "px-6 sm:px-10 lg:px-16";
 const CONTAINER = `mx-auto max-w-[1280px] ${SECTION_X} box-border`;
 
+/* ------------------------------------------------------------------ *
+ * Hero terminal demo — an animated, self-cycling walkthrough of the
+ * cognitive engine. Each step is a real MCP tool call; the signatures
+ * and parameters (content/level, question_type, resolution_type,
+ * mode/observation_id, operation/entity_id/success) are validated
+ * against the Local Memory Go source, not the design's placeholder copy.
+ * ------------------------------------------------------------------ */
+
+interface DemoLine {
+  text: string;
+  color: string;
+}
+interface DemoStep {
+  label: string;
+  text: string;
+  lines: DemoLine[];
+}
+
+const DEMO: DemoStep[] = [
+  {
+    label: "observe",
+    text: 'observe(content: "Auth migrated to OAuth2 PKCE", level: "observation")',
+    lines: [
+      { text: "✓ stored mem_9e2d4f", color: "#4ade80" },
+      { text: "  level L0 · observation · weight 0.5", color: "#78716c" },
+      { text: "  domain backend · tags auth, security", color: "#78716c" },
+    ],
+  },
+  {
+    label: "question",
+    text: 'question("JWT or OAuth2 — which is current?", question_type: "contradiction")',
+    lines: [
+      { text: "⚠ contradiction recorded · q_3f8a1c", color: "#eab308" },
+      { text: 'memory A "Auth uses JWT, 24h expiry"', color: "#faf7f1" },
+      { text: "         L2 pattern · weight 7.2", color: "#78716c" },
+      { text: 'memory B "Auth migrated to OAuth2 PKCE"', color: "#faf7f1" },
+      { text: "         L0 observation · weight 0.5", color: "#78716c" },
+    ],
+  },
+  {
+    label: "resolve",
+    text: 'resolve(question_id: q_3f8a1c, resolution_type: "b_supersedes")',
+    lines: [
+      { text: '✓ "Auth uses JWT"  weight 7.2 → 1.0 (decayed)', color: "#4ade80" },
+      { text: '✓ "OAuth2 PKCE"    weight 0.5 → 2.5', color: "#4ade80" },
+      { text: "✓ q_3f8a1c resolved · contradicts link kept", color: "#78716c" },
+    ],
+  },
+  {
+    label: "reflect",
+    text: 'reflect(mode: "single", observation_id: mem_9e2d4f)',
+    lines: [
+      { text: "promoted L0 observation → L1 learning", color: "#eab308" },
+      { text: '"Auth stack modernized to OAuth2/PKCE,', color: "#faf7f1" },
+      { text: ' legacy JWT flow deprecated"', color: "#faf7f1" },
+      { text: "weight 2.5 → 3.2", color: "#78716c" },
+    ],
+  },
+  {
+    label: "evolve",
+    text: 'evolve(operation: "validate", entity_id: mem_9e2d4f, success: true)',
+    lines: [
+      { text: "weight 3.2 → 5.4 · validations 3 · confidence 0.92", color: "#78716c" },
+      { text: "⬆ auto-promotion criteria met: L1 → L2 pattern", color: "#eab308" },
+      { text: '  "Auth stack uses OAuth2 PKCE"', color: "#faf7f1" },
+      { text: "✓ knowledge evolved", color: "#4ade80" },
+    ],
+  },
+];
+
+const HeroDemo = () => {
+  const [step, setStep] = useState(0);
+  const [typed, setTyped] = useState("");
+  const [showOutput, setShowOutput] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const aliveRef = useRef(true);
+
+  const playStep = useCallback((i: number) => {
+    clearTimeout(timerRef.current);
+    setStep(i);
+    setTyped("");
+    setShowOutput(false);
+    const text = DEMO[i].text;
+    let c = 0;
+    const type = () => {
+      if (!aliveRef.current) return;
+      if (++c <= text.length) {
+        setTyped(text.slice(0, c));
+        timerRef.current = setTimeout(type, 16);
+      } else {
+        timerRef.current = setTimeout(() => {
+          if (!aliveRef.current) return;
+          setShowOutput(true);
+          timerRef.current = setTimeout(() => playStep((i + 1) % DEMO.length), 3400);
+        }, 300);
+      }
+    };
+    timerRef.current = setTimeout(type, 350);
+  }, []);
+
+  useEffect(() => {
+    aliveRef.current = true;
+    playStep(0);
+    return () => {
+      aliveRef.current = false;
+      clearTimeout(timerRef.current);
+    };
+  }, [playStep]);
+
+  const active = DEMO[step];
+
+  return (
+    <div className="flex min-w-0 flex-col gap-3">
+      {/* Terminal */}
+      <div className="rounded-xl bg-lm-ink px-6 pb-5 pt-[22px] font-plex text-[12.5px] leading-[1.75] shadow-[0_24px_48px_-20px_rgba(31,27,22,0.45)]">
+        <div className="mb-4 flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
+          <span className="ml-2 text-[11px] text-[#78716c]">local-memory</span>
+        </div>
+        <div className="h-[252px] overflow-hidden">
+          <div className="flex items-start gap-[9px]">
+            <span className="flex-shrink-0 text-lm-gold">$</span>
+            <span className="min-w-0 break-words text-[#b8ad99]">
+              {typed}
+              <span className="ml-0.5 inline-block h-[14px] w-[7px] animate-lm-blink bg-lm-gold align-text-bottom" />
+            </span>
+          </div>
+          {showOutput && (
+            <>
+              <div className="mt-3">
+                {active.lines.map((line, i) => (
+                  <div
+                    key={i}
+                    className="whitespace-pre-wrap break-words"
+                    style={{ color: line.color }}
+                  >
+                    {line.text}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 flex items-center gap-[9px]">
+                <span className="text-lm-gold">$</span>
+                <span className="inline-block h-[14px] w-[7px] animate-lm-blink bg-[#78716c]" />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Step chips */}
+      <div className="flex flex-wrap gap-2">
+        {DEMO.map((s, i) => (
+          <button
+            key={s.label}
+            onClick={() => playStep(i)}
+            className={`rounded-full border px-[13px] py-1.5 font-plex text-[11px] font-medium transition-colors ${
+              i === step
+                ? "border-lm-amber bg-lm-amber/[0.08] text-lm-amber"
+                : "border-lm-line-2 text-lm-muted hover:border-lm-amber hover:text-lm-amber"
+            }`}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Landing = () => {
   const { openCheckout } = useCheckout();
 
@@ -177,24 +349,8 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Terminal card */}
-          <div className="rounded-xl bg-lm-ink px-[26px] py-6 font-plex text-[13.5px] leading-[1.9] shadow-[0_24px_48px_-20px_rgba(31,27,22,0.45)]">
-            <div className="mb-[18px] flex gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#5c5347]" />
-            </div>
-            <div className="text-[#b8ad99]">
-              <span className="text-lm-gold">$</span> local-memory search "auth patterns"
-            </div>
-            <div className="text-[#78716c]">→ 3 memories · 23ms</div>
-            <div className="text-lm-cream">L2 · "JWT refresh in middleware, not routes"</div>
-            <div className="text-[#b8ad99]">L1 · "Session store moved to Redis, May 12"</div>
-            <div className="text-[#78716c]">
-              L0 · "Prefers httpOnly cookies"{" "}
-              <span className="ml-0.5 inline-block h-[15px] w-[7px] animate-lm-blink bg-lm-gold align-text-bottom" />
-            </div>
-          </div>
+          {/* Animated cognitive-engine demo */}
+          <HeroDemo />
         </section>
 
         {/* ============ Problem ============ */}
