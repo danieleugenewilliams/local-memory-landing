@@ -379,7 +379,7 @@ const Architecture = () => {
                 Architecture you can audit, on hardware you own.
               </div>
               <div className="font-plex text-[13px] text-[#78716c]">
-                $49 one-time · 30-day refund · 100% local
+                $49 one-time · 5-day refund · 100% local
               </div>
             </div>
             <button

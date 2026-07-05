@@ -94,7 +94,7 @@ function CheckoutInner({
         {state !== "success" && (
           <div className="mb-5 flex items-center gap-2 font-plex text-[11.5px] text-lm-amber">
             <span className="h-[5px] w-[5px] rounded-full bg-lm-amber" />
-            30-day money-back guarantee · instant license key
+            5-day money-back guarantee · instant license key
           </div>
         )}
 
