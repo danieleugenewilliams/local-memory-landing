@@ -14,10 +14,8 @@ import Pricing from "./pages/site/Pricing";
 import NotFound from "./pages/NotFound";
 import PaymentNew from "./pages/PaymentNew";
 import SuccessNew from "./pages/SuccessNew";
-import DocsNew from "./pages/DocsNew";
 import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
-import PromptsNew from "./pages/PromptsNew";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import CheckoutComplete from "./pages/CheckoutComplete";
@@ -65,10 +63,8 @@ const App = () => (
             <Route path="/payment" element={<PaymentNew />} />
             <Route path="/success" element={<SuccessNew />} />
             <Route path="/docs" element={<Docs />} />
-            <Route path="/docs-legacy" element={<DocsNew />} />
             <Route path="/agent-setup" element={<AgentSetup />} />
             <Route path="/prompts" element={<Navigate to="/agent-setup" replace />} />
-            <Route path="/prompts-legacy" element={<PromptsNew />} />
             <Route path="/architecture" element={<Architecture />} />
             <Route path="/privacy" element={<PrivacyNew />} />
             <Route path="/terms" element={<TermsNew />} />
