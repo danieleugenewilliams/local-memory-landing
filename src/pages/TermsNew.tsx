@@ -43,7 +43,7 @@ const SECTIONS: Section[] = [
     anchor: "payment",
     paras: [
       "Payments are processed through Stripe. Local Memory is a one-time purchase — no subscriptions, no recurring fees. Prices are in USD and may change, but purchased licenses remain valid regardless of future pricing.",
-      "If Local Memory isn't for you, request a refund within 5 days of purchase via our Discord community. You're responsible for applicable taxes based on your location.",
+      "If Local Memory isn't for you, request a refund within 5 days of purchase. You're responsible for applicable taxes based on your location.",
     ],
   },
   {
