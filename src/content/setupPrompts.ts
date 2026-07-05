@@ -100,7 +100,7 @@ and only enhance AI features like 'ask' and semantic 'search --use_ai'.
 
   # Apply the optional services (restart so Local Memory picks them up):
   local-memory stop && local-memory start
-  local-memory doctor --services
+  local-memory doctor
 
 MANUAL FALLBACK (only if 'local-memory install mcp' is unavailable):
 - Claude Code:    claude mcp add --transport stdio local-memory -- local-memory --mcp
@@ -176,7 +176,7 @@ and only enhance AI features like 'ask' and semantic 'search --use_ai'.
 
   # Apply the optional services (restart so Local Memory picks them up):
   local-memory stop && local-memory start
-  local-memory doctor --services
+  local-memory doctor
 
 MANUAL FALLBACK (only if 'local-memory install mcp' is unavailable):
 - Claude Code:    claude mcp add --transport stdio local-memory -- local-memory --mcp
@@ -258,7 +258,7 @@ and only enhance AI features like 'ask' and semantic 'search --use_ai'.
 
   # Apply the optional services (restart so Local Memory picks them up):
   local-memory stop && local-memory start
-  local-memory doctor --services
+  local-memory doctor
 
 MANUAL FALLBACK (only if 'local-memory install mcp' is unavailable):
 - Claude Code:    claude mcp add --transport stdio local-memory -- local-memory --mcp
