@@ -200,7 +200,7 @@ const CheckoutComplete = () => {
           {/* Hero: confirmation + license (left) · agent-assisted install (right) */}
           <div className="border-b border-lm-line">
             <div
-              className={`${CONTAINER} grid items-start gap-16 pb-[60px] pt-[52px] lg:grid-cols-[0.9fr_1.1fr]`}
+              className={`${CONTAINER} grid items-start gap-16 pb-[60px] pt-[52px] lg:grid-cols-[0.9fr_1.1fr] [&>*]:min-w-0`}
             >
               {/* left: confirmation + license */}
               <div>
@@ -341,7 +341,7 @@ const CheckoutComplete = () => {
               <span className="font-plex text-xs text-lm-muted">two steps · ~2 minutes</span>
             </div>
 
-            <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start [&>*]:min-w-0">
               {/* download */}
               <div>
                 <div className="mb-3.5 font-plex text-[11px] font-medium uppercase tracking-[0.08em] text-lm-muted">
