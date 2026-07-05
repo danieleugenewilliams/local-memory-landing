@@ -1,87 +1,98 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { createContext, useContext, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { format } from "date-fns";
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import HeaderNew from "@/components/v2/HeaderNew";
-import FooterNew from "@/components/v2/FooterNew";
+import type { Components } from "react-markdown";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import VideoEmbed from "@/components/blog/VideoEmbed";
-import { getPostBySlug } from "@/content/blog/posts";
+import { getAllPosts, getPostBySlug } from "@/content/blog/posts";
 import { trackBlogVisit, trackCTAClick } from "@/lib/analytics";
 import { useCheckout } from "@/contexts/CheckoutContext";
-import type { Components } from "react-markdown";
+
+/* Blog post — redesigned from Blog Post.dc.html (warm-paper theme).
+   The article body still renders post.content through ReactMarkdown; only the
+   component styling changed. "Read next" is derived (2 newest other posts). */
+
+const WIDE = "mx-auto max-w-[1080px] px-6 sm:px-10 lg:px-16 box-border";
+const READ = "mx-auto max-w-[760px] px-6 sm:px-10 box-border";
+
+const fmtLong = (date: string) => format(new Date(date + "T12:00:00"), "MMMM d, yyyy");
+
+// True while rendering inside a <pre> block, so `code` children of a fenced
+// block render plain on the dark terminal rather than as light inline chips —
+// react-markdown gives no className to no-language fenced blocks, so we can't
+// rely on className alone to tell inline code from block code.
+const InPreContext = createContext(false);
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const { openCheckout } = useCheckout();
   const post = slug ? getPostBySlug(slug) : undefined;
 
-  // Track blog post visit
   useEffect(() => {
     if (post && slug) {
-      trackBlogVisit('post', slug, post.title);
+      trackBlogVisit("post", slug, post.title);
     }
   }, [slug, post]);
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background">
-        <HeaderNew />
-        <section className="section flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight mb-4">Post Not Found</h1>
-            <p className="text-muted-foreground mb-8">
-              The blog post you're looking for doesn't exist.
-            </p>
-            <Link to="/blog" className="btn-primary">
-              Back to Blog
+      <div className="lm-theme min-h-screen">
+        <SiteHeader />
+        <section className="flex min-h-[60vh] items-center justify-center px-6 text-center">
+          <div>
+            <h1 className="mb-4 font-serif text-[34px] font-normal tracking-[-0.02em] text-lm-ink">
+              Post not found
+            </h1>
+            <p className="mb-8 text-lm-stone">The blog post you're looking for doesn't exist.</p>
+            <Link
+              to="/blog"
+              className="inline-block rounded-lg bg-lm-ink px-6 py-3 font-semibold text-lm-cream transition-colors hover:bg-lm-ink-soft"
+            >
+              Back to the blog
             </Link>
           </div>
         </section>
-        <FooterNew />
+        <SiteFooter minimal />
       </div>
     );
   }
 
-  // Custom markdown components for styling
+  const readNext = getAllPosts()
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 2);
+
   const components: Components = {
-    // Headings
     h1: ({ children }) => (
-      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mt-12 mb-6 first:mt-0">
+      <h1 className="mb-4 mt-11 font-serif text-[32px] font-medium leading-[1.2] tracking-[-0.02em] text-lm-ink first:mt-0">
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mt-12 mb-4 pt-4 border-t border-border first:border-t-0 first:pt-0">
+      <h2 className="mb-4 mt-11 font-serif text-[28px] font-medium leading-[1.25] tracking-[-0.015em] text-lm-ink">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl sm:text-2xl font-semibold tracking-tight mt-8 mb-3">
+      <h3 className="mb-3 mt-8 font-serif text-[20px] font-medium leading-[1.3] text-lm-ink">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-lg font-semibold tracking-tight mt-6 mb-2">
-        {children}
-      </h4>
+      <h4 className="mb-2 mt-6 font-serif text-[17px] font-medium text-lm-ink">{children}</h4>
     ),
-
-    // Paragraphs
     p: ({ children }) => {
-      // Check if the paragraph contains only a video URL
+      // Preserve the bare-video-URL → embed behavior from the original.
       const childArray = Array.isArray(children) ? children : [children];
       if (childArray.length === 1) {
         let videoUrl: string | null = null;
-
-        // Check for plain text URL
         if (typeof childArray[0] === "string") {
           videoUrl = childArray[0].trim();
-        }
-        // Check for auto-linked URL (remark-gfm wraps bare URLs in <a> tags)
-        else if (
+        } else if (
           childArray[0] &&
           typeof childArray[0] === "object" &&
           "props" in childArray[0] &&
@@ -89,203 +100,186 @@ const BlogPost = () => {
         ) {
           videoUrl = childArray[0].props.href;
         }
-
-        if (
-          videoUrl &&
-          videoUrl.match(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|loom\.com)/)
-        ) {
+        if (videoUrl && videoUrl.match(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|loom\.com)/)) {
           return <VideoEmbed url={videoUrl} />;
         }
       }
-      return <p className="text-foreground/90 leading-relaxed mb-4">{children}</p>;
+      return <p className="mb-[22px] text-[16.5px] leading-[1.75] text-[#33302a]">{children}</p>;
     },
-
-    // Strong/Bold
-    strong: ({ children }) => (
-      <strong className="font-semibold text-foreground">{children}</strong>
-    ),
-
-    // Emphasis/Italic
+    strong: ({ children }) => <strong className="font-semibold text-lm-ink">{children}</strong>,
     em: ({ children }) => <em className="italic">{children}</em>,
-
-    // Links
     a: ({ href, children }) => (
       <a
         href={href}
         target={href?.startsWith("http") ? "_blank" : undefined}
         rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-        className="text-[hsl(var(--brand-blue))] underline underline-offset-4 hover:text-[hsl(var(--brand-blue))/0.8] transition-colors"
+        className="text-lm-amber underline underline-offset-4 transition-colors hover:text-lm-rust"
       >
         {children}
       </a>
     ),
-
-    // Lists
     ul: ({ children }) => (
-      <ul className="list-disc list-outside ml-6 mb-4 space-y-2">{children}</ul>
+      <ul className="mb-[22px] flex list-disc flex-col gap-2 pl-6">{children}</ul>
     ),
     ol: ({ children }) => (
-      <ol className="list-decimal list-outside ml-6 mb-4 space-y-2">{children}</ol>
+      <ol className="mb-[22px] flex list-decimal flex-col gap-2 pl-6">{children}</ol>
     ),
     li: ({ children }) => (
-      <li className="text-foreground/90 leading-relaxed pl-1">{children}</li>
+      <li className="text-[16px] leading-[1.65] text-[#33302a] marker:text-lm-muted">{children}</li>
     ),
-
-    // Blockquotes
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-[hsl(var(--brand-blue))] bg-card/50 pl-6 py-4 my-6 italic text-muted-foreground">
+      <blockquote className="my-9 border-l-[3px] border-lm-amber pl-7 font-serif text-[24px] font-normal italic leading-[1.4] text-lm-ink">
         {children}
       </blockquote>
     ),
-
-    // Horizontal rules
-    hr: () => <hr className="my-12 border-border" />,
-
-    // Code blocks
-    code: ({ className, children }) => {
-      const isInline = !className;
-      if (isInline) {
-        return (
-          <code className="px-1.5 py-0.5 rounded bg-[hsl(var(--terminal-bg))] border border-[hsl(var(--terminal-border))] font-mono text-sm text-[hsl(var(--terminal-green))]">
-            {children}
-          </code>
-        );
+    hr: () => <hr className="my-11 border-lm-line" />,
+    code: ({ children }) => {
+      // Inside a <pre>, render plain so the dark terminal styling shows through;
+      // bare inline code gets the light chip treatment.
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const inPre = useContext(InPreContext);
+      if (inPre) {
+        return <code className="font-plex text-[#b8ad99]">{children}</code>;
       }
       return (
-        <code className="block font-mono text-sm">{children}</code>
+        <code className="rounded border border-lm-line-2 bg-lm-sand-2 px-1.5 py-0.5 font-plex text-[13.5px] text-lm-ink-soft">
+          {children}
+        </code>
       );
     },
     pre: ({ children }) => (
-      <div className="terminal my-6 overflow-hidden">
-        <div className="terminal-header">
-          <span className="terminal-dot terminal-dot-red"></span>
-          <span className="terminal-dot terminal-dot-yellow"></span>
-          <span className="terminal-dot terminal-dot-green"></span>
-        </div>
-        <pre className="terminal-body overflow-x-auto">{children}</pre>
-      </div>
+      <InPreContext.Provider value={true}>
+        <pre className="my-6 overflow-x-auto rounded-xl bg-lm-ink px-6 py-5 font-plex text-[13px] leading-[1.8] text-[#b8ad99]">
+          {children}
+        </pre>
+      </InPreContext.Provider>
     ),
-
-    // Tables
     table: ({ children }) => (
-      <div className="table-responsive my-6 rounded-lg border border-border overflow-hidden">
-        <table className="w-full text-sm">{children}</table>
+      <div className="my-6 overflow-x-auto rounded-xl border border-lm-line">
+        <table className="w-full text-left text-sm">{children}</table>
       </div>
     ),
     thead: ({ children }) => (
-      <thead className="bg-card border-b border-border">{children}</thead>
+      <thead className="border-b border-lm-line bg-lm-sand">{children}</thead>
     ),
-    tbody: ({ children }) => <tbody className="divide-y divide-border">{children}</tbody>,
-    tr: ({ children }) => <tr className="hover:bg-card/50 transition-colors">{children}</tr>,
+    tbody: ({ children }) => <tbody className="divide-y divide-lm-line">{children}</tbody>,
+    tr: ({ children }) => <tr>{children}</tr>,
     th: ({ children }) => (
-      <th className="px-4 py-3 text-left font-semibold text-foreground">{children}</th>
+      <th className="px-4 py-3 font-plex text-[12px] font-medium uppercase tracking-[0.04em] text-lm-stone">
+        {children}
+      </th>
     ),
-    td: ({ children }) => (
-      <td className="px-4 py-3 text-foreground/90">{children}</td>
-    ),
-
-    // Images
+    td: ({ children }) => <td className="px-4 py-3 text-[14px] text-[#33302a]">{children}</td>,
     img: ({ src, alt }) => (
       <figure className="my-8">
-        <img
-          src={src}
-          alt={alt || ""}
-          className="rounded-lg border border-border w-full"
-        />
+        <img src={src} alt={alt || ""} className="w-full rounded-xl border border-lm-line" />
         {alt && (
-          <figcaption className="mt-2 text-center text-sm text-muted-foreground">
-            {alt}
-          </figcaption>
+          <figcaption className="mt-2.5 text-center font-plex text-xs text-lm-muted">{alt}</figcaption>
         )}
       </figure>
     ),
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <HeaderNew />
+    <div className="lm-theme min-h-screen">
+      <Helmet>
+        <title>{post.title} — Local Memory</title>
+        <meta name="description" content={post.description} />
+      </Helmet>
 
-      {/* Article Header */}
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 grid-pattern grid-fade" />
-        <div className="container-tight relative py-16 md:py-20">
-          {/* Back link */}
-          <button
-            onClick={() => navigate("/blog")}
-            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 animate-in"
-          >
-            <svg
-              className="mr-2 h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Back to Blog
-          </button>
+      <SiteHeader />
 
-          {/* Date */}
-          <time className="block text-sm font-mono text-muted-foreground mb-4 animate-in animate-in-delay-1">
-            {format(new Date(post.date + 'T12:00:00'), "MMMM d, yyyy")}
-          </time>
-
-          {/* Title */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance animate-in animate-in-delay-2">
+      <main>
+        {/* Article header */}
+        <div className={`${READ} pt-[68px]`}>
+          <Link to="/blog" className="font-plex text-xs font-medium text-lm-amber hover:underline">
+            ← All essays
+          </Link>
+          <div className="mb-5 mt-[26px] flex flex-wrap items-center gap-3.5">
+            <span className="rounded-full border border-lm-line-2 px-2.5 py-1 font-plex text-[10.5px] font-medium tracking-[0.06em] text-lm-muted">
+              {post.tag}
+            </span>
+            <span className="font-plex text-xs text-lm-muted">
+              {fmtLong(post.date)} · {post.readingMinutes} min read
+            </span>
+          </div>
+          <h1 className="mb-[18px] text-balance font-serif text-[34px] font-normal leading-[1.15] tracking-[-0.02em] text-lm-ink sm:text-[42px]">
             {post.title}
           </h1>
-
-          {/* Description */}
-          <p className="mt-6 text-lg text-muted-foreground text-pretty animate-in animate-in-delay-3">
+          <p className="mb-7 font-serif text-[19px] font-normal italic leading-[1.55] text-lm-stone">
             {post.description}
           </p>
-        </div>
-      </section>
-
-      {/* Article Content */}
-      <article className="section-sm">
-        <div className="container-tight">
-          <div className="prose-container animate-in animate-in-delay-4">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-              {post.content}
-            </ReactMarkdown>
+          <div className="flex items-center gap-3 border-b border-lm-line pb-9">
+            <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-lm-ink font-serif text-[13px] font-medium text-lm-cream">
+              DW
+            </span>
+            <div>
+              <div className="text-[13px] font-medium text-lm-ink">Daniel Williams</div>
+              <div className="font-plex text-[11.5px] text-lm-muted">Builder of Local Memory</div>
+            </div>
           </div>
         </div>
-      </article>
 
-      {/* Footer CTA */}
-      <section className="section-sm border-t border-border">
-        <div className="container-tight text-center">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Ready to build intelligence that learns?
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Give your AI persistent memory. Keep your data local.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        {/* Article body */}
+        <article className={`${READ} pb-6 pt-10`}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+            {post.content}
+          </ReactMarkdown>
+        </article>
+
+        {/* In-article CTA */}
+        <div className={`${READ} pb-14`}>
+          <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl border border-lm-line bg-lm-sand px-8 py-7">
+            <div>
+              <div className="mb-1 font-serif text-[20px] font-normal text-lm-ink">
+                Give your agent a memory that persists.
+              </div>
+              <div className="font-plex text-[12.5px] text-lm-muted">
+                24 MCP tools · $49 once · 100% local
+              </div>
+            </div>
             <button
-              className="btn-primary text-base"
-              onClick={() => { trackCTAClick("blog-post", "Get Started", "/checkout"); openCheckout(); }}
+              onClick={() => {
+                trackCTAClick("blog-post", "Get Started", "/checkout");
+                openCheckout();
+              }}
+              className="shrink-0 rounded-lg bg-lm-ink px-6 py-3 text-[14px] font-semibold text-lm-cream transition-colors hover:bg-lm-ink-soft"
             >
               Get Started — $49
             </button>
-            <Link
-              to="/docs"
-              className="btn-secondary text-base"
-              onClick={() => trackCTAClick("blog-post", "View documentation", "/docs")}
-            >
-              View documentation
-            </Link>
           </div>
         </div>
-      </section>
 
-      <FooterNew />
+        {/* Read next */}
+        {readNext.length > 0 && (
+          <div className="border-t border-lm-line bg-lm-sand">
+            <div className={`${WIDE} pb-16 pt-[52px]`}>
+              <div className="mb-6 font-plex text-[11.5px] font-medium uppercase tracking-[0.08em] text-lm-muted">
+                Read next
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                {readNext.map((p) => (
+                  <Link
+                    key={p.slug}
+                    to={`/blog/${p.slug}`}
+                    className="block rounded-xl border border-lm-line bg-lm-cream px-7 py-6 transition-colors hover:border-lm-amber"
+                  >
+                    <div className="mb-2.5 font-plex text-xs text-lm-muted">
+                      {fmtLong(p.date)} · {p.tag === "RELEASE" ? "Release" : "Essay"}
+                    </div>
+                    <div className="mb-2 font-serif text-[19px] font-medium leading-[1.3] text-lm-ink">
+                      {p.title}
+                    </div>
+                    <p className="text-[13.5px] leading-[1.55] text-lm-stone-2">{p.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+
+      <SiteFooter minimal />
       <ScrollToTop />
     </div>
   );

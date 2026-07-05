@@ -3,6 +3,7 @@ title: "My Journey to Building Local-Memory-MCP"
 date: "2025-08-10"
 description: "The strategic imperative of persistent AI memory and context. How MCP enables AI to become a strategic co-pilot and knowledge multiplier."
 slug: "my-journey-to-building-local-memory-mcp"
+tag: "ESSAY"
 ---
 
 > **Note:** Tool names in this post reflect the API at time of writing. See the [v1.5.0 release post](/blog/local-memory-v150-knowledge-engineering-verified) for current names.

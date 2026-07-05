@@ -3,6 +3,7 @@ title: "RAG Is Storage, Not Learning"
 date: "2026-01-14"
 description: "When you store memories without any mechanism for them to evolve, you get a pile of facts with no way to distinguish signal from noise."
 slug: "rag-is-storage-not-learning"
+tag: "ESSAY"
 image: "/blog/images/contradiction-detection.png"
 ---
 

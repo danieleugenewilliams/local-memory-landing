@@ -3,6 +3,7 @@ title: "From Storage to Emergent Knowledge: Why AI Memory Needs Architecture"
 date: "2026-01-13"
 description: "How Local Memory's knowledge hierarchy implements the same principles Google Research just validated with Titans and MIRAS."
 slug: "from-rag-storage-to-emergent-intelligence"
+tag: "ESSAY"
 ---
 
 **How Local Memory's knowledge hierarchy implements the same principles Google Research just validated**

@@ -1,9 +1,14 @@
+export type BlogTag = "ESSAY" | "RELEASE";
+
 export interface BlogPost {
   slug: string;
   title: string;
   date: string;
   description: string;
   content: string;
+  tag: BlogTag;
+  /** Estimated reading time in whole minutes (200 wpm). */
+  readingMinutes: number;
 }
 
 interface FrontMatter {
@@ -11,6 +16,7 @@ interface FrontMatter {
   date?: string;
   description?: string;
   slug?: string;
+  tag?: string;
 }
 
 /**
@@ -42,12 +48,23 @@ function parseFrontmatter(markdown: string): { frontmatter: FrontMatter; content
       value = value.slice(1, -1);
     }
 
-    if (key === "title" || key === "date" || key === "description" || key === "slug") {
+    if (key === "title" || key === "date" || key === "description" || key === "slug" || key === "tag") {
       frontmatter[key] = value;
     }
   });
 
   return { frontmatter, content: content.trim() };
+}
+
+/** Whole-minute reading estimate at 200 words/minute (min 1). */
+function estimateReadingMinutes(content: string): number {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+/** Normalize a frontmatter tag, defaulting to ESSAY when absent/unknown. */
+function normalizeTag(raw: string | undefined): BlogTag {
+  return raw?.trim().toUpperCase() === "RELEASE" ? "RELEASE" : "ESSAY";
 }
 
 /**
@@ -83,6 +100,8 @@ function loadPosts(): BlogPost[] {
       date: frontmatter.date,
       description: frontmatter.description || "",
       content,
+      tag: normalizeTag(frontmatter.tag),
+      readingMinutes: estimateReadingMinutes(content),
     });
   }
 
