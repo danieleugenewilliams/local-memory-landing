@@ -209,7 +209,7 @@ local-memory observe "Committed: $(git log -1 --oneline)" --level observation --
     { category: "Core Memory",           color: "brand-blue",   count: 4, tools: ["observe", "update_memory", "delete_memory", "get_memory_by_id"] },
     { category: "Search & Retrieval",    color: "brand-green",  count: 3, tools: ["search", "ask", "summarize"] },
     { category: "Relationships",         color: "brand-pink",   count: 4, tools: ["find_related", "discover", "map_graph", "relate"] },
-    { category: "Knowledge Evolution",   color: "brand-purple", count: 4, tools: ["reflect", "evolve", "question", "resolve"] },
+    { category: "Knowledge Evolution",   color: "brand-purple", count: 5, tools: ["reflect", "evolve", "question", "questions", "resolve"] },
     { category: "Reasoning",             color: "brand-orange", count: 4, tools: ["predict", "explain", "counterfactual", "validate"] },
     { category: "Session & Orientation", color: "brand-blue",   count: 2, tools: ["bootstrap", "status"] },
     { category: "Temporal Analysis",     color: "brand-green",  count: 1, tools: ["temporal"] },
@@ -354,7 +354,7 @@ local-memory observe "Committed: $(git log -1 --oneline)" --level observation --
 
               {/* MCP Tools Grid */}
               <div>
-                <h3 className="mb-4 text-lg font-semibold">23 MCP Tools</h3>
+                <h3 className="mb-4 text-lg font-semibold">24 MCP Tools</h3>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
                   {mcpTools.map((group) => (
                     <div

@@ -14,13 +14,13 @@ const routeMetadata: Record<string, PageMetadata> = {
     keywords: 'AI context amnesia, persistent AI memory, AI intelligence building, context engineering, MCP integration, Claude Desktop memory, AI agent memory, cross-session learning, developer productivity, AI memory system, Model Context Protocol, vector search, token optimization'
   },
   '/features': {
-    title: 'Features - Local Memory | 23 MCP Tools & Persistent AI Memory',
-    description: 'Discover Local Memory features: 23 MCP tools, persistent AI memory, lightning-fast vector search, AI-powered categorization, token optimization, and 100% local operation.',
+    title: 'Features - Local Memory | 24 MCP Tools & Persistent AI Memory',
+    description: 'Discover Local Memory features: 24 MCP tools, persistent AI memory, lightning-fast vector search, AI-powered categorization, token optimization, and 100% local operation.',
     keywords: 'Local Memory features, MCP tools, persistent AI memory, vector search, AI categorization, token optimization, context engineering, AI memory system'
   },
   '/payment': {
     title: 'Purchase Local Memory | One-Time Payment, Lifetime AI Memory Solution',
-    description: 'Get Local Memory with secure one-time payment. Transform AI context amnesia into permanent intelligence with 23 MCP tools and lifetime value.',
+    description: 'Get Local Memory with secure one-time payment. Transform AI context amnesia into permanent intelligence with 24 MCP tools and lifetime value.',
     keywords: 'Local Memory purchase, buy Local Memory, AI memory payment, MCP tools payment, one-time purchase, lifetime AI intelligence'
   },
   '/success': {

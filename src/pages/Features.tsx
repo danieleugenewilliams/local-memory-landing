@@ -26,11 +26,11 @@ const FeaturesPage = () => {
       <StructuredData
         type="article"
         title="Local Memory Features - Transform AI Context Amnesia into Permanent Intelligence"
-        description="Comprehensive features overview: 8 unified MCP tools, 97.5% token optimization, 10-57ms response times, cross-agent compatibility, and 100% local operation for AI memory systems."
+        description="Comprehensive features overview: 24 MCP tools, up to 95% token reduction, 10-57ms response times, cross-agent compatibility, and 100% local operation for AI memory systems."
         url="https://localmemory.co/features"
         features={[
-          "8 unified MCP tools with operation-type architecture",
-          "97.5% token optimization for efficient responses",
+          "24 MCP tools with operation-type architecture",
+          "Up to 95% token reduction for efficient responses",
           "10-57ms lightning-fast search response times",
           "Universal AI platform compatibility (Claude Desktop, Code, OpenCode)",
           "Vector search with Qdrant and SQLite dual backend",
@@ -403,7 +403,7 @@ const FeaturesPage = () => {
                                     <strong>You:</strong> "We need to migrate 50,000 memories from our legacy system. What's the best approach for bulk operations at this scale?"
                                   </div>
                                   <div className="bg-purple-950/20 p-2 rounded border border-purple-700/30 break-words overflow-hidden">
-                                    <strong>Agent:</strong> "Perfect timing to apply everything we've learned! Based on our performance optimization work from months 1-2, I know Qdrant can handle this scale efficiently. I'll design a batched import strategy using the same vector optimization principles that gave us our 50x speed improvement. From our previous investigations, I recommend 1000-record batches with parallel embedding generation. This should achieve around 30K+ memories/second based on our established performance patterns." <br/><em>MCP: <code className="break-all">track_learning_progression</code> + <code className="break-all">analyze_memories</code> - <strong>Applies months of accumulated performance knowledge</strong></em>
+                                    <strong>Agent:</strong> "Perfect timing to apply everything we've learned! Based on our performance optimization work from months 1-2, I know Qdrant can handle this scale efficiently. I'll design a batched import strategy using the same vector optimization principles that made our vector search up to 50x faster. From our previous investigations, I recommend 1000-record batches with parallel embedding generation. This should keep imports fast and memory-light, based on our established performance patterns." <br/><em>MCP: <code className="break-all">track_learning_progression</code> + <code className="break-all">analyze_memories</code> - <strong>Applies months of accumulated performance knowledge</strong></em>
                                   </div>
                                 </div>
                               </div>

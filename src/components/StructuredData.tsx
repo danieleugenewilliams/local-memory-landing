@@ -75,8 +75,8 @@ export const StructuredData = ({
             "availability": "https://schema.org/InStock"
           },
           "featureList": features || [
-            "23 MCP tools",
-            "97.5% token optimization",
+            "24 MCP tools",
+            "Up to 95% token reduction",
             "10-57ms response times",
             "100% local operation",
             "Cross-agent compatibility"

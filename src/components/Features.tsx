@@ -59,7 +59,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-green mt-1">•</span>
-                <span>Token optimization (up to 97.5% response reduction)</span>
+                <span>Token optimization (up to 95% response reduction)</span>
               </li>
             </ul>
           </div>
@@ -151,7 +151,7 @@ const Features = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>
-                <span>23 MCP tools for complete control</span>
+                <span>24 MCP tools for complete control</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-memory-purple mt-1">•</span>

@@ -42,7 +42,7 @@ Built on MCP, it's not a hack or workaround. It's a production-ready memory serv
 
 ## Always Available Context Memories
 
-Let's talk about what this looks like in practice. Local Memory MCP processes **34,466 memories per second**. That's not a benchmark. That's real-world performance on standard hardware.
+Let's talk about what this looks like in practice. Local Memory MCP answers semantic queries in **10–57 milliseconds** — recall fast enough to feel instant, running entirely on your own hardware.
 
 But speed isn't the story. The story is what happens when your AI has instant access to:
 

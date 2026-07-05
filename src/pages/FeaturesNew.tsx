@@ -196,12 +196,12 @@ const FeaturesNew = () => {
         </div>
       </section>
 
-      {/* MCP Tools - 23 Tools in 8 Categories */}
+      {/* MCP Tools - 24 Tools in 8 Categories */}
       <section className="section-sm border-b border-border bg-card/30">
         <div className="container-wide">
           <div className="mb-10 text-center">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              23 MCP Tools
+              24 MCP Tools
             </h2>
             <p className="mt-4 text-muted-foreground">
               Organized into 8 categories for complete knowledge management.
@@ -301,7 +301,7 @@ const FeaturesNew = () => {
               </div>
               <p className="mb-4 text-sm text-muted-foreground">
                 Native integration with Claude Desktop, Cursor, and any MCP-enabled agent.
-                23 tools appear automatically — no configuration needed.
+                24 tools appear automatically — no configuration needed.
               </p>
               <div className="terminal">
                 <div className="terminal-header">
