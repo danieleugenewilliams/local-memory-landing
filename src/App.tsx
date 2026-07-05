@@ -11,7 +11,6 @@ import Architecture from "./pages/site/Architecture";
 import Docs from "./pages/site/Docs";
 import AgentSetup from "./pages/site/AgentSetup";
 import Pricing from "./pages/site/Pricing";
-import FeaturesNew from "./pages/FeaturesNew";
 import NotFound from "./pages/NotFound";
 import PaymentNew from "./pages/PaymentNew";
 import SuccessNew from "./pages/SuccessNew";
@@ -19,7 +18,6 @@ import DocsNew from "./pages/DocsNew";
 import PrivacyNew from "./pages/PrivacyNew";
 import TermsNew from "./pages/TermsNew";
 import PromptsNew from "./pages/PromptsNew";
-import ArchitectureNew from "./pages/ArchitectureNew";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import CheckoutComplete from "./pages/CheckoutComplete";
@@ -62,7 +60,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/v3" element={<IndexDifferentiated />} />
-            <Route path="/features" element={<FeaturesNew />} />
+            <Route path="/features" element={<Navigate to="/docs" replace />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/payment" element={<PaymentNew />} />
             <Route path="/success" element={<SuccessNew />} />
@@ -72,7 +70,6 @@ const App = () => (
             <Route path="/prompts" element={<Navigate to="/agent-setup" replace />} />
             <Route path="/prompts-legacy" element={<PromptsNew />} />
             <Route path="/architecture" element={<Architecture />} />
-            <Route path="/architecture-legacy" element={<ArchitectureNew />} />
             <Route path="/privacy" element={<PrivacyNew />} />
             <Route path="/terms" element={<TermsNew />} />
             <Route path="/blog" element={<Blog />} />
