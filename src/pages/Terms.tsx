@@ -190,7 +190,7 @@ const Terms = () => {
                 <div>
                   <h4 className="font-semibold mb-2">Refund Policy</h4>
                   <p className="text-muted-foreground">
-                    All sales are final. We have worked to ensure that <em>Local Memory</em> meets your needs. If you require additional assistance based on your particular set up, you can find support and guidance in our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
+                    If <em>Local Memory</em> isn't for you, request a refund within 5 days of purchase for a full refund — no questions asked. For setup help, you can also find support and guidance in our <a href="https://discord.gg/rMmn8xP3fZ" className="text-memory-blue hover:underline" target="_blank" rel="noopener noreferrer">Discord Community</a>.
                   </p>
                 </div>
                 <div>
