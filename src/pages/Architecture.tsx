@@ -72,7 +72,7 @@ const ArchitecturePage = () => {
                     <div className="text-sm text-muted-foreground">Architecture Layers</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-memory-green mb-1">11</div>
+                    <div className="text-2xl font-bold text-memory-green mb-1">24</div>
                     <div className="text-sm text-muted-foreground">MCP Tools</div>
                   </div>
                   <div className="text-center">

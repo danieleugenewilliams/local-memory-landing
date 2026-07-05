@@ -165,7 +165,7 @@ const Features = () => {
         <div className="mt-16 text-center">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">11</div>
+              <div className="text-2xl sm:text-3xl font-bold text-memory-blue mb-2">24</div>
               <div className="text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div>

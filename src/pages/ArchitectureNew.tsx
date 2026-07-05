@@ -46,7 +46,7 @@ const ArchitectureNew = () => {
         <div className="container-wide">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             <div className="rounded-xl border border-border bg-card p-4 text-center animate-in">
-              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">16</div>
+              <div className="font-mono text-3xl font-bold text-[hsl(var(--brand-blue))]">24</div>
               <div className="mt-1 text-sm text-muted-foreground">MCP Tools</div>
             </div>
             <div className="rounded-xl border border-border bg-card p-4 text-center animate-in animate-in-delay-1">
