@@ -197,44 +197,70 @@ const DEMO: DemoStep[] = [
   },
 ];
 
+const useReducedMotion = () => {
+  const [reduced, setReduced] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+};
+
 const HeroDemo = () => {
   const [step, setStep] = useState(0);
   const [typed, setTyped] = useState("");
   const [showOutput, setShowOutput] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const aliveRef = useRef(true);
+  const reduced = useReducedMotion();
 
-  const playStep = useCallback((i: number) => {
-    clearTimeout(timerRef.current);
-    setStep(i);
-    setTyped("");
-    setShowOutput(false);
-    const text = DEMO[i].text;
-    let c = 0;
-    const type = () => {
-      if (!aliveRef.current) return;
-      if (++c <= text.length) {
-        setTyped(text.slice(0, c));
-        timerRef.current = setTimeout(type, 16);
-      } else {
-        timerRef.current = setTimeout(() => {
-          if (!aliveRef.current) return;
-          setShowOutput(true);
-          timerRef.current = setTimeout(() => playStep((i + 1) % DEMO.length), 3400);
-        }, 300);
+  const playStep = useCallback(
+    (i: number) => {
+      clearTimeout(timerRef.current);
+      setStep(i);
+      const text = DEMO[i].text;
+      // Reduced motion: render the frame statically — no typing, no auto-advance.
+      if (reduced) {
+        setTyped(text);
+        setShowOutput(true);
+        return;
       }
-    };
-    timerRef.current = setTimeout(type, 350);
-  }, []);
+      setTyped("");
+      setShowOutput(false);
+      let c = 0;
+      const type = () => {
+        if (!aliveRef.current) return;
+        if (++c <= text.length) {
+          setTyped(text.slice(0, c));
+          timerRef.current = setTimeout(type, 16);
+        } else {
+          timerRef.current = setTimeout(() => {
+            if (!aliveRef.current) return;
+            setShowOutput(true);
+            timerRef.current = setTimeout(() => playStep((i + 1) % DEMO.length), 3400);
+          }, 300);
+        }
+      };
+      timerRef.current = setTimeout(type, 350);
+    },
+    [reduced]
+  );
 
   useEffect(() => {
     aliveRef.current = true;
-    playStep(0);
+    // Under reduced motion, land on the final `evolve` frame instead of cycling.
+    playStep(reduced ? DEMO.length - 1 : 0);
     return () => {
       aliveRef.current = false;
       clearTimeout(timerRef.current);
     };
-  }, [playStep]);
+  }, [playStep, reduced]);
 
   const active = DEMO[step];
 
@@ -253,7 +279,13 @@ const HeroDemo = () => {
             <span className="flex-shrink-0 text-lm-gold">$</span>
             <span className="min-w-0 break-words text-[#b8ad99]">
               {typed}
-              <span className="ml-0.5 inline-block h-[14px] w-[7px] animate-lm-blink bg-lm-gold align-text-bottom" />
+              {!showOutput && (
+                <span
+                  className={`ml-0.5 inline-block h-[14px] w-[7px] bg-lm-gold align-text-bottom ${
+                    reduced ? "" : "animate-lm-blink"
+                  }`}
+                />
+              )}
             </span>
           </div>
           {showOutput && (
@@ -271,7 +303,11 @@ const HeroDemo = () => {
               </div>
               <div className="mt-3 flex items-center gap-[9px]">
                 <span className="text-lm-gold">$</span>
-                <span className="inline-block h-[14px] w-[7px] animate-lm-blink bg-[#78716c]" />
+                <span
+                  className={`inline-block h-[14px] w-[7px] bg-[#78716c] ${
+                    reduced ? "" : "animate-lm-blink"
+                  }`}
+                />
               </div>
             </>
           )}
