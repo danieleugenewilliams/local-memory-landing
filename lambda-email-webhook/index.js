@@ -151,7 +151,7 @@ function createEmailTemplate(customerEmail, licenseKey, downloadUrls) {
 </head>
 <body style="margin:0; padding:0; background-color:#faf7f1;">
   <!-- preheader (hidden) -->
-  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your license key ${licenseKey} + a one-paste agent install prompt inside.</div>
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Your license key and a one-paste agent install prompt are inside.</div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#faf7f1;">
     <tr><td align="center" style="padding:32px 16px;">
